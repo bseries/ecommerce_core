@@ -12,27 +12,21 @@
 
 namespace cms_ecommerce\controllers;
 
-use cms_core\models\Users;
-use cms_ecommerce\models\Orders;
+use cms_ecommerce\models\Products;
 
-class OrdersController extends \cms_core\controllers\BaseController {
+class ProductsController extends \cms_core\controllers\BaseController {
 
 	use \cms_core\controllers\AdminAddTrait;
 	use \cms_core\controllers\AdminEditTrait;
 	use \cms_core\controllers\AdminDeleteTrait;
 
+	use \cms_core\controllers\AdminPublishTrait;
+
 	public function admin_index() {
-		$data = Orders::find('all', [
-			'order' => ['number' => 'DESC']
+		$data = Products::find('all', [
+			'order' => ['id' => 'ASC']
 		]);
 		return compact('data');
-	}
-
-	protected function _selects() {
-		$parent = parent::_selects();
-		$users = Users::find('list');
-
-		return compact('users') + $parent;
 	}
 }
 

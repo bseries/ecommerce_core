@@ -14,24 +14,44 @@ use lithium\net\http\Router;
 
 $persist = ['persist' => ['admin', 'controller']];
 
-Router::connect('/admin/billing/invoices/{:id:[0-9]+}', [
-	'controller' => 'Invoices', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
+Router::connect('/admin/ecommerce/orders/{:id:[0-9]+}', [
+	'controller' => 'orders', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
 ], $persist);
-Router::connect('/admin/billing/invoices/{:action}', [
-	'controller' => 'Invoices', 'library' => 'cms_ecommerce', 'admin' => true
+Router::connect('/admin/ecommerce/orders/{:action}', [
+	'controller' => 'orders', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
-Router::connect('/admin/billing/invoices/{:action}/{:id:[0-9]+}', [
-	'controller' => 'Invoices', 'library' => 'cms_ecommerce', 'admin' => true
+Router::connect('/admin/ecommerce/orders/{:action}/{:id:[0-9]+}', [
+	'controller' => 'orders', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
 
-Router::connect('/admin/billing/{:id:[0-9]+}', [
-	'controller' => 'Billing', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
+Router::connect('/admin/ecommerce/carts/{:id:[0-9]+}', [
+	'controller' => 'carts', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
 ], $persist);
-Router::connect('/admin/billing/{:action}', [
-	'controller' => 'Billing', 'library' => 'cms_ecommerce', 'admin' => true
+Router::connect('/admin/ecommerce/carts/{:action}', [
+	'controller' => 'carts', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
-Router::connect('/admin/billing/{:action}/{:id:[0-9]+}', [
-	'controller' => 'Billing', 'library' => 'cms_ecommerce', 'admin' => true
+Router::connect('/admin/ecommerce/carts/{:action}/{:id:[0-9]+}', [
+	'controller' => 'carts', 'library' => 'cms_ecommerce', 'admin' => true
+], $persist);
+
+Router::connect('/admin/ecommerce/products/{:id:[0-9]+}', [
+	'controller' => 'products', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
+], $persist);
+Router::connect('/admin/ecommerce/products/{:action}', [
+	'controller' => 'products', 'library' => 'cms_ecommerce', 'admin' => true
+], $persist);
+Router::connect('/admin/ecommerce/products/{:action}/{:id:[0-9]+}', [
+	'controller' => 'products', 'library' => 'cms_ecommerce', 'admin' => true
+], $persist);
+
+Router::connect('/admin/ecommerce/{:id:[0-9]+}', [
+	'controller' => 'ecommerce', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
+], $persist);
+Router::connect('/admin/ecommerce/{:action}', [
+	'controller' => 'ecommerce', 'library' => 'cms_ecommerce', 'admin' => true
+], $persist);
+Router::connect('/admin/ecommerce/{:action}/{:id:[0-9]+}', [
+	'controller' => 'ecommerce', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
 
 

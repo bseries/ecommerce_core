@@ -9,41 +9,30 @@ $dateFormatter = new IntlDateFormatter(
 
 ?>
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
-	<h1 class="alpha"><?= $this->title($t('Orders')) ?></h1>
+	<h1 class="alpha"><?= $this->title($t('Carts')) ?></h1>
 
 	<?php if ($data->count()): ?>
 		<table>
 			<thead>
 				<tr>
-					<td class="emphasize"><?= $t('Number') ?>
-					<td><?= $t('Invoice number') ?>
-					<td class="status"><?= $t('Invoice status') ?>
-					<td class="status"><?= $t('Shipment status') ?>
+					<td><?= $t('User session ID') ?>
 					<td class="date created"><?= $t('Created') ?>
+					<td><?= $t('Total positions') ?>
+					<td><?= $t('Total quantity') ?>
 					<td>
 			</thead>
 			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="emphasize"><?= $item->number ?: '–' ?>
-					<td>
-					<?php
-					if ($sub = $item->invoice()) {
-						echo $this->html->link($sub->number, ['controller' => 'invoices', 'library' => 'cms_billing', 'id' => $sub->id, 'action' => 'edit']);
-					} else {
-						echo '–';
-					}
-					?>
-					<td class="status"><?= ($sub = $item->invoice()) ? $sub->status : '–' ?>
-					<td class="status"><?= ($sub = $item->shipment()) ? $sub->status : '–' ?>
+					<td><?= $item->user_session_id ?>
+					<td><?= $item->positions()->count() ?>
+					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
 						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->created) ?>
 						<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
 					<td>
 						<nav class="actions">
 							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('paid'), ['id' => $item->id, 'action' => 'paid', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('ship'), ['id' => $item->id, 'action' => 'ship', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
 							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
 						</nav>
 				<?php endforeach ?>

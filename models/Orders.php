@@ -12,6 +12,7 @@
 
 namespace cms_ecommerce\models;
 
+use cms_billing\models\Invoices;
 use cms_core\extensions\cms\Settings;
 use DateTime;
 
@@ -53,17 +54,35 @@ class Orders extends \cms_core\models\Base {
 		}
 		return $number;
 	}
+
+	public function shipment($entity) {
+		return false;
+	}
+
+	public function invoice($entity) {
+		return Invoices::find('first', [
+			'conditions' => [
+				'id' => $entity->billing_invoice_id
+			]
+		]);
+	}
 }
 
 Orders::applyFilter('create', function($self, $params, $chain) {
-	$entity = $params['entity'];
-	$data = $params['data'];
+	static $useFilter = true;
 
-	if (!$entity->exists()) {
-		$entity->number = Orders::nextNumber();
+	$entity = $chain->next($self, $params, $chain);
+
+	if (!$useFilter) {
+		return $entity;
 	}
 
-	return $chain->next($self, $params, $chain);
+	if (!$entity->exists()) {
+		$useFilter = false;
+		$entity->number = Orders::nextNumber();
+		$useFilter = true;
+	}
+	return $entity;
 });
 
 ?>
