@@ -1,10 +1,17 @@
 <?php
 
+use lithium\core\Environment;
+use SebastianBergmann\Money\IntlFormatter;
+
 $dateFormatter = new IntlDateFormatter(
-	'de_DE',
+	Environment::get('locale'),
 	IntlDateFormatter::SHORT,
 	IntlDateFormatter::SHORT,
 	$authedUser['timezone']
+);
+
+$moneyFormatter = new IntlFormatter(
+	Environment::get('locale')
 );
 
 ?>
@@ -16,19 +23,23 @@ $dateFormatter = new IntlDateFormatter(
 			<thead>
 				<tr>
 					<td><?= $t('User session ID') ?>
-					<td class="date created"><?= $t('Created') ?>
-					<td><?= $t('Total positions') ?>
+					<td><?= $t('Total amount') ?>
 					<td><?= $t('Total quantity') ?>
+					<td class="date created"><?= $t('Created') ?>
+					<td class="date created"><?= $t('Modified') ?>
 					<td>
 			</thead>
 			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td><?= $item->user_session_id ?>
-					<td><?= $item->positions()->count() ?>
+					<td><?= $moneyFormatter->format($item->totalAmount()) ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
 						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->created) ?>
+						<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
+					<td class="date modified">
+						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->modified) ?>
 						<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
 					<td>
 						<nav class="actions">

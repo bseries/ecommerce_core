@@ -13,6 +13,8 @@
 namespace cms_ecommerce\models;
 
 use cms_ecommerce\models\ProductPrices;
+use SebastianBergmann\Money\Money;
+use SebastianBergmann\Money\Currency;
 
 class Products extends \cms_core\models\Base {
 
@@ -43,9 +45,9 @@ class Products extends \cms_core\models\Base {
 		'cms_core\extensions\data\behavior\Timestamp'
 	];
 
+	// @todo Implemented graded prices
 	public function price($entity, $type = null) {
-		// ProductPrices
-		return 0;
+		return new Money(0, new Currency('EUR'));
 	}
 }
 

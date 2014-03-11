@@ -12,6 +12,8 @@
 
 namespace cms_ecommerce\models;
 
+use cms_ecommerce\models\Products;
+
 class CartPositions extends \cms_core\models\Base {
 
 	protected $_meta = [
@@ -21,6 +23,22 @@ class CartPositions extends \cms_core\models\Base {
 	protected static $_actsAs = [
 		'cms_core\extensions\data\behavior\Timestamp'
 	];
+
+	public $belongsTo = [
+		'Cart' => [
+			'class' => 'cms_ecommerce\models\Cart',
+			'key' => 'ecommerce_cart_id'
+		]
+	];
+
+	public function product($entity) {
+		return Products::findById($entity->ecommerce_product_id);
+	}
+
+	public function totalAmount($entity) {
+		$product = $this->product($entity);
+		return $product->price()->multiply($entity->quantity);
+	}
 }
 
 ?>

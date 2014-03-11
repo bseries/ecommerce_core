@@ -13,6 +13,8 @@
 namespace cms_ecommerce\models;
 
 use cms_ecommerce\models\CartPositions;
+use SebastianBergmann\Money\Money;
+use SebastianBergmann\Money\Currency;
 
 class Carts extends \cms_core\models\Base {
 
@@ -24,6 +26,13 @@ class Carts extends \cms_core\models\Base {
 		'cms_core\extensions\data\behavior\Timestamp'
 	];
 
+	public $hasMany = [
+		'CartPositions' => [
+			'class' => 'cms_ecommerce\models\CartPositions',
+			'key' => 'ecommerce_cart_id'
+		]
+	];
+
 	public function positions($entity) {
 		return CartPositions::find('all', [
 			'conditions' => [
@@ -33,9 +42,18 @@ class Carts extends \cms_core\models\Base {
 	}
 
 	public function totalQuantity($entity) {
-		return array_reduce($this->positions($entity), function($carry, $item) {
+		return array_reduce($this->positions($entity)->data(), function($carry, $item) {
 			return $carry += $item['quantity'];
 		}, 0);
+	}
+
+	public function totalAmount($entity) {
+		$result = new Money(0, new Currency('EUR'));
+
+		foreach ($this->positions($entity) as $position) {
+			$result = $result->add($position->totalAmount());
+		}
+		return $result;
 	}
 }
 
