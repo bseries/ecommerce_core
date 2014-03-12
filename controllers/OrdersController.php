@@ -29,8 +29,7 @@ class OrdersController extends \cms_core\controllers\BaseController {
 		return compact('data');
 	}
 
-	protected function _selects() {
-		$parent = parent::_selects();
+	protected function _selects($item) {
 		$users = Users::find('list');
 
 		$shipments = [];
@@ -40,7 +39,7 @@ class OrdersController extends \cms_core\controllers\BaseController {
 		foreach ($results as $result) {
 			$invoices[$result->id] = $result->number;
 		}
-		return compact('users', 'invoices', 'shipments') + $parent;
+		return compact('users', 'invoices', 'shipments');
 	}
 }
 

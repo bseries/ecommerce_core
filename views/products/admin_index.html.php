@@ -9,7 +9,7 @@ $dateFormatter = new IntlDateFormatter(
 
 ?>
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
-	<h1 class="alpha"><?= $this->title($t('Products')) ?></h1>
+	<h1 class="alpha"><?= $this->title($t('Product variants')) ?></h1>
 
 	<?php if ($data->count()): ?>
 		<table>

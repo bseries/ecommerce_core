@@ -13,6 +13,7 @@
 namespace cms_ecommerce\controllers;
 
 use cms_ecommerce\models\Products;
+use cms_ecommerce\models\ProductGroups;
 
 class ProductsController extends \cms_core\controllers\BaseController {
 
@@ -27,6 +28,17 @@ class ProductsController extends \cms_core\controllers\BaseController {
 			'order' => ['id' => 'ASC']
 		]);
 		return compact('data');
+	}
+
+	public function _selects($item) {
+		$productGroups = [];
+		$results = ProductGroups::find('all');
+
+		foreach ($results as $result) {
+			$productGroups[$result->id] = $result->title;
+		}
+
+		return compact('productGroups');
 	}
 }
 

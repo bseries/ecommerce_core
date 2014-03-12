@@ -24,9 +24,6 @@ Router::connect('/admin/ecommerce/orders/{:action}/{:id:[0-9]+}', [
 	'controller' => 'orders', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
 
-Router::connect('/admin/ecommerce/carts/{:id:[0-9]+}', [
-	'controller' => 'carts', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
-], $persist);
 Router::connect('/admin/ecommerce/carts/{:action}', [
 	'controller' => 'carts', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
@@ -34,13 +31,20 @@ Router::connect('/admin/ecommerce/carts/{:action}/{:id:[0-9]+}', [
 	'controller' => 'carts', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
 
-Router::connect('/admin/ecommerce/products/{:id:[0-9]+}', [
-	'controller' => 'products', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
-], $persist);
+
+// We mask product groups as "products".
 Router::connect('/admin/ecommerce/products/{:action}', [
-	'controller' => 'products', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'ProductGroups', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/products/{:action}/{:id:[0-9]+}', [
+	'controller' => 'ProductGroups', 'library' => 'cms_ecommerce', 'admin' => true
+], $persist);
+
+// We mask products  as "product variants".
+Router::connect('/admin/ecommerce/product-variants/{:action}', [
+	'controller' => 'products', 'library' => 'cms_ecommerce', 'admin' => true
+], $persist);
+Router::connect('/admin/ecommerce/product-variants/{:action}/{:id:[0-9]+}', [
 	'controller' => 'products', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
 

@@ -5,7 +5,7 @@ $untitled = $t('Untitled');
 $title = [
 	'action' => ucfirst($this->_request->action === 'add' ? $t('creating') : $t('editing')),
 	'title' => $item->title ?: $untitled,
-	'object' => [ucfirst($t('order')), ucfirst($t('orders'))]
+	'object' => [ucfirst($t('product variant')), ucfirst($t('product variants'))]
 ];
 $this->title("{$title['title']} - {$title['object'][1]}");
 
@@ -22,7 +22,17 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 			'label' => $t('Number/SKU'),
 		]) ?>
 
-		<?= $this->form->field('title', ['type' => 'text', 'label' => $t('Title'), 'class' => 'use-for-title']) ?>
+		<?= $this->form->field('title', [
+			'type' => 'text',
+			'label' => $t('Title'),
+			'class' => 'use-for-title'
+		]) ?>
+
+		<?= $this->form->field('ecommerce_product_group_id', [
+			'type' => 'select',
+			'label' => $t('Contained in product group'),
+			'list' => ['new' => '-- ' . $t('Create new product group') . ' --'] + $productGroups
+		]) ?>
 
 		<div class="media-attachment use-media-attachment-direct">
 			<?= $this->form->label('ProductsCoverMediaId', $t('Cover')) ?>
@@ -39,7 +49,6 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 			<div class="selected"></div>
 			<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
 		</div>
-
 		<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large']) ?>
 
 	<?=$this->form->end() ?>

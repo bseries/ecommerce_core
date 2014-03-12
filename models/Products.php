@@ -12,6 +12,7 @@
 
 namespace cms_ecommerce\models;
 
+use cms_ecommerce\models\ProductGroups;
 use cms_ecommerce\models\ProductPrices;
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
@@ -48,6 +49,14 @@ class Products extends \cms_core\models\Base {
 	// @todo Implemented graded prices
 	public function price($entity, $type = null) {
 		return new Money(0, new Currency('EUR'));
+	}
+
+	public function group($entity) {
+		return ProductGroups::find('first', [
+			'conditions' => [
+				'id' => $entity->ecommerce_product_group_id
+			]
+		]);
 	}
 }
 

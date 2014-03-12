@@ -25,8 +25,10 @@ Panes::register('cms_ecommerce', 'ecommerce', [
 		$t('List carts') => ['controller' => 'Carts', 'action' => 'index'] + $base,
 		$t('List orders') => ['controller' => 'Orders', 'action' => 'index'] + $base,
 		$t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
-		$t('List products') => ['controller' => 'Products', 'action' => 'index'] + $base,
-		$t('New product') => ['controller' => 'Products', 'action' => 'add'] + $base,
+		$t('List products') => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
+		$t('New product') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
+		$t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
+		$t('New product variant') => ['controller' => 'Products', 'action' => 'add'] + $base,
 		// $t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
 	]
 ]);
@@ -38,6 +40,13 @@ Panes::register('cms_ecommerce', 'ecommerce', [
 Settings::register('cms_ecommerce', 'orderNumberPattern.number', '%04.d');
 Settings::register('cms_ecommerce', 'orderNumberPattern.prefix', '%Y');
 
-Media::registerDependent('cms_ecommerce\models\Products', ['cover' => 'direct', 'media' => 'joined']);
+Media::registerDependent('cms_ecommerce\models\Products', [
+	'cover' => 'direct',
+	'media' => 'joined'
+]);
+Media::registerDependent('cms_ecommerce\models\ProductGroups', [
+	'cover' => 'direct',
+	'media' => 'joined'
+]);
 
 ?>
