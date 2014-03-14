@@ -17,6 +17,8 @@ use cms_ecommerce\models\ProductGroups;
 
 class ProductsController extends \cms_core\controllers\BaseController {
 
+	protected $_redirectUrl = ['controller' => 'ProductGroups'];
+
 	use \cms_core\controllers\AdminAddTrait;
 	use \cms_core\controllers\AdminEditTrait;
 	use \cms_core\controllers\AdminDeleteTrait;
@@ -37,8 +39,12 @@ class ProductsController extends \cms_core\controllers\BaseController {
 		foreach ($results as $result) {
 			$productGroups[$result->id] = $result->title;
 		}
+		$currencies = [
+			'EUR' => 'EUR',
+			'USD' => 'USD'
+		];
 
-		return compact('productGroups');
+		return compact('productGroups', 'currencies');
 	}
 }
 

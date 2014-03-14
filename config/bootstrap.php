@@ -16,6 +16,7 @@ use lithium\g11n\Message;
 use cms_media\models\Media;
 use cms_ecommerce\models\ShippingMethods;
 use cms_ecommerce\models\PaymentMethods;
+use cms_ecommerce\models\ProductPriceGroups;
 
 extract(Message::aliases());
 
@@ -29,7 +30,7 @@ Panes::register('cms_ecommerce', 'ecommerce', [
 		$t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
 		$t('List products') => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
 		$t('New product') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
-		$t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
+		// $t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
 		$t('New product variant') => ['controller' => 'Products', 'action' => 'add'] + $base,
 		// $t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
 	]
@@ -71,7 +72,7 @@ ShippingMethods::register('default', [
 
 		$free = new Money(5000, $currency); // gross
 
-		if ($cart->totalAmount('gross', $taxZone, (string) $currency)->greaterThan($free)) {
+		if ($cart->totalAmount($user, 'gross', $taxZone, (string) $currency)->greaterThan($free)) {
 			$result = new Money(0, $currency);
 		} elseif ($user->role === 'merchant') {
 			$result = new Money(490, $currency); // gross
@@ -85,5 +86,23 @@ ShippingMethods::register('default', [
 	}
 ]);
 
+ProductPriceGroups::register('merchant', [
+	'title' => 'Merchant',
+	'legible' => function($user) {
+		if ($user->role == 'admin') {
+			return true;
+		}
+		return $user->role == 'merchant';
+	}
+]);
+ProductPriceGroups::register('customer', [
+	'title' => 'Customer',
+	'legible' => function($user) {
+		if ($user->role == 'admin') {
+			return true;
+		}
+		return $user->role == 'customer';
+	}
+]);
 
 ?>

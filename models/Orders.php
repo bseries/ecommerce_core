@@ -13,6 +13,7 @@
 namespace cms_ecommerce\models;
 
 use cms_ecommerce\models\Carts;
+use cms_ecommerce\models\Shipments;
 use cms_ecommerce\models\PaymentMethods;
 use cms_ecommerce\models\ShippingMethods;
 use cms_billing\models\InvoicePositions;
@@ -71,7 +72,14 @@ class Orders extends \cms_core\models\Base {
 	}
 
 	public function shipment($entity) {
-		return false;
+		return Shipments::findById($entity->shipment_id);
+	}
+
+	public function user($entity) {
+		if ($entity->user_id) {
+			return Users::findById($entity->user_id);
+		}
+		return VirtualUsers::findById($entity->virtual_user_id);
 	}
 
 	public function cart($entity) {
@@ -107,7 +115,7 @@ class Orders extends \cms_core\models\Base {
 	}
 
 	public function totalAmount($entity, $user, $cart, $type, $taxZone, $currency) {
-		$result = $this->cart($entity)->totalAmount($type, $taxZone, $currency);
+		$result = $this->cart($entity)->totalAmount($user, $type, $taxZone, $currency);
 
 		$result = $result->add($this->shippingMethod($entity)->price($user, $cart, $type, $taxZone, $currency));
 		$result = $result->add($this->paymentMethod($entity)->price($user, $cart, $type, $taxZone, $currency));
@@ -127,8 +135,7 @@ class Orders extends \cms_core\models\Base {
 			'status' => 'created',
 			'method' => $entity->shipping_method
 		]);
-		$address = Addresses::createFromPrefixed('shipping_address_', $entity->data());
-		$shipment = $address->copy($shipment, 'address_');
+		$shipment = $entity->address('shipping')->copy($shipment, 'address_');
 
 		if (!$shipment->save()) {
 			return false;
@@ -138,9 +145,6 @@ class Orders extends \cms_core\models\Base {
 	}
 
 	public function generateInvoice($entity, $user, $cart) {
-		// Always overwrite address.
-		$user->billing_address = Addresses::createFromPrefixed('billing_address_', $entity->data());
-
 		$invoice = Invoices::createForUser($user);
 		$data = [
 			'date' => date('Y-m-d'),
@@ -168,8 +172,8 @@ class Orders extends \cms_core\models\Base {
 				'billing_invoice_id' => $invoice->id,
 				'description' => $description,
 				'currency' => $currency,
-				'total_gross' => $cartPosition->totalAmount('gross', $taxZone, $currency)->getAmount(),
-				'total_net' => $cartPosition->totalAmount('net', $taxZone, $currency)->getAmount(),
+				'total_gross' => $cartPosition->totalAmount($user, 'gross', $taxZone, $currency)->getAmount(),
+				'total_net' => $cartPosition->totalAmount($user, 'net', $taxZone, $currency)->getAmount(),
 			]);
 			if (!$invoicePosition->save()) {
 				return false;
@@ -197,14 +201,15 @@ class Orders extends \cms_core\models\Base {
 			return false;
 		}
 
-		if (!$entity->save(['is_locked' => true])) {
+		if (!$invoice->save(['is_locked' => true])) {
 			return false;
 		}
 		return true;
 	}
 
 	public function address($entity, $type) {
-		return Addresses::createFromPrefixed($type . '_address_', $entity->data());
+		$field = $type . '_address_id';
+		return Addresses::findById($entity->$field);
 	}
 }
 

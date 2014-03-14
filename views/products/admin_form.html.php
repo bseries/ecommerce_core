@@ -49,6 +49,41 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 			<div class="selected"></div>
 			<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
 		</div>
+
+		<section class="nested use-nested">
+			<h1 class="beta"><?= $t('Prices') ?></h1>
+
+			<?php foreach ($item->prices() as $key => $child): ?>
+				<article class="nested-item">
+					<h1 class="gamma"><?= $t('Price') . ': '. $child->group()->title ?></h1>
+
+					<?php if ($child->id): ?>
+						<?= $this->form->field("prices.{$key}.id", [
+							'type' => 'hidden',
+							'value' => $child->id,
+						]) ?>
+					<?php endif ?>
+
+					<?= $this->form->field("prices.{$key}.group", [
+						'type' => 'hidden',
+						'value' => $child->group,
+					]) ?>
+
+					<?= $this->form->field("prices.{$key}.currency", [
+						'type' => 'select',
+						'label' => $t('Currency'),
+						'list' => $currencies,
+					]) ?>
+
+					<?= $this->form->field("prices.{$key}.price_gross", [
+						'type' => 'text',
+						'label' => $t('Amount (gross)'),
+						'value' => $child->price('gross', null, 'EUR')->getAmount() / 100,
+					]) ?>
+				</article>
+			<?php endforeach ?>
+		</section>
+
 		<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large']) ?>
 
 	<?=$this->form->end() ?>

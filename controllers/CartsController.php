@@ -22,6 +22,7 @@ class CartsController extends \cms_core\controllers\BaseController {
 	use \cms_core\controllers\AdminDeleteTrait;
 
 	public function admin_index() {
+
 		$taxZone = TaxZones::generate('DE', null, Environment::get('locale'));
 
 		$data = Carts::find('all', [

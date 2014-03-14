@@ -30,7 +30,7 @@ $moneyFormatter = new IntlFormatter($locale);
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td><?= $item->user_session_id ?>
-					<td><?= $moneyFormatter->format($item->totalAmount('net', $taxZone, 'EUR')) ?>
+					<td><?= $moneyFormatter->format($item->totalAmount($user, 'net', $taxZone, 'EUR')) ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
 						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->created) ?>

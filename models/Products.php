@@ -14,8 +14,10 @@ namespace cms_ecommerce\models;
 
 use cms_ecommerce\models\ProductGroups;
 use cms_ecommerce\models\ProductPrices;
+use cms_ecommerce\models\ProductPriceGroups;
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
+use Exception;
 
 class Products extends \cms_core\models\Base {
 
@@ -46,9 +48,33 @@ class Products extends \cms_core\models\Base {
 		'cms_core\extensions\data\behavior\Timestamp'
 	];
 
-	// @todo Implemented graded prices
-	public function price($entity, $type, $taxZone, $currency) {
-		return new Money(0, new Currency($currency));
+	public function price($entity, $user, $type, $taxZone, $currency) {
+		foreach ($this->prices($entity) as $price) {
+			if ($price->isLegibleFor($user)) {
+				return $price->price($type, $taxZone, $currency);
+			}
+		}
+		throw new Exception("Not legible for any price.");
+		// return new Money(0, new Currency($currency));
+	}
+
+	public function prices($entity) {
+		$results = [];
+
+		foreach (ProductPriceGroups::find('all') as $group) {
+			$results[$group->id] = ProductPrices::create([
+				'group' => $group->id
+			]);
+		}
+		$prices = ProductPrices::find('all', [
+			'conditions' => [
+				'ecommerce_product_id' => $entity->id
+			]
+		]);
+		foreach ($prices as $price) {
+			$results[$price->group] = $price;
+		}
+		return $results;
 	}
 
 	public function group($entity) {
@@ -59,5 +85,58 @@ class Products extends \cms_core\models\Base {
 		]);
 	}
 }
+
+Products::applyFilter('save', function($self, $params, $chain) {
+	$entity = $params['entity'];
+	$data =& $params['data'];
+
+	// Create new product group.
+	if ($data['ecommerce_product_group_id'] == 'new') {
+		$group = ProductGroups::create([
+			'title' => $data['title'],
+		]);
+		if (!$group->save()) {
+			return false;
+		}
+		$data['ecommerce_product_group_id'] = $group->id;
+	}
+
+	if (!$result = $chain->next($self, $params, $chain)) {
+		return false;
+	}
+
+	// Save nested.
+	$new = $entity->prices;
+
+	foreach ($new as $key => $data) {
+		if (isset($data['id'])) {
+			$item = ProductPrices::findById($data['id']);
+			$item->set($data);
+		} else {
+			$item = ProductPrices::create($data);
+			$item->ecommerce_product_id = $entity->id;
+		}
+		if (!$item->save()) {
+			return false;
+		}
+	}
+	return true;
+});
+Products::applyFilter('delete', function($self, $params, $chain) {
+	$entity = $params['entity'];
+	$result = $chain->next($self, $params, $chain);
+
+	if ($result) {
+		$data = ProductPrices::find('all', [
+			'conditions' => ['ecommerce_product_id' => $entity->id]
+		]);
+		foreach ($data as $item) {
+			$item->delete();
+		}
+	}
+	return $result;
+});
+
+
 
 ?>

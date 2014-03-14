@@ -35,9 +35,9 @@ class CartPositions extends \cms_core\models\Base {
 		return Products::findById($entity->ecommerce_product_id);
 	}
 
-	public function totalAmount($entity, $type, $taxZone, $currency) {
+	public function totalAmount($entity, $user, $type, $taxZone, $currency) {
 		$product = $this->product($entity);
-		return $product->price($type, $taxZone, $currency)->multiply($entity->quantity);
+		return $product->price($user, $type, $taxZone, $currency)->multiply($entity->quantity);
 	}
 }
 
