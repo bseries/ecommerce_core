@@ -1,18 +1,15 @@
 <?php
 
-use lithium\core\Environment;
 use SebastianBergmann\Money\IntlFormatter;
 
 $dateFormatter = new IntlDateFormatter(
-	Environment::get('locale'),
+	$locale,
 	IntlDateFormatter::SHORT,
 	IntlDateFormatter::SHORT,
 	$authedUser['timezone']
 );
 
-$moneyFormatter = new IntlFormatter(
-	Environment::get('locale')
-);
+$moneyFormatter = new IntlFormatter($locale);
 
 ?>
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
@@ -23,7 +20,7 @@ $moneyFormatter = new IntlFormatter(
 			<thead>
 				<tr>
 					<td><?= $t('User session ID') ?>
-					<td><?= $t('Total amount') ?>
+					<td><?= $t('Total net amount') ?>
 					<td><?= $t('Total quantity') ?>
 					<td class="date created"><?= $t('Created') ?>
 					<td class="date created"><?= $t('Modified') ?>
@@ -33,7 +30,7 @@ $moneyFormatter = new IntlFormatter(
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td><?= $item->user_session_id ?>
-					<td><?= $moneyFormatter->format($item->totalAmount()) ?>
+					<td><?= $moneyFormatter->format($item->totalAmount('net', $taxZone, 'EUR')) ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
 						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->created) ?>

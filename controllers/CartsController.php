@@ -12,7 +12,9 @@
 
 namespace cms_ecommerce\controllers;
 
+use cms_billing\models\TaxZones;
 use cms_ecommerce\models\Carts;
+use lithium\core\Environment;
 
 class CartsController extends \cms_core\controllers\BaseController {
 
@@ -20,10 +22,12 @@ class CartsController extends \cms_core\controllers\BaseController {
 	use \cms_core\controllers\AdminDeleteTrait;
 
 	public function admin_index() {
+		$taxZone = TaxZones::generate('DE', null, Environment::get('locale'));
+
 		$data = Carts::find('all', [
 			'order' => ['id' => 'ASC']
 		]);
-		return compact('data');
+		return compact('data', 'taxZone');
 	}
 }
 

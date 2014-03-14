@@ -16,6 +16,7 @@ $dateFormatter = new IntlDateFormatter(
 			<thead>
 				<tr>
 					<td class="emphasize"><?= $t('Number') ?>
+					<td><?= $t('Status') ?>
 					<td><?= $t('Invoice number') ?>
 					<td class="status"><?= $t('Invoice status') ?>
 					<td class="status"><?= $t('Shipment status') ?>
@@ -26,6 +27,7 @@ $dateFormatter = new IntlDateFormatter(
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="emphasize"><?= $item->number ?: '–' ?>
+					<td class="status"><?= $item->status ?>
 					<td>
 					<?php
 					if ($sub = $item->invoice()) {

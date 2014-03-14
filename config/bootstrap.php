@@ -14,6 +14,8 @@ use cms_core\extensions\cms\Settings;
 use cms_core\extensions\cms\Panes;
 use lithium\g11n\Message;
 use cms_media\models\Media;
+use cms_ecommerce\models\ShippingMethods;
+use cms_ecommerce\models\PaymentMethods;
 
 extract(Message::aliases());
 
@@ -48,5 +50,40 @@ Media::registerDependent('cms_ecommerce\models\ProductGroups', [
 	'cover' => 'direct',
 	'media' => 'joined'
 ]);
+
+PaymentMethods::register('invoice', [
+	'title' => $t('Invoice')
+]);
+PaymentMethods::register('paypal', [
+	'title' => $t('Paypal')
+]);
+PaymentMethods::register('prepayment', [
+	'title' => $t('Prepayment')
+]);
+
+use SebastianBergmann\Money\Money;
+use SebastianBergmann\Money\Currency;
+
+ShippingMethods::register('default', [
+	'title' => $t('Default Shipping'),
+	'price_eur' => function($user, $cart, $type, $taxZone, $currency) {
+		$currency = new Currency($currency);
+
+		$free = new Money(5000, $currency); // gross
+
+		if ($cart->totalAmount('gross', $taxZone, (string) $currency)->greaterThan($free)) {
+			$result = new Money(0, $currency);
+		} elseif ($user->role === 'merchant') {
+			$result = new Money(490, $currency); // gross
+		} else {
+			$result = new Money(390, $currency); // gross
+		}
+		if ($type === 'gross') {
+			return $result;
+		}
+		return $result->subtract($result->multiply(($taxZone->rate / 100)));
+	}
+]);
+
 
 ?>

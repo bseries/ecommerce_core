@@ -47,8 +47,8 @@ class Products extends \cms_core\models\Base {
 	];
 
 	// @todo Implemented graded prices
-	public function price($entity, $type = null) {
-		return new Money(0, new Currency('EUR'));
+	public function price($entity, $type, $taxZone, $currency) {
+		return new Money(0, new Currency($currency));
 	}
 
 	public function group($entity) {

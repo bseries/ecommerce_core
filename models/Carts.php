@@ -12,6 +12,7 @@
 
 namespace cms_ecommerce\models;
 
+use cms_core\extensions\cms\Settings;
 use cms_ecommerce\models\CartPositions;
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
@@ -47,11 +48,12 @@ class Carts extends \cms_core\models\Base {
 		}, 0);
 	}
 
-	public function totalAmount($entity) {
-		$result = new Money(0, new Currency('EUR'));
+	public function totalAmount($entity, $type, $taxZone, $currency) {
+		// @todo check if input is net or gross and adjust if needed.
+		$result = new Money(0, new Currency($currency));
 
 		foreach ($this->positions($entity) as $position) {
-			$result = $result->add($position->totalAmount());
+			$result = $result->add($position->totalAmount($type, $taxZone, $currency));
 		}
 		return $result;
 	}

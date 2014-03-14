@@ -29,14 +29,14 @@ class Checkouts extends \cms_core\models\Base {
 		$machine->addState('cart');
 		$machine->addState('shipping');
 		$machine->addState('payment');
-		$machine->addState('confirmation');
+		$machine->addState('confirm');
 		$machine->addState('success', StateInterface::TYPE_FINAL);
 
 		$machine->addTransition('user-starts-checkout', 'unknown', 'cart');
 		$machine->addTransition('user-confirms-products', 'cart', 'shipping');
 		$machine->addTransition('user-confirms-shipping', 'shipping', 'payment');
 		$machine->addTransition('user-confirms-payment', 'payment', 'confirmation');
-		$machine->addTransition('user-confirms-checkout', 'confirmation', 'success');
+		$machine->addTransition('user-confirms-checkout', 'confirm', 'success');
 
 		$machine->setObject(new StatefulDocument($status));
 		$machine->initialize();

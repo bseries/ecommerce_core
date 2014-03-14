@@ -1,5 +1,9 @@
 <?php
 
+use lithium\core\Environment;
+
+$locale = Environment::get('locale');
+
 $untitled = $t('Untitled');
 
 $title = [
@@ -25,19 +29,36 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 		]) ?>
 		<div class="help"><?= $t('The order number is automatically generated.') ?></div>
 
-		<?= $this->form->field('billing_invoice_id', [
-			'type' => 'select',
-			'label' => $t('Invoice number'),
-			'disabled' => $item->exists(),
-			'list' => $invoices
-		]) ?>
-
-		<?= $this->form->field('ecommerce_shipment_id', [
-			'type' => 'select',
-			'label' => $t('Shipment'),
-			'disabled' => $item->exists(),
-			'list' => $shipments
-		]) ?>
+		<section>
+			<h1 class="gamma"><?= $t('Billing') ?></h1>
+			<?= $this->form->field('billing_invoice_id', [
+				'type' => 'select',
+				'label' => $t('Invoice'),
+				'disabled' => $item->exists(),
+				'list' => $invoices
+			]) ?>
+			<?= $this->form->field('billing_address', [
+				'type' => 'textarea',
+				'label' => $t('Billing address'),
+				'disabled' => true,
+				'value' => $item->address('billing')->format('postal', $locale)
+			]) ?>
+		</section>
+		<section>
+			<h1 class="gamma"><?= $t('Shipment') ?></h1>
+			<?= $this->form->field('ecommerce_shipment_id', [
+				'type' => 'select',
+				'label' => $t('Shipment'),
+				'disabled' => $item->exists(),
+				'list' => $shipments
+			]) ?>
+			<?= $this->form->field('shipping_address', [
+				'type' => 'textarea',
+				'label' => $t('Shipping address'),
+				'disabled' => true,
+				'value' => $item->address('shipping')->format('postal', $locale)
+			]) ?>
+		</section>
 
 		<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large']) ?>
 
