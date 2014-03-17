@@ -16,6 +16,8 @@ use cms_ecommerce\models\Carts;
 use cms_ecommerce\models\Shipments;
 use cms_ecommerce\models\PaymentMethods;
 use cms_ecommerce\models\ShippingMethods;
+use cms_core\models\Users;
+use cms_core\models\VirtualUsers;
 use cms_billing\models\InvoicePositions;
 use cms_billing\models\Invoices;
 use cms_core\models\Addresses;

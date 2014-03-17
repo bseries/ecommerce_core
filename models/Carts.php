@@ -16,6 +16,8 @@ use cms_core\extensions\cms\Settings;
 use cms_ecommerce\models\CartPositions;
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
+use cms_core\models\Users;
+use cms_core\models\VirtualUsers;
 
 class Carts extends \cms_core\models\Base {
 
@@ -33,6 +35,17 @@ class Carts extends \cms_core\models\Base {
 			'key' => 'ecommerce_cart_id'
 		]
 	];
+
+	public function user($entity) {
+		if ($entity->user_id) {
+			return Users::findById($entity->user_id);
+		}
+		return VirtualUsers::findById($entity->virtual_user_id);
+	}
+
+	public function order($entity) {
+		return Orders::findByEcommerceCartId($entity->id);
+	}
 
 	public function positions($entity) {
 		return CartPositions::find('all', [

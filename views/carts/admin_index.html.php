@@ -19,8 +19,9 @@ $moneyFormatter = new IntlFormatter($locale);
 		<table>
 			<thead>
 				<tr>
-					<td><?= $t('User session ID') ?>
-					<td><?= $t('Total net amount') ?>
+					<td><?= $t('User Session ID') ?>
+					<td><?= $t('User ID') ?>
+					<td><?= $t('Total amount (net) ') ?>
 					<td><?= $t('Total quantity') ?>
 					<td class="date created"><?= $t('Created') ?>
 					<td class="date created"><?= $t('Modified') ?>
@@ -28,8 +29,27 @@ $moneyFormatter = new IntlFormatter($locale);
 			</thead>
 			<tbody>
 				<?php foreach ($data as $item): ?>
+					<?php $user = $item->order()->user() ?>
+					<?php $taxZone = $user->taxZone() ?>
 				<tr data-id="<?= $item->id ?>">
 					<td><?= $item->user_session_id ?>
+					<?php if ($user->isVirtual()): ?>
+						<td>
+							<?= $this->html->link($user->name . '/' . $user->id, [
+								'controller' => 'VirtualUsers', 'action' => 'edit', 'id' => $user->id, 'library' => 'cms_core'
+							]) ?>
+							(<?= $this->html->link('virtual', [
+								'controller' => 'VirtualUsers', 'action' => 'index', 'library' => 'cms_core'
+							]) ?>)
+					<?php else: ?>
+						<td>
+							<?= $this->html->link($user->name . '/' . $user->id, [
+								'controller' => 'Users', 'action' => 'edit', 'id' => $user->id, 'library' => 'cms_core'
+							]) ?>
+							(<?= $this->html->link('real', [
+								'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
+							]) ?>)
+					<?php endif ?>
 					<td><?= $moneyFormatter->format($item->totalAmount($user, 'net', $taxZone, 'EUR')) ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
@@ -41,7 +61,7 @@ $moneyFormatter = new IntlFormatter($locale);
 					<td>
 						<nav class="actions">
 							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
+							<? // $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
 						</nav>
 				<?php endforeach ?>
 			</tbody>

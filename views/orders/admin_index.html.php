@@ -17,6 +17,7 @@ $dateFormatter = new IntlDateFormatter(
 				<tr>
 					<td class="emphasize"><?= $t('Number') ?>
 					<td><?= $t('Status') ?>
+					<td><?= $t('User') ?>
 					<td><?= $t('Invoice number') ?>
 					<td class="status"><?= $t('Invoice status') ?>
 					<td class="status"><?= $t('Shipment status') ?>
@@ -25,9 +26,27 @@ $dateFormatter = new IntlDateFormatter(
 			</thead>
 			<tbody>
 				<?php foreach ($data as $item): ?>
+					<?php $user = $item->user() ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="emphasize"><?= $item->number ?: '–' ?>
 					<td class="status"><?= $item->status ?>
+					<?php if ($user->isVirtual()): ?>
+						<td>
+							<?= $this->html->link($user->name . '/' . $user->id, [
+								'controller' => 'VirtualUsers', 'action' => 'edit', 'id' => $user->id, 'library' => 'cms_core'
+							]) ?>
+							(<?= $this->html->link('virtual', [
+								'controller' => 'VirtualUsers', 'action' => 'index', 'library' => 'cms_core'
+							]) ?>)
+					<?php else: ?>
+						<td>
+							<?= $this->html->link($user->name . '/' . $user->id, [
+								'controller' => 'Users', 'action' => 'edit', 'id' => $user->id, 'library' => 'cms_core'
+							]) ?>
+							(<?= $this->html->link('real', [
+								'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
+							]) ?>)
+					<?php endif ?>
 					<td>
 					<?php
 					if ($sub = $item->invoice()) {
