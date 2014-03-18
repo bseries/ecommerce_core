@@ -91,7 +91,7 @@ Products::applyFilter('save', function($self, $params, $chain) {
 	$data =& $params['data'];
 
 	// Create new product group.
-	if ($data['ecommerce_product_group_id'] == 'new') {
+	if (isset($data['ecommerce_product_id']) && $data['ecommerce_product_group_id'] == 'new') {
 		$group = ProductGroups::create([
 			'title' => $data['title'],
 		]);
@@ -105,6 +105,9 @@ Products::applyFilter('save', function($self, $params, $chain) {
 		return false;
 	}
 
+	if (!$entity->prices) {
+		return true;
+	}
 	// Save nested.
 	$new = $entity->prices;
 

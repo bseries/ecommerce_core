@@ -22,6 +22,14 @@ class ProductPrices extends \cms_core\models\Base {
 		'source' => 'ecommerce_product_prices'
 	];
 
+	protected static $_actsAs = [
+		'cms_core\extensions\data\behavior\Localizable' => [
+			'fields' => [
+				'price_gross' => 'money'
+			]
+		]
+	];
+
 	public function group($entity) {
 		return ProductPriceGroups::find('first', [
 			'conditions' => [
@@ -31,7 +39,15 @@ class ProductPrices extends \cms_core\models\Base {
 	}
 
 	public function price($entity, $type, $taxZone, $currency) {
-		return new Money((integer) $entity->price_gross, new Currency($currency));
+		$money = new Money((integer) $entity->price_gross, new Currency($currency));
+
+		if ($type == 'gross') {
+			return $money;
+		}
+		if (!$taxZone->rate) {
+			return $money;
+		}
+		return $money->subtract($money->multiply($taxZone->rate / 100));
 	}
 
 	public function isLegibleFor($entity, $user) {

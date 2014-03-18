@@ -1,15 +1,3 @@
-<?php
-
-use lithium\core\Environment;
-
-$dateFormatter = new IntlDateFormatter(
-	Environment::get('locale'),
-	IntlDateFormatter::SHORT,
-	IntlDateFormatter::SHORT,
-	$authedUser['timezone']
-);
-
-?>
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
 	<h1 class="alpha"><?= $this->title($t('Products')) ?></h1>
 
@@ -22,7 +10,17 @@ $dateFormatter = new IntlDateFormatter(
 					<td>
 					<td class="emphasize"><?= $t('Title') ?>
 					<td><?= $t('Number') ?>
+					<td>
 					<td class="date created"><?= $t('Created') ?>
+					<td>
+				<tr>
+					<td>
+					<td>
+					<td>
+					<td>
+					<td>
+					<td><?= $t('Stock') ?>
+					<td>
 					<td>
 			</thead>
 			<tbody>
@@ -36,9 +34,11 @@ $dateFormatter = new IntlDateFormatter(
 						<?php endif ?>
 					<td class="emphasize"><?= $item->title ?>
 					<td>
+					<td>
 					<td class="date created">
-						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->created) ?>
-						<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
+						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
+							<?= $this->date->format($item->created, 'date') ?>
+						</time>
 					<td>
 						<nav class="actions">
 							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
@@ -55,9 +55,11 @@ $dateFormatter = new IntlDateFormatter(
 								<?php endif ?>
 							<td class="emphasize"><?= $sub->title ?>
 							<td class="emphasize">#<?= $sub->number ?>
+							<td><?= $sub->stock ?>
 							<td class="date created">
-								<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $sub->created) ?>
-								<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
+								<time datetime="<?= $this->date->format($sub->created, 'w3c') ?>">
+									<?= $this->date->format($sub->created, 'date') ?>
+								</time>
 							<td>
 								<nav class="actions">
 									<?= $this->html->link($t('delete'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>

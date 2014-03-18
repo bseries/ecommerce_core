@@ -32,7 +32,7 @@ Panes::register('cms_ecommerce', 'ecommerce', [
 		$t('New product') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
 		// $t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
 		$t('New product variant') => ['controller' => 'Products', 'action' => 'add'] + $base,
-		// $t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
+		$t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
 	]
 ]);
 
@@ -42,6 +42,7 @@ Panes::register('cms_ecommerce', 'ecommerce', [
 // Parsed with strftime.
 Settings::register('cms_ecommerce', 'orderNumberPattern.number', '%04.d');
 Settings::register('cms_ecommerce', 'orderNumberPattern.prefix', '%Y');
+Settings::register('cms_ecommerce', 'paypal.email', 'billing@example.com');
 
 Media::registerDependent('cms_ecommerce\models\Products', [
 	'cover' => 'direct',
@@ -69,13 +70,15 @@ PaymentMethods::register('paypal', [
 	'title' => $t('Paypal'),
 	'legible' => function($user) {
 		return true;
-	}
+	},
+	'online' => 'off-site'
 ]);
 PaymentMethods::register('prepayment', [
 	'title' => $t('Prepayment'),
 	'legible' => function($user) {
 		return true;
-	}
+	},
+	'online' => false
 ]);
 
 ShippingMethods::register('default', [

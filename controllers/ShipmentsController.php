@@ -12,39 +12,30 @@
 
 namespace cms_ecommerce\controllers;
 
-use cms_core\models\Users;
-use cms_ecommerce\models\Orders;
-use cms_billing\models\Invoices;
 use cms_ecommerce\models\Shipments;
+use cms_ecommerce\models\ShippingMethods;
 
-class OrdersController extends \cms_core\controllers\BaseController {
+class ShipmentsController extends \cms_core\controllers\BaseController {
 
 	use \cms_core\controllers\AdminAddTrait;
 	use \cms_core\controllers\AdminEditTrait;
 	use \cms_core\controllers\AdminDeleteTrait;
 
 	public function admin_index() {
-		$data = Orders::find('all', [
-			'order' => ['number' => 'DESC']
+		$data = Shipments::find('all', [
+			'order' => ['created' => 'DESC']
 		]);
 		return compact('data');
 	}
 
 	protected function _selects($item) {
-		$users = Users::find('list');
+		$methods = [];
 
-		$shipments = [];
-		$results = Shipments::find('all');
+		$results = ShippingMethods::find('all');
 		foreach ($results as $result) {
-			$shipments[$result->id] = $result->method . '; ' . $result->address()->format('oneline');
+			$methods[$result->id] = $result->title;
 		}
-
-		$invoices = [];
-		$results = Invoices::find('all');
-		foreach ($results as $result) {
-			$invoices[$result->id] = $result->number;
-		}
-		return compact('users', 'invoices', 'shipments');
+		return compact('methods');
 	}
 }
 

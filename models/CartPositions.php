@@ -37,7 +37,9 @@ class CartPositions extends \cms_core\models\Base {
 
 	public function totalAmount($entity, $user, $type, $taxZone, $currency) {
 		$product = $this->product($entity);
-		return $product->price($user, $type, $taxZone, $currency)->multiply($entity->quantity);
+		$result = $product->price($user, $type, $taxZone, $currency)->multiply($entity->quantity);
+
+		return $result;
 	}
 }
 

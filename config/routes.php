@@ -31,6 +31,12 @@ Router::connect('/admin/ecommerce/carts/{:action}/{:id:[0-9]+}', [
 	'controller' => 'carts', 'library' => 'cms_ecommerce', 'admin' => true
 ], $persist);
 
+Router::connect('/admin/ecommerce/shipments/{:action}', [
+	'controller' => 'Shipments', 'library' => 'cms_ecommerce', 'admin' => true
+], $persist);
+Router::connect('/admin/ecommerce/shipments/{:action}/{:id:[0-9]+}', [
+	'controller' => 'Shipments', 'library' => 'cms_ecommerce', 'admin' => true
+], $persist);
 
 // We mask product groups as "products".
 Router::connect('/admin/ecommerce/products/{:action}', [

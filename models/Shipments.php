@@ -35,8 +35,23 @@ class Shipments extends \cms_core\models\Base {
 		]
 	];
 
+	public function user($entity) {
+		return $entity->order()->user();
+	}
+
+	public function order($entity) {
+		return Orders::find('first', [
+			'conditions' => [
+				'ecommerce_shipment_id' => $entity->id
+			]
+		]);
+	}
+
 	public function address($entity) {
-		return Addresses::createFromPrefixed('address_', $entity->data());
+		$data = $entity->data();
+		$data += $entity->order()->data(); // Add user fields.
+
+		return Addresses::createFromPrefixed('address_', $data);
 	}
 }
 

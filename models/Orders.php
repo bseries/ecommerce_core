@@ -50,14 +50,15 @@ class Orders extends \cms_core\models\Base {
 	];
 
 	protected static $_actsAs = [
-		'cms_core\extensions\data\behavior\Timestamp'
+		'cms_core\extensions\data\behavior\Timestamp',
+		'cms_core\extensions\data\behavior\Uuid'
 	];
 
 	public static function nextNumber() {
 		$pattern = Settings::read('orderNumberPattern');
 
 		$item = static::find('first', [
-			'conditions' => $a = [
+			'conditions' => [
 				'number' => [
 					'LIKE' => strftime($pattern['prefix']) . '%'
 				]
@@ -74,7 +75,7 @@ class Orders extends \cms_core\models\Base {
 	}
 
 	public function shipment($entity) {
-		return Shipments::findById($entity->shipment_id);
+		return Shipments::findById($entity->ecommerce_shipment_id);
 	}
 
 	public function user($entity) {
@@ -117,17 +118,17 @@ class Orders extends \cms_core\models\Base {
 	}
 
 	public function totalAmount($entity, $user, $cart, $type, $taxZone, $currency) {
-		$result = $this->cart($entity)->totalAmount($user, $type, $taxZone, $currency);
+		$result = $entity->cart()->totalAmount($user, $type, $taxZone, $currency);
 
-		$result = $result->add($this->shippingMethod($entity)->price($user, $cart, $type, $taxZone, $currency));
-		$result = $result->add($this->paymentMethod($entity)->price($user, $cart, $type, $taxZone, $currency));
+		$result = $result->add($entity->shippingMethod()->price($user, $cart, $type, $taxZone, $currency));
+		$result = $result->add($entity->paymentMethod()->price($user, $cart, $type, $taxZone, $currency));
 
 		return $result;
 	}
 
 	public function totalTax($entity, $user, $cart, $taxZone, $currency) {
-		$result = $this->totalAmount($entity, $user, $cart, 'gross', $taxZone, $currency);
-		$result = $result->subtract($this->totalAmount($entity, $user, $cart, 'net', $taxZone, $currency));
+		$result = $entity->totalAmount($user, $cart, 'gross', $taxZone, $currency);
+		$result = $result->subtract($entity->totalAmount($user, $cart, 'net', $taxZone, $currency));
 
 		return $result;
 	}

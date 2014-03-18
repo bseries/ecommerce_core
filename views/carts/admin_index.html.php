@@ -1,15 +1,3 @@
-<?php
-
-use SebastianBergmann\Money\IntlFormatter;
-
-$dateFormatter = new IntlDateFormatter(
-	$locale,
-	IntlDateFormatter::SHORT,
-	IntlDateFormatter::SHORT,
-	$authedUser['timezone']
-);
-
-?>
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
 	<h1 class="alpha"><?= $this->title($t('Carts')) ?></h1>
 
@@ -17,19 +5,27 @@ $dateFormatter = new IntlDateFormatter(
 		<table>
 			<thead>
 				<tr>
+					<td class="status"><?= $t('Status') ?>
+					<td><?= $t('Order') ?>
 					<td><?= $t('User Session ID') ?>
 					<td><?= $t('User ID') ?>
 					<td><?= $t('Total amount (net) ') ?>
 					<td><?= $t('Total quantity') ?>
 					<td class="date created"><?= $t('Created') ?>
-					<td class="date created"><?= $t('Modified') ?>
+					<td class="date modified"><?= $t('Modified') ?>
 					<td>
 			</thead>
 			<tbody>
 				<?php foreach ($data as $item): ?>
-					<?php $user = $item->order()->user() ?>
+					<?php $order = $item->order() ?>
+					<?php $user = $order->user() ?>
 					<?php $taxZone = $user->taxZone() ?>
 				<tr data-id="<?= $item->id ?>">
+					<td class="status"><?= $item->status ?>
+					<td><?= $this->html->link('#' .  $order->number, [
+						'controller' => 'Orders', 'action' => 'edit', 'id' => $order->id,
+						'library' => 'cms_ecommerce'
+					]) ?>
 					<td><?= $item->user_session_id ?>
 					<?php if ($user->isVirtual()): ?>
 						<td>
@@ -51,11 +47,13 @@ $dateFormatter = new IntlDateFormatter(
 					<td><?= $this->money->format($item->totalAmount($user, 'net', $taxZone, 'EUR'), 'money') ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
-						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->created) ?>
-						<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
+						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
+							<?= $this->date->format($item->created, 'date') ?>
+						</time>
 					<td class="date modified">
-						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->modified) ?>
-						<time datetime="<?= $date->format(DateTime::W3C) ?>"><?= $dateFormatter->format($date) ?></time>
+						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
+							<?= $this->date->format($item->modified, 'date') ?>
+						</time>
 					<td>
 						<nav class="actions">
 							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
