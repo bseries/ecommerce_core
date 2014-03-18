@@ -27,7 +27,10 @@ class PaymentMethods extends \cms_core\models\Base {
 		$data += [
 			'id' => $name,
 			'title' => null,
-			'price_eur' => function($user, $cart, $type, $taxZone, $currency) {
+			'legible' => function($user) {
+				return false;
+			},
+			'price' => function($user, $cart, $type, $taxZone, $currency) {
 				return new Money(0, new Currency($currency));
 			}
 		];
@@ -42,8 +45,13 @@ class PaymentMethods extends \cms_core\models\Base {
 		}
 	}
 
+	public function isLegibleFor($entity, $user) {
+		$method = $entity->data('legible');
+		return $method($user);
+	}
+
 	public function price($entity, $user, $cart, $type, $taxZone, $currency) {
-		$value = $entity->data('price_eur');
+		$value = $entity->data('price');
 		return $value($user, $cart, $type, $taxZone, $currency);
 	}
 }

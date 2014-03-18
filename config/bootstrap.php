@@ -52,22 +52,38 @@ Media::registerDependent('cms_ecommerce\models\ProductGroups', [
 	'media' => 'joined'
 ]);
 
-PaymentMethods::register('invoice', [
-	'title' => $t('Invoice')
-]);
-PaymentMethods::register('paypal', [
-	'title' => $t('Paypal')
-]);
-PaymentMethods::register('prepayment', [
-	'title' => $t('Prepayment')
-]);
 
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
 
+PaymentMethods::register('invoice', [
+	'title' => $t('Invoice'),
+	'legible' => function($user) {
+		if ($user->role == 'admin') {
+			return true;
+		}
+		return $user->role == 'merchant';
+	}
+]);
+PaymentMethods::register('paypal', [
+	'title' => $t('Paypal'),
+	'legible' => function($user) {
+		return true;
+	}
+]);
+PaymentMethods::register('prepayment', [
+	'title' => $t('Prepayment'),
+	'legible' => function($user) {
+		return true;
+	}
+]);
+
 ShippingMethods::register('default', [
 	'title' => $t('Default Shipping'),
-	'price_eur' => function($user, $cart, $type, $taxZone, $currency) {
+	'legible' => function($user) {
+		return true;
+	},
+	'price' => function($user, $cart, $type, $taxZone, $currency) {
 		$currency = new Currency($currency);
 
 		$free = new Money(5000, $currency); // gross
