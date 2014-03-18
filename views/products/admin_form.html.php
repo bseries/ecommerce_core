@@ -78,7 +78,7 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 					<?= $this->form->field("prices.{$key}.price_gross", [
 						'type' => 'text',
 						'label' => $t('Amount (gross)'),
-						'value' => $child->price('gross', null, 'EUR')->getAmount() / 100,
+						'value' => ($money = $child->price('gross', null, 'EUR')) ? $this->money->format($money, 'decimal') : null
 					]) ?>
 				</article>
 			<?php endforeach ?>

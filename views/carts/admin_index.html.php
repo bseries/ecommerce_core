@@ -9,8 +9,6 @@ $dateFormatter = new IntlDateFormatter(
 	$authedUser['timezone']
 );
 
-$moneyFormatter = new IntlFormatter($locale);
-
 ?>
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
 	<h1 class="alpha"><?= $this->title($t('Carts')) ?></h1>
@@ -50,7 +48,7 @@ $moneyFormatter = new IntlFormatter($locale);
 								'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
 							]) ?>)
 					<?php endif ?>
-					<td><?= $moneyFormatter->format($item->totalAmount($user, 'net', $taxZone, 'EUR')) ?>
+					<td><?= $this->money->format($item->totalAmount($user, 'net', $taxZone, 'EUR'), 'money') ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
 						<?php $date = DateTime::createFromFormat('Y-m-d H:i:s', $item->created) ?>
