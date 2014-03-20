@@ -9,7 +9,7 @@
 					<td class="flag"><?= $t('publ.?') ?>
 					<td>
 					<td class="emphasize"><?= $t('Title') ?>
-					<td><?= $t('Number') ?>
+					<td>
 					<td>
 					<td class="date created"><?= $t('Created') ?>
 					<td>
@@ -18,7 +18,7 @@
 					<td>
 					<td>
 					<td>
-					<td>
+					<td><?= $t('Number') ?>
 					<td><?= $t('Stock') ?>
 					<td>
 					<td>
