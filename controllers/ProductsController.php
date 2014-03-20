@@ -10,10 +10,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\controllers;
+namespace ecommerce_core\controllers;
 
-use cms_ecommerce\models\Products;
-use cms_ecommerce\models\ProductGroups;
+use ecommerce_core\models\Products;
+use ecommerce_core\models\ProductGroups;
 
 class ProductsController extends \cms_core\controllers\BaseController {
 

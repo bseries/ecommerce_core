@@ -10,10 +10,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\models;
+namespace ecommerce_core\models;
 
 use cms_core\models\Addresses;
-use cms_ecommerce\models\ShippingMethods;
+use ecommerce_core\models\ShippingMethods;
 
 class Shipments extends \cms_core\models\Base {
 

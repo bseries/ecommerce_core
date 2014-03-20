@@ -10,9 +10,9 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\models;
+namespace ecommerce_core\models;
 
-use cms_ecommerce\models\Products;
+use ecommerce_core\models\Products;
 
 class CartPositions extends \cms_core\models\Base {
 
@@ -26,7 +26,7 @@ class CartPositions extends \cms_core\models\Base {
 
 	public $belongsTo = [
 		'Cart' => [
-			'class' => 'cms_ecommerce\models\Cart',
+			'class' => 'ecommerce_core\models\Cart',
 			'key' => 'ecommerce_cart_id'
 		]
 	];

@@ -41,9 +41,9 @@
 						</time>
 					<td>
 						<nav class="actions">
-							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+							<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						</nav>
 					<?php foreach ($item->products() as $sub): ?>
 						<tr class="sub-item">
@@ -62,9 +62,9 @@
 								</time>
 							<td>
 								<nav class="actions">
-									<?= $this->html->link($t('delete'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-									<?= $this->html->link($sub->is_published ? $t('unpublish') : $t('publish'), ['id' => $sub->id, 'controller' => 'Products', 'action' => $sub->is_published ? 'unpublish': 'publish', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-									<?= $this->html->link($t('edit'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'edit', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
+									<?= $this->html->link($t('delete'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+									<?= $this->html->link($sub->is_published ? $t('unpublish') : $t('publish'), ['id' => $sub->id, 'controller' => 'Products', 'action' => $sub->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+									<?= $this->html->link($t('edit'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 								</nav>
 
 					<?php endforeach ?>

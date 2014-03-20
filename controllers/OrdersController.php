@@ -10,12 +10,12 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\controllers;
+namespace ecommerce_core\controllers;
 
 use cms_core\models\Users;
-use cms_ecommerce\models\Orders;
+use ecommerce_core\models\Orders;
 use cms_billing\models\Invoices;
-use cms_ecommerce\models\Shipments;
+use ecommerce_core\models\Shipments;
 
 class OrdersController extends \cms_core\controllers\BaseController {
 

@@ -10,10 +10,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\controllers;
+namespace ecommerce_core\controllers;
 
-use cms_ecommerce\models\Shipments;
-use cms_ecommerce\models\ShippingMethods;
+use ecommerce_core\models\Shipments;
+use ecommerce_core\models\ShippingMethods;
 use lithium\g11n\Message;
 use li3_flash_message\extensions\storage\FlashMessage;
 

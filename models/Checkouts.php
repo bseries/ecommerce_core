@@ -10,7 +10,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\models;
+namespace ecommerce_core\models;
 
 use Finite\StateMachine\StateMachine;
 use Finite\State\StateInterface;

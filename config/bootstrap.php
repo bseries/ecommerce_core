@@ -17,10 +17,10 @@ use cms_media\models\Media;
 
 extract(Message::aliases());
 
-Panes::register('cms_ecommerce', 'ecommerce', [
+Panes::register('ecommerce_core', 'ecommerce', [
 	'title' => $t('eCommerce'),
 	'group' => Panes::GROUP_AUTHORING,
-	'url' => $base = ['controller' => 'ecommerce', 'library' => 'cms_ecommerce', 'admin' => true],
+	'url' => $base = ['controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true],
 	'actions' => [
 		$t('List orders') => ['controller' => 'Orders', 'action' => 'index'] + $base,
 		// $t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
@@ -37,16 +37,16 @@ Panes::register('cms_ecommerce', 'ecommerce', [
 //
 // Parsed with sprintf.
 // Parsed with strftime.
-Settings::register('cms_ecommerce', 'order.numberPattern.number', '%04.d');
-Settings::register('cms_ecommerce', 'order.numberPattern.prefix', '%Y');
-Settings::register('cms_ecommerce', 'paypal.email', 'billing@example.com');
-Settings::register('cms_ecommerce', 'checkout.expire', '+1 week');
+Settings::register('ecommerce_core', 'order.numberPattern.number', '%04.d');
+Settings::register('ecommerce_core', 'order.numberPattern.prefix', '%Y');
+Settings::register('ecommerce_core', 'paypal.email', 'billing@example.com');
+Settings::register('ecommerce_core', 'checkout.expire', '+1 week');
 
-Media::registerDependent('cms_ecommerce\models\Products', [
+Media::registerDependent('ecommerce_core\models\Products', [
 	'cover' => 'direct',
 	'media' => 'joined'
 ]);
-Media::registerDependent('cms_ecommerce\models\ProductGroups', [
+Media::registerDependent('ecommerce_core\models\ProductGroups', [
 	'cover' => 'direct',
 	'media' => 'joined'
 ]);

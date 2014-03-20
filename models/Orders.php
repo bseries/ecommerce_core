@@ -10,12 +10,12 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\models;
+namespace ecommerce_core\models;
 
-use cms_ecommerce\models\Carts;
-use cms_ecommerce\models\Shipments;
-use cms_ecommerce\models\PaymentMethods;
-use cms_ecommerce\models\ShippingMethods;
+use ecommerce_core\models\Carts;
+use ecommerce_core\models\Shipments;
+use ecommerce_core\models\PaymentMethods;
+use ecommerce_core\models\ShippingMethods;
 use cms_core\models\Users;
 use cms_core\models\VirtualUsers;
 use cms_billing\models\InvoicePositions;
@@ -44,7 +44,7 @@ class Orders extends \cms_core\models\Base {
 			'key' => 'billing_invoice_id'
 		],
 		'Shipment' => [
-			'class' => 'cms_ecommerce\models\Shipment',
+			'class' => 'ecommerce_core\models\Shipment',
 			'key' => 'ecommerce_shipment_id'
 		]
 	];

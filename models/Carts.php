@@ -10,10 +10,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\models;
+namespace ecommerce_core\models;
 
 use cms_core\extensions\cms\Settings;
-use cms_ecommerce\models\CartPositions;
+use ecommerce_core\models\CartPositions;
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
 use cms_core\models\Users;
@@ -39,7 +39,7 @@ class Carts extends \cms_core\models\Base {
 
 	public $hasMany = [
 		'CartPositions' => [
-			'class' => 'cms_ecommerce\models\CartPositions',
+			'class' => 'ecommerce_core\models\CartPositions',
 			'key' => 'ecommerce_cart_id'
 		]
 	];

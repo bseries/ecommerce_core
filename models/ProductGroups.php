@@ -10,9 +10,9 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\models;
+namespace ecommerce_core\models;
 
-use cms_ecommerce\models\Products;
+use ecommerce_core\models\Products;
 
 class ProductGroups extends \cms_core\models\Base {
 
@@ -29,7 +29,7 @@ class ProductGroups extends \cms_core\models\Base {
 
 	public $hasMany = [
 		'Products' => [
-			'to' => 'cms_ecommerce\models\Products',
+			'to' => 'ecommerce_core\models\Products',
 			'key' => 'ecommerce_product_group_id'
 		]
 	];

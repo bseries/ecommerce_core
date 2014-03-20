@@ -10,12 +10,12 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\models;
+namespace ecommerce_core\models;
 
-use cms_ecommerce\models\Carts;
-use cms_ecommerce\models\ProductGroups;
-use cms_ecommerce\models\ProductPrices;
-use cms_ecommerce\models\ProductPriceGroups;
+use ecommerce_core\models\Carts;
+use ecommerce_core\models\ProductGroups;
+use ecommerce_core\models\ProductPrices;
+use ecommerce_core\models\ProductPriceGroups;
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
 use Exception;

@@ -10,10 +10,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\controllers;
+namespace ecommerce_core\controllers;
 
 use cms_billing\models\TaxZones;
-use cms_ecommerce\models\Carts;
+use ecommerce_core\models\Carts;
 use lithium\core\Environment;
 
 class CartsController extends \cms_core\controllers\BaseController {

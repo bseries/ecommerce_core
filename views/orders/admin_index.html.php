@@ -50,7 +50,7 @@
 					<td>
 					<?php
 					if ($sub = $item->shipment()) {
-						echo $this->html->link($sub->id, ['controller' => 'shipments', 'library' => 'cms_ecommerce', 'id' => $sub->id, 'action' => 'edit']);
+						echo $this->html->link($sub->id, ['controller' => 'shipments', 'library' => 'ecommerce_core', 'id' => $sub->id, 'action' => 'edit']);
 					} else {
 						echo '–';
 					}
@@ -62,10 +62,10 @@
 						</time>
 					<td>
 						<nav class="actions">
-							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('paid'), ['id' => $item->id, 'action' => 'paid', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('ship'), ['id' => $item->shipment()->id, 'action' => 'ship', 'controller' => 'Shipments', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('paid'), ['id' => $item->id, 'action' => 'paid', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('ship'), ['id' => $item->shipment()->id, 'action' => 'ship', 'controller' => 'Shipments', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						</nav>
 				<?php endforeach ?>
 			</tbody>

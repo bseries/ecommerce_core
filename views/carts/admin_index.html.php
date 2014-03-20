@@ -24,7 +24,7 @@
 					<td class="status"><?= $item->status ?>
 					<td><?= $this->html->link('#' .  $order->number, [
 						'controller' => 'Orders', 'action' => 'edit', 'id' => $order->id,
-						'library' => 'cms_ecommerce'
+						'library' => 'ecommerce_core'
 					]) ?>
 					<td><?= $item->user_session_id ?>
 					<?php if ($user->isVirtual()): ?>
@@ -56,8 +56,8 @@
 						</time>
 					<td>
 						<nav class="actions">
-							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<? // $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+							<? // $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						</nav>
 				<?php endforeach ?>
 			</tbody>

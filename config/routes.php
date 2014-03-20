@@ -15,53 +15,53 @@ use lithium\net\http\Router;
 $persist = ['persist' => ['admin', 'controller']];
 
 Router::connect('/admin/ecommerce/orders/{:id:[0-9]+}', [
-	'controller' => 'orders', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
+	'controller' => 'orders', 'library' => 'ecommerce_core', 'action' => 'view', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/orders/{:action}', [
-	'controller' => 'orders', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'orders', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/orders/{:action}/{:id:[0-9]+}', [
-	'controller' => 'orders', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'orders', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
 Router::connect('/admin/ecommerce/carts/{:action}', [
-	'controller' => 'carts', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'carts', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/carts/{:action}/{:id:[0-9]+}', [
-	'controller' => 'carts', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'carts', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
 Router::connect('/admin/ecommerce/shipments/{:action}', [
-	'controller' => 'Shipments', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'Shipments', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/shipments/{:action}/{:id:[0-9]+}', [
-	'controller' => 'Shipments', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'Shipments', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
 // We mask product groups as "products".
 Router::connect('/admin/ecommerce/products/{:action}', [
-	'controller' => 'ProductGroups', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'ProductGroups', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/products/{:action}/{:id:[0-9]+}', [
-	'controller' => 'ProductGroups', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'ProductGroups', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
 // We mask products  as "product variants".
 Router::connect('/admin/ecommerce/product-variants/{:action}', [
-	'controller' => 'products', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'products', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/product-variants/{:action}/{:id:[0-9]+}', [
-	'controller' => 'products', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'products', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
 Router::connect('/admin/ecommerce/{:id:[0-9]+}', [
-	'controller' => 'ecommerce', 'library' => 'cms_ecommerce', 'action' => 'view', 'admin' => true
+	'controller' => 'ecommerce', 'library' => 'ecommerce_core', 'action' => 'view', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/{:action}', [
-	'controller' => 'ecommerce', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 Router::connect('/admin/ecommerce/{:action}/{:id:[0-9]+}', [
-	'controller' => 'ecommerce', 'library' => 'cms_ecommerce', 'admin' => true
+	'controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
 

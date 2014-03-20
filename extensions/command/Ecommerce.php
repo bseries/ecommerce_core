@@ -10,10 +10,10 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-namespace cms_ecommerce\extensions\command;
+namespace ecommerce_core\extensions\command;
 
-use cms_ecommerce\models\Orders;
-use cms_ecommerce\models\Carts;
+use ecommerce_core\models\Orders;
+use ecommerce_core\models\Carts;
 
 class Ecommerce extends \lithium\console\Command {
 
