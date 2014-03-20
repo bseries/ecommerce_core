@@ -18,8 +18,16 @@ use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
 use cms_core\models\Users;
 use cms_core\models\VirtualUsers;
+use DateTime;
 
 class Carts extends \cms_core\models\Base {
+
+	public static $enum = [
+		'status' => [
+			'open',
+			'closed'
+		]
+	];
 
 	protected $_meta = [
 		'source' => 'ecommerce_carts'
@@ -69,6 +77,11 @@ class Carts extends \cms_core\models\Base {
 			$result = $result->add($position->totalAmount($user, $type, $taxZone, $currency));
 		}
 		return $result;
+	}
+
+	public function isExpired($entity) {
+		$date = DateTime::createFromFormat('Y-m-d H:i:s', $entity->modified);
+		return strtotime(Settings::read('checkout.expire'), $date->getTimestamp()) < time();
 	}
 }
 

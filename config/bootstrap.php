@@ -40,9 +40,10 @@ Panes::register('cms_ecommerce', 'ecommerce', [
 //
 // Parsed with sprintf.
 // Parsed with strftime.
-Settings::register('cms_ecommerce', 'orderNumberPattern.number', '%04.d');
-Settings::register('cms_ecommerce', 'orderNumberPattern.prefix', '%Y');
+Settings::register('cms_ecommerce', 'order.numberPattern.number', '%04.d');
+Settings::register('cms_ecommerce', 'order.numberPattern.prefix', '%Y');
 Settings::register('cms_ecommerce', 'paypal.email', 'billing@example.com');
+Settings::register('cms_ecommerce', 'checkout.expire', '+1 week');
 
 Media::registerDependent('cms_ecommerce\models\Products', [
 	'cover' => 'direct',

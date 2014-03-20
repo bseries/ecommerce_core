@@ -30,7 +30,7 @@ class Orders extends \cms_core\models\Base {
 		'status' => [
 			'checking-out',
 			'checked-out',
-			'cancelled-by-re-checkout'
+			'expired'
 		]
 	];
 
@@ -55,7 +55,7 @@ class Orders extends \cms_core\models\Base {
 	];
 
 	public static function nextNumber() {
-		$pattern = Settings::read('orderNumberPattern');
+		$pattern = Settings::read('order.numberPattern');
 
 		$item = static::find('first', [
 			'conditions' => [
@@ -213,6 +213,11 @@ class Orders extends \cms_core\models\Base {
 	public function address($entity, $type) {
 		$field = $type . '_address_id';
 		return Addresses::findById($entity->$field);
+	}
+
+	public function isExpired($entity) {
+		$date = DateTime::createFromFormat('Y-m-d H:i:s', $entity->modified);
+		return strtotime(Settings::read('checkout.expire'), $date->getTimestamp()) < time();
 	}
 }
 

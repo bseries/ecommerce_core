@@ -12,6 +12,7 @@
 
 namespace cms_ecommerce\models;
 
+use cms_ecommerce\models\Carts;
 use cms_ecommerce\models\ProductGroups;
 use cms_ecommerce\models\ProductPrices;
 use cms_ecommerce\models\ProductPriceGroups;
@@ -83,6 +84,28 @@ class Products extends \cms_core\models\Base {
 				'id' => $entity->ecommerce_product_group_id
 			]
 		]);
+	}
+
+	public function stock($entity, $type = 'hard') {
+		$result = (integer) $entity->stock;
+
+		if ($type !== 'hard') {
+			return $result;
+		}
+		$carts = Carts::find('all', [
+			'conditions' => [
+				'status' => 'open'
+			]
+		]);
+		foreach ($carts as $cart) {
+			foreach ($cart->positions() as $position) {
+				if ($position->ecommerce_product_id != $entity->id) {
+					continue;
+				}
+				$result -= (integer) $position->quantity;
+			}
+		}
+		return $result;
 	}
 }
 

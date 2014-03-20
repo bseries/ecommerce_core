@@ -14,6 +14,7 @@ namespace cms_ecommerce\models;
 
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
+use lithium\util\Collection;
 
 class PaymentMethods extends \cms_core\models\Base {
 
@@ -39,7 +40,7 @@ class PaymentMethods extends \cms_core\models\Base {
 
 	public static function find($type, array $options = array()) {
 		if ($type == 'all') {
-			return static::$_data;
+			return new Collection(['data' => static::$_data]);
 		} elseif ($type == 'first') {
 			return static::$_data[$options['conditions']['id']];
 		}
