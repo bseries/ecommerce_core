@@ -14,9 +14,6 @@ use cms_core\extensions\cms\Settings;
 use cms_core\extensions\cms\Panes;
 use lithium\g11n\Message;
 use cms_media\models\Media;
-use cms_ecommerce\models\ShippingMethods;
-use cms_ecommerce\models\PaymentMethods;
-use cms_ecommerce\models\ProductPriceGroups;
 
 extract(Message::aliases());
 
@@ -25,14 +22,14 @@ Panes::register('cms_ecommerce', 'ecommerce', [
 	'group' => Panes::GROUP_AUTHORING,
 	'url' => $base = ['controller' => 'ecommerce', 'library' => 'cms_ecommerce', 'admin' => true],
 	'actions' => [
-		$t('List carts') => ['controller' => 'Carts', 'action' => 'index'] + $base,
 		$t('List orders') => ['controller' => 'Orders', 'action' => 'index'] + $base,
-		$t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
+		// $t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
 		$t('List products') => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
 		$t('New product') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
 		// $t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
 		$t('New product variant') => ['controller' => 'Products', 'action' => 'add'] + $base,
 		$t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
+		$t('List carts') => ['controller' => 'Carts', 'action' => 'index'] + $base,
 	]
 ]);
 
@@ -52,77 +49,6 @@ Media::registerDependent('cms_ecommerce\models\Products', [
 Media::registerDependent('cms_ecommerce\models\ProductGroups', [
 	'cover' => 'direct',
 	'media' => 'joined'
-]);
-
-
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
-
-PaymentMethods::register('invoice', [
-	'title' => $t('Invoice'),
-	'legible' => function($user) {
-		if ($user->role == 'admin') {
-			return true;
-		}
-		return $user->role == 'merchant';
-	}
-]);
-PaymentMethods::register('paypal', [
-	'title' => $t('Paypal'),
-	'legible' => function($user) {
-		return true;
-	},
-	'online' => 'off-site'
-]);
-PaymentMethods::register('prepayment', [
-	'title' => $t('Prepayment'),
-	'legible' => function($user) {
-		return true;
-	},
-	'online' => false
-]);
-
-ShippingMethods::register('default', [
-	'title' => $t('Default Shipping'),
-	'legible' => function($user) {
-		return true;
-	},
-	'price' => function($user, $cart, $type, $taxZone, $currency) {
-		$currency = new Currency($currency);
-
-		$free = new Money(5000, $currency); // gross
-
-		if ($cart->totalAmount($user, 'gross', $taxZone, (string) $currency)->greaterThan($free)) {
-			$result = new Money(0, $currency);
-		} elseif ($user->role === 'merchant') {
-			$result = new Money(490, $currency); // gross
-		} else {
-			$result = new Money(390, $currency); // gross
-		}
-		if ($type === 'gross') {
-			return $result;
-		}
-		return $result->subtract($result->multiply(($taxZone->rate / 100)));
-	}
-]);
-
-ProductPriceGroups::register('merchant', [
-	'title' => 'Merchant',
-	'legible' => function($user) {
-		if ($user->role == 'admin') {
-			return true;
-		}
-		return $user->role == 'merchant';
-	}
-]);
-ProductPriceGroups::register('customer', [
-	'title' => 'Customer',
-	'legible' => function($user) {
-		if ($user->role == 'admin') {
-			return true;
-		}
-		return $user->role == 'customer';
-	}
 ]);
 
 ?>

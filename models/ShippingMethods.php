@@ -31,6 +31,7 @@ class ShippingMethods extends \cms_core\models\Base {
 			'legible' => function($user) {
 				return false;
 			},
+			'delegate' => false,
 			'price' => function($user, $cart, $type, $taxZone, $currency) {
 				return new Money(0, new Currency($currecny));
 			}

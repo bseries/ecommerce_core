@@ -13,6 +13,7 @@
 namespace cms_ecommerce\models;
 
 use cms_core\models\Addresses;
+use cms_ecommerce\models\ShippingMethods;
 
 class Shipments extends \cms_core\models\Base {
 
@@ -27,13 +28,20 @@ class Shipments extends \cms_core\models\Base {
 	public static $enum = [
 		'status' => [
 			'created',
-			'scheduled-for-transmission',
-			'transmitted-in-progress',
-			'in-progress',
-			'failed',
-			'done'
+			'shipping-scheduled',
+			'shipping',
+			'shipped',
+			'failed'
 		]
 	];
+
+	public function method($entity) {
+		return ShippingMethods::find('first', [
+			'conditions' => [
+				'id' => $entity->method
+			]
+		]);
+	}
 
 	public function user($entity) {
 		return $entity->order()->user();

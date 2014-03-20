@@ -5,13 +5,12 @@
 		<table>
 			<thead>
 				<tr>
-					<td><?= $t('UUID') ?>
 					<td class="emphasize"><?= $t('Number') ?>
 					<td><?= $t('Status') ?>
 					<td><?= $t('User') ?>
 					<td><?= $t('Invoice number') ?>
 					<td class="status"><?= $t('Invoice status') ?>
-					<td><?= $t('Shipment') ?>
+					<td><?= $t('Shipment ID') ?>
 					<td class="status"><?= $t('Shipment status') ?>
 					<td class="date created"><?= $t('Created') ?>
 					<td>
@@ -20,7 +19,6 @@
 				<?php foreach ($data as $item): ?>
 					<?php $user = $item->user() ?>
 				<tr data-id="<?= $item->id ?>">
-					<td><?= $item->uuid ?>
 					<td class="emphasize"><?= $item->number ?: '–' ?>
 					<td class="status"><?= $item->status ?>
 					<?php if ($user->isVirtual()): ?>
@@ -66,7 +64,7 @@
 						<nav class="actions">
 							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
 							<?= $this->html->link($t('paid'), ['id' => $item->id, 'action' => 'paid', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('ship'), ['id' => $item->id, 'action' => 'ship', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('ship'), ['id' => $item->shipment()->id, 'action' => 'ship', 'controller' => 'Shipments', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
 							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'cms_ecommerce'], ['class' => 'button']) ?>
 						</nav>
 				<?php endforeach ?>
