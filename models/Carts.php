@@ -1,6 +1,6 @@
 <?php
 /**
- * Bureau eCommerce
+ * Magasin Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
