@@ -51,27 +51,16 @@ class Orders extends \cms_core\models\Base {
 
 	protected static $_actsAs = [
 		'cms_core\extensions\data\behavior\Timestamp',
-		'cms_core\extensions\data\behavior\Uuid'
+		'cms_core\extensions\data\behavior\Uuid',
+		'cms_core\extensions\data\behavior\ReferenceNumber'
 	];
 
-	public static function nextNumber() {
-		$pattern = Settings::read('order.numberPattern');
+	public static function init() {
+		$model = static::_object();
 
-		$item = static::find('first', [
-			'conditions' => [
-				'number' => [
-					'LIKE' => strftime($pattern['prefix']) . '%'
-				]
-			],
-			'order' => ['number' => 'DESC'],
-			'fields' => ['number']
-		]);
-		if ($item && ($number = $item->number)) {
-			$number++;
-		} else {
-			$number = strftime($pattern['prefix']) . sprintf($pattern['number'], 1);
-		}
-		return $number;
+		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
+			Settings::read('order.number')
+		);
 	}
 
 	public function shipment($entity) {
@@ -117,20 +106,17 @@ class Orders extends \cms_core\models\Base {
 		]);
 	}
 
-	public function totalAmount($entity, $user, $cart, $type, $taxZone, $currency) {
-		$result = $entity->cart()->totalAmount($user, $type, $taxZone, $currency);
+	public function totalAmount($entity, $user, $cart, $taxZone) {
+		$result = $entity->cart()->totalAmount($user, $taxZone);
 
-		$result = $result->add($entity->shippingMethod()->price($user, $cart, $type, $taxZone, $currency));
-		$result = $result->add($entity->paymentMethod()->price($user, $cart, $type, $taxZone, $currency));
+		$result = $result->add($entity->shippingMethod()->price($user, $cart, $taxZone));
+		$result = $result->add($entity->paymentMethod()->price($user, $cart, $taxZone));
 
 		return $result;
 	}
 
-	public function totalTax($entity, $user, $cart, $taxZone, $currency) {
-		$result = $entity->totalAmount($user, $cart, 'gross', $taxZone, $currency);
-		$result = $result->subtract($entity->totalAmount($user, $cart, 'net', $taxZone, $currency));
-
-		return $result;
+	public function totalTax($entity, $user, $cart, $taxZone) {
+		return $entity->totalAmount($user, $cart, $taxZone)->getTax();
 	}
 
 	public function generateShipment($entity) {
@@ -152,7 +138,7 @@ class Orders extends \cms_core\models\Base {
 		$data = [
 			'date' => date('Y-m-d'),
 			'status' => 'created',
-			'currency' => 'EUR'
+			'total_currency' => 'EUR'
 		];
 		if (!$invoice->save($data)) {
 			return false;
@@ -167,40 +153,45 @@ class Orders extends \cms_core\models\Base {
 		foreach ($cart->positions() as $cartPosition) {
 			$product = $cartPosition->product();
 
-			$description  = $cartPosition->quantity . ' x ';
-			$description .= $product->title . ' ';
+			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
+
+			$price = $cartPosition->product()->price($user, $taxZone);
 
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
 				'description' => $description,
-				'currency' => $currency,
-				'total_gross' => $cartPosition->totalAmount($user, 'gross', $taxZone, $currency)->getAmount(),
-				'total_net' => $cartPosition->totalAmount($user, 'net', $taxZone, $currency)->getAmount(),
+				'quantity' => $cartPosition->quantity,
+				'amount_type' => $price->getType(),
+				'amount_currency' => $price->getCurrency(),
+				'amount' => $price->getAmount(),
 			]);
-			if (!$invoicePosition->save()) {
+			if (!$invoicePosition->save(null, ['localize' => false])) {
 				return false;
 			}
 		}
+
+		$price = $entity->shippingMethod()->price($user, $cart, $taxZone);
 		$invoicePosition = InvoicePositions::create([
 			'billing_invoice_id' => $invoice->id,
-			'description' => $entity->shippingMethod($entity)->title,
-			'currency' => $currency,
-			'total_gross' => $entity->shippingMethod($entity)->price($user, $cart, 'gross', $taxZone, $currency)->getAmount(),
-			'total_net' => $entity->shippingMethod($entity)->price($user, $cart, 'net', $taxZone, $currency)->getAmount()
+			'description' => $entity->shippingMethod()->title,
+			'quantity' => 1,
+			'amount_currency' => $price->getCurrency(),
+			'amount_type' => $price->getType(),
+			'amount' => $price->getAmount()
 		]);
-		if (!$invoicePosition->save()) {
+		if (!$invoicePosition->save(null, ['localize' => false])) {
 			return false;
 		}
-
+		$price = $entity->paymentMethod()->price($user, $cart, $taxZone);
 		$invoicePosition = InvoicePositions::create([
 			'billing_invoice_id' => $invoice->id,
-			'description' => $entity->paymentMethod($entity)->title,
-			'currency' => $currency,
-			'total_gross' => $entity->paymentMethod($entity)->price($user, $cart, 'gross', $taxZone, $currency)->getAmount(),
-			'total_net' => $entity->paymentMethod($entity)->price($user, $cart, 'net', $taxZone, $currency)->getAmount()
+			'description' => $entity->paymentMethod()->title,
+			'amount_currency' => $price->getCurrency(),
+			'amount_type' => $price->getType(),
+			'amount' => $price->getAmount()
 		]);
-		if (!$invoicePosition->save()) {
+		if (!$invoicePosition->save(null, ['localize' => false])) {
 			return false;
 		}
 
@@ -221,21 +212,6 @@ class Orders extends \cms_core\models\Base {
 	}
 }
 
-Orders::applyFilter('create', function($self, $params, $chain) {
-	static $useFilter = true;
-
-	$entity = $chain->next($self, $params, $chain);
-
-	if (!$useFilter) {
-		return $entity;
-	}
-
-	if (!$entity->exists()) {
-		$useFilter = false;
-		$entity->number = Orders::nextNumber();
-		$useFilter = true;
-	}
-	return $entity;
-});
+Orders::init();
 
 ?>

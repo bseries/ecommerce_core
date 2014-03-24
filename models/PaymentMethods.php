@@ -12,8 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
+use cms_billing\extensions\finance\Price;
 use lithium\util\Collection;
 
 class PaymentMethods extends \cms_core\models\Base {
@@ -31,8 +30,8 @@ class PaymentMethods extends \cms_core\models\Base {
 			'legible' => function($user) {
 				return false;
 			},
-			'price' => function($user, $cart, $type, $taxZone, $currency) {
-				return new Money(0, new Currency($currency));
+			'price' => function($user, $cart, $taxZone) {
+				return new Price(0, 'EUR', 'net', $taxZone);
 			}
 		];
 		static::$_data[$name] = static::create($data);
@@ -51,9 +50,9 @@ class PaymentMethods extends \cms_core\models\Base {
 		return $method($user);
 	}
 
-	public function price($entity, $user, $cart, $type, $taxZone, $currency) {
+	public function price($entity, $user, $cart, $taxZone) {
 		$value = $entity->data('price');
-		return $value($user, $cart, $type, $taxZone, $currency);
+		return $value($user, $cart, $taxZone);
 	}
 }
 

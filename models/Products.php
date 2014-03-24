@@ -12,12 +12,11 @@
 
 namespace ecommerce_core\models;
 
+use cms_core\extensions\cms\Settings;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\ProductPrices;
 use ecommerce_core\models\ProductPriceGroups;
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
 use Exception;
 
 class Products extends \cms_core\models\Base {
@@ -46,17 +45,25 @@ class Products extends \cms_core\models\Base {
 				]
 			]
 		],
-		'cms_core\extensions\data\behavior\Timestamp'
+		'cms_core\extensions\data\behavior\Timestamp',
+		'cms_core\extensions\data\behavior\ReferenceNumber'
 	];
 
-	public function price($entity, $user, $type, $taxZone, $currency) {
+	public static function init() {
+		$model = static::_object();
+
+		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
+			Settings::read('order.number')
+		);
+	}
+
+	public function price($entity, $user, $taxZone) {
 		foreach ($this->prices($entity) as $price) {
 			if ($price->isLegibleFor($user)) {
-				return $price->price($type, $taxZone, $currency);
+				return $price->price($taxZone);
 			}
 		}
 		throw new Exception("Not legible for any price.");
-		// return new Money(0, new Currency($currency));
 	}
 
 	public function prices($entity) {
@@ -163,6 +170,6 @@ Products::applyFilter('delete', function($self, $params, $chain) {
 	return $result;
 });
 
-
+Products::init();
 
 ?>

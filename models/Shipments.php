@@ -12,6 +12,7 @@
 
 namespace ecommerce_core\models;
 
+use cms_core\extensions\cms\Settings;
 use cms_core\models\Addresses;
 use ecommerce_core\models\ShippingMethods;
 
@@ -22,7 +23,8 @@ class Shipments extends \cms_core\models\Base {
 	];
 
 	protected static $_actsAs = [
-		'cms_core\extensions\data\behavior\Timestamp'
+		'cms_core\extensions\data\behavior\Timestamp',
+		'cms_core\extensions\data\behavior\ReferenceNumber'
 	];
 
 	public static $enum = [
@@ -34,6 +36,14 @@ class Shipments extends \cms_core\models\Base {
 			'failed'
 		]
 	];
+
+	public static function init() {
+		$model = static::_object();
+
+		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
+			Settings::read('shipment.number')
+		);
+	}
 
 	public function method($entity) {
 		return ShippingMethods::find('first', [
@@ -62,5 +72,7 @@ class Shipments extends \cms_core\models\Base {
 		return Addresses::createFromPrefixed('address_', $data);
 	}
 }
+
+Shipments::init();
 
 ?>

@@ -12,10 +12,9 @@
 
 namespace ecommerce_core\models;
 
+use cms_billing\extensions\finance\Price;
 use cms_core\extensions\cms\Settings;
 use ecommerce_core\models\CartPositions;
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
 use cms_core\models\Users;
 use cms_core\models\VirtualUsers;
 use DateTime;
@@ -69,14 +68,19 @@ class Carts extends \cms_core\models\Base {
 		}, 0);
 	}
 
-	public function totalAmount($entity, $user, $type, $taxZone, $currency) {
-		// @todo check if input is net or gross and adjust if needed.
-		$result = new Money(0, new Currency($currency));
+	public function totalAmount($entity, $user, $taxZone) {
+		$sum = null;
 
-		foreach ($this->positions($entity) as $position) {
-			$result = $result->add($position->totalAmount($user, $type, $taxZone, $currency));
+		foreach ($entity->positions() as $position) {
+			$result = $position->totalAmount($user, $taxZone);
+
+			if ($sum) {
+				$sum = $result->add($result);
+			} else {
+				$sum = $result;
+			}
 		}
-		return $result;
+		return $sum;
 	}
 
 	public function isExpired($entity) {

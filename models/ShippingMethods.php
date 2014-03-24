@@ -12,8 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
+use cms_billing\extensions\financial\Price;
 use lithium\util\Collection;
 
 class ShippingMethods extends \cms_core\models\Base {
@@ -32,8 +31,8 @@ class ShippingMethods extends \cms_core\models\Base {
 				return false;
 			},
 			'delegate' => false,
-			'price' => function($user, $cart, $type, $taxZone, $currency) {
-				return new Money(0, new Currency($currecny));
+			'price' => function($user, $cart, $taxZone) {
+				return new Price(0, 'EUR', 'net', $taxZone);
 			}
 		];
 		static::$_data[$name] = static::create($data);
@@ -52,9 +51,9 @@ class ShippingMethods extends \cms_core\models\Base {
 		return $method($user);
 	}
 
-	public function price($entity, $user, $cart, $type, $taxZone, $currency) {
+	public function price($entity, $user, $cart, $taxZone) {
 		$value = $entity->data('price');
-		return $value($user, $cart, $type, $taxZone, $currency);
+		return $value($user, $cart, $taxZone);
 	}
 }
 

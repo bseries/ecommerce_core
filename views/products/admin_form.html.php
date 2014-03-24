@@ -69,16 +69,22 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 						'value' => $child->group,
 					]) ?>
 
-					<?= $this->form->field("prices.{$key}.currency", [
+					<?= $this->form->field("prices.{$key}.price_currency", [
 						'type' => 'select',
 						'label' => $t('Currency'),
 						'list' => $currencies,
+						'value' => $child->price_currency
 					]) ?>
-
-					<?= $this->form->field("prices.{$key}.price_gross", [
+					<?= $this->form->field("prices.{$key}.price_type", [
+						'type' => 'select',
+						'label' => $t('Type'),
+						'list' => ['net' => $t('net'), 'gross' => $t('gross')],
+						'value' => $child->price_type
+					]) ?>
+					<?= $this->form->field("prices.{$key}.price", [
 						'type' => 'text',
-						'label' => $t('Amount (gross)'),
-						'value' => ($money = $child->price('gross', null, 'EUR')) ? $this->money->format($money, 'decimal') : null
+						'label' => $t('Amount'),
+						'value' => $this->money->format($child->price, 'decimal')
 					]) ?>
 				</article>
 			<?php endforeach ?>

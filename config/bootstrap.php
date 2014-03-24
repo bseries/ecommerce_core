@@ -34,11 +34,22 @@ Panes::register('ecommerce_core', 'ecommerce', [
 ]);
 
 // Number Format
-//
-// Parsed with sprintf.
-// Parsed with strftime.
-Settings::register('ecommerce_core', 'order.numberPattern.number', '%04.d');
-Settings::register('ecommerce_core', 'order.numberPattern.prefix', '%Y');
+Settings::register('ecommerce_core', 'order.number', [
+	'sort' => '/([0-9]{4}-[0-9]{4})/',
+	'extract' => '/[0-9]{4}-([0-9]{4})/',
+	'generate' => '%Y-%04.d'
+]);
+Settings::register('ecommerce_core', 'shipment.number', [
+	'sort' => '/([0-9]{4}-[0-9]{4})/',
+	'extract' => '/[0-9]{4}-([0-9]{4})/',
+	'generate' => '%Y-%04.d'
+]);
+Settings::register('ecommerce_core', 'product.number', [
+	'sort' => '/([0-9]{4}-[0-9]{4})/',
+	'extract' => '/[0-9]{4}-([0-9]{4})/',
+	'generate' => '%Y-%04.d'
+]);
+
 Settings::register('ecommerce_core', 'paypal.email', 'billing@example.com');
 Settings::register('ecommerce_core', 'checkout.expire', '+1 week');
 

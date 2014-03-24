@@ -12,9 +12,8 @@
 
 namespace ecommerce_core\models;
 
+use cms_billing\extensions\finance\Price;
 use ecommerce_core\models\ProductPriceGroups;
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
 
 class ProductPrices extends \cms_core\models\Base {
 
@@ -25,7 +24,7 @@ class ProductPrices extends \cms_core\models\Base {
 	protected static $_actsAs = [
 		'cms_core\extensions\data\behavior\Localizable' => [
 			'fields' => [
-				'price_gross' => 'money'
+				'price' => 'money'
 			]
 		]
 	];
@@ -38,16 +37,10 @@ class ProductPrices extends \cms_core\models\Base {
 		]);
 	}
 
-	public function price($entity, $type, $taxZone, $currency) {
-		$money = new Money((integer) $entity->price_gross, new Currency($currency));
-
-		if ($type == 'gross') {
-			return $money;
-		}
-		if (!$taxZone->rate) {
-			return $money;
-		}
-		return $money->subtract($money->multiply($taxZone->rate / 100));
+	// When we display net prices as gross to user which we don't have
+	// any geographic and tax information of default to standard taxZone.
+	public function price($entity, $taxZone) {
+		return new Price($entity->price, $entity->price_currency, $entity->price_type, $taxZone);
 	}
 
 	public function isLegibleFor($entity, $user) {

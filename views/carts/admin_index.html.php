@@ -44,7 +44,7 @@
 								'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
 							]) ?>)
 					<?php endif ?>
-					<td><?= $this->money->format($item->totalAmount($user, 'net', $taxZone, 'EUR'), 'money') ?>
+					<td><?= $this->money->format($item->totalAmount($user)->getNet(), 'money') ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
