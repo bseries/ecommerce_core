@@ -35,19 +35,16 @@ Panes::register('ecommerce_core', 'ecommerce', [
 
 // Number Format
 Settings::register('ecommerce_core', 'order.number', [
-	'sort' => '/([0-9]{4}-[0-9]{4})/',
-	'extract' => '/[0-9]{4}-([0-9]{4})/',
-	'generate' => '%Y-%04.d'
+	'extract' => '/[0-9]{4}([0-9]{4})/',
+	'generate' => '%Y%%04.d'
 ]);
 Settings::register('ecommerce_core', 'shipment.number', [
-	'sort' => '/([0-9]{4}-[0-9]{4})/',
-	'extract' => '/[0-9]{4}-([0-9]{4})/',
-	'generate' => '%Y-%04.d'
+	'extract' => '/[0-9]{4}([0-9]{4})/',
+	'generate' => '%Y%%04.d'
 ]);
 Settings::register('ecommerce_core', 'product.number', [
-	'sort' => '/([0-9]{4}-[0-9]{4})/',
-	'extract' => '/[0-9]{4}-([0-9]{4})/',
-	'generate' => '%Y-%04.d'
+	'extract' => '/[0-9]{4}([0-9]{4})/',
+	'generate' => '%Y%%04.d'
 ]);
 
 Settings::register('ecommerce_core', 'paypal.email', 'billing@example.com');
