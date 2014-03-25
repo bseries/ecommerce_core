@@ -24,7 +24,8 @@ class Carts extends \cms_core\models\Base {
 	public static $enum = [
 		'status' => [
 			'open',
-			'closed'
+			'closed',
+			'expired'
 		]
 	];
 

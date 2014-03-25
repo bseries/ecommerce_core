@@ -51,13 +51,23 @@ class ShipmentsController extends \cms_core\controllers\BaseController {
 	}
 
 	protected function _selects($item) {
-		$methods = [];
+		extract(Message::aliases());
 
+		$statuses = Shipments::enum('status', [
+			'created' => $t('created'),
+			'shipping-scheduled' => $t('shipping scheduled'),
+			'shipping-error' => $t('shipping error'),
+			'shipping' => $t('shipping'),
+			'shipped' => $t('shipped'),
+			'delivered' => $t('delivered')
+		]);
+
+		$methods = [];
 		$results = ShippingMethods::find('all');
 		foreach ($results as $result) {
 			$methods[$result->id] = $result->title;
 		}
-		return compact('methods');
+		return compact('methods', 'statuses');
 	}
 }
 

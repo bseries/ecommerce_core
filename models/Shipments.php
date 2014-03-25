@@ -31,9 +31,10 @@ class Shipments extends \cms_core\models\Base {
 		'status' => [
 			'created',
 			'shipping-scheduled',
+			'shipping-error',
 			'shipping',
 			'shipped',
-			'failed'
+			'delivered'
 		]
 	];
 

@@ -16,12 +16,12 @@ use cms_core\models\Users;
 use ecommerce_core\models\Orders;
 use cms_billing\models\Invoices;
 use ecommerce_core\models\Shipments;
+use lithium\g11n\Message;
 
 class OrdersController extends \cms_core\controllers\BaseController {
 
 	use \cms_core\controllers\AdminAddTrait;
 	use \cms_core\controllers\AdminEditTrait;
-	use \cms_core\controllers\AdminDeleteTrait;
 
 	public function admin_index() {
 		$data = Orders::find('all', [
@@ -31,20 +31,34 @@ class OrdersController extends \cms_core\controllers\BaseController {
 	}
 
 	protected function _selects($item) {
-		$users = Users::find('list');
+		extract(Message::aliases());
 
-		$shipments = [];
-		$results = Shipments::find('all');
-		foreach ($results as $result) {
-			$shipments[$result->id] = $result->method . '; ' . $result->address()->format('oneline');
-		}
+		$statuses = Orders::enum('status', [
+			'checking-out' => $t('checking out'),
+			'checked-out'=> $t('checked out'),
+			'expired' => $t('expired')
+		]);
+		$shipmentStatuses = Shipments::enum('status', [
+			'created' => $t('created'),
+			'shipping-scheduled' => $t('shipping scheduled'),
+			'shipping-error' => $t('shipping error'),
+			'shipping' => $t('shipping'),
+			'shipped' => $t('shipped'),
+			'delivered' => $t('delivered')
+		]);
+		$invoiceStatuses = Invoices::enum('status', [
+			'created' => $t('created'), // open
+			'sent' => $t('sent'), // open
+			'paid' => $t('paid'),  // paid
+			'void' => $t('void'), // storno
 
-		$invoices = [];
-		$results = Invoices::find('all');
-		foreach ($results as $result) {
-			$invoices[$result->id] = $result->number;
-		}
-		return compact('users', 'invoices', 'shipments');
+			'awaiting-payment' => $t('awaiting payment'),
+			'payment-accepted' => $t('payment accepted'),
+			'payment-remotely-accepted' => $t('payment remotely accepted'),
+			'payment-error' => $t('payment error'),
+		]);
+
+		return compact('statuses', 'invoiceStatuses', 'shipmentStatuses');
 	}
 }
 

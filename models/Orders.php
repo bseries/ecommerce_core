@@ -31,6 +31,8 @@ class Orders extends \cms_core\models\Base {
 			'checking-out',
 			'checked-out',
 			'expired'
+			// 'on-backorder',
+			// 'refund',
 		]
 	];
 
@@ -137,7 +139,7 @@ class Orders extends \cms_core\models\Base {
 		$invoice = Invoices::createForUser($user);
 		$data = [
 			'date' => date('Y-m-d'),
-			'status' => 'created',
+			'status' => 'awaiting-payment',
 			'total_currency' => 'EUR'
 		];
 		if (!$invoice->save($data)) {

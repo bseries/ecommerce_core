@@ -20,6 +20,11 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 		<?= $this->form->field('id', [
 			'type' => 'hidden'
 		]) ?>
+		<?= $this->form->field('status', [
+			'type' => 'select',
+			'label' => $t('Status'),
+			'list' => $statuses
+		]) ?>
 		<?= $this->form->field('method', [
 			'type' => 'select',
 			'label' => $t('Method'),

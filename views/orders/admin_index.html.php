@@ -10,7 +10,7 @@
 					<td data-sort="user" class="user list-sort"><?= $t('User') ?>
 					<td data-sort="invoice-number" class="invoice-number list-sort"><?= $t('Invoice number') ?>
 					<td data-sort="invoice-status" class="status invoice-status list-sort"><?= $t('Invoice status') ?>
-					<td data-sort="shipment-id" class="shipment-id list-sort"><?= $t('Shipment ID') ?>
+					<td data-sort="shipment-number" class="shipment-number list-sort"><?= $t('Shipment number') ?>
 					<td data-sort="shipment-status" class="status shipment-status list-sort"><?= $t('Shipment status') ?>
 					<td class="date created"><?= $t('Created') ?>
 					<td>
@@ -53,10 +53,10 @@
 					}
 					?>
 					<td class="status invoice-status"><?= $sub->status ?>
-					<td class="shipment-id">
+					<td class="shipment-number">
 					<?php
 					if ($sub = $shipment = $item->shipment()) {
-						echo $this->html->link($sub->id, ['controller' => 'shipments', 'library' => 'ecommerce_core', 'id' => $sub->id, 'action' => 'edit']);
+						echo $this->html->link($sub->number, ['controller' => 'shipments', 'library' => 'ecommerce_core', 'id' => $sub->id, 'action' => 'edit']);
 					} else {
 						echo '–';
 					}
@@ -68,12 +68,7 @@
 						</time>
 					<td>
 						<nav class="actions">
-							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('paid'), ['id' => $item->id, 'action' => 'paid', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-							<?php if (!in_array($shipment->status, ['shipping', 'shipping-scheduled', 'shipped'])): ?>
-								<?= $this->html->link($t('ship'), ['id' => $item->shipment()->id, 'action' => 'ship', 'controller' => 'Shipments', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-							<?php endif ?>
-							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('view'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						</nav>
 				<?php endforeach ?>
 			</tbody>
