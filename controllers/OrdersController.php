@@ -50,7 +50,7 @@ class OrdersController extends \cms_core\controllers\BaseController {
 			'created' => $t('created'), // open
 			'sent' => $t('sent'), // open
 			'paid' => $t('paid'),  // paid
-			'void' => $t('void'), // storno
+			'cancelled' => $t('cancelled'), // storno
 
 			'awaiting-payment' => $t('awaiting payment'),
 			'payment-accepted' => $t('payment accepted'),

@@ -30,7 +30,8 @@ class Orders extends \cms_core\models\Base {
 		'status' => [
 			'checking-out',
 			'checked-out',
-			'expired'
+			'expired',
+			// 'closed'
 			// 'on-backorder',
 			// 'refund',
 		]
@@ -140,7 +141,9 @@ class Orders extends \cms_core\models\Base {
 		$data = [
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
-			'total_currency' => 'EUR'
+			'total_currency' => 'EUR',
+			'note' => $t('Order number: ') . $entity->number,
+			'terms' => Settings::read('invoice.terms')
 		];
 		if (!$invoice->save($data)) {
 			return false;

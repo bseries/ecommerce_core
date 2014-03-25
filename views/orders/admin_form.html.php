@@ -34,7 +34,6 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 				'list' => $statuses
 			]) ?>
 
-
 			<?= $this->form->field('number', [
 				'label' => $t('Number'),
 				'disabled' => true,
@@ -161,6 +160,12 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 				'disabled' => true,
 				'value' => $shipment->number
 			]) ?>
+			<?= $this->form->field('shipment.tracking', [
+				'label' => $t('Tracking Number'),
+				'disabled' => true,
+				'value' => $shipment->tracking
+			]) ?>
+			<div class="help"><?= $t('Tracking is available once status is `shipped`.') ?></div>
 			<?= $this->form->field('shipping_address', [
 				'type' => 'textarea',
 				'label' => $t('Address'),

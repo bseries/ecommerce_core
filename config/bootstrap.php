@@ -10,6 +10,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
+use cms_core\extensions\cms\Features;
 use cms_core\extensions\cms\Settings;
 use cms_core\extensions\cms\Panes;
 use lithium\g11n\Message;
@@ -49,6 +50,8 @@ Settings::register('ecommerce_core', 'product.number', [
 
 Settings::register('ecommerce_core', 'paypal.email', 'billing@example.com');
 Settings::register('ecommerce_core', 'checkout.expire', '+1 week');
+
+Features::register('cms_ecommerce', 'shipment.sendShippedMail', false);
 
 Media::registerDependent('ecommerce_core\models\Products', [
 	'cover' => 'direct',

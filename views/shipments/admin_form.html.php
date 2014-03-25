@@ -13,6 +13,7 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> section-spacing">
 	<h1 class="alpha">
 		<span class="action"><?= $title['action'] ?></span>
+		<span class="object"><?= $title['object'][0] ?></span>
 		<span class="title" data-untitled="<?= $untitled ?>"><?= $title['title'] ?></span>
 	</h1>
 
@@ -25,6 +26,11 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 			'label' => $t('Status'),
 			'list' => $statuses
 		]) ?>
+		<?= $this->form->field('tracking', [
+			'label' => $t('Tracking Number'),
+		]) ?>
+		<div class="help"><?= $t('Tracking is available once status is `shipped`.') ?></div>
+
 		<?= $this->form->field('method', [
 			'type' => 'select',
 			'label' => $t('Method'),

@@ -68,7 +68,7 @@
 						</time>
 					<td>
 						<nav class="actions">
-							<?= $this->html->link($t('view'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+							<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						</nav>
 				<?php endforeach ?>
 			</tbody>

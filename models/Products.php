@@ -99,6 +99,8 @@ class Products extends \cms_core\models\Base {
 		if ($type !== 'hard') {
 			return $result;
 		}
+		$subtract = [];
+
 		$carts = Carts::find('all', [
 			'conditions' => [
 				'status' => 'open'
@@ -109,10 +111,28 @@ class Products extends \cms_core\models\Base {
 				if ($position->ecommerce_product_id != $entity->id) {
 					continue;
 				}
-				$result -= (integer) $position->quantity;
+				$subtract[$position->id] = (integer) $position->quantity;
 			}
 		}
-		return $result;
+		$shipments = Shipments::find('all', [
+			'conditions' => [
+				'status' => [
+					'created',
+					'shipping-scheduled',
+					'shipping-error',
+					'shipping'
+				]
+			]
+		]);
+		foreach ($shipments as $shipment) {
+			foreach ($shipment->order()->cart()->positions() as $position) {
+				if ($position->ecommerce_product_id != $entity->id) {
+					continue;
+				}
+				$subtract[$position->id] = (integer) $position->quantity;
+			}
+		}
+		return $result - array_sum($subtract);
 	}
 }
 
