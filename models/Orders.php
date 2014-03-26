@@ -21,8 +21,11 @@ use cms_core\models\VirtualUsers;
 use cms_billing\models\InvoicePositions;
 use cms_billing\models\Invoices;
 use cms_core\models\Addresses;
+use cms_core\extensions\cms\Features;
 use cms_core\extensions\cms\Settings;
 use DateTime;
+use li3_mailer\action\Mailer;
+use lithium\g11n\Message;
 
 class Orders extends \cms_core\models\Base {
 
@@ -30,10 +33,12 @@ class Orders extends \cms_core\models\Base {
 		'status' => [
 			'checking-out',
 			'checked-out',
+			'processing',
 			'expired',
-			// 'closed'
-			// 'on-backorder',
-			// 'refund',
+			'processed',
+			'cancelled',
+			'on-backorder',
+			'refunding'
 		]
 	];
 
@@ -55,7 +60,8 @@ class Orders extends \cms_core\models\Base {
 	protected static $_actsAs = [
 		'cms_core\extensions\data\behavior\Timestamp',
 		'cms_core\extensions\data\behavior\Uuid',
-		'cms_core\extensions\data\behavior\ReferenceNumber'
+		'cms_core\extensions\data\behavior\ReferenceNumber',
+		'cms_core\extensions\data\behavior\StatusChange'
 	];
 
 	public static function init() {
@@ -177,27 +183,31 @@ class Orders extends \cms_core\models\Base {
 		}
 
 		$price = $entity->shippingMethod()->price($user, $cart, $taxZone);
-		$invoicePosition = InvoicePositions::create([
-			'billing_invoice_id' => $invoice->id,
-			'description' => $entity->shippingMethod()->title,
-			'quantity' => 1,
-			'amount_currency' => $price->getCurrency(),
-			'amount_type' => $price->getType(),
-			'amount' => $price->getAmount()
-		]);
-		if (!$invoicePosition->save(null, ['localize' => false])) {
-			return false;
+		if ($price->getAmount()) {
+			$invoicePosition = InvoicePositions::create([
+				'billing_invoice_id' => $invoice->id,
+				'description' => $entity->shippingMethod()->title,
+				'quantity' => 1,
+				'amount_currency' => $price->getCurrency(),
+				'amount_type' => $price->getType(),
+				'amount' => $price->getAmount()
+			]);
+			if (!$invoicePosition->save(null, ['localize' => false])) {
+				return false;
+			}
 		}
 		$price = $entity->paymentMethod()->price($user, $cart, $taxZone);
-		$invoicePosition = InvoicePositions::create([
-			'billing_invoice_id' => $invoice->id,
-			'description' => $entity->paymentMethod()->title,
-			'amount_currency' => $price->getCurrency(),
-			'amount_type' => $price->getType(),
-			'amount' => $price->getAmount()
-		]);
-		if (!$invoicePosition->save(null, ['localize' => false])) {
-			return false;
+		if ($price->getAmount()) {
+			$invoicePosition = InvoicePositions::create([
+				'billing_invoice_id' => $invoice->id,
+				'description' => $entity->paymentMethod()->title,
+				'amount_currency' => $price->getCurrency(),
+				'amount_type' => $price->getType(),
+				'amount' => $price->getAmount()
+			]);
+			if (!$invoicePosition->save(null, ['localize' => false])) {
+				return false;
+			}
 		}
 
 		if (!$invoice->save(['is_locked' => true])) {
@@ -214,6 +224,32 @@ class Orders extends \cms_core\models\Base {
 	public function isExpired($entity) {
 		$date = DateTime::createFromFormat('Y-m-d H:i:s', $entity->modified);
 		return strtotime(Settings::read('checkout.expire'), $date->getTimestamp()) < time();
+	}
+
+	// @todo Attach invoice.
+	public function statusChange($entity, $from, $to) {
+		extract(Message::aliases());
+
+		switch ($to) {
+			case 'checked-out':
+				$order = $entity;
+				$user = $order->user();
+
+				return Mailer::deliver('order_checked_out', [
+					'to' => $user->email,
+					'subject' => $t('Your order #{:number}.', [
+						'number' => $order->number
+					]),
+					'data' => [
+						'user' => $user,
+						'order' => $order
+					]
+				]);
+				break;
+			default:
+				break;
+		}
+		return true;
 	}
 }
 

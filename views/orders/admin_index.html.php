@@ -52,7 +52,7 @@
 						echo '–';
 					}
 					?>
-					<td class="status invoice-status"><?= $sub->status ?>
+					<td class="status invoice-status"><?= $sub ? $sub->status : '–' ?>
 					<td class="shipment-number">
 					<?php
 					if ($sub = $shipment = $item->shipment()) {
@@ -61,7 +61,7 @@
 						echo '–';
 					}
 					?>
-					<td class="status shipment-status"><?= $sub->status ?>
+					<td class="status shipment-status"><?= $sub ? $sub->status : '–' ?>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>

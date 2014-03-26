@@ -61,12 +61,8 @@ class ShipmentsController extends \cms_core\controllers\BaseController {
 			'shipped' => $t('shipped'),
 			'delivered' => $t('delivered')
 		]);
+		$methods = ShippingMethods::find('list');
 
-		$methods = [];
-		$results = ShippingMethods::find('all');
-		foreach ($results as $result) {
-			$methods[$result->id] = $result->title;
-		}
 		return compact('methods', 'statuses');
 	}
 }

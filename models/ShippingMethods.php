@@ -23,9 +23,14 @@ class ShippingMethods extends \cms_core\models\Base {
 
 	protected static $_data = [];
 
+	public function title($entity) {
+		return $entity->title;
+	}
+
 	public static function register($name, array $data) {
 		$data += [
 			'id' => $name,
+			'name' => $name,
 			'title' => null,
 			'legible' => function($user) {
 				return false;
@@ -43,6 +48,13 @@ class ShippingMethods extends \cms_core\models\Base {
 			return new Collection(['data' => static::$_data]);
 		} elseif ($type == 'first') {
 			return static::$_data[$options['conditions']['id']];
+		} elseif ($type == 'list') {
+			$results = [];
+
+			foreach (static::$_data as $item) {
+				$results[$item->id] = $item->title();
+			}
+			return $results;
 		}
 	}
 

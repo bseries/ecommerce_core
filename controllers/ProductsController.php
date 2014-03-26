@@ -12,6 +12,7 @@
 
 namespace ecommerce_core\controllers;
 
+use cms_core\models\Currencies;
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
 
@@ -33,16 +34,8 @@ class ProductsController extends \cms_core\controllers\BaseController {
 	}
 
 	public function _selects($item) {
-		$productGroups = [];
-		$results = ProductGroups::find('all');
-
-		foreach ($results as $result) {
-			$productGroups[$result->id] = $result->title;
-		}
-		$currencies = [
-			'EUR' => 'EUR',
-			'USD' => 'USD'
-		];
+		$productGroups = ProductGroups::find('list');
+		$currencies = Currencies::find('list');
 
 		return compact('productGroups', 'currencies');
 	}
