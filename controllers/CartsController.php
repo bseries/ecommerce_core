@@ -23,7 +23,7 @@ class CartsController extends \cms_core\controllers\BaseController {
 
 	public function admin_index() {
 		$data = Carts::find('all', [
-			'order' => ['id' => 'ASC']
+			'order' => ['created' => 'desc']
 		]);
 		return compact('data');
 	}

@@ -120,6 +120,15 @@ class Shipments extends \cms_core\models\Base {
 		}
 		return true;
 	}
+
+	public function isCancelable($entity) {
+		return in_array($entity->status, [
+			'created',
+			'cancelled',
+			'shipping-scheduled',
+			'shipping-error'
+		]);
+	}
 }
 
 Shipments::init();

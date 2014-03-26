@@ -23,6 +23,10 @@ Router::connect('/admin/ecommerce/orders/{:action}', [
 Router::connect('/admin/ecommerce/orders/{:action}/{:id:[0-9]+}', [
 	'controller' => 'orders', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
+Router::connect('/admin/ecommerce/orders/{:id:[0-9]+}/status/{:status}', [
+	'controller' => 'orders', 'action' => 'update_status', 'library' => 'ecommerce_core', 'admin' => true
+], $persist);
+
 
 Router::connect('/admin/ecommerce/carts/{:action}', [
 	'controller' => 'carts', 'library' => 'ecommerce_core', 'admin' => true

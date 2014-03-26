@@ -143,6 +143,8 @@ class Orders extends \cms_core\models\Base {
 	}
 
 	public function generateInvoice($entity, $user, $cart) {
+		extract(Message::aliases());
+
 		$invoice = Invoices::createForUser($user);
 		$data = [
 			'date' => date('Y-m-d'),
@@ -231,11 +233,33 @@ class Orders extends \cms_core\models\Base {
 		extract(Message::aliases());
 
 		switch ($to) {
+			case 'cancelled':
+				$invoice = $entity->invoice();
+				$shipment = $entity->shipment();
+
+				if (!$invoice->isCancelable() || !$shipment->isCancelable()) {
+					return false;
+				}
+				$result = $invoice->save(['status' => 'cancelled'], [
+					'whitelist' => ['status'],
+					'validate' => false
+				]);
+				if (!$result) {
+					return false;
+				}
+				$result = $shipment->save(['status' => 'cancelled'], [
+					'whitelist' => ['status'],
+					'validate' => false
+				]);
+				if (!$result) {
+					return false;
+				}
+				return true;
 			case 'checked-out':
 				$order = $entity;
 				$user = $order->user();
 
-				return Mailer::deliver('order_checked_out', [
+				$result = Mailer::deliver('order_checked_out', [
 					'to' => $user->email,
 					'subject' => $t('Your order #{:number}.', [
 						'number' => $order->number
@@ -244,6 +268,14 @@ class Orders extends \cms_core\models\Base {
 						'user' => $user,
 						'order' => $order
 					]
+				]);
+				if (!$result) {
+					return false;
+				}
+				return $invoice->save(['status' => 'sent'], [
+					'whitelist' => ['status'],
+					'validate' => false,
+					'lockWriteThrough' => true
 				]);
 				break;
 			default:

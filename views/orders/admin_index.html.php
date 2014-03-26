@@ -1,6 +1,11 @@
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
 	<h1 class="alpha"><?= $this->title($t('Orders')) ?></h1>
 
+	<div class="help">
+		<?= $t('Cancelling an order will also cancel associated invoice and shipment - if possible.') ?>
+		<?= $t('Once the order was shipped and the invoice paid, mark the order as `processed` to close it.') ?>
+	</div>
+
 	<?php if ($data->count()): ?>
 		<table>
 			<thead>
@@ -13,7 +18,7 @@
 					<td data-sort="shipment-number" class="shipment-number list-sort"><?= $t('Shipment number') ?>
 					<td data-sort="shipment-status" class="status shipment-status list-sort"><?= $t('Shipment status') ?>
 					<td class="date created"><?= $t('Created') ?>
-					<td>
+					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
 							'label' => false,
@@ -27,23 +32,16 @@
 				<tr data-id="<?= $item->id ?>">
 					<td class="emphasize number"><?= $item->number ?: '–' ?>
 					<td class="status"><?= $item->status ?>
-					<?php if ($user->isVirtual()): ?>
-						<td class="user">
-							<?= $this->html->link($user->name . '/' . $user->id, [
-								'controller' => 'VirtualUsers', 'action' => 'edit', 'id' => $user->id, 'library' => 'cms_core'
+					<td class="user">
+						<?php if ($user): ?>
+							<?= $this->html->link($user->title(), [
+								'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
+								'action' => 'edit', 'id' => $user->id,
+								'library' => 'cms_core'
 							]) ?>
-							(<?= $this->html->link('virtual', [
-								'controller' => 'VirtualUsers', 'action' => 'index', 'library' => 'cms_core'
-							]) ?>)
-					<?php else: ?>
-						<td class="user">
-							<?= $this->html->link($user->name . '/' . $user->id, [
-								'controller' => 'Users', 'action' => 'edit', 'id' => $user->id, 'library' => 'cms_core'
-							]) ?>
-							(<?= $this->html->link('real', [
-								'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
-							]) ?>)
-					<?php endif ?>
+						<?php else: ?>
+							-
+						<?php endif ?>
 					<td class="invoice-number">
 					<?php
 					if ($sub = $item->invoice()) {
@@ -66,10 +64,17 @@
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>
 						</time>
-					<td>
-						<nav class="actions">
-							<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-						</nav>
+					<td class="actions">
+						<?php if ($item->status == 'checked-out'): ?>
+							<?= $this->html->link($t('processing'), ['id' => $item->id, 'action' => 'update_status', 'status' => 'processing' , 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?php endif ?>
+						<?php if ($item->status == 'checked-out'): ?>
+							<?= $this->html->link($t('cancel'), ['id' => $item->id, 'action' => 'update_status', 'status' => 'cancelled' , 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?php endif ?>
+						<?php if ($item->status == 'processing'): ?>
+							<?= $this->html->link($t('processed'), ['id' => $item->id, 'action' => 'update_status', 'status' => 'processed' , 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?php endif ?>
+						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>

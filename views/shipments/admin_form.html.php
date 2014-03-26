@@ -1,5 +1,7 @@
 <?php
 
+use cms_core\extensions\cms\Features;
+
 $untitled = $t('Untitled');
 
 $title = [
@@ -26,6 +28,10 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 			'label' => $t('Status'),
 			'list' => $statuses
 		]) ?>
+		<div class="help">
+		<?php if (Features::enabled('shipment.sendShippedMail')): ?>
+			<?= $t('The user will be notified by e-mail when the status is changed to `shipped`.') ?></div>
+		<?php endif ?>
 		<?= $this->form->field('tracking', [
 			'label' => $t('Tracking Number'),
 		]) ?>

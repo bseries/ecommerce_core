@@ -38,7 +38,7 @@ class PaymentMethods extends \cms_core\models\Base {
 			'price' => function($user, $cart, $taxZone) {
 				return new Price(0, 'EUR', 'net', $taxZone);
 			},
-			'info' => function($context, $format) {
+			'info' => function($context, $format, $renderer, $order) {
 
 			}
 		];
@@ -70,9 +70,9 @@ class PaymentMethods extends \cms_core\models\Base {
 		return $value($user, $cart, $taxZone);
 	}
 
-	public function info($entity, $context, $format) {
+	public function info($entity, $context, $format, $renderer, $order) {
 		$value = $entity->data('info');
-		return $value($context, $format);
+		return $value($context, $format, $renderer, $order);
 	}
 }
 

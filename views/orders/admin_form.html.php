@@ -19,11 +19,8 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 		<span class="action"><?= $title['action'] ?></span>
 		<span class="object"><?= $title['object'][0] ?></span>
 		<span class="title" data-untitled="<?= $untitled ?>"><?= $title['title'] ?></span>
+		<span class="status"><?= $statuses[$item->status] ?></span>
 	</h1>
-
-	<nav class="actions">
-
-	</nav>
 
 	<?=$this->form->create($item) ?>
 		<section>
@@ -42,16 +39,6 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 			<?= $this->form->field('uuid', [
 				'label' => $t('ID'),
 				'disabled' => true
-			]) ?>
-			<?= $this->form->field('total', [
-				'label' => $t('Total (net/gross)'),
-				'disabled' => true,
-				'value' => $this->money->format($item->totalAmount($item->user(), $item->cart(), $item->user()->taxZone())->getNet(), 'money')
-			]) ?>
-			<?= $this->form->field('total_gross', [
-				'label' => $t('Total (gross)'),
-				'disabled' => true,
-				'value' => $this->money->format($item->totalAmount($item->user(), $item->cart(), $item->user()->taxZone())->getGross(), 'money')
 			]) ?>
 			<?= $this->form->field('created', [
 				'label' => $t('Created'),
@@ -92,7 +79,7 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 				'disabled' => true,
 				'value' => $this->date->format($user->created, 'datetime')
 			]) ?>
-			<?= $this->html->link($t('edit user'), [
+			<?= $this->html->link($t('open user'), [
 				'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
 				'action' => 'edit',
 				'id' => $user->id,
@@ -115,6 +102,12 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 				'value' => $invoice->number
 			]) ?>
 
+			<?= $this->form->field('total_net', [
+				'label' => $t('Total (net)'),
+				'disabled' => true,
+				'value' => $this->money->format($item->totalAmount($item->user(), $item->cart(), $item->user()->taxZone())->getNet(), 'money')
+			]) ?>
+
 			<?= $this->form->field('billing_address', [
 				'type' => 'textarea',
 				'label' => $t('Address'),
@@ -127,22 +120,28 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 				'value' => $item->address('billing')->phone
 			]) ?>
 
-			<?= $this->html->link($t('edit invoice'), [
+			<?= $this->html->link($t('open invoice'), [
 				'controller' => 'Invoices',
 				'action' => 'edit',
 				'id' => $item->billing_invoice_id,
 				'library' => 'cms_billing'
 			], ['class' => 'button']) ?>
-			<?= $this->html->link($t('edit invoice address'), [
+			<?= $this->html->link($t('PDF'), [
+				'controller' => 'Invoices',
+				'id' => $item->id, 'action' => 'export_pdf',
+				'library' => 'cms_billing'
+			], ['class' => 'button']) ?>
+			<?= $this->html->link($t('XLSX'), [
+				'controller' => 'Invoices',
+				'id' => $item->id, 'action' => 'export_excel',
+				'library' => 'cms_billing'
+			], ['class' => 'button']) ?>
+			<?= $this->html->link($t('open invoice address'), [
 				'controller' => 'Addresses',
 				'action' => 'edit',
 				'id' => $item->address('billing')->id,
 				'library' => 'cms_core'
 			], ['class' => 'button']) ?>
-			<section>
-				<h1 class="gamma"><?= $t('Positions') ?></h1>
-
-			</section>
 		</section>
 		<section>
 			<h1 class="beta"><?= $t('Shipment') ?></h1>
@@ -177,13 +176,13 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 				'disabled' => true,
 				'value' => $item->address('shipping')->phone
 			]) ?>
-			<?= $this->html->link($t('edit shipment'), [
+			<?= $this->html->link($t('open shipment'), [
 				'controller' => 'Shipments',
 				'action' => 'edit',
 				'id' => $item->ecommerce_shipment_id,
 				'library' => 'ecommerce_core'
 			], ['class' => 'button']) ?>
-			<?= $this->html->link($t('edit shipping address'), [
+			<?= $this->html->link($t('open shipping address'), [
 				'controller' => 'Addresses',
 				'action' => 'edit',
 				'id' => $item->address('shipping')->id,

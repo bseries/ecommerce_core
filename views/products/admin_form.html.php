@@ -13,8 +13,15 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> section-spacing">
 	<h1 class="alpha">
 		<span class="action"><?= $title['action'] ?></span>
+		<span class="object"><?= $title['object'][0] ?></span>
 		<span class="title" data-untitled="<?= $untitled ?>"><?= $title['title'] ?></span>
+		<span class="status"><?= $item->is_published ? $t('published') : $t('unpublished') ?></span>
 	</h1>
+
+	<nav class="actions">
+		<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+	</nav>
+
 
 	<?=$this->form->create($item) ?>
 		<?= $this->form->field('number', [
@@ -50,44 +57,64 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 			<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
 		</div>
 
-		<section class="nested use-nested">
+		<?= $this->form->field('description', [
+			'type' => 'textarea',
+			'label' => $t('Description'),
+			'wrap' => ['class' => 'body use-editor editor-basic editor-link'],
+		]) ?>
+
+		<section class="use-nested">
 			<h1 class="beta"><?= $t('Prices') ?></h1>
-
-			<?php foreach ($item->prices() as $key => $child): ?>
-				<article class="nested-item">
-					<h1 class="gamma"><?= $t('Price') . ': '. $child->group()->title ?></h1>
-
-					<?php if ($child->id): ?>
-						<?= $this->form->field("prices.{$key}.id", [
-							'type' => 'hidden',
-							'value' => $child->id,
-						]) ?>
-					<?php endif ?>
-
-					<?= $this->form->field("prices.{$key}.group", [
-						'type' => 'hidden',
-						'value' => $child->group,
-					]) ?>
-
-					<?= $this->form->field("prices.{$key}.price_currency", [
-						'type' => 'select',
-						'label' => $t('Currency'),
-						'list' => $currencies,
-						'value' => $child->price_currency
-					]) ?>
-					<?= $this->form->field("prices.{$key}.price_type", [
-						'type' => 'select',
-						'label' => $t('Type'),
-						'list' => ['net' => $t('net'), 'gross' => $t('gross')],
-						'value' => $child->price_type
-					]) ?>
-					<?= $this->form->field("prices.{$key}.price", [
-						'type' => 'text',
-						'label' => $t('Amount'),
-						'value' => $this->money->format($child->price, 'decimal')
-					]) ?>
-				</article>
-			<?php endforeach ?>
+			<table>
+				<thead>
+					<tr>
+						<td><?= $t('Name') ?>
+						<td><?= $t('Type') ?>
+						<td><?= $t('Currency') ?>
+						<td><?= $t('Amount') ?>
+						<td>
+				</thead>
+				<tbody>
+				<?php foreach ($item->prices() as $key => $child): ?>
+					<tr class="nested-item">
+						<td>
+							<?= $this->form->field("prices.{$key}.id", [
+								'type' => 'hidden',
+								'value' => $child->id,
+							]) ?>
+							<?= $this->form->field("prices.{$key}.group", [
+								'type' => 'hidden',
+								'value' => $child->group,
+							]) ?>
+							<?= $this->form->field("prices.{$key}.group.title", [
+								'type' => 'text',
+								'disabled' => true,
+								'value' => $child->group()->title,
+								'label' => false
+							]) ?>
+						<td>
+							<?= $this->form->field("prices.{$key}.price_type", [
+								'type' => 'select',
+								'label' => false,
+								'list' => ['net' => $t('net'), 'gross' => $t('gross')],
+								'value' => $child->price_type
+							]) ?>
+						<td>
+							<?= $this->form->field("prices.{$key}.price_currency", [
+								'type' => 'select',
+								'label' => false,
+								'list' => $currencies,
+								'value' => $child->price_currency
+							]) ?>
+						<td>
+							<?= $this->form->field("prices.{$key}.price", [
+								'type' => 'text',
+								'label' => false,
+								'value' => $this->money->format($child->price, 'decimal')
+							]) ?>
+						<td>
+				<?php endforeach ?>
+			</table>
 		</section>
 
 		<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large']) ?>

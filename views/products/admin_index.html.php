@@ -10,7 +10,7 @@
 					<td class="emphasize"><?= $t('Title') ?>
 					<td class="emphasize"><?= $t('Number') ?>
 					<td class="date created"><?= $t('Created') ?>
-					<td>
+					<td class="actions">
 			</thead>
 			<tbody>
 				<?php foreach ($data as $item): ?>
@@ -26,12 +26,10 @@
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>
 						</time>
-					<td>
-						<nav class="actions">
-							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-							<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-						</nav>
+					<td class="actions">
+						<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>

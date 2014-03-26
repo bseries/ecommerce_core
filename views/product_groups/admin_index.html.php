@@ -12,7 +12,7 @@
 					<td>
 					<td>
 					<td class="date created"><?= $t('Created') ?>
-					<td>
+					<td class="actions">
 				<tr>
 					<td>
 					<td>
@@ -21,7 +21,7 @@
 					<td><?= $t('Number') ?>
 					<td><?= $t('Stock') ?>
 					<td>
-					<td>
+					<td class="actions">
 			</thead>
 			<tbody>
 				<?php foreach ($data as $item): ?>
@@ -39,12 +39,10 @@
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>
 						</time>
-					<td>
-						<nav class="actions">
-							<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-							<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-							<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-						</nav>
+					<td class="actions">
+						<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 					<?php foreach ($item->products() as $sub): ?>
 						<tr class="sub-item">
 							<td>↳
@@ -60,12 +58,10 @@
 								<time datetime="<?= $this->date->format($sub->created, 'w3c') ?>">
 									<?= $this->date->format($sub->created, 'date') ?>
 								</time>
-							<td>
-								<nav class="actions">
-									<?= $this->html->link($t('delete'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-									<?= $this->html->link($sub->is_published ? $t('unpublish') : $t('publish'), ['id' => $sub->id, 'controller' => 'Products', 'action' => $sub->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-									<?= $this->html->link($t('edit'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-								</nav>
+							<td class="actions">
+								<?= $this->html->link($t('delete'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+								<?= $this->html->link($sub->is_published ? $t('unpublish') : $t('publish'), ['id' => $sub->id, 'controller' => 'Products', 'action' => $sub->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+								<?= $this->html->link($t('edit'), ['id' => $sub->id, 'controller' => 'Products', 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 
 					<?php endforeach ?>
 				<?php endforeach ?>

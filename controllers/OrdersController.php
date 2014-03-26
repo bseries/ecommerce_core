@@ -22,6 +22,7 @@ class OrdersController extends \cms_core\controllers\BaseController {
 
 	use \cms_core\controllers\AdminAddTrait;
 	use \cms_core\controllers\AdminEditTrait;
+	use \cms_core\controllers\AdminUpdateStatusTrait;
 
 	public function admin_index() {
 		$data = Orders::find('all', [
