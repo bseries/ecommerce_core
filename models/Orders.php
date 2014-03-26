@@ -258,6 +258,7 @@ class Orders extends \cms_core\models\Base {
 			case 'checked-out':
 				$order = $entity;
 				$user = $order->user();
+				$invoice = $order->invoice();
 
 				$result = Mailer::deliver('order_checked_out', [
 					'to' => $user->email,
