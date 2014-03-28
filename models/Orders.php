@@ -66,10 +66,25 @@ class Orders extends \cms_core\models\Base {
 
 	public static function init() {
 		$model = static::_object();
+		extract(Message::aliases());
 
 		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('order.number')
 		);
+		$model->validates['shipping_method'] = [
+			[
+				'notEmpty',
+				'on' => ['checkoutShipping'],
+				'message' => $t('You must select a method.')
+			]
+		];
+		$model->validates['payment_method'] = [
+			[
+				'notEmpty',
+				'on' => ['checkoutPayment'],
+				'message' => $t('You must select a method.')
+			]
+		];
 	}
 
 	public function shipment($entity) {
@@ -258,9 +273,8 @@ class Orders extends \cms_core\models\Base {
 			case 'checked-out':
 				$order = $entity;
 				$user = $order->user();
-				$invoice = $order->invoice();
 
-				$result = Mailer::deliver('order_checked_out', [
+				return Mailer::deliver('order_checked_out', [
 					'to' => $user->email,
 					'subject' => $t('Your order #{:number}.', [
 						'number' => $order->number
@@ -270,15 +284,6 @@ class Orders extends \cms_core\models\Base {
 						'order' => $order
 					]
 				]);
-				if (!$result) {
-					return false;
-				}
-				return $invoice->save(['status' => 'sent'], [
-					'whitelist' => ['status'],
-					'validate' => false,
-					'lockWriteThrough' => true
-				]);
-				break;
 			default:
 				break;
 		}
