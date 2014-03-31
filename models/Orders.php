@@ -243,7 +243,6 @@ class Orders extends \cms_core\models\Base {
 		return strtotime(Settings::read('checkout.expire'), $date->getTimestamp()) < time();
 	}
 
-	// @todo Attach invoice.
 	public function statusChange($entity, $from, $to) {
 		extract(Message::aliases());
 
@@ -282,7 +281,12 @@ class Orders extends \cms_core\models\Base {
 					'data' => [
 						'user' => $user,
 						'order' => $order
+					],
+					/*
+					'attach' => [
+						'/tmp/test.jpg'
 					]
+					 */
 				]);
 			default:
 				break;
