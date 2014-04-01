@@ -30,7 +30,7 @@
 					<td class="flag"><?= ($item->is_published ? '✓' : '╳') ?>
 					<td>
 						<?php if ($cover = $item->cover()): ?>
-							<?= $this->media->image($cover->version('fix3')->url('http'), ['class' => 'media']) ?>
+							<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
 						<?php endif ?>
 					<td class="emphasize"><?= $item->title ?>
 					<td>
@@ -49,7 +49,7 @@
 							<td class="flag"><?= ($sub->is_published ? '✓' : '╳') ?>
 							<td>
 								<?php if ($cover = $sub->cover()): ?>
-									<?= $this->media->image($cover->version('fix3')->url('http'), ['class' => 'media']) ?>
+									<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
 								<?php endif ?>
 							<td class="emphasize"><?= $sub->title ?>
 							<td class="emphasize">#<?= $sub->number ?>
