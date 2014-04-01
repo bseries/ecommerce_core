@@ -8,7 +8,6 @@
 					<td data-sort="status" class="status list-sort"><?= $t('Status') ?>
 					<td data-sort="order" class="order list-sort"><?= $t('Order') ?>
 					<td data-sort="user" class="user list-sort"><?= $t('User') ?>
-					<td><?= $t('User Session ID') ?>
 					<td><?= $t('Total amount (net) ') ?>
 					<td><?= $t('Total quantity') ?>
 					<td data-sort="created" class="date created list-sort desc"><?= $t('Created') ?>
@@ -41,7 +40,6 @@
 					<?php else: ?>
 						-
 					<?php endif ?>
-					<td><?= $item->user_session_id ?>
 					<td><?= $this->money->format($item->totalAmount($user, $user->taxZone())->getNet(), 'money') ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
