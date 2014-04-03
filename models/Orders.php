@@ -272,6 +272,7 @@ class Orders extends \cms_core\models\Base {
 			case 'checked-out':
 				$order = $entity;
 				$user = $order->user();
+				$invoice = $entity->invoice();
 
 				return Mailer::deliver('order_checked_out', [
 					'to' => $user->email,
@@ -282,11 +283,13 @@ class Orders extends \cms_core\models\Base {
 						'user' => $user,
 						'order' => $order
 					],
-					/*
 					'attach' => [
-						'/tmp/test.jpg'
+						[
+							'data' => $invoice->exportPdf(),
+							'filename' => 'invoice_' . $invoice->number . '.pdf',
+							'content-type' => 'application/pdf'
+						]
 					]
-					 */
 				]);
 			default:
 				break;
