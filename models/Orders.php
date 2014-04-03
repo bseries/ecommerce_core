@@ -270,12 +270,14 @@ class Orders extends \cms_core\models\Base {
 				}
 				return true;
 			case 'checked-out':
+				$contact = Settings::read('contact.billing');
 				$order = $entity;
 				$user = $order->user();
 				$invoice = $entity->invoice();
 
 				return Mailer::deliver('order_checked_out', [
 					'to' => $user->email,
+					'bcc' => $contact['email'],
 					'subject' => $t('Your order #{:number}.', [
 						'number' => $order->number
 					]),
@@ -285,7 +287,7 @@ class Orders extends \cms_core\models\Base {
 					],
 					'attach' => [
 						[
-							'data' => $invoice->exportPdf(),
+							'data' => $invoice->exportAsPdf(),
 							'filename' => 'invoice_' . $invoice->number . '.pdf',
 							'content-type' => 'application/pdf'
 						]
