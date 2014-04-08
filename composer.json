@@ -1,0 +1,36 @@
+{
+    "name": "atelierdisko/ecommerce_core",
+    "description": "Core functionality for magasin.",
+    "license": "proprietary",
+    "config": {
+        "vendor-dir": "libraries",
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "yohang/finite": "1.*",
+        "uor/li3_flash_message": "dev-master",
+        "atelierdisko/li3_mailer": "dev-master",
+        "atelierdisko/cms_core": "dev-master",
+        "atelierdisko/cms_media": "dev-master",
+        "atelierdisko/cms_billing": "dev-master"
+    },
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/uor/li3_flash_message"
+      },
+      {
+        "type": "vcs",
+        "url": "git@bitbucket.org:atelierdisko/cms_core.git"
+      },
+      {
+        "type": "vcs",
+        "url": "git@bitbucket.org:atelierdisko/cms_media.git"
+      },
+      {
+        "type": "vcs",
+        "url": "git@bitbucket.org:atelierdisko/cms_billing.git"
+      }
+   ]
+}
