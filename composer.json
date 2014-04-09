@@ -1,10 +1,12 @@
 {
     "name": "atelierdisko/ecommerce_core",
     "description": "Core functionality for magasin.",
+    "homepage": "http://atelierdisko.de",
+    "type": "lithium-library",
     "license": "proprietary",
-    "config": {
-        "vendor-dir": "libraries",
-        "preferred-install": "dist"
+    "authors": {
+      "name": "Atelier Disko",
+      "homepage": "http://atelierdisko.de"
     },
     "require": {
         "php": ">=5.5.0",
@@ -13,7 +15,9 @@
         "atelierdisko/li3_mailer": "dev-master",
         "atelierdisko/cms_core": "dev-master",
         "atelierdisko/cms_media": "dev-master",
-        "atelierdisko/cms_billing": "dev-master"
+        "atelierdisko/cms_billing": "dev-master",
+        "unionofrad/lithium": "dev-dev",
+        "composer/installers": "~1.0"
     },
     "repositories": [
       {
