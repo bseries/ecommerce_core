@@ -14,6 +14,7 @@ use lithium\g11n\Message;
 use cms_core\extensions\cms\Widgets;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Orders;
+use ecommerce_core\models\Products;
 use cms_core\models\Users;
 use cms_core\models\VirtualUsers;
 
@@ -88,5 +89,53 @@ Widgets::register('ecommerce_core', 'total_orders_value', [
 		];
 	}
 ]);
+
+Widgets::register('ecommerce_core', 'total_products', [
+	'type' => Widgets::TYPE_COUNT_SINGLE_ALPHA,
+	'group' => Widgets::GROUP_DASHBOARD,
+	'url' => [
+		'controller' => 'ProductGroups', 'action' => 'index', 'library' => 'ecommerce_core'
+	],
+	'data' => function() use ($t) {
+		$count = Products::find('count', [
+			'conditions' => [
+				'is_published' => true
+			]
+		]);
+		return [
+			'title' => $t('Products'),
+			'value' => $count
+		];
+	}
+]);
+
+Widgets::register('ecommerce_core', 'ecommerce_pending', [
+	'type' => Widgets::TYPE_COUNT_MULTIPLE_ALPHA,
+	'group' => Widgets::GROUP_DASHBOARD,
+	'url' => [
+		'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
+	],
+	'data' => function() use ($t) {
+		$orders = Orders::find('count', [
+			'conditions' => [
+				'status' => [
+					'NOT' => ['processed', 'cancelled', 'expired']
+				]
+			]
+		]);
+		$products = Products::find('all')->find(function($item) {
+			return $item->stock() <= 0;
+		})->count();
+
+		return [
+			'title' => $t('Pending'),
+			'data' => [
+				$t('Orders') => $orders,
+				$t('Out of Stock') => $products
+			]
+		];
+	}
+]);
+
 
 ?>
