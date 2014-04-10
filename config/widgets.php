@@ -118,9 +118,7 @@ Widgets::register('ecommerce_core', 'ecommerce_pending', [
 	'data' => function() use ($t) {
 		$orders = Orders::find('count', [
 			'conditions' => [
-				'status' => [
-					'NOT' => ['processed', 'cancelled', 'expired']
-				]
+				'status NOT' => ['processed', 'cancelled', 'expired']
 			]
 		]);
 		$products = Products::find('all')->find(function($item) {
