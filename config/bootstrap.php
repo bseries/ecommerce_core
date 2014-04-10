@@ -10,6 +10,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
+define('ECOMMERCE_CORE_VERSION', '1.0.0');
+
 use cms_core\extensions\cms\Features;
 use cms_core\extensions\cms\Settings;
 use cms_core\extensions\cms\Panes;
