@@ -12,7 +12,6 @@
 
 use cms_core\extensions\cms\Features;
 use cms_core\extensions\cms\Settings;
-use cms_media\models\Media;
 
 // Number Format
 Settings::register('ecommerce_core', 'order.number', [
@@ -32,14 +31,5 @@ Settings::register('ecommerce_core', 'paypal.email', 'billing@example.com');
 Settings::register('ecommerce_core', 'checkout.expire', '+1 week');
 
 Features::register('cms_ecommerce', 'shipment.sendShippedMail', false);
-
-Media::registerDependent('ecommerce_core\models\Products', [
-	'cover' => 'direct',
-	'media' => 'joined'
-]);
-Media::registerDependent('ecommerce_core\models\ProductGroups', [
-	'cover' => 'direct',
-	'media' => 'joined'
-]);
 
 ?>

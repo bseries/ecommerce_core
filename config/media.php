@@ -10,11 +10,15 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-define('ECOMMERCE_CORE_VERSION', '1.0.0');
+use cms_media\models\Media;
 
-require 'panes.php';
-require 'settings.php';
-require 'media.php';
-require 'widgets.php';
+Media::registerDependent('ecommerce_core\models\Products', [
+	'cover' => 'direct',
+	'media' => 'joined'
+]);
+Media::registerDependent('ecommerce_core\models\ProductGroups', [
+	'cover' => 'direct',
+	'media' => 'joined'
+]);
 
 ?>
