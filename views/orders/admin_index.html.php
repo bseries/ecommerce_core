@@ -1,6 +1,14 @@
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
-	<h1 class="alpha"><?= $this->title($t('Orders')) ?></h1>
+<?php
 
+$this->set([
+	'page' => [
+		'type' => 'multiple',
+		'object' => $t('banners')
+	]
+]);
+
+?>
+<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
 	<div class="help">
 		<?= $t('Cancelling an order will also cancel associated invoice and shipment - if possible.') ?>
 		<?= $t('Once the order was shipped and the invoice paid, mark the order as `processed` to close it.') ?>
@@ -34,7 +42,7 @@
 					<td class="status"><?= $item->status ?>
 					<td class="user">
 						<?php if ($user): ?>
-							<?= $this->html->link($user->title(), [
+							<?= $this->html->link($user->number, [
 								'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
 								'action' => 'edit', 'id' => $user->id,
 								'library' => 'cms_core'
@@ -65,6 +73,7 @@
 							<?= $this->date->format($item->created, 'date') ?>
 						</time>
 					<td class="actions">
+<!--
 						<?php if ($item->status == 'checked-out'): ?>
 							<?= $this->html->link($t('processing'), ['id' => $item->id, 'action' => 'update_status', 'status' => 'processing' , 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						<?php endif ?>
@@ -74,6 +83,7 @@
 						<?php if ($item->status == 'processing'): ?>
 							<?= $this->html->link($t('processed'), ['id' => $item->id, 'action' => 'update_status', 'status' => 'processed' , 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						<?php endif ?>
+-->
 						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 				<?php endforeach ?>
 			</tbody>

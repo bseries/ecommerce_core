@@ -1,6 +1,14 @@
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
-	<h1 class="alpha"><?= $this->title($t('Carts')) ?></h1>
+<?php
 
+$this->set([
+	'page' => [
+		'type' => 'multiple',
+		'object' => $t('carts')
+	]
+]);
+
+?>
+<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
 	<?php if ($data->count()): ?>
 		<table>
 			<thead>
@@ -22,17 +30,22 @@
 			<tbody class="list">
 				<?php foreach ($data as $item): ?>
 					<?php $order = $item->order() ?>
-					<?php $user = $order->user() ?>
-					<?php $taxZone = $user->taxZone() ?>
+					<?php $user = $order ? $order->user() : null?>
+					<?php $taxZone = $user ? $user->taxZone() : null ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="status"><?= $item->status ?>
-					<td class="order"><?= $this->html->link($order->number, [
-						'controller' => 'Orders', 'action' => 'edit', 'id' => $order->id,
-						'library' => 'ecommerce_core'
-					]) ?>
+					<td class="order">
+					<?php if ($order): ?>
+						<?= $this->html->link($order->number, [
+							'controller' => 'Orders', 'action' => 'edit', 'id' => $order->id,
+							'library' => 'ecommerce_core'
+						]) ?>
+					<?php else: ?>
+						-
+					<?php endif ?>
 					<td class="user">
 					<?php if ($user): ?>
-						<?= $this->html->link($user->title(), [
+						<?= $this->html->link($user->number, [
 							'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
 							'action' => 'edit', 'id' => $user->id,
 							'library' => 'cms_core'
@@ -40,7 +53,12 @@
 					<?php else: ?>
 						-
 					<?php endif ?>
-					<td><?= $this->money->format($item->totalAmount($user, $user->taxZone())->getNet(), 'money') ?>
+					<td>
+					<?php if ($user): ?>
+						<?= $this->money->format($item->totalAmount($user, $user->taxZone())->getNet(), 'money') ?>
+					<?php else: ?>
+						-
+					<?php endif ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">

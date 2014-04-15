@@ -20,120 +20,120 @@ use cms_core\models\VirtualUsers;
 
 extract(Message::aliases());
 
-Widgets::register('ecommerce_core', 'carts', [
+Widgets::register('ecommerce_core', 'carts', function() use ($t) {
+	$open = Carts::find('count', ['conditions' => ['status' => 'open']]);
+	$expired = Carts::find('count', ['conditions' => ['status' => 'expired']]);
+
+	return [
+		'class' => null,
+		'title' => false,
+		'url' => [
+			'controller' => 'Carts', 'action' => 'index', 'library' => 'ecommerce_core'
+		],
+		'data' => [
+			$t('Open Carts') => $open,
+			$t('Expired Carts') => $expired
+		]
+	];
+}, [
 	'type' => Widgets::TYPE_COUNT_MULTIPLE_BETA,
 	'group' => Widgets::GROUP_DASHBOARD,
-	'url' => [
-		'controller' => 'Carts', 'action' => 'index', 'library' => 'ecommerce_core'
-	],
-	'data' => function() use ($t) {
-		$open = Carts::find('count', ['conditions' => ['status' => 'open']]);
-		$expired = Carts::find('count', ['conditions' => ['status' => 'expired']]);
-
-		return [
-			'title' => false,
-			'data' => [
-				$t('Open Carts') => $open,
-				$t('Expired Carts') => $expired
-			]
-		];
-	}
 ]);
 
-Widgets::register('ecommerce_core', 'total_customers', [
+Widgets::register('ecommerce_core', 'total_customers', function() use ($t) {
+	$total = Users::find('count', ['conditions' => [
+		'is_active' => true,
+		'role' => ['customer', 'merchant']
+	]]);
+	$total += VirtualUsers::find('count', ['conditions' => [
+		'is_active' => true,
+		'role' => ['customer', 'merchant']
+	]]);
+
+	return [
+		'class' => null,
+		'url' => [
+			'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
+		],
+		'data' => [
+			$t('Customers') => $total
+		]
+	];
+}, [
 	'type' => Widgets::TYPE_COUNT_MULTIPLE_BETA,
 	'group' => Widgets::GROUP_DASHBOARD,
-	'url' => [
-		'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
-	],
-	'data' => function() use ($t) {
-		$total = Users::find('count', ['conditions' => [
-			'is_active' => true,
-			'role' => ['customer', 'merchant']
-		]]);
-		$total += VirtualUsers::find('count', ['conditions' => [
-			'is_active' => true,
-			'role' => ['customer', 'merchant']
-		]]);
-
-		return [
-			'data' => [
-				$t('Customers') => $total
-			]
-		];
-	}
 ]);
 
-Widgets::register('ecommerce_core', 'total_orders_value', [
-	'type' => Widgets::TYPE_COUNT_SINGLE_ALPHA,
-	'group' => Widgets::GROUP_DASHBOARD,
-	'url' => [
-		'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
-	],
-	'data' => function() use ($t) {
-		$orders = Orders::find('all');
-		$result = null;
+Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
+	$orders = Orders::find('all');
+	$result = null;
 
-		foreach ($orders as $item) {
-			$value = $item->totalAmount($item->user(), $item->cart(), $item->user()->taxZone());
+	foreach ($orders as $item) {
+		$value = $item->totalAmount($item->user(), $item->cart(), $item->user()->taxZone());
 
-			if ($result) {
-				$result = $result->add($value);
-			} else {
-				$result = $value;
-			}
+		if ($result) {
+			$result = $result->add($value);
+		} else {
+			$result = $value;
 		}
-		return [
-			'title' => $t('Total Orders Value (net)'),
-			'value' => $value->getNet()
-		];
 	}
-]);
-
-Widgets::register('ecommerce_core', 'total_products', [
+	return [
+		'class' => null,
+		'title' => $t('Total Orders Value (net)'),
+		'url' => [
+			'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
+		],
+		'class' => 'positive',
+		'value' => $value->getNet()
+	];
+}, [
 	'type' => Widgets::TYPE_COUNT_SINGLE_ALPHA,
 	'group' => Widgets::GROUP_DASHBOARD,
-	'url' => [
-		'controller' => 'ProductGroups', 'action' => 'index', 'library' => 'ecommerce_core'
-	],
-	'data' => function() use ($t) {
-		$count = Products::find('count', [
-			'conditions' => [
-				'is_published' => true
-			]
-		]);
-		return [
-			'title' => $t('Products'),
-			'value' => $count
-		];
-	}
 ]);
 
-Widgets::register('ecommerce_core', 'ecommerce_pending', [
+Widgets::register('ecommerce_core', 'total_products', function() use ($t) {
+	$count = Products::find('count', [
+		'conditions' => [
+			'is_published' => true
+		]
+	]);
+	return [
+		'class' => null,
+		'url' => [
+			'controller' => 'ProductGroups', 'action' => 'index', 'library' => 'ecommerce_core'
+		],
+		'title' => $t('Products'),
+		'value' => $count
+	];
+}, [
+	'type' => Widgets::TYPE_COUNT_SINGLE_ALPHA,
+	'group' => Widgets::GROUP_DASHBOARD,
+]);
+
+Widgets::register('ecommerce_core', 'ecommerce_pending', function() use ($t) {
+	$orders = Orders::find('count', [
+		'conditions' => [
+			'status NOT' => ['processed', 'cancelled', 'expired']
+		]
+	]);
+	$products = Products::find('all')->find(function($item) {
+		return $item->stock() <= 0;
+	})->count();
+
+	return [
+		'title' => $t('Pending'),
+		'class' => $orders || $products ? 'negative' : 'positive',
+		'url' => [
+			'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
+		],
+		'data' => [
+			$t('Orders') => $orders,
+			$t('Out of Stock') => $products
+		]
+	];
+}, [
 	'type' => Widgets::TYPE_COUNT_MULTIPLE_ALPHA,
 	'group' => Widgets::GROUP_DASHBOARD,
-	'url' => [
-		'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
-	],
-	'data' => function() use ($t) {
-		$orders = Orders::find('count', [
-			'conditions' => [
-				'status NOT' => ['processed', 'cancelled', 'expired']
-			]
-		]);
-		$products = Products::find('all')->find(function($item) {
-			return $item->stock() <= 0;
-		})->count();
-
-		return [
-			'title' => $t('Pending'),
-			'data' => [
-				$t('Orders') => $orders,
-				$t('Out of Stock') => $products
-			]
-		];
-	}
 ]);
-
 
 ?>

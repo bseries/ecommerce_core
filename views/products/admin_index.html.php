@@ -1,6 +1,14 @@
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
-	<h1 class="alpha"><?= $this->title($t('Product variants')) ?></h1>
+<?php
 
+$this->set([
+	'page' => [
+		'type' => 'multiple',
+		'object' => $t('product variants')
+	]
+]);
+
+?>
+<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
 	<?php if ($data->count()): ?>
 		<table>
 			<thead>
@@ -27,9 +35,9 @@
 							<?= $this->date->format($item->created, 'date') ?>
 						</time>
 					<td class="actions">
-						<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'delete button']) ?>
 						<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-						<?= $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>

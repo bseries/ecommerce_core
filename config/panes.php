@@ -26,7 +26,7 @@ Panes::registerActions('ecommerce_core', 'ecommerce', [
 	// $t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
 	$t('List products') => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
 	$t('New product') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
-	// $t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
+	$t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
 	$t('New product variant') => ['controller' => 'Products', 'action' => 'add'] + $base,
 	$t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
 	$t('List carts') => ['controller' => 'Carts', 'action' => 'index'] + $base,
