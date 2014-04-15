@@ -15,20 +15,21 @@ use lithium\g11n\Message;
 
 extract(Message::aliases());
 
-Panes::register('ecommerce_core', 'ecommerce', [
+Panes::registerGroup('ecommerce_core', 'ecommerce', [
 	'title' => $t('eCommerce'),
-	'group' => Panes::GROUP_AUTHORING,
-	'url' => $base = ['controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true],
-	'actions' => [
-		$t('List orders') => ['controller' => 'Orders', 'action' => 'index'] + $base,
-		// $t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
-		$t('List products') => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
-		$t('New product') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
-		// $t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
-		$t('New product variant') => ['controller' => 'Products', 'action' => 'add'] + $base,
-		$t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
-		$t('List carts') => ['controller' => 'Carts', 'action' => 'index'] + $base,
-	]
+	'order' => 70
+]);
+
+$base = ['controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true];
+Panes::registerActions('ecommerce_core', 'ecommerce', [
+	$t('List orders') => ['controller' => 'Orders', 'action' => 'index'] + $base,
+	// $t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
+	$t('List products') => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
+	$t('New product') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
+	// $t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
+	$t('New product variant') => ['controller' => 'Products', 'action' => 'add'] + $base,
+	$t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
+	$t('List carts') => ['controller' => 'Carts', 'action' => 'index'] + $base,
 ]);
 
 ?>
