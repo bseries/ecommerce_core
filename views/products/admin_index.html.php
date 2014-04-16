@@ -23,7 +23,7 @@ $this->set([
 			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="flag"><?= ($item->is_published ? '✓' : '╳') ?>
+					<td class="flag"><?= ($item->is_published ? '✓' : '×') ?>
 					<td>
 						<?php if ($cover = $item->cover()): ?>
 							<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>

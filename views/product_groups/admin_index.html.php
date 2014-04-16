@@ -13,7 +13,6 @@ $this->set([
 		<table>
 			<thead>
 				<tr>
-					<td class="flag">
 					<td class="flag"><?= $t('publ.?') ?>
 					<td>
 					<td class="emphasize"><?= $t('Title') ?>
@@ -25,8 +24,7 @@ $this->set([
 			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="flag">
-					<td class="flag"><?= ($item->is_published ? '✓' : '╳') ?>
+					<td class="flag"><?= ($item->is_published ? '✓' : '×') ?>
 					<td>
 						<?php if ($cover = $item->cover()): ?>
 							<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
@@ -44,8 +42,7 @@ $this->set([
 						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 					<?php foreach ($item->products() as $sub): ?>
 						<tr class="sub-item">
-							<td class="flag">↳
-							<td class="flag"><?= ($sub->is_published ? '✓' : '╳') ?>
+							<td class="flag"><?= ($sub->is_published ? '✓' : '×') ?>
 							<td>
 								<?php if ($cover = $sub->cover()): ?>
 									<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
