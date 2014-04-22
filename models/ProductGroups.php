@@ -13,6 +13,7 @@
 namespace ecommerce_core\models;
 
 use ecommerce_core\models\Products;
+use lithium\util\Inflector;
 
 class ProductGroups extends \cms_core\models\Base {
 
@@ -56,6 +57,10 @@ class ProductGroups extends \cms_core\models\Base {
 				'ecommerce_product_group_id' => $entity->id
 			]
 		]);
+	}
+
+	public function slug($entity) {
+		return strtolower(Inflector::slug($entity->title));
 	}
 }
 

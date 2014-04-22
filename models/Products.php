@@ -18,6 +18,7 @@ use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\ProductPrices;
 use ecommerce_core\models\ProductPriceGroups;
 use Exception;
+use lithium\util\Inflector;
 
 class Products extends \cms_core\models\Base {
 
@@ -133,6 +134,10 @@ class Products extends \cms_core\models\Base {
 			}
 		}
 		return $result - array_sum($subtract);
+	}
+
+	public function slug($entity) {
+		return strtolower(Inflector::slug($entity->title));
 	}
 }
 
