@@ -131,7 +131,9 @@ $this->set([
 		</div>
 
 		<div class="bottom-actions">
-			<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button large']) ?>
+			<?php if ($item->exists()): ?>
+				<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button large']) ?>
+			<?php endif ?>
 			<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large save']) ?>
 		</div>
 	<?=$this->form->end() ?>
