@@ -3,7 +3,7 @@
 $this->set([
 	'page' => [
 		'type' => 'multiple',
-		'object' => $t('product variants')
+		'object' => $t('products')
 	]
 ]);
 

@@ -5,7 +5,7 @@ $this->set([
 		'type' => 'single',
 		'title' => $item->title,
 		'empty' => $t('untitled'),
-		'object' => $t('product variant')
+		'object' => $t('products')
 	],
 	'meta' => [
 		'is_published' => $item->is_published ? $t('published') : $t('unpublished')
@@ -32,6 +32,10 @@ $this->set([
 					'type' => 'select',
 					'label' => $t('Contained in product group'),
 					'list' => ['new' => '-- ' . $t('Create new product group') . ' --'] + $productGroups
+				]) ?>
+				<?= $this->form->field('stock', [
+					'type' => 'number',
+					'label' => $t('Stock'),
 				]) ?>
 			</div>
 		</div>

@@ -5,7 +5,7 @@ $this->set([
 		'type' => 'single',
 		'title' => $item->title,
 		'empty' => $t('untitled'),
-		'object' => $t('product')
+		'object' => $t('product group')
 	],
 	'meta' => [
 		'is_published' => $item->is_published ? $t('published') : $t('unpublished')

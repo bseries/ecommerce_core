@@ -27,7 +27,7 @@ Settings::register('ecommerce_core', 'product.number', [
 	'generate' => '%Y%%04.d'
 ]);
 
-Settings::register('ecommerce_core', 'paypal.email', 'billing@example.com');
+Settings::register('ecommerce_core', 'service.paypal.default.email', 'billing@example.com');
 Settings::register('ecommerce_core', 'checkout.expire', '+1 week');
 
 Features::register('cms_ecommerce', 'shipment.sendShippedMail', false);

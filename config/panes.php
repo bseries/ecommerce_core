@@ -24,10 +24,10 @@ $base = ['controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => 
 Panes::registerActions('ecommerce_core', 'ecommerce', [
 	$t('List orders') => ['controller' => 'Orders', 'action' => 'index'] + $base,
 	// $t('New order') => ['controller' => 'Orders', 'action' => 'add'] + $base,
-	$t('List products') => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
-	$t('New product') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
-	$t('List product variants') => ['controller' => 'Products', 'action' => 'index'] + $base,
-	$t('New product variant') => ['controller' => 'Products', 'action' => 'add'] + $base,
+	$t('List products groups') => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
+	$t('New product group') => ['controller' => 'ProductGroups', 'action' => 'add'] + $base,
+	$t('List products') => ['controller' => 'Products', 'action' => 'index'] + $base,
+	$t('New product') => ['controller' => 'Products', 'action' => 'add'] + $base,
 	$t('List shipments') => ['controller' => 'Shipments', 'action' => 'index'] + $base,
 	$t('List carts') => ['controller' => 'Carts', 'action' => 'index'] + $base,
 ]);

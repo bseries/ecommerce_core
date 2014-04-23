@@ -42,19 +42,17 @@ Router::connect('/admin/ecommerce/shipments/{:action}/{:id:[0-9]+}', [
 	'controller' => 'Shipments', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
-// We mask product groups as "products".
-Router::connect('/admin/ecommerce/products/{:action}', [
+Router::connect('/admin/ecommerce/product-groups/{:action}', [
 	'controller' => 'ProductGroups', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
-Router::connect('/admin/ecommerce/products/{:action}/{:id:[0-9]+}', [
+Router::connect('/admin/ecommerce/product-groups/{:action}/{:id:[0-9]+}', [
 	'controller' => 'ProductGroups', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
-// We mask products  as "product variants".
-Router::connect('/admin/ecommerce/product-variants/{:action}', [
+Router::connect('/admin/ecommerce/products/{:action}', [
 	'controller' => 'products', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
-Router::connect('/admin/ecommerce/product-variants/{:action}/{:id:[0-9]+}', [
+Router::connect('/admin/ecommerce/products/{:action}/{:id:[0-9]+}', [
 	'controller' => 'products', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 

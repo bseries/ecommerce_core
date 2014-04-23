@@ -54,7 +54,7 @@ class Products extends \cms_core\models\Base {
 		$model = static::_object();
 
 		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
-			Settings::read('order.number')
+			Settings::read('product.number')
 		);
 	}
 
@@ -146,9 +146,10 @@ Products::applyFilter('save', function($self, $params, $chain) {
 	$data =& $params['data'];
 
 	// Create new product group.
-	if (isset($data['ecommerce_product_id']) && $data['ecommerce_product_group_id'] == 'new') {
+	if (isset($data['ecommerce_product_group_id']) && $data['ecommerce_product_group_id'] == 'new') {
 		$group = ProductGroups::create([
 			'title' => $data['title'],
+			'cover_media_id' => $data['cover_media_id']
 		]);
 		if (!$group->save()) {
 			return false;
@@ -167,7 +168,7 @@ Products::applyFilter('save', function($self, $params, $chain) {
 	$new = $entity->prices;
 
 	foreach ($new as $key => $data) {
-		if (isset($data['id'])) {
+		if (!empty($data['id'])) {
 			$item = ProductPrices::findById($data['id']);
 			$item->set($data);
 		} else {
