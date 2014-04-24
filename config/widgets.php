@@ -65,7 +65,11 @@ Widgets::register('ecommerce_core', 'total_customers', function() use ($t) {
 ]);
 
 Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
-	$orders = Orders::find('all');
+	$orders = Orders::find('all', [
+		'conditions' => [
+			'status' => 'processed'
+		]
+	]);
 	$result = null;
 
 	foreach ($orders as $item) {
@@ -92,21 +96,30 @@ Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
 ]);
 
 Widgets::register('ecommerce_core', 'total_products', function() use ($t) {
-	$count = Products::find('count', [
+	$products = Products::find('all', [
 		'conditions' => [
 			'is_published' => true
 		]
 	]);
+
+	$stock = 0;
+	foreach ($products as $product) {
+		$stock += $product->stock();
+	}
+
 	return [
 		'class' => null,
 		'url' => [
 			'controller' => 'ProductGroups', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
 		'title' => $t('Products'),
-		'value' => $count
+		'data' => [
+			$t('Total') => $products->count(),
+			$t('In stock') => $stock
+		]
 	];
 }, [
-	'type' => Widgets::TYPE_COUNT_SINGLE_ALPHA,
+	'type' => Widgets::TYPE_COUNT_MULTIPLE_ALPHA,
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
