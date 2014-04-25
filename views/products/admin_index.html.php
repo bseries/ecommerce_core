@@ -8,28 +8,36 @@ $this->set([
 ]);
 
 ?>
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
+<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
 	<?php if ($data->count()): ?>
 		<table>
 			<thead>
 				<tr>
-					<td class="flag"><?= $t('publ.?') ?>
+					<td data-sort="is-published" class="flag is-published list-sort"><?= $t('publ.?') ?>
 					<td>
-					<td class="emphasize"><?= $t('Title') ?>
-					<td class="emphasize"><?= $t('Number') ?>
-					<td class="date created"><?= $t('Created') ?>
+					<td data-sort="title" class="emphasize title list-sort"><?= $t('Title') ?>
+					<td data-sort="number" class="emphasize number list-sort"><?= $t('Number') ?>
+					<td data-sort="stock" class="stock list-sort"><?= $t('Stock') ?>
+					<td data-sort="created" class="date created list-sort desc"><?= $t('Created') ?>
 					<td class="actions">
+						<?= $this->form->field('search', [
+							'type' => 'search',
+							'label' => false,
+							'placeholder' => $t('Filter'),
+							'class' => 'list-search'
+						]) ?>
 			</thead>
-			<tbody>
+			<tbody class="list">
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="flag"><?= ($item->is_published ? '✓' : '×') ?>
+					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
 					<td>
 						<?php if ($cover = $item->cover()): ?>
 							<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
 						<?php endif ?>
-					<td class="emphasize"><?= $item->title ?>
-					<td class="emphasize"><?= $item->number ?: '–' ?>
+					<td class="emphasize title"><?= $item->title ?>
+					<td class="emphasize number"><?= $item->number ?: '–' ?>
+					<td class="emphasize stock"><?= $item->stock() ?: '–' ?>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>

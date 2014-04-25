@@ -3,7 +3,7 @@
 $this->set([
 	'page' => [
 		'type' => 'multiple',
-		'object' => $t('banners')
+		'object' => $t('orders')
 	]
 ]);
 
