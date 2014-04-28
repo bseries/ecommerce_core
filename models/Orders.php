@@ -27,6 +27,7 @@ use DateTime;
 use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
 use lithium\analysis\Logger;
+use lithium\util\Validator;
 
 class Orders extends \cms_core\models\Base {
 
@@ -72,6 +73,11 @@ class Orders extends \cms_core\models\Base {
 		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('order.number')
 		);
+
+		Validator::add('checked', function($value, $format, $options) {
+			return $value === '1';
+		});
+
 		$model->validates['shipping_method'] = [
 			[
 				'notEmpty',
@@ -84,6 +90,13 @@ class Orders extends \cms_core\models\Base {
 				'notEmpty',
 				'on' => ['checkoutPayment'],
 				'message' => $t('You must select a method.')
+			]
+		];
+		$model->validates['has_accepted_terms'] = [
+			[
+				'checked',
+				'on' => ['checkoutConfirm'],
+				'message' => $t('You must accept the terms.')
 			]
 		];
 	}
