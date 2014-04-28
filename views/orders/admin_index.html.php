@@ -12,6 +12,7 @@ $this->set([
 	<div class="help">
 		<?= $t('Cancelling an order will also cancel associated invoice and shipment - if possible.') ?>
 		<?= $t('Once the order was shipped and the invoice paid, mark the order as `processed` to close it.') ?>
+		<?= $t('When the order has been checked out, an email along with the invoice is sent to the user.') ?>
 	</div>
 
 	<?php if ($data->count()): ?>

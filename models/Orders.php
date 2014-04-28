@@ -304,6 +304,9 @@ class Orders extends \cms_core\models\Base {
 				$user = $order->user();
 				$invoice = $entity->invoice();
 
+				if (!$user->is_notified) {
+					return true;
+				}
 				return Mailer::deliver('order_checked_out', [
 					'to' => $user->email,
 					'bcc' => $contact['email'],

@@ -103,6 +103,9 @@ class Shipments extends \cms_core\models\Base {
 				}
 				$user = $order->user();
 
+				if (!$user->is_notified) {
+					return true;
+				}
 				return Mailer::deliver('shipment_shipped', [
 					'to' => $user->email,
 					'subject' => $t('Order #{:number} shipped.', [
