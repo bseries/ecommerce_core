@@ -18,6 +18,7 @@ use ecommerce_core\models\CartPositions;
 use cms_core\models\Users;
 use cms_core\models\VirtualUsers;
 use DateTime;
+use lithium\analysis\Logger;
 
 class Carts extends \cms_core\models\Base {
 
@@ -82,6 +83,22 @@ class Carts extends \cms_core\models\Base {
 			}
 		}
 		return $sum;
+	}
+
+	// Not all carts must have an associated order, i.e.
+	// when checkout never begun.
+	public static function expire() {
+		$data = static::find('all', [
+			'conditions' => [
+				'status' => 'open'
+			]
+		]);
+		foreach ($data as $item) {
+			if ($item->isExpired()) {
+				$item->save(['status' => 'expired']);
+				Logger::write('debug', "Cart `{$item->id}` expired.");
+			}
+		}
 	}
 
 	public function isExpired($entity) {

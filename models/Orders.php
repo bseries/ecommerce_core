@@ -26,6 +26,7 @@ use cms_core\extensions\cms\Settings;
 use DateTime;
 use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
+use lithium\analysis\Logger;
 
 class Orders extends \cms_core\models\Base {
 
@@ -236,6 +237,21 @@ class Orders extends \cms_core\models\Base {
 	public function address($entity, $type) {
 		$field = $type . '_address_id';
 		return Addresses::findById($entity->$field);
+	}
+
+	public static function expire() {
+		$data = static::find('all', [
+			'conditions' => [
+				'status' => 'checking-out'
+			]
+		]);
+		foreach ($data as $item) {
+			if ($item->isExpired()) {
+				$item->save(['status' => 'expired']);
+				$item->cart()->save(['status' => 'expired']);
+				Logger:write('debug', "Order `{$item->id}` and associated cart expired.");
+			}
+		}
 	}
 
 	public function isExpired($entity) {
