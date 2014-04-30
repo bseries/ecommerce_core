@@ -77,12 +77,16 @@ class Carts extends \cms_core\models\Base {
 			$result = $position->totalAmount($user, $taxZone);
 
 			if ($sum) {
-				$sum = $result->add($result);
+				$sum = $sum->add($result);
 			} else {
 				$sum = $result;
 			}
 		}
 		return $sum;
+	}
+
+	public function totalTax($entity, $user, $taxZone) {
+		return $entity->totalAmount($user, $taxZone)->getTax();
 	}
 
 	// Not all carts must have an associated order, i.e.
