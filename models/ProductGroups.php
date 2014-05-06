@@ -14,6 +14,7 @@ namespace ecommerce_core\models;
 
 use ecommerce_core\models\Products;
 use lithium\util\Inflector;
+use li3_access\security\Access;
 
 class ProductGroups extends \cms_core\models\Base {
 
@@ -48,7 +49,12 @@ class ProductGroups extends \cms_core\models\Base {
 				]
 			]
 		],
-		'cms_core\extensions\data\behavior\Timestamp'
+		'cms_core\extensions\data\behavior\Timestamp',
+		'cms_core\extensions\data\behavior\Serializable' => [
+			'fields' => [
+				'access' => ','
+			]
+		]
 	];
 
 	public function products($entity) {
@@ -61,6 +67,12 @@ class ProductGroups extends \cms_core\models\Base {
 
 	public function slug($entity) {
 		return strtolower(Inflector::slug($entity->title));
+	}
+
+	public function hasAccess($entity, $user) {
+		return Access::check('entity', $user, ['request' => $entity], [
+			'rules' => $entity->access
+		]) === [];
 	}
 }
 

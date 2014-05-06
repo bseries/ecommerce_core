@@ -24,7 +24,7 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 					<?php $user = $item->user() ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="status"><?= $item->status ?>
+					<td class="status"><?= $statuses[$item->status] ?>
 					<td><?= $item->method ?>
 					<td class="user">
 						<?php if ($user): ?>

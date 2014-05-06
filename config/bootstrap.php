@@ -20,6 +20,7 @@ require 'widgets.php';
 use cms_core\extensions\cms\Jobs;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\Carts;
+use li3_access\security\Access;
 
 Jobs::recur('ecommerce_core', 'expire', function() {
 	Orders::expire();
@@ -27,5 +28,14 @@ Jobs::recur('ecommerce_core', 'expire', function() {
 }, [
 	'frequency' => Jobs::FREQUENCY_LOW
 ]);
+
+$rules = Access::adapter('entity');
+
+$rules->add('user.role:merchant', function($user, $entity, $options) {
+	return $user->role == 'merchant';
+});
+$rules->add('user.role:customer', function($user, $entity, $options) {
+	return $user->role == 'customer';
+});
 
 ?>

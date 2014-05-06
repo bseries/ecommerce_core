@@ -14,6 +14,7 @@ namespace ecommerce_core\models;
 
 use cms_billing\extensions\financial\Price;
 use lithium\util\Collection;
+use li3_access\security\Access;
 
 class ShippingMethods extends \cms_core\models\Base {
 
@@ -32,9 +33,7 @@ class ShippingMethods extends \cms_core\models\Base {
 			'id' => $name,
 			'name' => $name,
 			'title' => null,
-			'legible' => function($user) {
-				return false;
-			},
+			'access' => ['user.role:admin'],
 			'delegate' => false,
 			'price' => function($user, $cart, $taxZone) {
 				return new Price(0, 'EUR', 'net', $taxZone);
@@ -58,9 +57,10 @@ class ShippingMethods extends \cms_core\models\Base {
 		}
 	}
 
-	public function isLegibleFor($entity, $user) {
-		$method = $entity->data('legible');
-		return $method($user);
+	public function hasAccess($entity, $user) {
+		return Access::check('entity', $user, ['request' => $entity], [
+			'rules' => $entity->data('access')
+		]) === [];
 	}
 
 	public function price($entity, $user, $cart, $taxZone) {

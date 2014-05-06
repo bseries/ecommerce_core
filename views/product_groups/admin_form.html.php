@@ -25,6 +25,12 @@ $this->set([
 				]) ?>
 			</div>
 			<div class="grid-column-right">
+				<?= $this->form->field('access', [
+					'type' => 'select',
+					'multiple' => true,
+					'list' => $rules,
+					'label' => $t('Access'),
+				]) ?>
 			</div>
 		</div>
 

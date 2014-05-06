@@ -26,7 +26,7 @@ class ShipmentsController extends \cms_core\controllers\BaseController {
 		$data = Shipments::find('all', [
 			'order' => ['created' => 'DESC']
 		]);
-		return compact('data');
+		return compact('data') + $this->_selects();
 	}
 
 	public function admin_ship() {
@@ -49,7 +49,7 @@ class ShipmentsController extends \cms_core\controllers\BaseController {
 		return $this->redirect($this->request->referer());
 	}
 
-	protected function _selects($item) {
+	protected function _selects($item = null) {
 		extract(Message::aliases());
 
 		$statuses = Shipments::enum('status', [

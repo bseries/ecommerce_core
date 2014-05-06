@@ -12,6 +12,7 @@
 
 namespace ecommerce_core\models;
 
+use li3_access\security\Access;
 use cms_billing\extensions\finance\Price;
 use lithium\util\Collection;
 
@@ -32,9 +33,7 @@ class PaymentMethods extends \cms_core\models\Base {
 			'id' => $name,
 			'name' => $name,
 			'title' => null,
-			'legible' => function($user) {
-				return false;
-			},
+			'access' => ['user.role:admin'],
 			'price' => function($user, $cart, $taxZone) {
 				return new Price(0, 'EUR', 'net', $taxZone);
 			},
@@ -42,6 +41,7 @@ class PaymentMethods extends \cms_core\models\Base {
 
 			}
 		];
+		$data['access'] = (array) $data['access'];
 		static::$_data[$name] = static::create($data);
 	}
 
@@ -60,9 +60,10 @@ class PaymentMethods extends \cms_core\models\Base {
 		}
 	}
 
-	public function isLegibleFor($entity, $user) {
-		$method = $entity->data('legible');
-		return $method($user);
+	public function hasAccess($entity, $user) {
+		return Access::check('entity', $user, ['request' => $entity], [
+			'rules' => $entity->data('access')
+		]) === [];
 	}
 
 	public function price($entity, $user, $cart, $taxZone) {

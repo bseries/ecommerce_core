@@ -82,7 +82,7 @@ class Carts extends \cms_core\models\Base {
 				$sum = $result;
 			}
 		}
-		return $sum;
+		return $sum ?: new Price(0, $user->currency, 'net', $taxZone);
 	}
 
 	public function totalTax($entity, $user, $taxZone) {

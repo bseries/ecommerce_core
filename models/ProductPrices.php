@@ -14,6 +14,7 @@ namespace ecommerce_core\models;
 
 use cms_billing\extensions\finance\Price;
 use ecommerce_core\models\ProductPriceGroups;
+use li3_access\security\Access;
 
 class ProductPrices extends \cms_core\models\Base {
 
@@ -43,9 +44,10 @@ class ProductPrices extends \cms_core\models\Base {
 		return new Price($entity->price, $entity->price_currency, $entity->price_type, $taxZone);
 	}
 
-	public function isLegibleFor($entity, $user) {
-		$method = $this->group($entity)->data('legible');
-		return $method($user);
+	public function hasAccess($entity, $user) {
+		return Access::check('entity', $user, ['request' => $entity], [
+			'rules' => $entity->group()->data('access')
+		]) === [];
 	}
 }
 

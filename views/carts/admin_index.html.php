@@ -33,7 +33,7 @@ $this->set([
 					<?php $user = $order ? $order->user() : null?>
 					<?php $taxZone = $user ? $user->taxZone() : null ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="status"><?= $item->status ?>
+					<td class="status"><?= $statuses[$item->status] ?>
 					<td class="order">
 					<?php if ($order): ?>
 						<?= $this->html->link($order->number, [
@@ -51,13 +51,13 @@ $this->set([
 							'library' => 'cms_core'
 						]) ?>
 					<?php else: ?>
-						-
+						–
 					<?php endif ?>
 					<td>
 					<?php if ($user): ?>
-						<?= $this->money->format($item->totalAmount($user, $user->taxZone())->getNet(), 'money') ?>
+						<?= $this->money->format($item->totalAmount($user, $user->taxZone())->getNet(), 'money') ?: '–' ?>
 					<?php else: ?>
-						-
+						–
 					<?php endif ?>
 					<td><?= $item->totalQuantity() ?>
 					<td class="date created">

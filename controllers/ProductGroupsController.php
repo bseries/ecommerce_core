@@ -14,6 +14,7 @@ namespace ecommerce_core\controllers;
 
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
+use li3_access\security\Access;
 
 class ProductGroupsController extends \cms_core\controllers\BaseController {
 
@@ -27,7 +28,21 @@ class ProductGroupsController extends \cms_core\controllers\BaseController {
 		$data = ProductGroups::find('all', [
 			'order' => ['id' => 'ASC']
 		]);
-		return compact('data');
+		return compact('data') + $this->_selects();
+	}
+
+	protected function _selects($item = null) {
+		$data = array_keys(Access::adapter('entity')->get());
+		$skip = ['allowAll', 'denyAll', 'allowAnyUser', 'allowIp'];
+		$rules = [];
+
+		foreach ($data as $item) {
+			if (in_array($item, $skip)) {
+				continue;
+			}
+			$rules[$item] = $item;
+		}
+		return compact('rules');
 	}
 }
 

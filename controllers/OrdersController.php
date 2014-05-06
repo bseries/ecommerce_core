@@ -35,6 +35,11 @@ class OrdersController extends \cms_core\controllers\BaseController {
 		extract(Message::aliases());
 
 		$statuses = Orders::enum('status', [
+			'refunding' => $t('refunding'),
+			'on-backorder' => $t('on backorder'),
+			'cancelled' => $t('cancelled'),
+			'processed' => $t('processed'),
+			'processing' => $t('processing'),
 			'checking-out' => $t('checking out'),
 			'checked-out'=> $t('checked out'),
 			'expired' => $t('expired')

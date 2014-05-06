@@ -15,6 +15,7 @@ namespace ecommerce_core\controllers;
 use cms_billing\models\TaxZones;
 use ecommerce_core\models\Carts;
 use lithium\core\Environment;
+use lithium\g11n\Message;
 
 class CartsController extends \cms_core\controllers\BaseController {
 
@@ -25,7 +26,18 @@ class CartsController extends \cms_core\controllers\BaseController {
 		$data = Carts::find('all', [
 			'order' => ['created' => 'desc']
 		]);
-		return compact('data');
+		return compact('data') + $this->_selects();
+	}
+
+	protected function _selects($item = null) {
+		extract(Message::aliases());
+
+		$statuses = Carts::enum('status', [
+			'closed' => $t('closed'),
+			'open' => $t('open')
+		]);
+
+		return compact('statuses');
 	}
 }
 

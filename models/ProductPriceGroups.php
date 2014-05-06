@@ -27,10 +27,9 @@ class ProductPriceGroups extends \cms_core\models\Base {
 		$data += [
 			'id' => $name,
 			'title' => null,
-			'legible' => function($user) {
-				return false;
-			}
+			'access' => ['user.role:admin']
 		];
+		$data['access'] = (array) $data['access'];
 		static::$_data[$name] = static::create($data);
 	}
 

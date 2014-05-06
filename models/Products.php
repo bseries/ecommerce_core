@@ -60,7 +60,7 @@ class Products extends \cms_core\models\Base {
 
 	public function price($entity, $user, $taxZone) {
 		foreach ($this->prices($entity) as $price) {
-			if ($price->isLegibleFor($user)) {
+			if ($price->hasAccess($user)) {
 				return $price->price($taxZone);
 			}
 		}
