@@ -39,6 +39,7 @@ class ShippingMethods extends \cms_core\models\Base {
 				return new Price(0, 'EUR', 'net', $taxZone);
 			}
 		];
+		$data['access'] = (array) $data['access'];
 		static::$_data[$name] = static::create($data);
 	}
 
