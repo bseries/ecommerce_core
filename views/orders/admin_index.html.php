@@ -41,7 +41,7 @@ $this->set([
 					<?php $user = $item->user() ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="emphasize number"><?= $item->number ?: '–' ?>
-					<td class="status"><?= $item->status ?>
+					<td class="status"><?= $item->status ? $statuses[$item->status] : '–' ?>
 					<td class="user">
 						<?php if ($user): ?>
 							<?= $this->html->link($user->number, [
@@ -60,7 +60,7 @@ $this->set([
 						echo '–';
 					}
 					?>
-					<td class="status invoice-status"><?= $sub ? $sub->status : '–' ?>
+					<td class="status invoice-status"><?= $sub ? $invoiceStatuses[$sub->status] : '–' ?>
 					<td class="shipment-number">
 					<?php
 					if ($sub = $shipment = $item->shipment()) {
@@ -69,7 +69,7 @@ $this->set([
 						echo '–';
 					}
 					?>
-					<td class="status shipment-status"><?= $sub ? $sub->status : '–' ?>
+					<td class="status shipment-status"><?= $sub ? $shipmentStatuses[$sub->status] : '–' ?>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>

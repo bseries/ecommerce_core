@@ -26,17 +26,17 @@ Widgets::register('ecommerce_core', 'carts', function() use ($t) {
 
 	return [
 		'class' => null,
-		'title' => false,
+		'title' => $t('Carts'),
 		'url' => [
 			'controller' => 'Carts', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
 		'data' => [
-			$t('Open Carts') => $open,
-			$t('Expired Carts') => $expired
+			$t('Open') => $open,
+			$t('Expired') => $expired
 		]
 	];
 }, [
-	'type' => Widgets::TYPE_COUNT_MULTIPLE_BETA,
+	'type' => Widgets::TYPE_COUNT_MULTIPLE_ALPHA,
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 

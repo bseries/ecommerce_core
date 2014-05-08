@@ -28,10 +28,10 @@ class OrdersController extends \cms_core\controllers\BaseController {
 		$data = Orders::find('all', [
 			'order' => ['number' => 'DESC']
 		]);
-		return compact('data');
+		return compact('data') + $this->_selects();
 	}
 
-	protected function _selects($item) {
+	protected function _selects($item = null) {
 		extract(Message::aliases());
 
 		$statuses = Orders::enum('status', [
