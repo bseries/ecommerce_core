@@ -179,7 +179,7 @@ class Orders extends \cms_core\models\Base {
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
 			'total_currency' => 'EUR',
-			'note' => $t('Order number: ') . $entity->number,
+			'note' => $t('Order No.') . ': ' . $entity->number,
 			'terms' => Settings::read('billing.paymentTerms')
 		];
 		if (!$invoice->save($data)) {
