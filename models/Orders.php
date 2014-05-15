@@ -171,11 +171,11 @@ class Orders extends \cms_core\models\Base {
 		return $entity->save();
 	}
 
-	public function generateInvoice($entity, $user, $cart) {
+	public function generateInvoice($entity, $user, $cart, array $data = []) {
 		extract(Message::aliases());
 
 		$invoice = Invoices::createForUser($user);
-		$data = [
+		$data += [
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
 			'total_currency' => 'EUR',
