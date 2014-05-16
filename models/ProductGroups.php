@@ -57,12 +57,12 @@ class ProductGroups extends \cms_core\models\Base {
 		]
 	];
 
-	public function products($entity) {
-		return Products::find('all', [
+	public function products($entity, array $query = []) {
+		return Products::find('all', $y = [
 			'conditions' => [
 				'ecommerce_product_group_id' => $entity->id
 			]
-		]);
+		] + $query);
 	}
 
 	public function slug($entity) {
