@@ -58,7 +58,7 @@ class ProductGroups extends \cms_core\models\Base {
 	];
 
 	public function products($entity, array $query = []) {
-		return Products::find('all', $y = [
+		return Products::find('all', [
 			'conditions' => [
 				'ecommerce_product_group_id' => $entity->id
 			]
