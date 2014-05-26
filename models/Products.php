@@ -12,6 +12,7 @@
 
 namespace ecommerce_core\models;
 
+use lithium\storage\Cache;
 use cms_core\extensions\cms\Settings;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\ProductGroups;
@@ -94,46 +95,74 @@ class Products extends \cms_core\models\Base {
 		]);
 	}
 
-	public function stock($entity, $type = 'hard') {
+	public function stock($entity, $type = 'virtual') {
 		$result = (integer) $entity->stock;
 
-		if ($type !== 'hard') {
+		if ($type !== 'virtual') {
 			return $result;
 		}
-		$subtract = [];
+		$cacheKeyBase = 'stock_real_' . $entity->id;
 
-		$carts = Carts::find('all', [
-			'conditions' => [
-				'status' => 'open'
-			]
+		$lastModified = Carts::find('first', [
+			'order' => ['modified' => 'DESC'],
+			'fields' => ['modified']
 		]);
-		foreach ($carts as $cart) {
-			foreach ($cart->positions() as $position) {
-				if ($position->ecommerce_product_id != $entity->id) {
-					continue;
-				}
-				$subtract[$position->id] = (integer) $position->quantity;
-			}
-		}
-		$shipments = Shipments::find('all', [
-			'conditions' => [
-				'status' => [
-					'created',
-					'shipping-scheduled',
-					'shipping-error',
-					'shipping'
+		$cacheKey = $cacheKeyBase . '_carts_' . md5($lastModified->modified);
+
+		if (($cartSubtract = Cache::read('default', $cacheKey)) === null) {
+			$cartSubtract = [];
+
+			$carts = Carts::find('all', [
+				'conditions' => [
+					'status' => 'open'
 				]
-			]
-		]);
-		foreach ($shipments as $shipment) {
-			foreach ($shipment->order()->cart()->positions() as $position) {
-				if ($position->ecommerce_product_id != $entity->id) {
-					continue;
+			]);
+			foreach ($carts as $cart) {
+				foreach ($cart->positions() as $position) {
+					if ($position->ecommerce_product_id != $entity->id) {
+						continue;
+					}
+					$cartSubtract[$position->id] = (integer) $position->quantity;
 				}
-				$subtract[$position->id] = (integer) $position->quantity;
 			}
+			Cache::write('default', $cacheKey, $cartSubtract, Cache::PERSIST);
 		}
-		return $result - array_sum($subtract);
+
+		$lastModified = Shipments::find('first', [
+			'order' => ['modified' => 'DESC'],
+			'fields' => ['modified']
+		]);
+		$cacheKey = $cacheKeyBase . '_shipments_' . md5($lastModified->modified);
+
+		if (($shipmentSubtract = Cache::read('default', $cacheKey)) === null) {
+			$shipmentSubtract = [];
+
+			$shipments = Shipments::find('all', [
+				'conditions' => [
+					'status' => [
+						'created',
+						'shipping-scheduled',
+						'shipping-error',
+						'shipping'
+					]
+				]
+			]);
+			foreach ($shipments as $shipment) {
+				$positions = $shipment
+					->order(['fields' => ['ecommerce_cart_id']])
+					->cart(['fields' => ['id']])
+					->positions();
+
+				foreach ($positions as $position) {
+					if ($position->ecommerce_product_id != $entity->id) {
+						continue;
+					}
+					$shipmentSubtract[$position->id] = (integer) $position->quantity;
+				}
+			}
+			Cache::write('default', $cacheKey, $shipmentSubtract, Cache::PERSIST);
+		}
+		return $result - array_sum($cartSubtract) - array_sum($shipmentSubtract);
 	}
 
 	public function slug($entity) {
