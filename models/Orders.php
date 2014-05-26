@@ -112,12 +112,12 @@ class Orders extends \cms_core\models\Base {
 		return VirtualUsers::findById($entity->virtual_user_id);
 	}
 
-	public function cart($entity) {
+	public function cart($entity, array $query = []) {
 		return Carts::find('first', [
 			'conditions' => [
 				'id' => $entity->ecommerce_cart_id
 			]
-		]);
+		] + $query);
 	}
 
 	public function invoice($entity) {

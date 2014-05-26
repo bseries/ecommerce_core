@@ -52,8 +52,12 @@ class Carts extends \cms_core\models\Base {
 		return VirtualUsers::findById($entity->virtual_user_id);
 	}
 
-	public function order($entity) {
-		return Orders::findByEcommerceCartId($entity->id);
+	public function order($entity, array $query = []) {
+		return Orders::find('first', [
+			'conditions' => [
+				'ecommerce_cart_id' => $entity->id
+			]
+		] + $query);
 	}
 
 	public function positions($entity) {

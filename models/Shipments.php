@@ -63,12 +63,12 @@ class Shipments extends \cms_core\models\Base {
 		return $entity->order()->user();
 	}
 
-	public function order($entity) {
+	public function order($entity, array $query = []) {
 		return Orders::find('first', [
 			'conditions' => [
 				'ecommerce_shipment_id' => $entity->id
 			]
-		]);
+		] + $query);
 	}
 
 	public function address($entity) {
