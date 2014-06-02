@@ -32,7 +32,11 @@ class CartPositions extends \cms_core\models\Base {
 	];
 
 	public function product($entity) {
-		return Products::findById($entity->ecommerce_product_id);
+		return Products::find('first', [
+			'conditions' => [
+				'id' => $entity->ecommerce_product_id
+			]
+		]);
 	}
 
 	public function amount($entity, $user, $taxZone) {
