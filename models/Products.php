@@ -107,7 +107,7 @@ class Products extends \cms_core\models\Base {
 			'order' => ['modified' => 'DESC'],
 			'fields' => ['modified']
 		]);
-		$cacheKey = $cacheKeyBase . '_carts_' . md5($lastModified->modified);
+		$cacheKey = $cacheKeyBase . '_carts_' . ($lastModified ? md5($lastModified->modified) : 'initial');
 
 		if (($cartSubtract = Cache::read('default', $cacheKey)) === null) {
 			$cartSubtract = [];
@@ -132,7 +132,7 @@ class Products extends \cms_core\models\Base {
 			'order' => ['modified' => 'DESC'],
 			'fields' => ['modified']
 		]);
-		$cacheKey = $cacheKeyBase . '_shipments_' . md5($lastModified->modified);
+		$cacheKey = $cacheKeyBase . '_shipments_' . ($lastModified ? md5($lastModified->modified) : 'initial');
 
 		if (($shipmentSubtract = Cache::read('default', $cacheKey)) === null) {
 			$shipmentSubtract = [];
