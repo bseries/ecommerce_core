@@ -50,11 +50,12 @@ Widgets::register('ecommerce_core', 'total_customers', function() use ($t) {
 	]]);
 
 	return [
+		'title' => $t('Customers'),
 		'url' => [
 			'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
 		],
 		'data' => [
-			$t('Customers') => $total
+			$total
 		]
 	];
 }, [
