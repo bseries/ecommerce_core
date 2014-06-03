@@ -102,14 +102,14 @@ class Orders extends \cms_core\models\Base {
 	}
 
 	public function shipment($entity) {
-		return Shipments::findById($entity->ecommerce_shipment_id);
+		return Shipments::find('first', ['conditions' => ['id' => $entity->ecommerce_shipment_id]]);
 	}
 
 	public function user($entity) {
 		if ($entity->user_id) {
-			return Users::findById($entity->user_id);
+			return Users::find('first', ['conditions' => ['id' => $entity->user_id]]);
 		}
-		return VirtualUsers::findById($entity->virtual_user_id);
+		return VirtualUsers::find('first', ['conditions' => ['id' => $entity->virtual_user_id]]);
 	}
 
 	public function cart($entity, array $query = []) {
@@ -249,7 +249,7 @@ class Orders extends \cms_core\models\Base {
 
 	public function address($entity, $type) {
 		$field = $type . '_address_id';
-		return Addresses::findById($entity->$field);
+		return Addresses::find('first', ['conditions' => ['id' => $entity->$field]]);
 	}
 
 	public static function expire() {

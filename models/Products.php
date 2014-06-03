@@ -198,7 +198,7 @@ Products::applyFilter('save', function($self, $params, $chain) {
 
 	foreach ($new as $key => $data) {
 		if (!empty($data['id'])) {
-			$item = ProductPrices::findById($data['id']);
+			$item = ProductPrices::find('first', ['conditions' => ['id' => $data['id']]]);
 			$item->set($data);
 		} else {
 			$item = ProductPrices::create($data);
