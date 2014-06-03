@@ -35,6 +35,7 @@ class Shipments extends \cms_core\models\Base {
 	public static $enum = [
 		'status' => [
 			'created',
+			'cancelled',
 			'shipping-scheduled',
 			'shipping-error',
 			'shipping',

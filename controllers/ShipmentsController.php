@@ -54,6 +54,7 @@ class ShipmentsController extends \cms_core\controllers\BaseController {
 
 		$statuses = Shipments::enum('status', [
 			'created' => $t('created'),
+			'cancelled' => $t('cancelled'),
 			'shipping-scheduled' => $t('shipping scheduled'),
 			'shipping-error' => $t('shipping error'),
 			'shipping' => $t('shipping'),
