@@ -25,7 +25,6 @@ Widgets::register('ecommerce_core', 'carts', function() use ($t) {
 	$expired = Carts::find('count', ['conditions' => ['status' => 'expired']]);
 
 	return [
-		'class' => null,
 		'title' => $t('Carts'),
 		'url' => [
 			'controller' => 'Carts', 'action' => 'index', 'library' => 'ecommerce_core'
@@ -36,7 +35,7 @@ Widgets::register('ecommerce_core', 'carts', function() use ($t) {
 		]
 	];
 }, [
-	'type' => Widgets::TYPE_COUNT_MULTIPLE_ALPHA,
+	'type' => Widgets::TYPE_COUNTER,
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
@@ -51,7 +50,6 @@ Widgets::register('ecommerce_core', 'total_customers', function() use ($t) {
 	]]);
 
 	return [
-		'class' => null,
 		'url' => [
 			'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
 		],
@@ -60,7 +58,7 @@ Widgets::register('ecommerce_core', 'total_customers', function() use ($t) {
 		]
 	];
 }, [
-	'type' => Widgets::TYPE_COUNT_MULTIPLE_BETA,
+	'type' => Widgets::TYPE_COUNTER,
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
@@ -82,7 +80,6 @@ Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
 		}
 	}
 	return [
-		'class' => null,
 		'title' => $t('Total Orders Value (net)'),
 		'url' => [
 			'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
@@ -91,7 +88,7 @@ Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
 		'value' => $result ? $result->getNet() : 0
 	];
 }, [
-	'type' => Widgets::TYPE_COUNT_SINGLE_ALPHA,
+	'type' => Widgets::TYPE_COUNTER,
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
@@ -108,7 +105,6 @@ Widgets::register('ecommerce_core', 'total_products', function() use ($t) {
 	}
 
 	return [
-		'class' => null,
 		'url' => [
 			'controller' => 'ProductGroups', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
@@ -119,7 +115,7 @@ Widgets::register('ecommerce_core', 'total_products', function() use ($t) {
 		]
 	];
 }, [
-	'type' => Widgets::TYPE_COUNT_MULTIPLE_ALPHA,
+	'type' => Widgets::TYPE_COUNTER,
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
@@ -145,7 +141,7 @@ Widgets::register('ecommerce_core', 'ecommerce_pending', function() use ($t) {
 		]
 	];
 }, [
-	'type' => Widgets::TYPE_COUNT_MULTIPLE_ALPHA,
+	'type' => Widgets::TYPE_COUNTER,
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
