@@ -1,6 +1,6 @@
 <?php
 /**
- * Magasin Core
+ * Boutique Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *

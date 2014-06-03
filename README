@@ -1,5 +1,5 @@
-MAGASIN Core
--- Core functionality for magasin.
+BOUTIQUE Core
+-- Core functionality for boutique.
 
 Synopsis
 --------
@@ -11,7 +11,7 @@ David M. Persson for Atelier Disko (david@atelierdisko.de).
 
 Copyright & License
 -------------------
-Magasin Core is Copyright (c) 2014 Atelier Disko - All rights reserved.
+Boutique Core is Copyright (c) 2014 Atelier Disko - All rights reserved.
 
 -- This software is proprietary and confidential. Redistributions   --
 -- not permitted. Unless required by applicable law or agreed to    --
@@ -24,7 +24,7 @@ contained in the library or (c) the directory of the library.
 
 Versions & Requirements
 -----------------------
-Magasin follows the rolling release development model. Code in the master
+Boutique follows the rolling release development model. Code in the master
 branch should always considered to be stable. While code in the dev branch
 should be considered unstable or sometimes even expiremental.
 
