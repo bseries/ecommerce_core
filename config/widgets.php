@@ -86,7 +86,9 @@ Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
 			'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
 		'class' => 'positive',
-		'value' => $result ? $result->getNet() : 0
+		'data' => [
+			$result ? $result->getNet() : 0
+		]
 	];
 }, [
 	'type' => Widgets::TYPE_COUNTER,
