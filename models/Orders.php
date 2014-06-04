@@ -262,7 +262,7 @@ class Orders extends \cms_core\models\Base {
 			if ($item->isExpired()) {
 				$item->save(['status' => 'expired']);
 				$item->cart()->save(['status' => 'expired']);
-				Logger:write('debug', "Order `{$item->id}` and associated cart expired.");
+				Logger::write('debug', "Order `{$item->id}` and associated cart expired.");
 			}
 		}
 	}
