@@ -66,7 +66,7 @@ Widgets::register('ecommerce_core', 'total_customers', function() use ($t) {
 Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
 	$orders = Orders::find('all', [
 		'conditions' => [
-			'status' => 'processed'
+			'status' => ['processed', 'checked-out', 'processing']
 		]
 	]);
 	$result = null;
