@@ -18,6 +18,10 @@ use ecommerce_core\models\Orders;
 
 class Ecommerce extends \lithium\console\Command {
 
+	/**
+	 * Allows you run an inventory on the stock of your products.
+	 * Will deduce orders with a shipment status of `shipping` from real stock.
+	 */
 	public function recoverStock() {
 		$products = Products::find('all');
 		$orders = Orders::find('all', [
@@ -37,7 +41,6 @@ class Ecommerce extends \lithium\console\Command {
 				$cartPositions = $order->cart()->positions();
 
 				$shipment = $order->shipment();
-				// TODO Check if shipment is in correct status-
 				if (!in_array($shipment->status, ['shipping'])) {
 					continue;
 				}
@@ -46,12 +49,11 @@ class Ecommerce extends \lithium\console\Command {
 					$cartProduct = $cartPosition->product();
 
 					if ($cartProduct->id == $product->id) {
-						$this->out('Found order #' . $order->number);
+						$this->out('Found order #' . $order->number . ' with shipment in status `shipping`.');
 						$stock -= $cartPosition->quantity;
 					}
 				}
 			}
-			$this->out("Decrementing real stock by {$count}.");
 			$this->out("Final real stock is {$stock}; saving...");
 			$result = $product->save([
 				'stock' => $stock

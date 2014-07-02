@@ -109,9 +109,8 @@ class Products extends \cms_core\models\Base {
 		]);
 		$cacheKey = $cacheKeyBase . '_carts_' . ($lastModified ? md5($lastModified->modified) : 'initial');
 
-		if (($cartSubtract = Cache::read('default', $cacheKey)) === null) {
-			$cartSubtract = [];
-
+		$cartSubtract = [];
+		if (!($cached = Cache::read('default', $cacheKey)) && $cached !== []) {
 			$carts = Carts::find('all', [
 				'conditions' => [
 					'status' => 'open'
@@ -126,6 +125,8 @@ class Products extends \cms_core\models\Base {
 				}
 			}
 			Cache::write('default', $cacheKey, $cartSubtract, Cache::PERSIST);
+		} else {
+			$cartSubtract = $cached;
 		}
 
 		$lastModified = Shipments::find('first', [
@@ -134,9 +135,8 @@ class Products extends \cms_core\models\Base {
 		]);
 		$cacheKey = $cacheKeyBase . '_shipments_' . ($lastModified ? md5($lastModified->modified) : 'initial');
 
-		if (($shipmentSubtract = Cache::read('default', $cacheKey)) === null) {
-			$shipmentSubtract = [];
-
+		$shipmentSubtract = [];
+		if (!($cached = Cache::read('default', $cacheKey)) && $cached !== []) {
 			$shipments = Shipments::find('all', [
 				'conditions' => [
 					'status' => [
@@ -163,6 +163,8 @@ class Products extends \cms_core\models\Base {
 				}
 			}
 			Cache::write('default', $cacheKey, $shipmentSubtract, Cache::PERSIST);
+		} else {
+			$shipmentSubtract = $cached;
 		}
 		return $result - array_sum($cartSubtract) - array_sum($shipmentSubtract);
 	}
