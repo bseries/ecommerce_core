@@ -36,9 +36,9 @@ class Shipments extends \cms_core\models\Base {
 		'status' => [
 			'created',
 			'cancelled',
+			'shipping', // When entering state will decrement stock.
 			'shipping-scheduled',
 			'shipping-error',
-			'shipping',
 			'shipped',
 			'delivered'
 		]
@@ -83,7 +83,28 @@ class Shipments extends \cms_core\models\Base {
 		extract(Message::aliases());
 
 		switch ($to) {
-			case 'shipped':
+			case 'cancelled':
+				// If shipment went through `shipping` status
+				// we must increment stock back again.
+				if (strpos($from, 'ship') === 0) {
+					$order = $entity->order();
+					$positions = $order->cart()->positions();
+
+					foreach ($positions as $position) {
+						$product = $position->product();
+						$product->increment('stock', $position->quantity);
+
+						if (!$product->save()) {
+							return false;
+						}
+						$message  = "Shipment status changed to `cancelled`, incrementing stock ";
+						$message .= "for product {$product->id} by {$position->quantity}. ";
+						$message .= "Stock is now `{$product->stock}`.";
+						Logger::write('debug', $message);
+					}
+				}
+				return true;
+			case 'shipping':
 				$order = $entity->order();
 				$positions = $order->cart()->positions();
 
@@ -94,14 +115,17 @@ class Shipments extends \cms_core\models\Base {
 					if (!$product->save()) {
 						return false;
 					}
-					$message  = "Shipment status changed to `shipped`, decremented stock ";
+					$message  = "Shipment status changed to `shipping`, decremented stock ";
 					$message .= "for product {$product->id} by {$position->quantity}. ";
 					$message .= "Stock is now `{$product->stock}`.";
 					Logger::write('debug', $message);
 				}
+				return true;
+			case 'shipped':
 				if (!Features::enabled('shipment.sendShippedMail')) {
 					return true;
 				}
+				$order = $entity->order();
 				$user = $order->user();
 
 				if (!$user->is_notified) {
