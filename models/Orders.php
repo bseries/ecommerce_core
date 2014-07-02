@@ -144,8 +144,10 @@ class Orders extends \cms_core\models\Base {
 		]);
 	}
 
+	// FIXME Drop cart parameter and retrieve via entity->cart()?
 	public function totalAmount($entity, $user, $cart, $taxZone) {
-		$result = $entity->cart()->totalAmount($user, $taxZone);
+		$cart = $cart ?: $entity->cart();
+		$result = $cart->totalAmount($user, $taxZone);
 
 		$result = $result->add($entity->shippingMethod()->price($user, $cart, $taxZone));
 		$result = $result->add($entity->paymentMethod()->price($user, $cart, $taxZone));
