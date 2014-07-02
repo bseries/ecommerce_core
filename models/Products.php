@@ -140,10 +140,12 @@ class Products extends \cms_core\models\Base {
 			$shipments = Shipments::find('all', [
 				'conditions' => [
 					'status' => [
+						// When in one of the following statuses, will decrement from real.
 						'created',
+						// When cancelled, we free stock and do not count it.
 						'shipping-scheduled',
-						'shipping-error',
-						'shipping'
+						'shipping-error'
+						// After status was `shipping` the stock has been decremented already.
 					]
 				]
 			]);
