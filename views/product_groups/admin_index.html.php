@@ -55,7 +55,9 @@ $this->set([
 								<?php endif ?>
 							<td class="emphasize"><?= $sub->title ?>
 							<td class="emphasize"><?= $sub->number ?>
-							<td><?= $sub->stock() ?>
+							<td>
+								<span><?= $sub->stock('virtual') ?></span>
+								<span class="minor"><?= $sub->stock('real') ?></span>
 							<td class="date created">
 								<time datetime="<?= $this->date->format($sub->created, 'w3c') ?>">
 									<?= $this->date->format($sub->created, 'date') ?>

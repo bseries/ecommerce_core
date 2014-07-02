@@ -37,7 +37,9 @@ $this->set([
 						<?php endif ?>
 					<td class="emphasize title"><?= $item->title ?>
 					<td class="emphasize number"><?= $item->number ?: '–' ?>
-					<td class="emphasize stock"><?= $item->stock() ?: '–' ?>
+					<td class="emphasize stock">
+						<span><?= $item->stock('virtual') ?></span>
+						<span class="minor"><?= $item->stock('real') ?></span>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>
