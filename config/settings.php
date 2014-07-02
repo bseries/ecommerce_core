@@ -32,4 +32,6 @@ Settings::register('ecommerce_core', 'checkout.expire', '+1 week');
 
 Features::register('cms_ecommerce', 'shipment.sendShippedMail', false);
 
+Features::register('cms_ecommerce', 'stock.check', true);
+
 ?>
