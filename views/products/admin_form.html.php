@@ -37,6 +37,15 @@ $this->set([
 					'type' => 'number',
 					'label' => $t('Stock'),
 				]) ?>
+				<div class="help">
+					<?= $t('Updates real stock.') ?>
+					<?php if ($item->exists()): ?>
+						<?= $t('Current real stock is {:realCount}, current virtual stock is {:virtualCount}.', [
+							'realCount' => $item->stock('real'),
+							'virtualCount' => $item->stock('virtual')
+						]) ?>
+					<?php endif ?>
+				</div>
 			</div>
 		</div>
 
