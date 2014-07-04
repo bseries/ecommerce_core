@@ -101,119 +101,109 @@ $this->set([
 			</div>
 		</div>
 
-		<?php $invoice = $item->invoice() ?>
 		<div class="grid-row">
 			<h1 class="h-gamma"><?= $t('Invoice') ?></h1>
-			<div class="grid-column-left">
-				<?= $this->form->field('billing_address', [
-					'type' => 'textarea',
-					'label' => $t('Address'),
-					'disabled' => true,
-					'value' => $item->address('billing')->format('postal', $locale)
-				]) ?>
-				<?= $this->form->field('billing.address_phone', [
-					'label' => $t('Phone'),
-					'disabled' => true,
-					'value' => $item->address('billing')->phone
-				]) ?>
-			</div>
-			<div class="grid-column-right">
-				<?= $this->form->field('invoice.status', [
-					'type' => 'select',
-					'label' => $t('Status'),
-					'list' => $invoiceStatuses,
-					'disabled' => true,
-					'value' => $invoice->status
-				]) ?>
-				<?= $this->form->field('invoice.number', [
-					'label' => $t('Number'),
-					'disabled' => true,
-					'value' => $invoice->number
-				]) ?>
-				<?= $this->form->field('total_net', [
-					'label' => $t('Total (net)'),
-					'disabled' => true,
-					'value' => $this->money->format($item->totalAmount($item->user(), $item->cart(), $item->user()->taxZone())->getNet(), 'money')
-				]) ?>
-			</div>
-			<div class="actions">
-				<?= $this->html->link($t('open invoice'), [
-					'controller' => 'Invoices',
-					'action' => 'edit',
-					'id' => $item->billing_invoice_id,
-					'library' => 'cms_billing'
-				], ['class' => 'button']) ?>
-				<?= $this->html->link($t('PDF'), [
-					'controller' => 'Invoices',
-					'id' => $item->billing_invoice_id, 'action' => 'export_pdf',
-					'library' => 'cms_billing'
-				], ['class' => 'button']) ?>
-				<?= $this->html->link($t('XLSX'), [
-					'controller' => 'Invoices',
-					'id' => $item->billing_invoice_id, 'action' => 'export_excel',
-					'library' => 'cms_billing'
-				], ['class' => 'button']) ?>
-				<?= $this->html->link($t('open invoice address'), [
-					'controller' => 'Addresses',
-					'action' => 'edit',
-					'id' => $item->address('billing')->id,
-					'library' => 'cms_core'
-				], ['class' => 'button']) ?>
-			</div>
+			<?php if ($invoice = $item->invoice()): ?>
+				<div class="grid-column-left">
+					<?= $this->form->field('billing_address', [
+						'type' => 'textarea',
+						'label' => $t('Address'),
+						'disabled' => true,
+						'value' => $invoice->address()->format('postal', $locale)
+					]) ?>
+					<?= $this->form->field('billing.address_phone', [
+						'label' => $t('Phone'),
+						'disabled' => true,
+						'value' => $invoice->address()->phone
+					]) ?>
+				</div>
+				<div class="grid-column-right">
+					<?= $this->form->field('invoice.status', [
+						'type' => 'select',
+						'label' => $t('Status'),
+						'list' => $invoiceStatuses,
+						'disabled' => true,
+						'value' => $invoice->status
+					]) ?>
+					<?= $this->form->field('invoice.number', [
+						'label' => $t('Number'),
+						'disabled' => true,
+						'value' => $invoice->number
+					]) ?>
+					<?= $this->form->field('total_net', [
+						'label' => $t('Total (net)'),
+						'disabled' => true,
+						'value' => $this->money->format($item->totalAmount($item->user(), $item->cart(), $item->user()->taxZone())->getNet(), 'money')
+					]) ?>
+				</div>
+				<div class="actions">
+					<?= $this->html->link($t('PDF'), [
+						'controller' => 'Invoices',
+						'id' => $invoice->id, 'action' => 'export_pdf',
+						'library' => 'cms_billing'
+					], ['class' => 'button']) ?>
+					<?= $this->html->link($t('XLSX'), [
+						'controller' => 'Invoices',
+						'id' => $invoice->id, 'action' => 'export_excel',
+						'library' => 'cms_billing'
+					], ['class' => 'button']) ?>
+					<?= $this->html->link($t('open invoice'), [
+						'controller' => 'Invoices',
+						'action' => 'edit',
+						'id' => $invoice->id,
+						'library' => 'cms_billing'
+					], ['class' => 'button']) ?>
+				</div>
+			<?php endif ?>
 		</div>
 
-		<?php $shipment = $item->shipment() ?>
 		<div class="grid-row grid-row-last">
 			<h1 class="h-gamma"><?= $t('Shipment') ?></h1>
-			<div class="grid-column-left">
-				<?= $this->form->field('shipping_address', [
-					'type' => 'textarea',
-					'label' => $t('Address'),
-					'disabled' => true,
-					'value' => $item->address('shipping')->format('postal', $locale)
-				]) ?>
-				<?= $this->form->field('shipping.address_phone', [
-					'label' => $t('Phone'),
-					'disabled' => true,
-					'value' => $item->address('shipping')->phone
-				]) ?>
-			</div>
-			<div class="grid-column-right">
-				<?= $this->form->field('shipment.status', [
-					'type' => 'select',
-					'label' => $t('Status'),
-					'list' => $shipmentStatuses,
-					'disabled' => true,
-					'value' => $shipment->status
-				]) ?>
+			<?php if ($shipment = $item->shipment()): ?>
+				<div class="grid-column-left">
+					<?= $this->form->field('shipping_address', [
+						'type' => 'textarea',
+						'label' => $t('Address'),
+						'disabled' => true,
+						'value' => $shipment->address()->format('postal', $locale)
+					]) ?>
+					<?= $this->form->field('shipping.address_phone', [
+						'label' => $t('Phone'),
+						'disabled' => true,
+						'value' => $shipment->address()->phone
+					]) ?>
+				</div>
+				<div class="grid-column-right">
+					<?= $this->form->field('shipment.status', [
+						'type' => 'select',
+						'label' => $t('Status'),
+						'list' => $shipmentStatuses,
+						'disabled' => true,
+						'value' => $shipment->status
+					]) ?>
 
-				<?= $this->form->field('shipment.number', [
-					'label' => $t('Number'),
-					'disabled' => true,
-					'value' => $shipment->number
-				]) ?>
-				<?= $this->form->field('shipment.tracking', [
-					'label' => $t('Tracking Number'),
-					'disabled' => true,
-					'value' => $shipment->tracking
-				]) ?>
-				<div class="help"><?= $t('Tracking is available once status is `shipped`.') ?></div>
-			</div>
+					<?= $this->form->field('shipment.number', [
+						'label' => $t('Number'),
+						'disabled' => true,
+						'value' => $shipment->number
+					]) ?>
+					<?= $this->form->field('shipment.tracking', [
+						'label' => $t('Tracking Number'),
+						'disabled' => true,
+						'value' => $shipment->tracking
+					]) ?>
+					<div class="help"><?= $t('Tracking is available once status is `shipped`.') ?></div>
+				</div>
 
-			<div class="actions">
-				<?= $this->html->link($t('open shipment'), [
-					'controller' => 'Shipments',
-					'action' => 'edit',
-					'id' => $item->ecommerce_shipment_id,
-					'library' => 'ecommerce_core'
-				], ['class' => 'button']) ?>
-				<?= $this->html->link($t('open shipping address'), [
-					'controller' => 'Addresses',
-					'action' => 'edit',
-					'id' => $item->address('shipping')->id,
-					'library' => 'cms_core'
-				], ['class' => 'button']) ?>
-			</div>
+				<div class="actions">
+					<?= $this->html->link($t('open shipment'), [
+						'controller' => 'Shipments',
+						'action' => 'edit',
+						'id' => $shipment->id,
+						'library' => 'ecommerce_core'
+					], ['class' => 'button']) ?>
+				</div>
+			<?php endif ?>
 		</div>
 
 		<div class="bottom-actions">
