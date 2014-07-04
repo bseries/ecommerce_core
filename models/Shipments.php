@@ -73,10 +73,7 @@ class Shipments extends \cms_core\models\Base {
 	}
 
 	public function address($entity) {
-		$data = $entity->data();
-		$data += $entity->order()->data(); // Add user fields.
-
-		return Addresses::createFromPrefixed('address_', $data);
+		return Addresses::createFromPrefixed('address_', $entity->data());
 	}
 
 	public function statusChange($entity, $from, $to) {
