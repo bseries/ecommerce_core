@@ -101,10 +101,6 @@ class Orders extends \cms_core\models\Base {
 		];
 	}
 
-	public function shipment($entity) {
-		return Shipments::find('first', ['conditions' => ['id' => $entity->ecommerce_shipment_id]]);
-	}
-
 	public function user($entity) {
 		if ($entity->user_id) {
 			return Users::find('first', ['conditions' => ['id' => $entity->user_id]]);
@@ -124,6 +120,14 @@ class Orders extends \cms_core\models\Base {
 		return Invoices::find('first', [
 			'conditions' => [
 				'id' => $entity->billing_invoice_id
+			]
+		]);
+	}
+
+	public function shipment($entity) {
+		return Shipments::find('first', [
+			'conditions' => [
+				'id' => $entity->ecommerce_shipment_id
 			]
 		]);
 	}
