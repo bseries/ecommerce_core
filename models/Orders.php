@@ -24,6 +24,7 @@ use cms_core\models\Addresses;
 use cms_core\extensions\cms\Features;
 use cms_core\extensions\cms\Settings;
 use DateTime;
+use Exception;
 use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
 use lithium\analysis\Logger;
@@ -174,6 +175,11 @@ class Orders extends \cms_core\models\Base {
 			return false;
 		}
 		$entity->ecommerce_shipment_id = $shipment->id;
+
+		// Shipping address is now contained in shipment.
+		// For clarity nullify field.
+		$entity->shipping_address_id = null;
+
 		return $entity->save();
 	}
 
@@ -247,15 +253,38 @@ class Orders extends \cms_core\models\Base {
 			}
 		}
 
-		if (!$invoice->save(['is_locked' => true])) {
-			return false;
-		}
-		return true;
+		// Billing address is now contained in invoice.
+		// For clarity nullify field.
+		$entity->billing_invoice_address_id = null;
+
+		return $entity->save() && $invoice->save(['is_locked' => true]);
 	}
 
+	// Retrieves either the shipping or billing address. If
+	// a shipment or invoice is already associated with the order
+	// their respective addresses will be returned.
+	//
+	// Please note that for BC we don't rely on i.e. `shipping_address_id`
+	// being null to indicate that we should use the shipment's address.
 	public function address($entity, $type) {
-		$field = $type . '_address_id';
-		return Addresses::find('first', ['conditions' => ['id' => $entity->$field]]);
+		if ($type == 'shipping') {
+			if ($entity->ecommerce_shipment_id) {
+				return $entity->shipment()->address();
+			} else {
+				return Addresses::find('first', ['conditions' => [
+					'id' => $entity->shipping_address_id
+				]]);
+			}
+		} elseif ($type == 'billing') {
+			if ($entity->billing_invoice_id) {
+				return $entity->invoice()->address();
+			} else {
+				return Addresses::find('first', ['conditions' => [
+					'id' => $entity->billing_address_id
+				]]);
+			}
+		}
+		throw new Exception("Unknown address type `{$type}`.");
 	}
 
 	public static function expire() {
