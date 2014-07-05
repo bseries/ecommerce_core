@@ -12,15 +12,15 @@
 
 namespace ecommerce_core\models;
 
+use cms_core\models\Users;
+use cms_core\models\VirtualUsers;
+use cms_core\models\Addresses;
+use cms_billing\models\InvoicePositions;
+use cms_billing\models\Invoices;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\PaymentMethods;
 use ecommerce_core\models\ShippingMethods;
-use cms_core\models\Users;
-use cms_core\models\VirtualUsers;
-use cms_billing\models\InvoicePositions;
-use cms_billing\models\Invoices;
-use cms_core\models\Addresses;
 use cms_core\extensions\cms\Features;
 use cms_core\extensions\cms\Settings;
 use DateTime;
@@ -100,6 +100,57 @@ class Orders extends \cms_core\models\Base {
 				'message' => $t('You must accept the terms.')
 			]
 		];
+	}
+
+	// Used during checkout to assign transient addresses while creating them when
+	// necessary. Type can be either `billing` or `shipping`. Assumes address
+	// has been already validated before. Will update user's preferred address.
+	//
+	// Expects $entity to have an address object at $entity->shipping_address or
+	// $entity->billing_address. These must not have an id set.
+	//
+	// We will reuse existing addresses but only if don't need to update them. If there is
+	// any new data we will create a new address and set the users preferred address to
+	// it.
+	public function assignTransientAddress($entity, $type, $user) {
+		$typeField       = $type == 'billing' ? 'billing_address' : 'shipping_address';
+		$typeIdField     = $type == 'billing' ? 'billing_address_id' : 'shipping_address_id';
+		$typeMethodField = $type == 'billing' ? 'payment_method' : 'shipping_method';
+
+		// Work on this object and reassign it to $entity back again later.
+		// FIXME check if we can drop reassignment as we're working with a ref.
+		$address = $entity->{$typeField};
+
+		if ($address->id) {
+			throw new Exception("Method will not work with an address id.");
+		}
+		$exists = Addresses::find('first', [
+			'conditions' =>  [
+				$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id
+			] + $address->data()
+		]);
+		if ($exists) {
+			$address = $exists; // Need id for setting default address later.
+			$result = true;
+		} else {
+			$address = Addresses::create([
+				$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id
+			] + $address->data());
+
+			$result = $address->save(null, ['validate' => false]);
+		}
+
+		// This will select the last address used in checkout as user's new default address.
+		$result = $result && $user->save([$typeIdField => $address->id], [
+			'whitelist' => [$typeIdField]
+		]);
+		$result = $result && $entity->save([$typeIdField => $address->id], [
+			'whitelist' => [$typeIdField]
+		]);
+		if (!$result) {
+			return false;
+		}
+		return $entity->{$typeField} = $address;
 	}
 
 	public function user($entity) {
