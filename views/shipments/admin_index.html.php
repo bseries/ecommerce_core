@@ -8,24 +8,30 @@ $this->set([
 ]);
 
 ?>
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
+<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
 	<?php if ($data->count()): ?>
 		<table>
 			<thead>
 				<tr>
-					<td class="status"><?= $t('Status') ?>
-					<td><?= $t('Method') ?>
-					<td><?= $t('Recipient') ?>
-					<td><?= $t('Address') ?>
-					<td class="date created"><?= $t('Created') ?>
+					<td data-sort="status" class="status list-sort"><?= $t('Status') ?>
+					<td data-sort="method" class="method list-sort"><?= $t('Method') ?>
+					<td data-sort="user" class="user list-sort"><?= $t('Recipient') ?>
+					<td class="address"><?= $t('Address') ?>
+					<td data-sort="created" class="date created list-sort desc"><?= $t('Created') ?>
 					<td class="actions">
+						<?= $this->form->field('search', [
+							'type' => 'search',
+							'label' => false,
+							'placeholder' => $t('Filter'),
+							'class' => 'list-search'
+						]) ?>
 			</thead>
-			<tbody>
+			<tbody class="list">
 				<?php foreach ($data as $item): ?>
 					<?php $user = $item->user() ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="status"><?= $statuses[$item->status] ?>
-					<td><?= $item->method ?>
+					<td class="method"><?= $item->method ?>
 					<td class="user">
 						<?php if ($user): ?>
 							<?= $this->html->link($user->number, [
@@ -36,7 +42,7 @@ $this->set([
 						<?php else: ?>
 							-
 						<?php endif ?>
-					<td><?= $item->address()->format('oneline') ?>
+					<td class="address"><?= $item->address()->format('oneline') ?>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>
