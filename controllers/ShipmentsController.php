@@ -24,7 +24,7 @@ class ShipmentsController extends \cms_core\controllers\BaseController {
 
 	public function admin_index() {
 		$data = Shipments::find('all', [
-			'order' => ['created' => 'DESC']
+			'order' => ['number' => 'DESC']
 		]);
 		return compact('data') + $this->_selects();
 	}
