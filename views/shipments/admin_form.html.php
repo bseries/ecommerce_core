@@ -50,6 +50,11 @@ $this->set([
 					'disabled' => true,
 					'value' => $this->date->format($item->created, 'datetime')
 				]) ?>
+				<?= $this->form->field('modified', [
+					'label' => $t('Modified'),
+					'disabled' => true,
+					'value' => $this->date->format($item->modified, 'datetime')
+				]) ?>
 				<?= $this->form->field('tracking', [
 					'label' => $t('Tracking Number'),
 				]) ?>
