@@ -13,11 +13,13 @@ $this->set([
 		<table>
 			<thead>
 				<tr>
+					<td data-sort="number" class="number emphasize list-sort desc"><?= $t('Number') ?>
+					<td data-sort="order" class="order list-sort"><?= $t('Order') ?>
 					<td data-sort="status" class="status list-sort"><?= $t('Status') ?>
 					<td data-sort="method" class="method list-sort"><?= $t('Method') ?>
 					<td data-sort="user" class="user list-sort"><?= $t('Recipient') ?>
 					<td class="address"><?= $t('Address') ?>
-					<td data-sort="created" class="date created list-sort desc"><?= $t('Created') ?>
+					<td data-sort="created" class="date created list-sort"><?= $t('Created') ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
@@ -30,6 +32,8 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 					<?php $user = $item->user() ?>
 				<tr data-id="<?= $item->id ?>">
+					<td class="number"><?= $item->number ?>
+					<td class="order"><?= $item->order()->number ?>
 					<td class="status"><?= $statuses[$item->status] ?>
 					<td class="method"><?= $item->method ?>
 					<td class="user">
