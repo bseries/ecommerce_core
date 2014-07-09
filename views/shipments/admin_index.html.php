@@ -31,9 +31,13 @@ $this->set([
 			<tbody class="list">
 				<?php foreach ($data as $item): ?>
 					<?php $user = $item->user() ?>
+					<?php $order = $item->order() ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="number"><?= $item->number ?>
-					<td class="order"><?= $item->order()->number ?>
+					<td class="order"><?= $this->html->link($order->number, [
+						'controller' => 'Orders', 'action' => 'edit', 'id' => $order->id,
+						'library' => 'ecommerce_core'
+					]) ?>
 					<td class="status"><?= $statuses[$item->status] ?>
 					<td class="method"><?= $item->method ?>
 					<td class="user">
