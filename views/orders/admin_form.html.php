@@ -130,6 +130,11 @@ $this->set([
 						'disabled' => true,
 						'value' => $invoice->number
 					]) ?>
+					<?= $this->form->field('invoice.created', [
+						'label' => $t('Created'),
+						'disabled' => true,
+						'value' => $this->date->format($invoice->created, 'datetime')
+					]) ?>
 					<?= $this->form->field('total_net', [
 						'label' => $t('Total (net)'),
 						'disabled' => true,
@@ -186,6 +191,11 @@ $this->set([
 						'label' => $t('Number'),
 						'disabled' => true,
 						'value' => $shipment->number
+					]) ?>
+					<?= $this->form->field('shipment.created', [
+						'label' => $t('Created'),
+						'disabled' => true,
+						'value' => $this->date->format($shipment->created, 'datetime')
 					]) ?>
 					<?= $this->form->field('shipment.tracking', [
 						'label' => $t('Tracking Number'),

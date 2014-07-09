@@ -45,6 +45,11 @@ $this->set([
 					'label' => $t('Method'),
 					'list' => $methods
 				]) ?>
+				<?= $this->form->field('created', [
+					'label' => $t('Created'),
+					'disabled' => true,
+					'value' => $this->date->format($item->created, 'datetime')
+				]) ?>
 				<?= $this->form->field('tracking', [
 					'label' => $t('Tracking Number'),
 				]) ?>
