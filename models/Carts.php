@@ -117,8 +117,6 @@ class Carts extends \cms_core\models\Base {
 	}
 
 	public function statusChange($entity, $from, $to) {
-		extract(Message::aliases());
-
 		switch ($to) {
 			case 'cancelled':
 				return !$entity->order();
