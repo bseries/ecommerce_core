@@ -26,7 +26,8 @@ class Carts extends \cms_core\models\Base {
 		'status' => [
 			'open',
 			'closed',
-			'expired'
+			'expired',
+			'cancelled'
 		]
 	];
 

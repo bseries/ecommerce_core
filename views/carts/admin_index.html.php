@@ -16,8 +16,8 @@ $this->set([
 					<td data-sort="status" class="status list-sort"><?= $t('Status') ?>
 					<td data-sort="order" class="order list-sort"><?= $t('Order') ?>
 					<td data-sort="user" class="user list-sort"><?= $t('User') ?>
-					<td><?= $t('Total amount (net) ') ?>
-					<td><?= $t('Total quantity') ?>
+					<td data-sort="total-amount" class="total-amount list-sort"><?= $t('Total amount (net) ') ?>
+					<td data-sort="total-quantity" class="total-quantity list-sort"><?= $t('Total quantity') ?>
 					<td data-sort="created" class="date created list-sort desc"><?= $t('Created') ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
@@ -53,20 +53,21 @@ $this->set([
 					<?php else: ?>
 						–
 					<?php endif ?>
-					<td>
+					<td class="total-amount">
 					<?php if ($user): ?>
 						<?= $this->money->format($item->totalAmount($user, $user->taxZone())->getNet(), 'money') ?: '–' ?>
 					<?php else: ?>
 						–
 					<?php endif ?>
-					<td><?= $item->totalQuantity() ?>
+					<td class="total-quantity"><?= $item->totalQuantity() ?>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>
 						</time>
 					<td class="actions">
-						<?php // $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
-						<?php // $this->html->link($t('edit'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?php if (!$order && $item->status !== 'cancelled'): ?>
+							<?= $this->html->link($t('cancel'), ['id' => $item->id, 'action' => 'cancel', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?php endif ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>

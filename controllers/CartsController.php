@@ -16,6 +16,7 @@ use cms_billing\models\TaxZones;
 use ecommerce_core\models\Carts;
 use lithium\core\Environment;
 use lithium\g11n\Message;
+use li3_flash_message\extensions\storage\FlashMessage;
 
 class CartsController extends \cms_core\controllers\BaseController {
 
@@ -39,6 +40,24 @@ class CartsController extends \cms_core\controllers\BaseController {
 		]);
 
 		return compact('statuses');
+	}
+
+	public function admin_cancel() {
+		extract(Message::aliases());
+
+		Carts::pdo()->beginTransaction();
+
+		$item = Carts::find('first', [
+			'conditions' => ['id' => $this->request->id]
+		]);
+		if ($item->save(['status' => 'cancelled'], ['whitelist' => ['status']])) {
+			Carts::pdo()->commit();
+			FlashMessage::write($t('Successfully cancelled.'), ['level' => 'success']);
+		} else {
+			Carts::pdo()->rollback();
+			FlashMessage::write($t('Failed to cancel.'), ['level' => 'error']);
+		}
+		return $this->redirect($this->request->referer());
 	}
 }
 
