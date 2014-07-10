@@ -34,6 +34,7 @@ class CartsController extends \cms_core\controllers\BaseController {
 		extract(Message::aliases());
 
 		$statuses = Carts::enum('status', [
+			'cancelled' => $t('cancelled'),
 			'expired' => $t('expired'),
 			'closed' => $t('closed'),
 			'open' => $t('open')
