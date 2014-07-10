@@ -29,6 +29,7 @@ Settings::register('ecommerce_core', 'product.number', [
 
 Settings::register('ecommerce_core', 'service.paypal.default.email', 'billing@example.com');
 Settings::register('ecommerce_core', 'checkout.expire', '+1 week');
+Settings::register('ecommerce_core', 'cart.limitItemsPerPosition', false); // false to disable check
 
 Features::register('cms_ecommerce', 'shipment.sendShippedMail', false);
 
