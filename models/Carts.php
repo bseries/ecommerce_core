@@ -36,7 +36,8 @@ class Carts extends \cms_core\models\Base {
 	];
 
 	protected static $_actsAs = [
-		'cms_core\extensions\data\behavior\Timestamp'
+		'cms_core\extensions\data\behavior\Timestamp',
+		'cms_core\extensions\data\behavior\StatusChange'
 	];
 
 	public $hasMany = [
@@ -113,6 +114,18 @@ class Carts extends \cms_core\models\Base {
 	public function isExpired($entity) {
 		$date = DateTime::createFromFormat('Y-m-d H:i:s', $entity->modified);
 		return strtotime(Settings::read('checkout.expire'), $date->getTimestamp()) < time();
+	}
+
+	public function statusChange($entity, $from, $to) {
+		extract(Message::aliases());
+
+		switch ($to) {
+			case 'cancelled':
+				return !$entity->order();
+			default:
+				break;
+		}
+		return true;
 	}
 }
 
