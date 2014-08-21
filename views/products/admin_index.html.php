@@ -9,6 +9,11 @@ $this->set([
 
 ?>
 <article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
+
+	<div class="top-actions">
+		<?= $this->html->link($t('new product'), ['action' => 'add', 'library' => 'ecommerce_core'], ['class' => 'button add']) ?>
+	</div>
+
 	<?php if ($data->count()): ?>
 		<table>
 			<thead>
