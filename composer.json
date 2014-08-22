@@ -15,7 +15,7 @@
         "atelierdisko/li3_mailer": "dev-master",
         "atelierdisko/cms_core": "1.2.*",
         "atelierdisko/cms_media": "1.2.*",
-        "atelierdisko/cms_billing": "1.2.*",
+        "atelierdisko/billing_core": "1.2.*",
         "unionofrad/lithium": "dev-dev",
         "composer/installers": "~1.0"
     },
@@ -34,7 +34,7 @@
       },
       {
         "type": "vcs",
-        "url": "git@bitbucket.org:atelierdisko/cms_billing.git"
+        "url": "git@bitbucket.org:atelierdisko/billing_core.git"
       }
    ]
 }
