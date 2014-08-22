@@ -10,7 +10,7 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-define('ECOMMERCE_CORE_VERSION', '1.1.0');
+define('ECOMMERCE_CORE_VERSION', '1.2.0');
 
 require 'panes.php';
 require 'settings.php';
