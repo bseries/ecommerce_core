@@ -15,8 +15,8 @@ namespace ecommerce_core\models;
 use cms_core\models\Users;
 use cms_core\models\VirtualUsers;
 use cms_core\models\Addresses;
-use cms_billing\models\InvoicePositions;
-use cms_billing\models\Invoices;
+use billing_core\models\InvoicePositions;
+use billing_core\models\Invoices;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\PaymentMethods;
@@ -51,7 +51,7 @@ class Orders extends \cms_core\models\Base {
 
 	public $belongsTo = [
 		'Invoice' => [
-			'class' => 'cms_billing\models\Invoice',
+			'class' => 'billing_core\models\Invoice',
 			'key' => 'billing_invoice_id'
 		],
 		'Shipment' => [

@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use cms_billing\extensions\financial\Price;
+use billing_core\extensions\financial\Price;
 use lithium\util\Collection;
 use li3_access\security\Access;
 

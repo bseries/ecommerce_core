@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use cms_billing\extensions\finance\Price;
+use billing_core\extensions\finance\Price;
 use cms_core\extensions\cms\Settings;
 use ecommerce_core\models\CartPositions;
 use cms_core\models\Users;

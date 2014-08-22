@@ -145,18 +145,18 @@ $this->set([
 					<?= $this->html->link($t('PDF'), [
 						'controller' => 'Invoices',
 						'id' => $invoice->id, 'action' => 'export_pdf',
-						'library' => 'cms_billing'
+						'library' => 'billing_core'
 					], ['class' => 'button']) ?>
 					<?= $this->html->link($t('XLSX'), [
 						'controller' => 'Invoices',
 						'id' => $invoice->id, 'action' => 'export_excel',
-						'library' => 'cms_billing'
+						'library' => 'billing_core'
 					], ['class' => 'button']) ?>
 					<?= $this->html->link($t('open invoice'), [
 						'controller' => 'Invoices',
 						'action' => 'edit',
 						'id' => $invoice->id,
-						'library' => 'cms_billing'
+						'library' => 'billing_core'
 					], ['class' => 'button']) ?>
 				</div>
 			<?php endif ?>

@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\controllers;
 
-use cms_billing\models\TaxZones;
+use billing_core\models\TaxZones;
 use ecommerce_core\models\Carts;
 use lithium\core\Environment;
 use lithium\g11n\Message;

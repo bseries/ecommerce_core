@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use cms_billing\extensions\finance\Price;
+use billing_core\extensions\finance\Price;
 use ecommerce_core\models\ProductPriceGroups;
 use li3_access\security\Access;
 
