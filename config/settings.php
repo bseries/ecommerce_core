@@ -14,11 +14,11 @@ use cms_core\extensions\cms\Features;
 use cms_core\extensions\cms\Settings;
 
 // Number Format
-Settings::register('ecommerce_core', 'order.number', [
+Settings::register('order.number', [
 	'extract' => '/[0-9]{4}([0-9]{4})/',
 	'generate' => '%Y%%04.d'
 ]);
-Settings::register('ecommerce_core', 'shipment.number', [
+Settings::register('shipment.number', [
 	'extract' => '/[0-9]{4}([0-9]{4})/',
 	'generate' => '%Y%%04.d'
 ]);
@@ -27,12 +27,12 @@ Settings::register('ecommerce_core', 'product.number', [
 	'generate' => '%Y%%04.d'
 ]);
 
-Settings::register('ecommerce_core', 'service.paypal.default.email', 'billing@example.com');
-Settings::register('ecommerce_core', 'checkout.expire', '+1 week');
-Settings::register('ecommerce_core', 'cart.limitItemsPerPosition', false); // false to disable check
+Settings::register('service.paypal.default.email', 'billing@example.com');
+Settings::register('checkout.expire', '+1 week');
+Settings::register('cart.limitItemsPerPosition', false); // false to disable check
 
-Features::register('cms_ecommerce', 'shipment.sendShippedMail', false);
+Features::register('shipment.sendShippedMail', false);
 
-Features::register('cms_ecommerce', 'stock.check', true);
+Features::register('stock.check', true);
 
 ?>
