@@ -21,7 +21,7 @@ use lithium\storage\Cache;
 
 extract(Message::aliases());
 
-Widgets::register('ecommerce_core', 'carts', function() use ($t) {
+Widgets::register('carts', function() use ($t) {
 	$open = Carts::find('count', ['conditions' => ['status' => 'open']]);
 	$expired = Carts::find('count', ['conditions' => ['status' => 'expired']]);
 
@@ -40,7 +40,7 @@ Widgets::register('ecommerce_core', 'carts', function() use ($t) {
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
-Widgets::register('ecommerce_core', 'total_customers', function() use ($t) {
+Widgets::register('total_customers', function() use ($t) {
 	$total = Users::find('count', ['conditions' => [
 		'is_active' => true,
 		'role' => ['customer', 'merchant']
@@ -64,7 +64,7 @@ Widgets::register('ecommerce_core', 'total_customers', function() use ($t) {
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
-Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
+Widgets::register('total_orders_value', function() use ($t) {
 	$orders = Orders::find('all', [
 		'conditions' => [
 			'status' => ['processed', 'checked-out', 'processing']
@@ -113,7 +113,7 @@ Widgets::register('ecommerce_core', 'total_orders_value', function() use ($t) {
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
-Widgets::register('ecommerce_core', 'total_products', function() use ($t) {
+Widgets::register('total_products', function() use ($t) {
 	$products = Products::find('all', [
 		'conditions' => [
 			'is_published' => true
@@ -140,7 +140,7 @@ Widgets::register('ecommerce_core', 'total_products', function() use ($t) {
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
-Widgets::register('ecommerce_core', 'ecommerce_pending', function() use ($t) {
+Widgets::register('ecommerce_pending', function() use ($t) {
 	$orders = Orders::find('count', [
 		'conditions' => [
 			'status NOT' => ['processed', 'cancelled', 'expired', 'checking-out']
