@@ -17,7 +17,6 @@ use ecommerce_core\models\Orders;
 use ecommerce_core\models\Products;
 use cms_core\models\Users;
 use cms_core\models\VirtualUsers;
-use lithium\storage\Cache;
 
 extract(Message::aliases());
 
@@ -57,55 +56,6 @@ Widgets::register('total_customers', function() use ($t) {
 		],
 		'data' => [
 			$total
-		]
-	];
-}, [
-	'type' => Widgets::TYPE_COUNTER,
-	'group' => Widgets::GROUP_DASHBOARD,
-]);
-
-Widgets::register('total_orders_value', function() use ($t) {
-	$orders = Orders::find('all', [
-		'conditions' => [
-			'status' => ['processed', 'checked-out', 'processing']
-		],
-		'fields' => [
-			'id', 'user_id', 'virtual_user_id',
-			'ecommerce_cart_id',
-			'shipping_method',
-			'payment_method'
-		]
-	]);
-	$result = null;
-
-	foreach ($orders as $item) {
-		$cart = $item->cart(['fields' => ['id', 'modified']]);
-
-		$cacheKey  = 'widget_total_orders_value_order_total_amount_';
-		$cacheKey .= md5($item->modified . $cart->modified);
-
-		if ($cached = Cache::read('default', $cacheKey)) {
-			$value = $cached;
-		} else {
-			$user = $item->user();
-			$value = $item->totalAmount($user, $cart, $user->taxZone());
-			Cache::write('default', $cacheKey, $value, Cache::PERSIST);
-		}
-
-		if ($result) {
-			$result = $result->add($value);
-		} else {
-			$result = $value;
-		}
-	}
-	return [
-		'title' => $t('Total Orders Value (net)'),
-		'url' => [
-			'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
-		],
-		'class' => 'positive',
-		'data' => [
-			$result ? $result->getNet() : 0
 		]
 	];
 }, [
