@@ -110,6 +110,7 @@ Widgets::register('ecommerce_pending', function() use ($t) {
 }, [
 	'type' => Widgets::TYPE_COUNTER,
 	'group' => Widgets::GROUP_DASHBOARD,
+	'weight' => Widgets::WEIGHT_LOW
 ]);
 
 ?>
