@@ -39,7 +39,7 @@ Widgets::register('carts', function() use ($t) {
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
-Widgets::register('total_customers', function() use ($t) {
+Widgets::register('users', function() use ($t) {
 	$total = Users::find('count', ['conditions' => [
 		'is_active' => true,
 		'role' => ['customer', 'merchant']
@@ -50,12 +50,8 @@ Widgets::register('total_customers', function() use ($t) {
 	]]);
 
 	return [
-		'title' => $t('Customers'),
-		'url' => [
-			'controller' => 'Users', 'action' => 'index', 'library' => 'cms_core'
-		],
 		'data' => [
-			$total
+			$t('Customers') => $total
 		]
 	];
 }, [
