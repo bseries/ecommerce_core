@@ -33,7 +33,7 @@ class ProductsController extends \cms_core\controllers\BaseController {
 		return compact('data');
 	}
 
-	public function _selects($item) {
+	public function _selects($item = null) {
 		$productGroups = ProductGroups::find('list');
 		$currencies = Currencies::find('list');
 
