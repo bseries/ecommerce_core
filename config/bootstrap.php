@@ -16,18 +16,9 @@ require 'panes.php';
 require 'settings.php';
 require 'media.php';
 require 'widgets.php';
+require 'jobs.php';
 
-use cms_core\extensions\cms\Jobs;
-use ecommerce_core\models\Orders;
-use ecommerce_core\models\Carts;
 use li3_access\security\Access;
-
-Jobs::recur('ecommerce_core', 'expire', function() {
-	Orders::expire();
-	Carts::expire();
-}, [
-	'frequency' => Jobs::FREQUENCY_LOW
-]);
 
 $rules = Access::adapter('entity');
 
