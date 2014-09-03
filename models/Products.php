@@ -15,11 +15,13 @@ namespace ecommerce_core\models;
 use lithium\storage\Cache;
 use cms_core\extensions\cms\Settings;
 use ecommerce_core\models\Carts;
+use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\ProductPrices;
 use ecommerce_core\models\ProductPriceGroups;
 use Exception;
 use lithium\util\Inflector;
+use lithium\util\Collection;
 
 class Products extends \cms_core\models\Base {
 
@@ -68,13 +70,22 @@ class Products extends \cms_core\models\Base {
 		throw new Exception("Not legible for any price.");
 	}
 
-	public function prices($entity) {
+	// Returns prices for the product keyed by price group.
+	//
+	// When the sparse option is disabled will always return
+	// a complete mapping of price groups => prices.
+	public function prices($entity, array $options = []) {
+		$options += [
+			'sparse' => false
+		];
 		$results = [];
 
-		foreach (ProductPriceGroups::find('all') as $group) {
-			$results[$group->id] = ProductPrices::create([
-				'group' => $group->id
-			]);
+		if (!$options['sparse']) {
+			foreach (ProductPriceGroups::find('all') as $group) {
+				$results[$group->id] = ProductPrices::create([
+					'group' => $group->id
+				]);
+			}
 		}
 		$prices = ProductPrices::find('all', [
 			'conditions' => [
@@ -84,13 +95,21 @@ class Products extends \cms_core\models\Base {
 		foreach ($prices as $price) {
 			$results[$price->group] = $price;
 		}
-		return $results;
+		return new Collection(['data' => $results]);
 	}
 
 	public function group($entity) {
 		return ProductGroups::find('first', [
 			'conditions' => [
 				'id' => $entity->ecommerce_product_group_id
+			]
+		]);
+	}
+
+	public function attributes($entity) {
+		return ProductAttributes::find('all', [
+			'conditions' => [
+				'ecommerce_product_id' => $entity->id
 			]
 		]);
 	}
@@ -194,38 +213,62 @@ Products::applyFilter('save', function($self, $params, $chain) {
 		return false;
 	}
 
-	if (!$entity->prices) {
-		return true;
+	// Save nested prices. We don't need to drop the whole prices
+	// to get a clean start as price groups only get added never removed. This
+	// however might change in future versions and behavior will then be
+	// similar to the one how attributes are saved.
+	if ($entity->prices) {
+		foreach ($entity->prices as $key => $data) {
+			if (!empty($data['id'])) {
+				$item = ProductPrices::find('first', ['conditions' => ['id' => $data['id']]]);
+				$item->set($data);
+			} else {
+				$item = ProductPrices::create($data + [
+					'ecommerce_product_id' => $entity->id
+				]);
+			}
+			if (!$item->save()) {
+				return false;
+			}
+		}
 	}
-	// Save nested.
-	$new = $entity->prices;
 
-	foreach ($new as $key => $data) {
-		if (!empty($data['id'])) {
-			$item = ProductPrices::find('first', ['conditions' => ['id' => $data['id']]]);
-			$item->set($data);
-		} else {
-			$item = ProductPrices::create($data);
-			$item->ecommerce_product_id = $entity->id;
-		}
-		if (!$item->save()) {
-			return false;
+	// Save nested attributes. The to-be-saved attributes will replace
+	// the current attributes as a whole. Thus on each save the whole
+	// set of attributes needs to be provided.
+	//
+	// Key/Value Pairs must be unique.
+	if ($entity->attributes) {
+		$entity->attributes()->delete();
+
+		$created = [];
+		foreach ($entity->attributes as $key => $data) {
+			if ($key === 'new') {
+				continue;
+			}
+			if (in_array($data['key'], $created)) {
+				return false;
+			}
+			$item = ProductAttributes::create($data + [
+				'ecommerce_product_id' => $entity->id
+			]);
+			if (!$item->save()) {
+				return false;
+			}
+			$created[] = $data['key'];
 		}
 	}
+
 	return true;
 });
 Products::applyFilter('delete', function($self, $params, $chain) {
 	$entity = $params['entity'];
 	$result = $chain->next($self, $params, $chain);
 
-	if ($result) {
-		$data = ProductPrices::find('all', [
-			'conditions' => ['ecommerce_product_id' => $entity->id]
-		]);
-		foreach ($data as $item) {
-			$item->delete();
-		}
-	}
+	// Delete nested/dependent items.
+	$entity->prices(['sparse' => true])->delete();
+	$entity->attributes()->delete();
+
 	return $result;
 });
 

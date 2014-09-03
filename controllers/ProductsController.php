@@ -14,7 +14,9 @@ namespace ecommerce_core\controllers;
 
 use cms_core\models\Currencies;
 use ecommerce_core\models\Products;
+use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
+use lithium\g11n\Message;
 
 class ProductsController extends \cms_core\controllers\BaseController {
 
@@ -34,10 +36,21 @@ class ProductsController extends \cms_core\controllers\BaseController {
 	}
 
 	public function _selects($item = null) {
+		extract(Message::aliases());
+
 		$productGroups = ProductGroups::find('list');
 		$currencies = Currencies::find('list');
+		$attributeKeys = [];
 
-		return compact('productGroups', 'currencies');
+		if ($item) {
+			$attributeKeys = ProductAttributes::enum('key', [
+				'size' => $t('size'),
+				'label' => $t('label'),
+				'make' => $t('make')
+			]);
+		}
+
+		return compact('productGroups', 'currencies', 'attributeKeys');
 	}
 }
 
