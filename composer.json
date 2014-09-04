@@ -20,21 +20,9 @@
         "composer/installers": "~1.0"
     },
     "repositories": [
-      {
-        "type": "vcs",
-        "url": "https://github.com/uor/li3_flash_message"
-      },
-      {
-        "type": "vcs",
-        "url": "git@bitbucket.org:atelierdisko/cms_core.git"
-      },
-      {
-        "type": "vcs",
-        "url": "git@bitbucket.org:atelierdisko/cms_media.git"
-      },
-      {
-        "type": "vcs",
-        "url": "git@bitbucket.org:atelierdisko/billing_core.git"
-      }
+      { "type": "vcs", "url": "https://github.com/uor/li3_flash_message" },
+      { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/cms_core.git" },
+      { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/cms_media.git" },
+      { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/billing_core.git" }
    ]
 }
