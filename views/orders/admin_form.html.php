@@ -159,6 +159,8 @@ $this->set([
 						'library' => 'billing_core'
 					], ['class' => 'button']) ?>
 				</div>
+			<?php else: ?>
+				<div class="none-available"><?= $t('There is no invoice attached to this order.') ?></div>
 			<?php endif ?>
 		</div>
 
@@ -213,6 +215,8 @@ $this->set([
 						'library' => 'ecommerce_core'
 					], ['class' => 'button']) ?>
 				</div>
+			<?php else: ?>
+				<div class="none-available"><?= $t('There is no shipment attached to this order.') ?></div>
 			<?php endif ?>
 		</div>
 

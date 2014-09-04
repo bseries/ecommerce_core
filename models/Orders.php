@@ -379,8 +379,9 @@ class Orders extends \base_core\models\Base {
 				return true;
 			case 'checked-out':
 				$contact = Settings::read('contact.billing');
-				$order = $entity;
-				$user = $order->user();
+
+				$order   = $entity;
+				$user    = $order->user();
 				$invoice = $entity->invoice();
 
 				if (!$user->is_notified) {
@@ -396,7 +397,9 @@ class Orders extends \base_core\models\Base {
 						'user' => $user,
 						'order' => $order
 					],
-					'attach' => [
+					// Orders for i.e. subscriptions must not have an invoice
+					// when the order is completed.
+					'attach' => !$invoice ? [] : [
 						[
 							'data' => $invoice->exportAsPdf(),
 							'filename' => 'invoice_' . $invoice->number . '.pdf',
