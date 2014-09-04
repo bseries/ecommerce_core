@@ -12,8 +12,6 @@
 
 namespace ecommerce_core\models;
 
-use cms_core\models\Users;
-use cms_core\models\VirtualUsers;
 use cms_core\models\Addresses;
 use billing_core\models\InvoicePositions;
 use billing_core\models\Invoices;
@@ -31,6 +29,8 @@ use lithium\analysis\Logger;
 use lithium\util\Validator;
 
 class Orders extends \cms_core\models\Base {
+
+	use \cms_core\models\UserTrait;
 
 	public static $enum = [
 		'status' => [
@@ -151,13 +151,6 @@ class Orders extends \cms_core\models\Base {
 			return false;
 		}
 		return $entity->{$typeField} = $address;
-	}
-
-	public function user($entity) {
-		if ($entity->user_id) {
-			return Users::find('first', ['conditions' => ['id' => $entity->user_id]]);
-		}
-		return VirtualUsers::find('first', ['conditions' => ['id' => $entity->virtual_user_id]]);
 	}
 
 	public function cart($entity, array $query = []) {

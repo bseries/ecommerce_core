@@ -15,12 +15,12 @@ namespace ecommerce_core\models;
 use billing_core\extensions\finance\Price;
 use cms_core\extensions\cms\Settings;
 use ecommerce_core\models\CartPositions;
-use cms_core\models\Users;
-use cms_core\models\VirtualUsers;
 use DateTime;
 use lithium\analysis\Logger;
 
 class Carts extends \cms_core\models\Base {
+
+	use \cms_core\models\UserTrait;
 
 	public static $enum = [
 		'status' => [
@@ -46,13 +46,6 @@ class Carts extends \cms_core\models\Base {
 			'key' => 'ecommerce_cart_id'
 		]
 	];
-
-	public function user($entity) {
-		if ($entity->user_id) {
-			return Users::find('first', ['conditions' => ['id' => $entity->user_id]]);
-		}
-		return VirtualUsers::find('first', ['conditions' => ['id' => $entity->virtual_user_id]]);
-	}
 
 	public function order($entity, array $query = []) {
 		return Orders::find('first', [
