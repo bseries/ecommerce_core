@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use billing_core\extensions\finance\Price;
+use Finance\Price;
 use cms_core\extensions\cms\Settings;
 use ecommerce_core\models\CartPositions;
 use DateTime;

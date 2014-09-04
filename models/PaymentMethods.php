@@ -13,7 +13,7 @@
 namespace ecommerce_core\models;
 
 use li3_access\security\Access;
-use billing_core\extensions\finance\Price;
+use Finance\Price;
 use lithium\util\Collection;
 
 class PaymentMethods extends \cms_core\models\Base {
