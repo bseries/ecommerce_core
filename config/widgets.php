@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -11,12 +11,12 @@
  */
 
 use lithium\g11n\Message;
-use cms_core\extensions\cms\Widgets;
+use base_core\extensions\cms\Widgets;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\Products;
-use cms_core\models\Users;
-use cms_core\models\VirtualUsers;
+use base_core\models\Users;
+use base_core\models\VirtualUsers;
 
 extract(Message::aliases());
 

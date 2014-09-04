@@ -96,7 +96,7 @@ $this->set([
 					'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
 					'action' => 'edit',
 					'id' => $user->id,
-					'library' => 'cms_core'
+					'library' => 'base_core'
 				], ['class' => 'button']) ?>
 			</div>
 		</div>

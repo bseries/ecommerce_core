@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -16,13 +16,13 @@ use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
 use li3_access\security\Access;
 
-class ProductGroupsController extends \cms_core\controllers\BaseController {
+class ProductGroupsController extends \base_core\controllers\BaseController {
 
-	use \cms_core\controllers\AdminAddTrait;
-	use \cms_core\controllers\AdminEditTrait;
-	use \cms_core\controllers\AdminDeleteTrait;
+	use \base_core\controllers\AdminAddTrait;
+	use \base_core\controllers\AdminEditTrait;
+	use \base_core\controllers\AdminDeleteTrait;
 
-	use \cms_core\controllers\AdminPublishTrait;
+	use \base_core\controllers\AdminPublishTrait;
 
 	public function admin_index() {
 		$data = ProductGroups::find('all', [

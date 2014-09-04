@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -12,24 +12,24 @@
 
 namespace ecommerce_core\models;
 
-use cms_core\extensions\cms\Settings;
-use cms_core\extensions\cms\Features;
-use cms_core\models\Addresses;
+use base_core\extensions\cms\Settings;
+use base_core\extensions\cms\Features;
+use base_core\models\Addresses;
 use ecommerce_core\models\ShippingMethods;
 use lithium\analysis\Logger;
 use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
 
-class Shipments extends \cms_core\models\Base {
+class Shipments extends \base_core\models\Base {
 
 	protected $_meta = [
 		'source' => 'ecommerce_shipments'
 	];
 
 	protected static $_actsAs = [
-		'cms_core\extensions\data\behavior\Timestamp',
-		'cms_core\extensions\data\behavior\ReferenceNumber',
-		'cms_core\extensions\data\behavior\StatusChange'
+		'base_core\extensions\data\behavior\Timestamp',
+		'base_core\extensions\data\behavior\ReferenceNumber',
+		'base_core\extensions\data\behavior\StatusChange'
 	];
 
 	public static $enum = [
@@ -47,7 +47,7 @@ class Shipments extends \cms_core\models\Base {
 	public static function init() {
 		$model = static::_object();
 
-		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
+		static::behavior('base_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('shipment.number')
 		);
 	}

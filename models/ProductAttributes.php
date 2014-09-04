@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -14,7 +14,7 @@ namespace ecommerce_core\models;
 
 use ecommerce_core\models\Products;
 
-class ProductAttributes extends \cms_core\models\Base {
+class ProductAttributes extends \base_core\models\Base {
 
 	public static $enum = [
 		'key' => [

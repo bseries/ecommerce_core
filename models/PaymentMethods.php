@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -16,7 +16,7 @@ use li3_access\security\Access;
 use Finance\Price;
 use lithium\util\Collection;
 
-class PaymentMethods extends \cms_core\models\Base {
+class PaymentMethods extends \base_core\models\Base {
 
 	protected $_meta = [
 		'connection' => false

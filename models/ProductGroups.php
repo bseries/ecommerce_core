@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -16,7 +16,7 @@ use ecommerce_core\models\Products;
 use lithium\util\Inflector;
 use li3_access\security\Access;
 
-class ProductGroups extends \cms_core\models\Base {
+class ProductGroups extends \base_core\models\Base {
 
 	protected $_meta = [
 		'source' => 'ecommerce_product_groups'
@@ -24,7 +24,7 @@ class ProductGroups extends \cms_core\models\Base {
 
 	public $belongsTo = [
 		'CoverMedia' => [
-			'to' => 'cms_media\models\Media',
+			'to' => 'base_media\models\Media',
 			'key' => 'cover_media_id'
 		]
 	];
@@ -37,7 +37,7 @@ class ProductGroups extends \cms_core\models\Base {
 	];
 
 	protected static $_actsAs = [
-		'cms_media\extensions\data\behavior\Coupler' => [
+		'base_media\extensions\data\behavior\Coupler' => [
 			'bindings' => [
 				'cover' => [
 					'type' => 'direct',
@@ -45,12 +45,12 @@ class ProductGroups extends \cms_core\models\Base {
 				],
 				'media' => [
 					'type' => 'joined',
-					'to' => 'cms_media\models\MediaAttachments'
+					'to' => 'base_media\models\MediaAttachments'
 				]
 			]
 		],
-		'cms_core\extensions\data\behavior\Timestamp',
-		'cms_core\extensions\data\behavior\Serializable' => [
+		'base_core\extensions\data\behavior\Timestamp',
+		'base_core\extensions\data\behavior\Serializable' => [
 			'fields' => [
 				'access' => ','
 			]

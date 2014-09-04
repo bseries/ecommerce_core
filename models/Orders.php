@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -12,15 +12,15 @@
 
 namespace ecommerce_core\models;
 
-use cms_core\models\Addresses;
+use base_core\models\Addresses;
 use billing_core\models\InvoicePositions;
 use billing_core\models\Invoices;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\PaymentMethods;
 use ecommerce_core\models\ShippingMethods;
-use cms_core\extensions\cms\Features;
-use cms_core\extensions\cms\Settings;
+use base_core\extensions\cms\Features;
+use base_core\extensions\cms\Settings;
 use DateTime;
 use Exception;
 use li3_mailer\action\Mailer;
@@ -28,9 +28,9 @@ use lithium\g11n\Message;
 use lithium\analysis\Logger;
 use lithium\util\Validator;
 
-class Orders extends \cms_core\models\Base {
+class Orders extends \base_core\models\Base {
 
-	use \cms_core\models\UserTrait;
+	use \base_core\models\UserTrait;
 
 	public static $enum = [
 		'status' => [
@@ -61,17 +61,17 @@ class Orders extends \cms_core\models\Base {
 	];
 
 	protected static $_actsAs = [
-		'cms_core\extensions\data\behavior\Timestamp',
-		'cms_core\extensions\data\behavior\Uuid',
-		'cms_core\extensions\data\behavior\ReferenceNumber',
-		'cms_core\extensions\data\behavior\StatusChange'
+		'base_core\extensions\data\behavior\Timestamp',
+		'base_core\extensions\data\behavior\Uuid',
+		'base_core\extensions\data\behavior\ReferenceNumber',
+		'base_core\extensions\data\behavior\StatusChange'
 	];
 
 	public static function init() {
 		$model = static::_object();
 		extract(Message::aliases());
 
-		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
+		static::behavior('base_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('order.number')
 		);
 

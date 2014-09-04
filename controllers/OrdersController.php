@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -12,17 +12,17 @@
 
 namespace ecommerce_core\controllers;
 
-use cms_core\models\Users;
+use base_core\models\Users;
 use ecommerce_core\models\Orders;
 use billing_core\models\Invoices;
 use ecommerce_core\models\Shipments;
 use lithium\g11n\Message;
 
-class OrdersController extends \cms_core\controllers\BaseController {
+class OrdersController extends \base_core\controllers\BaseController {
 
-	use \cms_core\controllers\AdminAddTrait;
-	use \cms_core\controllers\AdminEditTrait;
-	use \cms_core\controllers\AdminUpdateStatusTrait;
+	use \base_core\controllers\AdminAddTrait;
+	use \base_core\controllers\AdminEditTrait;
+	use \base_core\controllers\AdminUpdateStatusTrait;
 
 	public function admin_index() {
 		$data = Orders::find('all', [

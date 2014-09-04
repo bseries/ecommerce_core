@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -14,9 +14,9 @@ namespace ecommerce_core\models;
 
 use Finite\StateMachine\StateMachine;
 use Finite\State\StateInterface;
-use cms_core\models\StatefulDocument;
+use base_core\models\StatefulDocument;
 
-class Checkouts extends \cms_core\models\Base {
+class Checkouts extends \base_core\models\Base {
 
 	protected $_meta = [
 		'connection' => false

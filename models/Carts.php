@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -13,14 +13,14 @@
 namespace ecommerce_core\models;
 
 use Finance\Price;
-use cms_core\extensions\cms\Settings;
+use base_core\extensions\cms\Settings;
 use ecommerce_core\models\CartPositions;
 use DateTime;
 use lithium\analysis\Logger;
 
-class Carts extends \cms_core\models\Base {
+class Carts extends \base_core\models\Base {
 
-	use \cms_core\models\UserTrait;
+	use \base_core\models\UserTrait;
 
 	public static $enum = [
 		'status' => [
@@ -36,8 +36,8 @@ class Carts extends \cms_core\models\Base {
 	];
 
 	protected static $_actsAs = [
-		'cms_core\extensions\data\behavior\Timestamp',
-		'cms_core\extensions\data\behavior\StatusChange'
+		'base_core\extensions\data\behavior\Timestamp',
+		'base_core\extensions\data\behavior\StatusChange'
 	];
 
 	public $hasMany = [

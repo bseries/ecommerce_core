@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -16,14 +16,14 @@ use Finance\Price;
 use ecommerce_core\models\ProductPriceGroups;
 use li3_access\security\Access;
 
-class ProductPrices extends \cms_core\models\Base {
+class ProductPrices extends \base_core\models\Base {
 
 	protected $_meta = [
 		'source' => 'ecommerce_product_prices'
 	];
 
 	protected static $_actsAs = [
-		'cms_core\extensions\data\behavior\Localizable' => [
+		'base_core\extensions\data\behavior\Localizable' => [
 			'fields' => [
 				'price' => 'money'
 			]

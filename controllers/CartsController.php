@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -18,10 +18,10 @@ use lithium\core\Environment;
 use lithium\g11n\Message;
 use li3_flash_message\extensions\storage\FlashMessage;
 
-class CartsController extends \cms_core\controllers\BaseController {
+class CartsController extends \base_core\controllers\BaseController {
 
-	use \cms_core\controllers\AdminEditTrait;
-	use \cms_core\controllers\AdminDeleteTrait;
+	use \base_core\controllers\AdminEditTrait;
+	use \base_core\controllers\AdminDeleteTrait;
 
 	public function admin_index() {
 		$data = Carts::find('all', [

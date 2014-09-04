@@ -1,6 +1,6 @@
 {
     "name": "atelierdisko/ecommerce_core",
-    "description": "Core functionality for boutique.",
+    "description": "Core functionality for Boutique.",
     "homepage": "http://atelierdisko.de",
     "type": "lithium-library",
     "license": "proprietary",
@@ -14,8 +14,8 @@
         "uor/li3_flash_message": "dev-master",
         "atelierdisko/li3_mailer": "dev-master",
         "atelierdisko/finance": "1.*",
-        "atelierdisko/cms_core": "1.2.*",
-        "atelierdisko/cms_media": "1.2.*",
+        "atelierdisko/base_core": "1.2.*",
+        "atelierdisko/base_media": "1.2.*",
         "atelierdisko/billing_core": "1.2.*",
         "unionofrad/lithium": "dev-dev",
         "composer/installers": "~1.0"
@@ -23,8 +23,8 @@
     "repositories": [
       { "type": "vcs", "url": "https://github.com/uor/li3_flash_message" },
       { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/finance.git" },
-      { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/cms_core.git" },
-      { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/cms_media.git" },
+      { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/base_core.git" },
+      { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/base_media.git" },
       { "type": "vcs", "url": "git@bitbucket.org:atelierdisko/billing_core.git" }
    ]
 }

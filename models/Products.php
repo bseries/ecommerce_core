@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -13,7 +13,7 @@
 namespace ecommerce_core\models;
 
 use lithium\storage\Cache;
-use cms_core\extensions\cms\Settings;
+use base_core\extensions\cms\Settings;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
@@ -23,7 +23,7 @@ use Exception;
 use lithium\util\Inflector;
 use lithium\util\Collection;
 
-class Products extends \cms_core\models\Base {
+class Products extends \base_core\models\Base {
 
 	protected $_meta = [
 		'source' => 'ecommerce_products'
@@ -31,13 +31,13 @@ class Products extends \cms_core\models\Base {
 
 	public $belongsTo = [
 		'CoverMedia' => [
-			'to' => 'cms_media\models\Media',
+			'to' => 'base_media\models\Media',
 			'key' => 'cover_media_id'
 		]
 	];
 
 	protected static $_actsAs = [
-		'cms_media\extensions\data\behavior\Coupler' => [
+		'base_media\extensions\data\behavior\Coupler' => [
 			'bindings' => [
 				'cover' => [
 					'type' => 'direct',
@@ -45,18 +45,18 @@ class Products extends \cms_core\models\Base {
 				],
 				'media' => [
 					'type' => 'joined',
-					'to' => 'cms_media\models\MediaAttachments'
+					'to' => 'base_media\models\MediaAttachments'
 				]
 			]
 		],
-		'cms_core\extensions\data\behavior\Timestamp',
-		'cms_core\extensions\data\behavior\ReferenceNumber'
+		'base_core\extensions\data\behavior\Timestamp',
+		'base_core\extensions\data\behavior\ReferenceNumber'
 	];
 
 	public static function init() {
 		$model = static::_object();
 
-		static::behavior('cms_core\extensions\data\behavior\ReferenceNumber')->config(
+		static::behavior('base_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('product.number')
 		);
 	}

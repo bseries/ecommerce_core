@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -17,10 +17,10 @@ use ecommerce_core\models\ShippingMethods;
 use lithium\g11n\Message;
 use li3_flash_message\extensions\storage\FlashMessage;
 
-class ShipmentsController extends \cms_core\controllers\BaseController {
+class ShipmentsController extends \base_core\controllers\BaseController {
 
-	use \cms_core\controllers\AdminAddTrait;
-	use \cms_core\controllers\AdminEditTrait;
+	use \base_core\controllers\AdminAddTrait;
+	use \base_core\controllers\AdminEditTrait;
 
 	public function admin_index() {
 		$data = Shipments::find('all', [

@@ -1,6 +1,6 @@
 <?php
 /**
- * Boutique Core
+ * eCommerce Core
  *
  * Copyright (c) 2014 Atelier Disko - All rights reserved.
  *
@@ -15,7 +15,7 @@ namespace ecommerce_core\models;
 use SebastianBergmann\Money\Money;
 use SebastianBergmann\Money\Currency;
 
-class ProductPriceGroups extends \cms_core\models\Base {
+class ProductPriceGroups extends \base_core\models\Base {
 
 	protected $_meta = [
 		'connection' => false
