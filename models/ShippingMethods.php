@@ -43,7 +43,7 @@ class ShippingMethods extends \base_core\models\Base {
 		static::$_data[$name] = static::create($data);
 	}
 
-	public static function find($type, array $options = array()) {
+	public static function find($type, array $options = []) {
 		if ($type == 'all') {
 			return new Collection(['data' => static::$_data]);
 		} elseif ($type == 'first') {
