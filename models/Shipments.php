@@ -19,7 +19,14 @@ use ecommerce_core\models\ShippingMethods;
 use lithium\analysis\Logger;
 use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
+use billing_core\models\TaxZones;
 
+// Shipments are very similar to invoices in that
+// they also have positions. In general shipments
+// only track amount/values to allow calculating
+// best shipment method if required.
+//
+// @see billing_core\models\Invoices
 class Shipments extends \base_core\models\Base {
 
 	protected $_meta = [
@@ -152,6 +159,21 @@ class Shipments extends \base_core\models\Base {
 			'cancelled',
 			'shipping-scheduled',
 			'shipping-error'
+		]);
+	}
+
+	public function positions($entity) {
+		return !$entity->id ? [] : InvoicePositions::find('all', [
+			'conditions' => [
+				'billing_invoice_id' => $entity->id
+			]
+		]);
+	}
+
+	public function taxZone($entity) {
+		return TaxZones::create([
+			'rate' => $entity->tax_rate,
+			'note' => $entity->tax_note
 		]);
 	}
 }

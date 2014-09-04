@@ -208,7 +208,7 @@ class Orders extends \base_core\models\Base {
 		return $entity->totalAmount($user, $cart, $taxZone)->getTax();
 	}
 
-	public function generateShipment($entity) {
+	public function generateShipment($entity, $user, $cart, array $data = []) {
 		$shipment = Shipments::create([
 			'status' => 'created',
 			'method' => $entity->shipping_method
@@ -219,6 +219,30 @@ class Orders extends \base_core\models\Base {
 			return false;
 		}
 		$entity->ecommerce_shipment_id = $shipment->id;
+
+		foreach ($cart->positions() as $cartPosition) {
+			$product = $cartPosition->product();
+
+			$description  = $product->title . ' ';
+			$description .= '(#' . $product->number . ')';
+
+			$price = $cartPosition->product()->price($user, $taxZone);
+
+			$taxZone = $user->taxZone();
+			// $currency = $user->billing_currency;
+
+			$shipmentPosition = ShipmentPositions::create([
+				'ecommerce_shipment_id' => $invoice->id,
+				'description' => $description,
+				'quantity' => $cartPosition->quantity,
+				'amount_type' => $price->getType(),
+				'amount_currency' => $price->getCurrency(),
+				'amount' => $price->getAmount(),
+			]);
+			if (!$shipmentPosition->save(null, ['localize' => false])) {
+				return false;
+			}
+		}
 
 		// Shipping address is now contained in shipment.
 		// For clarity nullify field.
