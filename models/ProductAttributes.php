@@ -20,7 +20,8 @@ class ProductAttributes extends \base_core\models\Base {
 		'key' => [
 			'size',
 			'label',
-			'make'
+			'make',
+			'color'
 		]
 	];
 
