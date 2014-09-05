@@ -258,7 +258,7 @@ class Orders extends \base_core\models\Base {
 		$data += [
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
-			'total_currency' => 'EUR',
+			'total_currency' => 'EUR', // FIXME use user billing_currency?
 			'note' => $t('Order No.') . ': ' . $entity->number,
 			'terms' => Settings::read('billing.paymentTerms')
 		];
