@@ -24,10 +24,6 @@ class PaymentMethods extends \base_core\models\Base {
 
 	protected static $_data = [];
 
-	public function title($entity) {
-		return $entity->title;
-	}
-
 	public static function register($name, array $data) {
 		$data += [
 			'id' => $name,
@@ -38,7 +34,7 @@ class PaymentMethods extends \base_core\models\Base {
 				return new Price(0, 'EUR', 'net', $taxZone);
 			},
 			'info' => function($context, $format, $renderer, $order) {
-
+				// Dependent on $format return either HTML or plaintext.
 			}
 		];
 		$data['access'] = (array) $data['access'];
@@ -58,6 +54,10 @@ class PaymentMethods extends \base_core\models\Base {
 			}
 			return $results;
 		}
+	}
+
+	public function title($entity) {
+		return $entity->title;
 	}
 
 	public function hasAccess($entity, $user) {
