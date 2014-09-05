@@ -202,3 +202,6 @@ CREATE TABLE `ecommerce_product_attributes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_key` (`ecommerce_product_id`,`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `users` ADD `has_accepted_terms` TINYINT(1)  UNSIGNED  NOT NULL  DEFAULT '0'  AFTER `is_notified`;
+
