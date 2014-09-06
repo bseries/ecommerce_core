@@ -17,29 +17,34 @@ extract(Message::aliases());
 
 Panes::register('ecommerce', [
 	'title' => $t('eCommerce'),
-	'order' => 70
+	'weight' => 30
 ]);
 
 $base = ['controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true];
 Panes::register('ecommerce.orders', [
 	'title' => $t('Orders'),
-	'url' => ['controller' => 'Orders', 'action' => 'index'] + $base
+	'url' => ['controller' => 'Orders', 'action' => 'index'] + $base,
+	'weight' => 0
 ]);
 Panes::register('ecommerce.productGroups', [
 	'title' => $t('Product Groups'),
-	'url' => ['controller' => 'ProductGroups', 'action' => 'index'] + $base
+	'url' => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
+	'weight' => 11
 ]);
 Panes::register('ecommerce.products', [
 	'title' => $t('Products'),
-	'url' => ['controller' => 'Products', 'action' => 'index'] + $base
+	'url' => ['controller' => 'Products', 'action' => 'index'] + $base,
+	'weight' => 10
 ]);
 Panes::register('ecommerce.shipments', [
 	'title' => $t('Shipments'),
-	'url' => ['controller' => 'Shipments', 'action' => 'index'] + $base
+	'url' => ['controller' => 'Shipments', 'action' => 'index'] + $base,
+	'weight' => 2
 ]);
 Panes::register('ecommerce.carts', [
 	'title' => $t('Carts'),
-	'url' => ['controller' => 'Carts', 'action' => 'index'] + $base
+	'url' => ['controller' => 'Carts', 'action' => 'index'] + $base,
+	'weight' => 50
 ]);
 
 ?>
