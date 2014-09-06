@@ -16,7 +16,9 @@ use base_core\models\Currencies;
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
+use ecommerce_brand\models\Brands;
 use lithium\g11n\Message;
+use lithium\core\Libraries;
 
 class ProductsController extends \base_core\controllers\BaseController {
 
@@ -48,8 +50,10 @@ class ProductsController extends \base_core\controllers\BaseController {
 				'color' => $t('color')
 			]);
 		}
-
-		return compact('productGroups', 'currencies', 'attributeKeys');
+		if (Libraries::get('ecommerce_brand')) {
+			$brands = Brands::find('list');
+		}
+		return compact('productGroups', 'currencies', 'attributeKeys', 'brands');
 	}
 }
 

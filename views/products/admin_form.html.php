@@ -51,6 +51,13 @@ $this->set([
 
 		<div class="grid-row">
 			<div class="grid-column-left">
+				<?php if (isset($brands)): ?>
+					<?= $this->form->field('ecommerce_brand_id', [
+						'type' => 'select',
+						'list' => $brands,
+						'label' => $t('Brand')
+					]) ?>
+				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
 				<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags'), 'placeholder' => 'foo, bar']) ?>
