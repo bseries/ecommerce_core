@@ -19,8 +19,6 @@ class ProductAttributes extends \base_core\models\Base {
 	public static $enum = [
 		'key' => [
 			'size',
-			'label',
-			'make',
 			'color'
 		]
 	];

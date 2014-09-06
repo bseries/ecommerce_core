@@ -45,8 +45,6 @@ class ProductsController extends \base_core\controllers\BaseController {
 		if ($item) {
 			$attributeKeys = ProductAttributes::enum('key', [
 				'size' => $t('size'),
-				'label' => $t('label'),
-				'make' => $t('make'),
 				'color' => $t('color')
 			]);
 		}
