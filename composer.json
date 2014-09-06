@@ -16,6 +16,7 @@
         "atelierdisko/finance": "1.*",
         "atelierdisko/base_core": "1.2.*",
         "atelierdisko/base_media": "1.2.*",
+        "atelierdisko/base_tag": "1.2.*",
         "atelierdisko/billing_core": "1.2.*",
         "unionofrad/lithium": "dev-dev",
         "composer/installers": "~1.0",

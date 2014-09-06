@@ -51,6 +51,13 @@ $this->set([
 
 		<div class="grid-row">
 			<div class="grid-column-left">
+			</div>
+			<div class="grid-column-right">
+				<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags'), 'placeholder' => 'foo, bar']) ?>
+			</div>
+		</div>
+		<div class="grid-row">
+			<div class="grid-column-left">
 				<div class="media-attachment use-media-attachment-direct">
 					<?= $this->form->label('ProductsCoverMediaId', $t('Cover')) ?>
 					<?= $this->form->hidden('cover_media_id') ?>
