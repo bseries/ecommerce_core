@@ -31,6 +31,7 @@ Settings::register('service.paypal.default.email', 'billing@example.com');
 Settings::register('checkout.expire', '+1 week');
 Settings::register('cart.limitItemsPerPosition', false); // false to disable check
 
+Settings::register('ecommerce.shipmentTerms', null);
 Features::register('shipment.sendShippedMail', false);
 
 Features::register('stock.check', true);

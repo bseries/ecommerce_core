@@ -209,9 +209,15 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function generateShipment($entity, $user, $cart, array $data = []) {
+		$taxZone = $user->taxZone();
+
 		$shipment = Shipments::create([
 			'status' => 'created',
-			'method' => $entity->shipping_method
+			'method' => $entity->shipping_method,
+			'tax_rate' => $taxZone->rate,
+			'tax_note' => $taxZone->note,
+			'note' => $t('Order No.') . ': ' . $entity->number,
+			'terms' => Settings::read('ecommerce.shipmentTerms')
 		]);
 		$shipment = $entity->address('shipping')->copy($shipment, 'address_');
 
@@ -226,13 +232,12 @@ class Orders extends \base_core\models\Base {
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
 
-			$price = $cartPosition->product()->price($user, $taxZone);
-
-			$taxZone = $user->taxZone();
 			// $currency = $user->billing_currency;
 
+			$price = $cartPosition->product()->price($user, $taxZone);
+
 			$shipmentPosition = ShipmentPositions::create([
-				'ecommerce_shipment_id' => $invoice->id,
+				'ecommerce_shipment_id' => $shipment->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
 				'amount_type' => $price->getType(),

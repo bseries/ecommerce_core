@@ -1,5 +1,9 @@
+ALTER TABLE `ecommerce_shipments` ADD `user_id` INT(11)  UNSIGNED  NULL  DEFAULT NULL  AFTER `id`;
+ALTER TABLE `ecommerce_shipments` ADD `virtual_user_id` INT(11)  UNSIGNED  NULL  DEFAULT NULL  AFTER `user_id`;
 ALTER TABLE `ecommerce_shipments` ADD `tax_rate` INT(4)  UNSIGNED  NOT NULL  AFTER `method`;
 ALTER TABLE `ecommerce_shipments` ADD `tax_note` VARCHAR(250)  NOT NULL  DEFAULT ''  AFTER `tax_rate`;
+ALTER TABLE `ecommerce_shipments` ADD `terms` TEXT  NULL  AFTER `address_phone`;
+ALTER TABLE `ecommerce_shipments` ADD `note` TEXT  NULL  AFTER `terms`;
 
 CREATE TABLE `ecommerce_shipment_positions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

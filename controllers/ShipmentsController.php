@@ -14,8 +14,11 @@ namespace ecommerce_core\controllers;
 
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\ShippingMethods;
+use base_core\models\VirtualUsers;
+use base_core\models\Users;
 use lithium\g11n\Message;
 use li3_flash_message\extensions\storage\FlashMessage;
+use base_core\models\Currencies;
 
 class ShipmentsController extends \base_core\controllers\BaseController {
 
@@ -62,8 +65,11 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 			'delivered' => $t('delivered')
 		]);
 		$methods = ShippingMethods::find('list');
+		$currencies = Currencies::find('list');
+		$virtualUsers = [null => '-'] + VirtualUsers::find('list', ['order' => 'name']);
+		$users = [null => '-'] + Users::find('list', ['order' => 'name']);
 
-		return compact('methods', 'statuses');
+		return compact('methods', 'statuses', 'currencies', 'users', 'virtualUsers');
 	}
 }
 

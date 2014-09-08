@@ -20,11 +20,14 @@ use lithium\analysis\Logger;
 use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
 use billing_core\models\TaxZones;
+use Finance\Price;
 
 // Shipments are very similar to invoices in that
 // they also have positions. In general shipments
 // only track amount/values to allow calculating
 // best shipment method if required.
+//
+// Position price can be thought of the "value".
 //
 // @see billing_core\models\Invoices
 class Shipments extends \base_core\models\Base {
@@ -163,9 +166,9 @@ class Shipments extends \base_core\models\Base {
 	}
 
 	public function positions($entity) {
-		return !$entity->id ? [] : InvoicePositions::find('all', [
+		return !$entity->id ? [] : ShipmentPositions::find('all', [
 			'conditions' => [
-				'billing_invoice_id' => $entity->id
+				'ecommerce_shipment_id' => $entity->id
 			]
 		]);
 	}
@@ -176,8 +179,70 @@ class Shipments extends \base_core\models\Base {
 			'note' => $entity->tax_note
 		]);
 	}
+
+	// This is the total value of the shipment. Used i.e. for
+	// calculating the inssurrance value needed.
+	public function totalAmount($entity) {
+		$result = new Price(0, 'EUR', 'net', $entity->taxZone());
+
+		$positions = $this->positions($entity);
+
+		foreach ($positions as $position) {
+			$result = $result->add($position->totalAmount($entity->taxZone()));
+		}
+		return $result;
+	}
 }
 
+Shipments::applyFilter('save', function($self, $params, $chain) {
+	if (!$result = $chain->next($self, $params, $chain)) {
+		return false;
+	}
+
+	// Save nested positions.
+	$new = isset($data['positions']) ? $data['positions'] : [];
+	foreach ($new as $key => $data) {
+		if ($key === 'new') {
+			continue;
+		}
+		if (isset($data['id'])) {
+			$item = ShipmentPositions::find('first', ['conditions' => ['id' => $data['id']]]);
+
+			if ($data['_delete']) {
+				if (!$item->delete()) {
+					return false;
+				}
+				continue;
+			}
+		} else {
+			$item = ShipmentPositions::create($data + [
+				'ecommerce_shipment_id' => $entity->id,
+				$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id
+			]);
+		}
+		if (!$item->save($data)) {
+			return false;
+		}
+	}
+	return true;
+});
+
+Shipments::applyFilter('delete', function($self, $params, $chain) {
+	$entity = $params['entity'];
+	$result = $chain->next($self, $params, $chain);
+
+	if ($result) {
+		$positions = ShipmentPositions::find('all', [
+			'conditions' => ['ecommerce_shipment_id' => $entity->id]
+		]);
+		foreach ($positions as $position) {
+			$position->delete();
+		}
+	}
+	return $result;
+});
+
 Shipments::init();
+
 
 ?>

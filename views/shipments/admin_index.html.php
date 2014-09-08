@@ -18,7 +18,7 @@ $this->set([
 					<td data-sort="status" class="status list-sort"><?= $t('Status') ?>
 					<td data-sort="method" class="method list-sort"><?= $t('Method') ?>
 					<td data-sort="user" class="user list-sort"><?= $t('Recipient') ?>
-					<td class="address"><?= $t('Address') ?>
+					<td><?= $t('Total (net)') ?>
 					<td data-sort="created" class="date created list-sort"><?= $t('Created') ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
@@ -50,7 +50,7 @@ $this->set([
 						<?php else: ?>
 							-
 						<?php endif ?>
-					<td class="address"><?= $item->address()->format('oneline') ?>
+					<td><?= ($money = $item->totalAmount()) ? $this->money->format($money->getNet(), 'money') : null ?>
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>
