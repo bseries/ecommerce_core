@@ -198,6 +198,9 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 	if (!$result = $chain->next($self, $params, $chain)) {
 		return false;
 	}
+	$entity = $params['entity'];
+	$data = $params['data'];
+	$user = $entity->user();
 
 	// Save nested positions.
 	$new = isset($data['positions']) ? $data['positions'] : [];

@@ -172,6 +172,7 @@ $this->set([
 								<?= $this->form->field("positions.{$key}.total_net", [
 									'type' => 'text',
 									'label' => false,
+									'disabled' => true,
 									'value' => $this->money->format($child->totalAmount()->getNet(), 'decimal')
 								]) ?>
 							<td class="actions">
