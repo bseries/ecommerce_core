@@ -54,7 +54,7 @@ $this->set([
 				<?php if (isset($brands)): ?>
 					<?= $this->form->field('ecommerce_brand_id', [
 						'type' => 'select',
-						'list' => $brands,
+						'list' => [null => null] + $brands,
 						'label' => $t('Brand')
 					]) ?>
 				<?php endif ?>
