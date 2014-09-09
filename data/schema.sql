@@ -204,4 +204,7 @@ CREATE TABLE `ecommerce_product_attributes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `users` ADD `has_accepted_terms` TINYINT(1)  UNSIGNED  NOT NULL  DEFAULT '0'  AFTER `is_notified`;
+ALTER TABLE `users` ADD `shipping_address_id` int(11) unsigned DEFAULT NULL AFTER `timezone`;
 
+ALTER TABLE `virtual_users` ADD `has_accepted_terms` TINYINT(1)  UNSIGNED  NOT NULL  DEFAULT '0'  AFTER `is_notified`;
+ALTER TABLE `virtual_users` ADD `shipping_address_id` int(11) unsigned DEFAULT NULL AFTER `timezone`;
