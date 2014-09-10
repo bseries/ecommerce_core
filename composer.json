@@ -13,7 +13,7 @@
         "yohang/finite": "1.*",
         "uor/li3_flash_message": "dev-master",
         "atelierdisko/li3_mailer": "dev-master",
-        "atelierdisko/finance": "1.*",
+        "atelierdisko/finance": "2.*",
         "atelierdisko/base_core": "1.2.*",
         "atelierdisko/base_media": "1.2.*",
         "atelierdisko/base_tag": "1.2.*",
