@@ -39,14 +39,14 @@ class ProductPrices extends \base_core\models\Base {
 		]);
 	}
 
-	// When we display net prices as gross to user which we don't have
-	// any geographic and tax information of default to standard taxZone.
-	public function price($entity) {
+	// Prices may be retrieved using a temporary user.
+	// That user must at a minimum have tax country and vat_reg_no fields set.
+	public function price($entity, $user) {
 		return new Price(
 			$entity->price,
 			$entity->price_currency,
 			$entity->price_type,
-			$entity->tax()->rate
+			$entity->tax()->rate($user->billing_tax_country, $user->billing_vat_reg_no)
 		);
 	}
 

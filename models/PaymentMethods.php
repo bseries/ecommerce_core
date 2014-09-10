@@ -30,8 +30,8 @@ class PaymentMethods extends \base_core\models\Base {
 			'name' => $name,
 			'title' => null,
 			'access' => ['user.role:admin'],
-			'price' => function($user, $cart, $taxZone) {
-				return new Price(0, 'EUR', 'net', $taxZone);
+			'price' => function($user, $cart) {
+				return new Price(0, 'EUR', 'net');
 			},
 			'info' => function($context, $format, $renderer, $order) {
 				// Dependent on $format return either HTML or plaintext.
@@ -66,9 +66,9 @@ class PaymentMethods extends \base_core\models\Base {
 		]) === [];
 	}
 
-	public function price($entity, $user, $cart, $taxZone) {
+	public function price($entity, $user, $cart) {
 		$value = $entity->data('price');
-		return $value($user, $cart, $taxZone);
+		return $value($user, $cart);
 	}
 
 	public function info($entity, $context, $format, $renderer, $order) {

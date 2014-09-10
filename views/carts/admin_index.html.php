@@ -31,7 +31,6 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 					<?php $order = $item->order() ?>
 					<?php $user = $order ? $order->user() : null?>
-					<?php $taxZone = $user ? $user->taxZone() : null ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="status"><?= $statuses[$item->status] ?>
 					<td class="order">
@@ -55,7 +54,7 @@ $this->set([
 					<?php endif ?>
 					<td class="total-amount">
 					<?php if ($user): ?>
-						<?= $this->money->format($item->totalAmount($user, $user->taxZone())->getNet(), 'money') ?: '–' ?>
+						<?= $this->money->format($item->totalAmount($user)->getNet(), 'money') ?: '–' ?>
 					<?php else: ?>
 						–
 					<?php endif ?>

@@ -69,11 +69,11 @@ class Carts extends \base_core\models\Base {
 		}, 0);
 	}
 
-	public function totalAmount($entity, $user, $taxZone) {
+	public function totalAmount($entity, $user) {
 		$sum = null;
 
 		foreach ($entity->positions() as $position) {
-			$result = $position->totalAmount($user, $taxZone);
+			$result = $position->totalAmount($user);
 
 			if ($sum) {
 				$sum = $sum->add($result);
@@ -81,11 +81,11 @@ class Carts extends \base_core\models\Base {
 				$sum = $result;
 			}
 		}
-		return $sum ?: new Price(0, $user->billing_currency, 'net', $taxZone);
+		return $sum ?: new Price(0, 'EUR', 'net');
 	}
 
-	public function totalTax($entity, $user, $taxZone) {
-		return $entity->totalAmount($user, $taxZone)->getTax();
+	public function totalTax($entity, $user) {
+		return $entity->totalAmount($user)->getTax();
 	}
 
 	// Not all carts must have an associated order, i.e.

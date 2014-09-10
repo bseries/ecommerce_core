@@ -193,29 +193,24 @@ class Orders extends \base_core\models\Base {
 		]);
 	}
 
-	// FIXME Drop cart parameter and retrieve via entity->cart()?
-	public function totalAmount($entity, $user, $cart, $taxZone) {
-		$cart = $cart ?: $entity->cart();
-		$result = $cart->totalAmount($user, $taxZone);
+	public function totalAmount($entity, $user) {
+		$cart = $entity->cart();
 
-		$result = $result->add($entity->shippingMethod()->price($user, $cart, $taxZone));
-		$result = $result->add($entity->paymentMethod()->price($user, $cart, $taxZone));
+		$result = $cart->totalAmount($user);
+		$result = $result->add($entity->shippingMethod()->price($user, $cart));
+		$result = $result->add($entity->paymentMethod()->price($user, $cart));
 
 		return $result;
 	}
 
-	public function totalTax($entity, $user, $cart, $taxZone) {
-		return $entity->totalAmount($user, $cart, $taxZone)->getTax();
+	public function totalTax($entity, $user, $cart) {
+		return $entity->totalAmount($user, $cart)->getTax();
 	}
 
 	public function generateShipment($entity, $user, $cart, array $data = []) {
-		$taxZone = $user->taxZone();
-
 		$shipment = Shipments::create([
 			'status' => 'created',
 			'method' => $entity->shipping_method,
-			'tax_rate' => $taxZone->rate,
-			'tax_note' => $taxZone->note,
 			'note' => $t('Order No.') . ': ' . $entity->number,
 			'terms' => Settings::read('ecommerce.shipmentTerms')
 		]);
@@ -234,12 +229,14 @@ class Orders extends \base_core\models\Base {
 
 			// $currency = $user->billing_currency;
 
-			$price = $cartPosition->product()->price($user, $taxZone);
+			$price = $cartPosition->product()->price($user);
 
 			$shipmentPosition = ShipmentPositions::create([
 				'ecommerce_shipment_id' => $shipment->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
+//				'tax' => null,
+//				'tax_rate' => null,
 				'amount_type' => $price->getType(),
 				'amount_currency' => $price->getCurrency(),
 				'amount' => $price->getAmount(),
@@ -277,7 +274,6 @@ class Orders extends \base_core\models\Base {
 			return false;
 		}
 
-		$taxZone = $user->taxZone();
 		$currency = $invoice->currency;
 
 		foreach ($cart->positions() as $cartPosition) {
@@ -286,12 +282,14 @@ class Orders extends \base_core\models\Base {
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
 
-			$price = $cartPosition->product()->price($user, $taxZone);
+			$price = $product->price($user);
 
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
+				'tax' => $product->tax,
+				'tax_rate' => $product->tax()->rate,
 				'amount_type' => $price->getType(),
 				'amount_currency' => $price->getCurrency(),
 				'amount' => $price->getAmount(),
@@ -301,12 +299,13 @@ class Orders extends \base_core\models\Base {
 			}
 		}
 
-		$price = $entity->shippingMethod()->price($user, $cart, $taxZone);
+		$price = $entity->shippingMethod()->price($user, $cart);
 		if ($price->getAmount()) {
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
 				'description' => $entity->shippingMethod()->title,
 				'quantity' => 1,
+				// TODO TAX
 				'amount_currency' => $price->getCurrency(),
 				'amount_type' => $price->getType(),
 				'amount' => $price->getAmount()
@@ -315,11 +314,12 @@ class Orders extends \base_core\models\Base {
 				return false;
 			}
 		}
-		$price = $entity->paymentMethod()->price($user, $cart, $taxZone);
+		$price = $entity->paymentMethod()->price($user, $cart);
 		if ($price->getAmount()) {
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
 				'description' => $entity->paymentMethod()->title,
+				// TODO TAX
 				'amount_currency' => $price->getCurrency(),
 				'amount_type' => $price->getType(),
 				'amount' => $price->getAmount()

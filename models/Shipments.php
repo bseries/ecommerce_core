@@ -173,22 +173,15 @@ class Shipments extends \base_core\models\Base {
 		]);
 	}
 
-	public function taxZone($entity) {
-		return TaxZones::create([
-			'rate' => $entity->tax_rate,
-			'note' => $entity->tax_note
-		]);
-	}
-
 	// This is the total value of the shipment. Used i.e. for
 	// calculating the inssurrance value needed.
 	public function totalAmount($entity) {
-		$result = new Price(0, 'EUR', 'net', $entity->taxZone());
+		$result = new Price(0, 'EUR', 'net');
 
 		$positions = $this->positions($entity);
 
 		foreach ($positions as $position) {
-			$result = $result->add($position->totalAmount($entity->taxZone()));
+			$result = $result->add($position->totalAmount());
 		}
 		return $result;
 	}

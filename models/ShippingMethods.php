@@ -31,8 +31,8 @@ class ShippingMethods extends \base_core\models\Base {
 			'title' => null,
 			'access' => ['user.role:admin'],
 			'delegate' => false,
-			'price' => function($user, $cart, $taxZone) {
-				return new Price(0, 'EUR', 'net', $taxZone);
+			'price' => function($user, $cart) {
+				return new Price(0, 'EUR', 'net');
 			}
 		];
 		$data['access'] = (array) $data['access'];
@@ -64,9 +64,9 @@ class ShippingMethods extends \base_core\models\Base {
 		]) === [];
 	}
 
-	public function price($entity, $user, $cart, $taxZone) {
+	public function price($entity, $user, $cart) {
 		$value = $entity->data('price');
-		return $value($user, $cart, $taxZone);
+		return $value($user, $cart);
 	}
 }
 

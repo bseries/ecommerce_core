@@ -138,7 +138,7 @@ $this->set([
 					<?= $this->form->field('total_net', [
 						'label' => $t('Total (net)'),
 						'disabled' => true,
-						'value' => $this->money->format($item->totalAmount($item->user(), $item->cart(), $item->user()->taxZone())->getNet(), 'money')
+						'value' => $this->money->format($item->totalAmount($item->user())->getNet(), 'money')
 					]) ?>
 				</div>
 				<div class="actions">
