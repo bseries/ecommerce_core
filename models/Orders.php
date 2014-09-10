@@ -259,15 +259,18 @@ class Orders extends \base_core\models\Base {
 	public function generateInvoice($entity, $user, $cart, array $data = []) {
 		extract(Message::aliases());
 
-		$invoice = Invoices::createForUser($user);
-		$data += [
+		$invoice = Invoices::create([
+			$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id,
+			'user_vat_reg_no' => $user->vat_reg_no,
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
 			'total_currency' => 'EUR', // FIXME use user billing_currency?
 			'note' => $t('Order No.') . ': ' . $entity->number,
 			'terms' => Settings::read('billing.paymentTerms')
-		];
-		if (!$invoice->save($data)) {
+		]);
+		$invoice = $user->address('billing')->copy($invoice, 'address_');
+
+		if (!$invoice->save()) {
 			return false;
 		}
 		if (!$entity->save(['billing_invoice_id' => $invoice->id])) {

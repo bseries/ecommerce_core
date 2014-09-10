@@ -17,6 +17,7 @@ use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_brand\models\Brands;
+use billing_core\models\Taxes;
 use lithium\g11n\Message;
 use lithium\core\Libraries;
 
@@ -49,11 +50,12 @@ class ProductsController extends \base_core\controllers\BaseController {
 				'size' => $t('size'),
 				'color' => $t('color')
 			]);
+			$taxes = Taxes::find('list');
 		}
 		if (Libraries::get('ecommerce_brand')) {
 			$brands = Brands::find('list');
 		}
-		return compact('productGroups', 'currencies', 'attributeKeys', 'brands');
+		return compact('productGroups', 'currencies', 'attributeKeys', 'brands', 'taxes');
 	}
 }
 

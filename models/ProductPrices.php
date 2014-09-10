@@ -15,6 +15,7 @@ namespace ecommerce_core\models;
 use Finance\Price;
 use ecommerce_core\models\ProductPriceGroups;
 use li3_access\security\Access;
+use billing_core\models\Taxes;
 
 class ProductPrices extends \base_core\models\Base {
 
@@ -40,8 +41,17 @@ class ProductPrices extends \base_core\models\Base {
 
 	// When we display net prices as gross to user which we don't have
 	// any geographic and tax information of default to standard taxZone.
-	public function price($entity, $taxZone) {
-		return new Price($entity->price, $entity->price_currency, $entity->price_type, $taxZone);
+	public function price($entity) {
+		return new Price(
+			$entity->price,
+			$entity->price_currency,
+			$entity->price_type,
+			$entity->tax()->rate
+		);
+	}
+
+	public function tax($entity) {
+		return Taxes::find('first', ['conditions' => ['id' => $entity->tax]]);
 	}
 
 	public function hasAccess($entity, $user) {

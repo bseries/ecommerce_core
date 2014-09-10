@@ -66,10 +66,10 @@ class Products extends \base_core\models\Base {
 		);
 	}
 
-	public function price($entity, $user, $taxZone) {
+	public function price($entity, $user) {
 		foreach ($this->prices($entity) as $price) {
 			if ($price->hasAccess($user)) {
-				return $price->price($taxZone);
+				return $price->price();
 			}
 		}
 		throw new Exception("Not legible for any price.");

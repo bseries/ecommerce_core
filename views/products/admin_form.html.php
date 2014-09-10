@@ -162,6 +162,7 @@ $this->set([
 							<td><?= $t('Type') ?>
 							<td><?= $t('Currency') ?>
 							<td><?= $t('Amount') ?>
+							<td><?= $t('Tax') ?>
 							<td>
 					</thead>
 					<tbody>
@@ -201,6 +202,13 @@ $this->set([
 									'type' => 'text',
 									'label' => false,
 									'value' => $this->money->format($child->price, 'decimal')
+								]) ?>
+							<td>
+								<?= $this->form->field("prices.{$key}.tax", [
+									'type' => 'select',
+									'label' => false,
+									'list' => $taxes,
+									'value' => $child->tax
 								]) ?>
 							<td>
 					<?php endforeach ?>
