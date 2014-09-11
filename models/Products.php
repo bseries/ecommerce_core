@@ -88,7 +88,11 @@ class Products extends \base_core\models\Base {
 		if (!$options['sparse']) {
 			foreach (ProductPriceGroups::find('all') as $group) {
 				$results[$group->id] = ProductPrices::create([
-					'group' => $group->id
+					'group' => $group->id,
+					'amount_currency' => $group->amountCurrency,
+					'amount_type' => $group->amountType,
+					'tax_type' => $group->taxType,
+					'tax_rate' => $group->taxType()->rate
 				]);
 			}
 		}

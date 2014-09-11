@@ -162,7 +162,8 @@ $this->set([
 							<td><?= $t('Type') ?>
 							<td><?= $t('Currency') ?>
 							<td><?= $t('Amount') ?>
-							<td><?= $t('Tax') ?>
+							<td><?= $t('Tax type') ?>
+							<td><?= $t('Tax rate (%)') ?>
 							<td>
 					</thead>
 					<tbody>
@@ -188,27 +189,36 @@ $this->set([
 									'type' => 'select',
 									'label' => false,
 									'list' => ['net' => $t('net'), 'gross' => $t('gross')],
-									'value' => $child->price_type
+									'value' => $child->amount_type
 								]) ?>
 							<td>
 								<?= $this->form->field("prices.{$key}.price_currency", [
 									'type' => 'select',
 									'label' => false,
+									// 'disabled' => true,
 									'list' => $currencies,
-									'value' => $child->price_currency
+									'value' => $child->amount_currency
 								]) ?>
 							<td>
 								<?= $this->form->field("prices.{$key}.price", [
 									'type' => 'text',
 									'label' => false,
-									'value' => $this->money->format($child->price, 'decimal')
+									'value' => $this->money->format($child->amount, 'decimal')
 								]) ?>
 							<td>
-								<?= $this->form->field("prices.{$key}.tax", [
+								<?= $this->form->field("prices.{$key}.tax_type", [
 									'type' => 'select',
 									'label' => false,
-									'list' => $taxes,
-									'value' => $child->tax
+									'list' => $taxeTypes,
+									// 'disabled' => true,
+									'value' => $child->tax_type
+								]) ?>
+							<td>
+								<?= $this->form->field("prices.{$key}.tax_rate", [
+									'type' => 'text',
+									// 'disabled' => true,
+									'value' => $child->tax_rate,
+									'label' => false
 								]) ?>
 							<td>
 					<?php endforeach ?>

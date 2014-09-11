@@ -12,8 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use SebastianBergmann\Money\Money;
-use SebastianBergmann\Money\Currency;
+use billing_core\models\TaxTypes;
 
 class ProductPriceGroups extends \base_core\models\Base {
 
@@ -27,6 +26,9 @@ class ProductPriceGroups extends \base_core\models\Base {
 		$data += [
 			'id' => $name,
 			'title' => null,
+			'amountCurrency' => 'EUR',
+			'amountType' => 'gross',
+			'taxType' => null,
 			'access' => ['user.role:admin']
 		];
 		$data['access'] = (array) $data['access'];
@@ -39,6 +41,10 @@ class ProductPriceGroups extends \base_core\models\Base {
 		} elseif ($type == 'first') {
 			return static::$_data[$options['conditions']['id']];
 		}
+	}
+
+	public function taxType($entity) {
+		return TaxTypes::find('first', ['conditions' => ['id' => $entity->taxType]]);
 	}
 }
 

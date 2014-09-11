@@ -15,7 +15,7 @@ namespace ecommerce_core\models;
 use Finance\Price;
 use ecommerce_core\models\ProductPriceGroups;
 use li3_access\security\Access;
-use billing_core\models\Taxes;
+use billing_core\models\TaxeTypes;
 
 class ProductPrices extends \base_core\models\Base {
 
@@ -26,7 +26,7 @@ class ProductPrices extends \base_core\models\Base {
 	protected static $_actsAs = [
 		'base_core\extensions\data\behavior\Localizable' => [
 			'fields' => [
-				'price' => 'money'
+				'amount' => 'money'
 			]
 		]
 	];
@@ -41,17 +41,17 @@ class ProductPrices extends \base_core\models\Base {
 
 	// Prices may be retrieved using a temporary user.
 	// That user must at a minimum have tax country and vat_reg_no fields set.
-	public function price($entity, $user) {
+	public function amount($entity, $user) {
 		return new Price(
-			$entity->price,
-			$entity->price_currency,
-			$entity->price_type,
-			$entity->tax()->rate($user->billing_tax_country, $user->billing_vat_reg_no)
+			$entity->amount,
+			$entity->amount_currency,
+			$entity->amount_type,
+			$entity->tax_rate
 		);
 	}
 
-	public function tax($entity) {
-		return Taxes::find('first', ['conditions' => ['id' => $entity->tax]]);
+	public function taxType($entity) {
+		return TaxeTypes::find('first', ['conditions' => ['id' => $entity->tax_type]]);
 	}
 
 	public function hasAccess($entity, $user) {
