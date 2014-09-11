@@ -18,7 +18,7 @@ $this->set([
 					<td data-sort="status" class="status list-sort"><?= $t('Status') ?>
 					<td data-sort="method" class="method list-sort"><?= $t('Method') ?>
 					<td data-sort="user" class="user list-sort"><?= $t('Recipient') ?>
-					<td><?= $t('Total (net)') ?>
+					<td><?= $t('Total value (net)') ?>
 					<td data-sort="created" class="date created list-sort"><?= $t('Created') ?>
 					<td class="actions">
 						<?= $this->form->field('search', [

@@ -44,8 +44,8 @@ class ShipmentPositions extends \base_core\models\Base {
 		return new Price(
 			$entity->amount,
 			$entity->amount_currency,
-			$entity->amount_type,
-			$entity->tax_rate
+			$entity->amount_type, // FIXME Hardcode to net?
+			null
 		);
 	}
 

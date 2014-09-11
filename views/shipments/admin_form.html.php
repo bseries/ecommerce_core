@@ -122,8 +122,8 @@ $this->set([
 							<td><?= $t('Quantity') ?>
 							<td><?= $t('Currency') ?>
 							<td><?= $t('Type') ?>
-							<td><?= $t('Unit price') ?>
-							<td><?= $t('Line total (net)') ?>
+							<td><?= $t('Unit value') ?>
+							<td><?= $t('Line total value (net)') ?>
 							<td class="actions">
 					</thead>
 					<tbody>
@@ -160,6 +160,7 @@ $this->set([
 									'type' => 'select',
 									'label' => false,
 									'value' => $child->amount_type,
+									'disabled' => true,
 									'list' => ['net' => $t('net'), 'gross' => $t('gross')]
 								]) ?>
 							<td>
@@ -203,6 +204,7 @@ $this->set([
 								<?= $this->form->field("positions.new.amount_type", [
 									'type' => 'select',
 									'label' => false,
+									'disabled' => true,
 									'list' => ['net' => $t('net'), 'gross' => $t('gross')]
 								]) ?>
 							<td>
@@ -220,32 +222,11 @@ $this->set([
 							<td colspan="7" class="nested-add-action">
 								<?= $this->form->button($t('add position'), ['type' => 'button', 'class' => 'button add-nested']) ?>
 						<tr>
-							<td colspan="6"><?= $t('Total (net)') ?>
+							<td colspan="6"><?= $t('Total value (net)') ?>
 							<td><?= ($money = $item->totalAmount()) ? $this->money->format($money->getNet(), 'money') : null ?>
 						<tr>
-							<td colspan="6"><?= $t('Tax ({:rate}%)', ['rate' => $item->tax_rate]) ?>
-							<td><?= ($money = $item->totalAmount()) ? $this->money->format($money->getTax(), 'money') : null ?>
-						<tr>
-							<td colspan="6"><?= $t('Total (gross)') ?>
-							<td><?= ($money = $item->totalAmount()) ? $this->money->format($money->getGross(), 'money') : null ?>
 					</tfoot>
 				</table>
-			</section>
-		</div>
-		<div class="grid-row grid-row-last">
-			<section class="grid-column-right">
-				<?= $this->form->field('tax_rate', [
-					'type' => 'text',
-					'label' => $t('Tax rate (%)'),
-					'disabled' => $item->is_locked
-				]) ?>
-
-				<?= $this->form->field('tax_note', [
-					'type' => 'text',
-					'label' => $t('Tax note'),
-					'disabled' => $item->is_locked
-				]) ?>
-				<div class="help"><?= $t('Visible to recipient.') ?></div>
 			</section>
 		</div>
 

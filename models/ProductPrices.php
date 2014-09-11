@@ -15,7 +15,7 @@ namespace ecommerce_core\models;
 use Finance\Price;
 use ecommerce_core\models\ProductPriceGroups;
 use li3_access\security\Access;
-use billing_core\models\TaxeTypes;
+use billing_core\models\TaxTypes;
 
 class ProductPrices extends \base_core\models\Base {
 
@@ -51,7 +51,7 @@ class ProductPrices extends \base_core\models\Base {
 	}
 
 	public function taxType($entity) {
-		return TaxeTypes::find('first', ['conditions' => ['id' => $entity->tax_type]]);
+		return TaxTypes::find('first', ['conditions' => ['id' => $entity->tax_type]]);
 	}
 
 	public function hasAccess($entity, $user) {
