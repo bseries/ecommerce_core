@@ -152,7 +152,7 @@ $this->set([
 			</div>
 		</div>
 
-		<div class="grid-row grid-row-last">
+		<div class="grid-row">
 			<section class="use-nested">
 				<h1 class="h-gamma"><?= $t('Prices') ?></h1>
 				<table>

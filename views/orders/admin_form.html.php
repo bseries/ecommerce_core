@@ -164,7 +164,7 @@ $this->set([
 			<?php endif ?>
 		</div>
 
-		<div class="grid-row grid-row-last">
+		<div class="grid-row">
 			<h1 class="h-gamma"><?= $t('Shipment') ?></h1>
 			<?php if ($shipment = $item->shipment()): ?>
 				<div class="grid-column-left">

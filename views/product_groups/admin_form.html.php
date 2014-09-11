@@ -43,7 +43,7 @@ $this->set([
 			</div>
 		</div>
 
-		<div class="grid-row grid-row-last">
+		<div class="grid-row">
 			<div class="grid-column-left">
 				<?= $this->form->field('description', [
 					'type' => 'textarea',
