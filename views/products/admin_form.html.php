@@ -168,6 +168,7 @@ $this->set([
 					</thead>
 					<tbody>
 					<?php foreach ($item->prices() as $key => $child): ?>
+						<?php $key = md5($key); // Prevent making sub fields with name and dots. ?>
 						<tr class="nested-item">
 							<td>
 								<?= $this->form->field("prices.{$key}.id", [
@@ -185,14 +186,14 @@ $this->set([
 									'label' => false
 								]) ?>
 							<td>
-								<?= $this->form->field("prices.{$key}.price_type", [
+								<?= $this->form->field("prices.{$key}.amount_type", [
 									'type' => 'select',
 									'label' => false,
 									'list' => ['net' => $t('net'), 'gross' => $t('gross')],
 									'value' => $child->amount_type
 								]) ?>
 							<td>
-								<?= $this->form->field("prices.{$key}.price_currency", [
+								<?= $this->form->field("prices.{$key}.amount_currency", [
 									'type' => 'select',
 									'label' => false,
 									// 'disabled' => true,
@@ -200,7 +201,7 @@ $this->set([
 									'value' => $child->amount_currency
 								]) ?>
 							<td>
-								<?= $this->form->field("prices.{$key}.price", [
+								<?= $this->form->field("prices.{$key}.amount", [
 									'type' => 'text',
 									'label' => false,
 									'value' => $this->money->format($child->amount, 'decimal')
@@ -209,7 +210,7 @@ $this->set([
 								<?= $this->form->field("prices.{$key}.tax_type", [
 									'type' => 'select',
 									'label' => false,
-									'list' => $taxeTypes,
+									'list' => $taxTypes,
 									// 'disabled' => true,
 									'value' => $child->tax_type
 								]) ?>
