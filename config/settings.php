@@ -22,7 +22,7 @@ Settings::register('shipment.number', [
 	'extract' => '/[0-9]{4}([0-9]{4})/',
 	'generate' => '%Y%%04.d'
 ]);
-Settings::register('ecommerce_core', 'product.number', [
+Settings::register('product.number', [
 	'extract' => '/[0-9]{4}([0-9]{4})/',
 	'generate' => '%Y%%04.d'
 ]);
