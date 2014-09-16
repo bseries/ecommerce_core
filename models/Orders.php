@@ -261,7 +261,6 @@ class Orders extends \base_core\models\Base {
 			'user_vat_reg_no' => $user->vat_reg_no,
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
-			'total_currency' => 'EUR', // FIXME use user billing_currency?
 			'note' => $t('Order No.') . ': ' . $entity->number,
 			'terms' => Settings::read('billing.paymentTerms')
 		]);
