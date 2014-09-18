@@ -14,7 +14,7 @@ use base_core\extensions\cms\Jobs;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\Carts;
 
-Jobs::recur('expire', function() {
+Jobs::recur('ecommerce_core:expire', function() {
 	Orders::expire();
 	Carts::expire();
 }, [
