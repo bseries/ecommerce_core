@@ -139,6 +139,7 @@ class Shipments extends \base_core\models\Base {
 					return true;
 				}
 				return Mailer::deliver('shipment_shipped', [
+					'library' => 'ecommerce_core',
 					'to' => $user->email,
 					'subject' => $t('Order #{:number} shipped.', [
 						'number' => $order->number
