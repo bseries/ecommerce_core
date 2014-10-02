@@ -33,6 +33,6 @@ Settings::register('cart.limitItemsPerPosition', false); // false to disable che
 Settings::register('ecommerce.shipmentTerms', null);
 Settings::register('shipment.sendShippedMail', false);
 
-Settingss::register('stock.check', true);
+Settings::register('stock.check', true);
 
 ?>

@@ -19,6 +19,7 @@ $this->set([
 			<thead>
 				<tr>
 					<td data-sort="is-published" class="flag is-published list-sort"><?= $t('publ.?') ?>
+					<td data-sort="is-promoted" class="flag is-promoted list-sort"><?= $t('prom.?') ?>
 					<td>
 					<td data-sort="title" class="emphasize title list-sort"><?= $t('Title') ?>
 					<td class="number"><?= $t('Number') ?>
@@ -36,6 +37,7 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
+					<td class="flag is-promoted"><?= ($item->is_promoted ? '✓' : '×') ?>
 					<td>
 						<?php if ($cover = $item->cover()): ?>
 							<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
@@ -49,11 +51,13 @@ $this->set([
 						</time>
 					<td class="actions">
 						<?= $this->html->link($t('delete'), ['id' => $item->id, 'action' => 'delete', 'library' => 'ecommerce_core'], ['class' => 'button delete']) ?>
+						<?= $this->html->link($item->is_promoted ? $t('unpromote') : $t('promote'), ['id' => $item->id, 'action' => $item->is_promoted ? 'unpromote': 'promote', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 					<?php foreach ($item->products() as $sub): ?>
 						<tr class="sub-item">
 							<td class="flag"><?= ($sub->is_published ? '✓' : '×') ?>
+							<td>
 							<td>
 								<?php if ($cover = $sub->cover()): ?>
 									<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>

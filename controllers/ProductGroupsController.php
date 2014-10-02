@@ -23,6 +23,7 @@ class ProductGroupsController extends \base_core\controllers\BaseController {
 	use \base_core\controllers\AdminDeleteTrait;
 
 	use \base_core\controllers\AdminPublishTrait;
+	use \base_core\controllers\AdminPromoteTrait;
 
 	public function admin_index() {
 		$data = ProductGroups::find('all', [

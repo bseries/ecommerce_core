@@ -8,6 +8,7 @@ $this->set([
 		'object' => $t('product group')
 	],
 	'meta' => [
+		'is_promoted' => $item->is_promoted ? $t('promoted') : $t('unpromoted'),
 		'is_published' => $item->is_published ? $t('published') : $t('unpublished')
 	]
 ]);
@@ -57,6 +58,7 @@ $this->set([
 
 		<div class="bottom-actions">
 			<?php if ($item->exists()): ?>
+				<?= $this->html->link($item->is_promoted ? $t('unpromote') : $t('promote'), ['id' => $item->id, 'action' => $item->is_promoted ? 'unpromote': 'promote', 'library' => 'ecommerce_core'], ['class' => 'button large']) ?>
 				<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button large']) ?>
 			<?php endif ?>
 			<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large save']) ?>
