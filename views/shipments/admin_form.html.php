@@ -1,6 +1,6 @@
 <?php
 
-use base_core\extensions\cms\Features;
+use base_core\extensions\cms\Settings;
 
 $this->set([
 	'page' => [
@@ -45,7 +45,7 @@ $this->set([
 					'label' => $t('Status'),
 					'list' => $statuses
 				]) ?>
-				<?php if (Features::enabled('shipment.sendShippedMail')): ?>
+				<?php if (Settings::read('shipment.sendShippedMail')): ?>
 				<div class="help">
 					<?= $t('The user will be notified by e-mail when the status is changed to `shipped`.') ?>
 				</div>

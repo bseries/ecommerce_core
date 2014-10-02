@@ -13,7 +13,6 @@
 namespace ecommerce_core\models;
 
 use base_core\extensions\cms\Settings;
-use base_core\extensions\cms\Features;
 use base_core\models\Addresses;
 use ecommerce_core\models\ShippingMethods;
 use lithium\analysis\Logger;
@@ -129,7 +128,7 @@ class Shipments extends \base_core\models\Base {
 				}
 				return true;
 			case 'shipped':
-				if (!Features::enabled('shipment.sendShippedMail')) {
+				if (!Settings::read('shipment.sendShippedMail')) {
 					return true;
 				}
 				$order = $entity->order();

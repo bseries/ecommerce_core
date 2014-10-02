@@ -10,7 +10,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-use base_core\extensions\cms\Features;
 use base_core\extensions\cms\Settings;
 
 // Number Format
@@ -32,8 +31,8 @@ Settings::register('checkout.expire', '+1 week');
 Settings::register('cart.limitItemsPerPosition', false); // false to disable check
 
 Settings::register('ecommerce.shipmentTerms', null);
-Features::register('shipment.sendShippedMail', false);
+Settings::register('shipment.sendShippedMail', false);
 
-Features::register('stock.check', true);
+Settingss::register('stock.check', true);
 
 ?>
