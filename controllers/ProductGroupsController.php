@@ -14,6 +14,7 @@ namespace ecommerce_core\controllers;
 
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
+use ecommerce_brand\models\Brands;
 use li3_access\security\Access;
 
 class ProductGroupsController extends \base_core\controllers\BaseController {
@@ -43,7 +44,10 @@ class ProductGroupsController extends \base_core\controllers\BaseController {
 			}
 			$rules[$item] = $item;
 		}
-		return compact('rules');
+		if (Libraries::get('ecommerce_brand')) {
+			$brands = Brands::find('list');
+		}
+		return compact('rules', 'brands');
 	}
 }
 

@@ -54,6 +54,11 @@ class ProductGroups extends \base_core\models\Base {
 			'fields' => [
 				'access' => ','
 			]
+		],
+		'li3_taggable\extensions\data\behavior\Taggable' => [
+			'field' => 'tags',
+			'tagModel' => false,
+			'filters' => ['strtolower']
 		]
 	];
 

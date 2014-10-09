@@ -50,12 +50,7 @@ class Products extends \base_core\models\Base {
 			]
 		],
 		'base_core\extensions\data\behavior\Timestamp',
-		'base_core\extensions\data\behavior\ReferenceNumber',
-		'li3_taggable\extensions\data\behavior\Taggable' => [
-			'field' => 'tags',
-			'tagModel' => false,
-			'filters' => ['strtolower']
-		]
+		'base_core\extensions\data\behavior\ReferenceNumber'
 	];
 
 	public static function init() {

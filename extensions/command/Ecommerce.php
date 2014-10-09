@@ -14,6 +14,7 @@ namespace ecommerce_core\extensions\command;
 
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\Products;
+use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\Orders;
 
 class Ecommerce extends \lithium\console\Command {
@@ -62,6 +63,21 @@ class Ecommerce extends \lithium\console\Command {
 			]);
 			$this->out($result ? 'OK' : 'FAILED!');
 		}
+	}
+
+	public function migrateTags() {
+		foreach (Products::find('all') as $product) {
+			$group = $product->group();
+			$group->tags = $product->tags;
+			$group->save([
+				'tags' => $product->tags,
+				'ecommerce_brand_id' => $product->ecommerce_brand_id
+			], [
+				'whitelist' => ['tags', 'ecommerce_brand_id'],
+				'validate' => false
+			]);
+		}
+		$this->out('DONE');
 	}
 }
 

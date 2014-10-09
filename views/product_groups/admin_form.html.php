@@ -36,6 +36,21 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
+			<div class="grid-column-left">
+				<?php if (isset($brands)): ?>
+					<?= $this->form->field('ecommerce_brand_id', [
+						'type' => 'select',
+						'list' => [null => null] + $brands,
+						'label' => $t('Brand')
+					]) ?>
+				<?php endif ?>
+			</div>
+			<div class="grid-column-right">
+				<?= $this->form->field('tags', ['value' => $item->tags(), 'label' => $t('Tags'), 'placeholder' => 'foo, bar']) ?>
+			</div>
+		</div>
+
+		<div class="grid-row">
 			<div class="media-attachment use-media-attachment-direct">
 				<?= $this->form->label('ProductsCoverMediaId', $t('Cover')) ?>
 				<?= $this->form->hidden('cover_media_id') ?>

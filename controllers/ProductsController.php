@@ -16,7 +16,6 @@ use base_core\models\Currencies;
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
-use ecommerce_brand\models\Brands;
 use billing_core\models\TaxTypes;
 use lithium\g11n\Message;
 use lithium\core\Libraries;
@@ -52,10 +51,7 @@ class ProductsController extends \base_core\controllers\BaseController {
 			]);
 			$taxTypes = TaxTypes::find('list');
 		}
-		if (Libraries::get('ecommerce_brand')) {
-			$brands = Brands::find('list');
-		}
-		return compact('productGroups', 'currencies', 'attributeKeys', 'brands', 'taxTypes');
+		return compact('productGroups', 'currencies', 'attributeKeys', 'taxTypes');
 	}
 }
 
