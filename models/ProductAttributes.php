@@ -12,6 +12,7 @@
 
 namespace ecommerce_core\models;
 
+use lithium\g11n\Message;
 use ecommerce_core\models\Products;
 
 class ProductAttributes extends \base_core\models\Base {
@@ -33,6 +34,19 @@ class ProductAttributes extends \base_core\models\Base {
 			'key' => 'ecomerce_product_id'
 		]
 	];
+
+	public function title($entity) {
+		extract(Message::aliases());
+
+		$map = [
+			'size' => $t('size'),
+			'color' => $t('color')
+		];
+		if (!isset($map[$entity->key])) {
+			return $entity->key;
+		}
+		return $map[$entity->key];
+	}
 }
 
 ?>
