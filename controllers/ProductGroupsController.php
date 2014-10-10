@@ -16,6 +16,7 @@ use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_brand\models\Brands;
 use li3_access\security\Access;
+use lithium\core\Libraries;
 
 class ProductGroupsController extends \base_core\controllers\BaseController {
 
