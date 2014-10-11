@@ -40,7 +40,7 @@ $this->set([
 					<td class="flag is-promoted"><?= ($item->is_promoted ? '✓' : '×') ?>
 					<td>
 						<?php if ($cover = $item->cover()): ?>
-							<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
+							<?= $this->media->image($cover->version('fix3admin'), ['class' => 'media']) ?>
 						<?php endif ?>
 					<td class="emphasize title"><?= $item->title ?>
 					<td>
@@ -60,7 +60,7 @@ $this->set([
 							<td>
 							<td>
 								<?php if ($cover = $sub->cover()): ?>
-									<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
+									<?= $this->media->image($cover->version('fix3admin'), ['class' => 'media']) ?>
 								<?php endif ?>
 							<td class="emphasize"><?= $sub->title ?>
 							<td class="emphasize"><?= $sub->number ?>

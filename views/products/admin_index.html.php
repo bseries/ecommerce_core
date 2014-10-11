@@ -38,7 +38,7 @@ $this->set([
 					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
 					<td>
 						<?php if ($cover = $item->cover()): ?>
-							<?= $this->media->image($cover->version('fix3'), ['class' => 'media']) ?>
+							<?= $this->media->image($cover->version('fix3admin'), ['class' => 'media']) ?>
 						<?php endif ?>
 					<td class="emphasize title"><?= $item->title ?>
 					<td class="emphasize number"><?= $item->number ?: '–' ?>
