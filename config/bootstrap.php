@@ -30,6 +30,6 @@ $rules->add('user.role:customer', function($user, $entity, $options) {
 	return $user->role == 'customer';
 });
 
-Tags::registerDependent('ecommerce_core\models\Products');
+Tags::registerDependent('ecommerce_core\models\ProductGroups');
 
 ?>
