@@ -118,6 +118,10 @@ class Products extends \base_core\models\Base {
 		]);
 	}
 
+	protected static $_lastModifiedCarts = null;
+
+	protected static $_lastModifiedShipments = null;
+
 	public function stock($entity, $type = 'virtual') {
 		$result = (integer) $entity->stock;
 
@@ -126,11 +130,13 @@ class Products extends \base_core\models\Base {
 		}
 		$cacheKeyBase = 'stock_real_' . $entity->id;
 
-		$lastModified = Carts::find('first', [
-			'order' => ['modified' => 'DESC'],
-			'fields' => ['modified']
-		]);
-		$cacheKey = $cacheKeyBase . '_carts_' . ($lastModified ? md5($lastModified->modified) : 'initial');
+		if (static::$_lastModifiedCarts === null) {
+			static::$_lastModifiedCarts = Carts::find('first', [
+				'order' => ['modified' => 'DESC'],
+				'fields' => ['modified']
+			]) ?: false;
+		}
+		$cacheKey = $cacheKeyBase . '_carts_' . (static::$_lastModifiedCarts ? md5(static::$_lastModifiedCarts->modified) : 'initial');
 
 		$cartSubtract = [];
 		if (!($cached = Cache::read('default', $cacheKey)) && $cached !== []) {
@@ -152,11 +158,13 @@ class Products extends \base_core\models\Base {
 			$cartSubtract = $cached;
 		}
 
-		$lastModified = Shipments::find('first', [
-			'order' => ['modified' => 'DESC'],
-			'fields' => ['modified']
-		]);
-		$cacheKey = $cacheKeyBase . '_shipments_' . ($lastModified ? md5($lastModified->modified) : 'initial');
+		if (static::$_lastModifiedShipments === null) {
+			static::$_lastModifiedShipments = Shipments::find('first', [
+				'order' => ['modified' => 'DESC'],
+				'fields' => ['modified']
+			]) ?: false;
+		}
+		$cacheKey = $cacheKeyBase . '_shipments_' . (static::$_lastModifiedShipments ? md5(static::$_lastModifiedShipments->modified) : 'initial');
 
 		$shipmentSubtract = [];
 		if (!($cached = Cache::read('default', $cacheKey)) && $cached !== []) {
