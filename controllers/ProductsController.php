@@ -21,8 +21,6 @@ use lithium\g11n\Message;
 
 class ProductsController extends \base_core\controllers\BaseController {
 
-	protected $_redirectUrl = ['controller' => 'ProductGroups'];
-
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
 	use \base_core\controllers\AdminDeleteTrait;
@@ -31,12 +29,19 @@ class ProductsController extends \base_core\controllers\BaseController {
 
 	public function admin_index() {
 		$data = Products::find('all', [
-			'order' => ['id' => 'ASC']
+			'order' => ['created' => 'DESC']
 		]);
 		return compact('data');
 	}
 
-	public function _selects($item = null) {
+	protected function _redirectUrl($item = null) {
+		if (!$item) {
+			return [];
+		}
+		return ['#' => $item->id];
+	}
+
+	protected function _selects($item = null) {
 		extract(Message::aliases());
 
 		$productGroups = ProductGroups::find('list');

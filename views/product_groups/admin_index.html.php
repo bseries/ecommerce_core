@@ -20,7 +20,7 @@ $this->set([
 				<tr>
 					<td data-sort="is-published" class="flag is-published list-sort"><?= $t('publ.?') ?>
 					<td data-sort="is-promoted" class="flag is-promoted list-sort"><?= $t('prom.?') ?>
-					<td>
+					<td class="media">
 					<td data-sort="title" class="emphasize title list-sort"><?= $t('Title') ?>
 					<td class="number"><?= $t('Number') ?>
 					<td class="stock"><?= $t('Stock') ?>
@@ -38,9 +38,11 @@ $this->set([
 				<tr data-id="<?= $item->id ?>">
 					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
 					<td class="flag is-promoted"><?= ($item->is_promoted ? '✓' : '×') ?>
-					<td>
+					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
-							<?= $this->media->image($cover->version('fix3admin'), ['class' => 'media']) ?>
+							<?= $this->media->image($cover->version('fix3admin'), [
+								'data-media-id' => $cover->id, 'alt' => 'preview'
+							]) ?>
 						<?php endif ?>
 					<td class="emphasize title"><?= $item->title ?>
 					<td>
@@ -58,10 +60,7 @@ $this->set([
 						<tr class="sub-item">
 							<td class="flag"><?= ($sub->is_published ? '✓' : '×') ?>
 							<td>
-							<td>
-								<?php if ($cover = $sub->cover()): ?>
-									<?= $this->media->image($cover->version('fix3admin'), ['class' => 'media']) ?>
-								<?php endif ?>
+							<td class="media">
 							<td class="emphasize"><?= $sub->title ?>
 							<td class="emphasize"><?= $sub->number ?>
 							<td>

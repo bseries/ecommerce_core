@@ -19,7 +19,7 @@ $this->set([
 			<thead>
 				<tr>
 					<td data-sort="is-published" class="flag is-published list-sort"><?= $t('publ.?') ?>
-					<td>
+					<td class="media">
 					<td data-sort="title" class="emphasize title list-sort"><?= $t('Title') ?>
 					<td data-sort="number" class="emphasize number list-sort"><?= $t('Number') ?>
 					<td data-sort="stock" class="stock list-sort"><?= $t('Stock') ?>
@@ -36,9 +36,11 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
-					<td>
+					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
-							<?= $this->media->image($cover->version('fix3admin'), ['class' => 'media']) ?>
+							<?= $this->media->image($cover->version('fix3admin'), [
+								'data-media-id' => $cover->id, 'alt' => 'preview'
+							]) ?>
 						<?php endif ?>
 					<td class="emphasize title"><?= $item->title ?>
 					<td class="emphasize number"><?= $item->number ?: '–' ?>
