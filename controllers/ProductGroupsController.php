@@ -29,7 +29,8 @@ class ProductGroupsController extends \base_core\controllers\BaseController {
 
 	public function admin_index() {
 		$data = ProductGroups::find('all', [
-			'order' => ['created' => 'DESC']
+			'order' => ['created' => 'DESC'],
+			'with' => ['Products']
 		]);
 		return compact('data') + $this->_selects();
 	}
