@@ -208,7 +208,10 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function generateShipment($entity, $user, $cart, array $data = []) {
+		extract(Message::aliases());
+
 		$shipment = Shipments::create([
+			$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->shipping_method,
 			'note' => $t('Order No.') . ': ' . $entity->number,
@@ -227,19 +230,17 @@ class Orders extends \base_core\models\Base {
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
 
-			// $currency = $user->billing_currency;
-
 			$price = $cartPosition->product()->price($user);
 
 			$shipmentPosition = ShipmentPositions::create([
 				'ecommerce_shipment_id' => $shipment->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
-//				'tax' => null,
-//				'tax_rate' => null,
-				'amount_type' => $price->getType(),
-				'amount_currency' => $price->getCurrency(),
-				'amount' => $price->getAmount(),
+				'tax_type' => $price->tax_type,
+				'tax_rate' => $price->tax_rate,
+				'amount_type' => $price->amount_type,
+				'amount_currency' => $price->amount_currency,
+				'amount' => $price->amount
 			]);
 			if (!$shipmentPosition->save(null, ['localize' => false])) {
 				return false;
@@ -287,11 +288,11 @@ class Orders extends \base_core\models\Base {
 				'billing_invoice_id' => $invoice->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
-				'tax' => $product->tax,
-				'tax_rate' => $product->tax()->rate,
-				'amount_type' => $price->getType(),
-				'amount_currency' => $price->getCurrency(),
-				'amount' => $price->getAmount(),
+				'tax_type' => $price->tax_type,
+				'tax_rate' => $price->tax_rate,
+				'amount_type' => $price->amount_type,
+				'amount_currency' => $price->amount_currency,
+				'amount' => $price->amount,
 			]);
 			if (!$invoicePosition->save(null, ['localize' => false])) {
 				return false;

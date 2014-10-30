@@ -31,6 +31,8 @@ use Finance\Price;
 // @see billing_core\models\Invoices
 class Shipments extends \base_core\models\Base {
 
+	use \base_core\models\UserTrait;
+
 	protected $_meta = [
 		'source' => 'ecommerce_shipments'
 	];
@@ -67,10 +69,6 @@ class Shipments extends \base_core\models\Base {
 				'id' => $entity->method
 			]
 		]);
-	}
-
-	public function user($entity) {
-		return $entity->order()->user();
 	}
 
 	public function order($entity, array $query = []) {

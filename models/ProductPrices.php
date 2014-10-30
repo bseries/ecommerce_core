@@ -41,7 +41,7 @@ class ProductPrices extends \base_core\models\Base {
 
 	// Prices may be retrieved using a temporary user.
 	// That user must at a minimum have tax country and vat_reg_no fields set.
-	public function amount($entity, $user) {
+	public function amount($entity) {
 		return new Price(
 			$entity->amount,
 			$entity->amount_currency,
