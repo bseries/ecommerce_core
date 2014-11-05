@@ -416,7 +416,8 @@ class Orders extends \base_core\models\Base {
 				$user    = $order->user();
 				$invoice = $entity->invoice();
 
-				if (!$user->is_notified) {
+				// Orders without invoices are OK.
+				if (!$user->is_notified || !$invoice) {
 					return true;
 				}
 				return Mailer::deliver('order_checked_out', [
