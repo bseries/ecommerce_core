@@ -20,6 +20,7 @@ use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
 use billing_core\models\TaxZones;
 use Finance\Price;
+use Finance\PriceSum;
 
 // Shipments are very similar to invoices in that
 // they also have positions. In general shipments
@@ -174,7 +175,7 @@ class Shipments extends \base_core\models\Base {
 	// This is the total value of the shipment. Used i.e. for
 	// calculating the inssurrance value needed.
 	public function totalAmount($entity) {
-		$result = new Price(0, 'EUR', 'net');
+		$result = new PriceSum();
 
 		$positions = $this->positions($entity);
 
