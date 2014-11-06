@@ -416,8 +416,7 @@ class Orders extends \base_core\models\Base {
 				$user    = $order->user();
 				$invoice = $entity->invoice();
 
-				// Orders without invoices are OK.
-				if (!$user->is_notified || !$invoice) {
+				if (!$user->is_notified) {
 					return true;
 				}
 				return Mailer::deliver('order_checked_out', [
@@ -429,10 +428,13 @@ class Orders extends \base_core\models\Base {
 					]),
 					'data' => [
 						'user' => $user,
-						'order' => $order
+						'order' => $order,
+						// Orders without invoices are OK. But then we do
+						// pass an empty invoice into the template. The template
+						// will then have to deal with that. Also see conditional
+						// attachment below.
+						'invoice' => $invoice ?: null
 					],
-					// Orders for i.e. subscriptions must not have an invoice
-					// when the order is completed.
 					'attach' => !$invoice ? [] : [
 						[
 							'data' => $invoice->exportAsPdf(),
