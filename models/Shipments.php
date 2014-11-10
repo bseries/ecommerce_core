@@ -109,8 +109,9 @@ class Shipments extends \base_core\models\Base {
 					}
 				}
 				return true;
-			case 'shipping':
+			case 'shipped':
 				$order = $entity->order();
+				$user = $order->user();
 				$positions = $order->cart()->positions();
 
 				foreach ($positions as $position) {
@@ -125,18 +126,16 @@ class Shipments extends \base_core\models\Base {
 					$message .= "Stock is now `{$product->stock}`.";
 					Logger::write('debug', $message);
 				}
-				return true;
-			case 'shipped':
+
 				if (!Settings::read('shipment.sendShippedMail')) {
 					return true;
 				}
-				$order = $entity->order();
-				$user = $order->user();
 
 				if (!$user->is_notified) {
 					return true;
 				}
 				return Mailer::deliver('shipment_shipped', [
+					'library' => 'ecommerce_core',
 					'to' => $user->email,
 					'subject' => $t('Order #{:number} shipped.', [
 						'number' => $order->number

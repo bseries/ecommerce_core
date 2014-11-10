@@ -175,8 +175,9 @@ class Products extends \base_core\models\Base {
 						'created',
 						// When cancelled, we free stock and do not count it.
 						'shipping-scheduled',
-						'shipping-error'
-						// After status was `shipping` the stock has been decremented already.
+						'shipping-error',
+						'shipping',
+						// When status is `shipped` the stock has been decremented already.
 					]
 				]
 			]);
