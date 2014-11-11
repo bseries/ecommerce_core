@@ -391,7 +391,7 @@ class Orders extends \base_core\models\Base {
 				$invoice = $entity->invoice();
 				$shipment = $entity->shipment();
 
-				if (!$invoice->isCancelable() || !$shipment->isCancelable()) {
+				if (($invoice && !$invoice->isCancelable()) || !$shipment->isCancelable()) {
 					return false;
 				}
 				$result = $invoice->save(['status' => 'cancelled'], [
