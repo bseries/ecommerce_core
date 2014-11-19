@@ -12,15 +12,15 @@
 
 namespace ecommerce_core\models;
 
-use base_core\extensions\cms\Settings;
-use base_core\models\Addresses;
-use ecommerce_core\models\ShippingMethods;
+use lithium\g11n\Message;
 use lithium\analysis\Logger;
 use li3_mailer\action\Mailer;
-use lithium\g11n\Message;
-use billing_core\models\TaxZones;
 use Finance\Price;
 use Finance\PriceSum;
+
+use base_core\extensions\cms\Settings;
+use base_address\models\Addresses;
+use ecommerce_core\models\ShippingMethods;
 
 // Shipments are very similar to invoices in that
 // they also have positions. In general shipments

@@ -12,21 +12,22 @@
 
 namespace ecommerce_core\models;
 
-use base_core\models\Addresses;
-use billing_core\models\InvoicePositions;
-use billing_core\models\Invoices;
-use ecommerce_core\models\Carts;
-use ecommerce_core\models\Shipments;
-use ecommerce_core\models\PaymentMethods;
-use ecommerce_core\models\ShippingMethods;
-use base_core\extensions\cms\Features;
-use base_core\extensions\cms\Settings;
 use DateTime;
 use Exception;
 use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
 use lithium\analysis\Logger;
 use lithium\util\Validator;
+
+use base_address\models\Addresses;
+use base_core\extensions\cms\Features;
+use base_core\extensions\cms\Settings;
+use billing_core\models\InvoicePositions;
+use billing_core\models\Invoices;
+use ecommerce_core\models\Carts;
+use ecommerce_core\models\Shipments;
+use ecommerce_core\models\PaymentMethods;
+use ecommerce_core\models\ShippingMethods;
 
 class Orders extends \base_core\models\Base {
 
