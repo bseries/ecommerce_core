@@ -56,15 +56,4 @@ Router::connect('/admin/ecommerce/products/{:action}/{:id:[0-9]+}', [
 	'controller' => 'products', 'library' => 'ecommerce_core', 'admin' => true
 ], $persist);
 
-Router::connect('/admin/ecommerce/{:id:[0-9]+}', [
-	'controller' => 'ecommerce', 'library' => 'ecommerce_core', 'action' => 'view', 'admin' => true
-], $persist);
-Router::connect('/admin/ecommerce/{:action}', [
-	'controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true
-], $persist);
-Router::connect('/admin/ecommerce/{:action}/{:id:[0-9]+}', [
-	'controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true
-], $persist);
-
-
 ?>
