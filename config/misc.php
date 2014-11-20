@@ -12,12 +12,6 @@
 
 define('ECOMMERCE_CORE_VERSION', '1.2.0');
 
-require 'panes.php';
-require 'settings.php';
-require 'media.php';
-require 'widgets.php';
-require 'jobs.php';
-
 use li3_access\security\Access;
 use base_tag\models\Tags;
 
