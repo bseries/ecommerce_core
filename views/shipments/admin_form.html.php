@@ -111,7 +111,6 @@ $this->set([
 			</section>
 		</div>
 
-
 		<div class="grid-row">
 			<section class="use-nested">
 				<h1 class="h-gamma"><?= $t('Positions') ?></h1>
@@ -177,45 +176,41 @@ $this->set([
 									'value' => $this->money->format($child->totalAmount()->getNet(), 'decimal')
 								]) ?>
 							<td class="actions">
-							<?php if (!$item->is_locked): ?>
 								<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
-							<?php endif ?>
 					<?php endforeach ?>
-					<?php if (!$item->is_locked): ?>
-						<tr class="nested-add nested-item">
-							<td>
-								<?= $this->form->field('positions.new.description', [
-									'type' => 'text',
-									'label' => false
-								]) ?>
-							<td>
-								<?= $this->form->field('positions.new.quantity', [
-									'type' => 'text',
-									'value' => 1,
-									'label' => false
-								]) ?>
-							<td>
-								<?= $this->form->field("positions.new.amount_currency", [
-									'type' => 'select',
-									'label' => false,
-									'list' => $currencies
-								]) ?>
-							<td>
-								<?= $this->form->field("positions.new.amount_type", [
-									'type' => 'select',
-									'label' => false,
-									'disabled' => true,
-									'list' => ['net' => $t('net'), 'gross' => $t('gross')]
-								]) ?>
-							<td>
-								<?= $this->form->field('positions.new.amount', [
-									'type' => 'text',
-									'label' => false
-								]) ?>
-							<td>
-							<td class="actions">
-								<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
-					<?php endif ?>
+					<tr class="nested-add nested-item">
+						<td>
+							<?= $this->form->field('positions.new.description', [
+								'type' => 'text',
+								'label' => false
+							]) ?>
+						<td>
+							<?= $this->form->field('positions.new.quantity', [
+								'type' => 'text',
+								'value' => 1,
+								'label' => false
+							]) ?>
+						<td>
+							<?= $this->form->field("positions.new.amount_currency", [
+								'type' => 'select',
+								'label' => false,
+								'list' => $currencies
+							]) ?>
+						<td>
+							<?= $this->form->field("positions.new.amount_type", [
+								'type' => 'select',
+								'label' => false,
+								'disabled' => true,
+								'list' => ['net' => $t('net'), 'gross' => $t('gross')]
+							]) ?>
+						<td>
+							<?= $this->form->field('positions.new.amount', [
+								'type' => 'text',
+								'label' => false
+							]) ?>
+						<td>
+						<td class="actions">
+							<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
 					</tbody>
 					<tfoot>
 						<tr>
