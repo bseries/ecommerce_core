@@ -16,7 +16,7 @@
         "uor/li3_flash_message": "dev-master",
         "tmaiaroto/li3_access": "dev-master",
         "atelierdisko/li3_mailer": "dev-master",
-        "atelierdisko/finance": "dev-master as 2.0.0-dev",
+        "atelierdisko/finance": "1.1.*",
         "atelierdisko/base_core": "1.2.*",
         "atelierdisko/base_media": "1.2.*",
         "atelierdisko/base_tag": "1.2.*",
