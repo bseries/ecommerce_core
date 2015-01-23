@@ -12,10 +12,13 @@
 
 namespace ecommerce_core\extensions\command;
 
+use billing_core\models\Invoices;
 use ecommerce_core\models\Shipments;
+use ecommerce_core\models\ShipmentPositionss;
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\Orders;
+use ecommerce_core\models\ProductPrices;
 
 class Ecommerce extends \lithium\console\Command {
 
@@ -63,6 +66,108 @@ class Ecommerce extends \lithium\console\Command {
 			]);
 			$this->out($result ? 'OK' : 'FAILED!');
 		}
+	}
+
+	public function migrate10to13() {
+		// Assumes source was all German and certain
+		// tax customer type mappings are valid.
+
+		$this->out('Migrating product prices...');
+		$results = ProductPrices::find('all');
+
+		foreach ($results as $result) {
+			$result->tax_type = 'DE.vat.standard';
+			$result->tax_rate = 19;
+
+			if ($result->group == 'merchant') {
+				$result->group = 'DE.merchant';
+			} else {
+				$result->group = 'DE.customer';
+			}
+			$r = $result->save(null, [
+				'validate' => false,
+				'whitelist' => ['tax_type', 'tax_rate', 'group']
+			]);
+			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
+		}
+		$this->out('All done.');
+
+
+		$this->out('Migrating shipments...');
+		$results = Shipments::find('all');
+
+		foreach ($results as $result) {
+			$result->tax_rate = 19;
+			$result->tax_note = 'Enthält 19% MwSt.';
+
+			$r = $result->save(null, [
+				'validate' => false,
+				'whitelist' => ['tax_note', 'tax_rate']
+			]);
+			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
+		}
+		$this->out('All done.');
+
+		$this->out('Migrating shipment positions...');
+		$orders = Orders::find('all', [
+			'conditions' => [
+				'status' => 'checked-out'
+			]
+		]);
+		// $invoices = Invoices::find('all');
+		// $shipments = Shipments::find('all');
+
+		foreach ($orders as $order) {
+			$shipment = $order->shipment();
+			$invoice = $order->invoice();
+			$user = $order->user();
+
+			foreach ($invoice->positions() as $iPos) {
+				// Skip non items.
+				try {
+					$iPos->itemNumber();
+				} catch (\Exception $e) {
+					continue;
+				}
+
+				$sPos = ShipmentPositions::create([
+					'ecommerce_shipment_id' => $shipment->id,
+					'description' => $iPos->description,
+					'quantity' => $iPos->quantity,
+					'amount_currency' => $iPos->amount_currency,
+					'amount_type' => $iPos->amount_type,
+					'amount' => $iPos->amount
+				]);
+
+				$r = $sPos->save(null, [
+					'validate' => false
+				]);
+				$this->out("ID {$sPos->id}: " . ($r ? 'OK' : 'FAILED!'));
+			}
+		}
+		$this->out('All done.');
+
+		$this->migrateTo13();
+	}
+
+	public function migrateTo13() {
+		$this->out('Ensuring user_vat_reg_no is set on all invoices...');
+		$results = Invoices::find('all');
+
+		foreach ($results as $result) {
+			if (!$user = $result->user()) {
+				$this->out("ID {$result->id}: No user found!");
+				continue;
+			}
+			$result->user_vat_reg_no = $user->vat_reg_no;
+
+			$r = $result->save(null, [
+				'validate' => false,
+				'whitelist' => ['user_vat_reg_no']
+			]);
+			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
+		}
+		$this->out('All done.');
 	}
 }
 
