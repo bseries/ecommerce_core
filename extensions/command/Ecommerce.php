@@ -14,7 +14,7 @@ namespace ecommerce_core\extensions\command;
 
 use billing_core\models\Invoices;
 use ecommerce_core\models\Shipments;
-use ecommerce_core\models\ShipmentPositionss;
+use ecommerce_core\models\ShipmentPositions;
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\Orders;
