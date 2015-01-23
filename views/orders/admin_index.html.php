@@ -8,12 +8,23 @@ $this->set([
 ]);
 
 ?>
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?> use-list">
+<article class="use-list">
+
 	<div class="help">
 		<?= $t('Cancelling an order will also cancel associated invoice and shipment - if possible.') ?>
 		<?= $t('Once the order was shipped and the invoice paid, mark the order as `processed` to close it.') ?>
 		<?= $t('When the order has been checked out, an email along with the invoice is sent to the user.') ?>
 		<?= $t('The basic workflow is: 1. take the order and mark it as `processing`, 2. check the invoice and register payment, mark the invoice as `paid`, 3. handle the shipment, 4. mark the order as `processed`.')?>
+	</div>
+
+	<div class="actions">
+		<?= $this->form->field('show_checked_out_only', [
+			'type' => 'checkbox',
+			'label'	=> $t('show checked out orders only'),
+			'checked' => true,
+			'value' => 'checked out',
+			'data-filter' => 'status'
+		]) ?>
 	</div>
 
 	<?php if ($data->count()): ?>

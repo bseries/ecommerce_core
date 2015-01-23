@@ -20,16 +20,10 @@ use lithium\g11n\Message;
 
 class OrdersController extends \base_core\controllers\BaseController {
 
+	use \base_core\controllers\AdminIndexTrait;
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
 	use \base_core\controllers\AdminUpdateStatusTrait;
-
-	public function admin_index() {
-		$data = Orders::find('all', [
-			'order' => ['number' => 'DESC']
-		]);
-		return compact('data') + $this->_selects();
-	}
 
 	protected function _selects($item = null) {
 		extract(Message::aliases());
