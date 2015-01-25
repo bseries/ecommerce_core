@@ -20,27 +20,13 @@ use lithium\core\Libraries;
 
 class ProductGroupsController extends \base_core\controllers\BaseController {
 
+	use \base_core\controllers\AdminIndexTrait;
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
 	use \base_core\controllers\AdminDeleteTrait;
 
 	use \base_core\controllers\AdminPublishTrait;
 	use \base_core\controllers\AdminPromoteTrait;
-
-	public function admin_index() {
-		$data = ProductGroups::find('all', [
-			'order' => ['created' => 'DESC'],
-			'with' => ['Products']
-		]);
-		return compact('data') + $this->_selects();
-	}
-
-	protected function _redirectUrl($item = null) {
-		if (!$item) {
-			return [];
-		}
-		return ['#' => $item->id];
-	}
 
 	protected function _selects($item = null) {
 		$data = array_keys(Access::adapter('entity')->get());

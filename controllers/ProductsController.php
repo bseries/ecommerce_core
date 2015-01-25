@@ -21,25 +21,12 @@ use lithium\g11n\Message;
 
 class ProductsController extends \base_core\controllers\BaseController {
 
+	use \base_core\controllers\AdminIndexTrait;
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
 	use \base_core\controllers\AdminDeleteTrait;
 
 	use \base_core\controllers\AdminPublishTrait;
-
-	public function admin_index() {
-		$data = Products::find('all', [
-			'order' => ['created' => 'DESC']
-		]);
-		return compact('data');
-	}
-
-	protected function _redirectUrl($item = null) {
-		if (!$item) {
-			return [];
-		}
-		return ['#' => $item->id];
-	}
 
 	protected function _selects($item = null) {
 		extract(Message::aliases());
