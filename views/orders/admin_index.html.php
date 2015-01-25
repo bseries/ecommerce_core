@@ -28,7 +28,7 @@ $this->set([
 		]) ?>
 	</div>
 	-->
-	<?=$this->view()->render(['element' => 'paging'], $paging, ['library' => 'base_core']) ?>
+	<?=$this->view()->render(['element' => 'paging'], compact('paginator'), ['library' => 'base_core']) ?>
 
 	<?php if ($data->count()): ?>
 		<table>
@@ -108,6 +108,6 @@ $this->set([
 		<div class="none-available"><?= $t('No items available, yet.') ?></div>
 	<?php endif ?>
 
-	<?=$this->view()->render(['element' => 'paging'], $paging, ['library' => 'base_core']) ?>
+	<?=$this->view()->render(['element' => 'paging'], compact('paginator'), ['library' => 'base_core']) ?>
 
 </article>
