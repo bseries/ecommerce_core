@@ -40,8 +40,7 @@ $this->set([
 					<td class="flag is-promoted"><?= ($item->is_promoted ? '✓' : '×') ?>
 					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
-							<?= $this->assets->image('/base-core/img/none_bg.png', [
-								'data-echo' => $this->media->url($cover->version('fix3admin')),
+							<?= $this->media->image($cover->version('fix3admin'), [
 								'data-media-id' => $cover->id, 'alt' => 'preview'
 							]) ?>
 						<?php endif ?>
