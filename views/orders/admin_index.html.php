@@ -8,8 +8,9 @@ $this->set([
 ]);
 
 ?>
-<article class="use-list">
+<article>
 
+	<!--
 	<div class="help">
 		<?= $t('Cancelling an order will also cancel associated invoice and shipment - if possible.') ?>
 		<?= $t('Once the order was shipped and the invoice paid, mark the order as `processed` to close it.') ?>
@@ -26,6 +27,8 @@ $this->set([
 			'data-filter' => 'status'
 		]) ?>
 	</div>
+	-->
+	<?=$this->view()->render(['element' => 'paging'], $paging, ['library' => 'base_core']) ?>
 
 	<?php if ($data->count()): ?>
 		<table>
@@ -104,4 +107,7 @@ $this->set([
 	<?php else: ?>
 		<div class="none-available"><?= $t('No items available, yet.') ?></div>
 	<?php endif ?>
+
+	<?=$this->view()->render(['element' => 'paging'], $paging, ['library' => 'base_core']) ?>
+
 </article>
