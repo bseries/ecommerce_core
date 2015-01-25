@@ -27,30 +27,38 @@ $this->set([
 			'data-filter' => 'status'
 		]) ?>
 	</div>
-	-->
-	<?=$this->view()->render(['element' => 'paging'], compact('paginator'), ['library' => 'base_core']) ?>
-
-	<?php if ($data->count()): ?>
-		<table>
-			<thead>
-				<tr>
-					<td data-sort="number" class="emphasize number list-sort desc"><?= $t('Number') ?>
-					<td data-sort="status" class="status list-sort"><?= $t('Status') ?>
-					<td data-sort="user" class="user list-sort"><?= $t('User') ?>
-					<td data-sort="invoice-number" class="invoice-number list-sort"><?= $t('Invoice number') ?>
-					<td data-sort="invoice-status" class="status invoice-status list-sort"><?= $t('Invoice status') ?>
-					<td data-sort="shipment-number" class="shipment-number list-sort"><?= $t('Shipment number') ?>
-					<td data-sort="shipment-status" class="status shipment-status list-sort"><?= $t('Shipment status') ?>
-					<td class="date created"><?= $t('Created') ?>
-					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
 							'label' => false,
 							'placeholder' => $t('Filter'),
 							'class' => 'list-search'
 						]) ?>
+	-->
+
+	<?php if ($data->count()): ?>
+		<table
+			class="use-index-table"
+			data-endpoint-sort="<?= $this->url([
+				'action' => 'index',
+				'page' => $paginator->getPages()->current,
+				'orderField' => '__ORDER_FIELD__',
+				'orderDirection' => '__ORDER_DIRECTION__'
+			]) ?>"
+		>
+			<thead>
+				<tr>
+					<td data-sort="number" class="emphasize number table-sort"><?= $t('Number') ?>
+					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
+					<td data-sort="user" class="user list-sort"><?= $t('User') ?>
+					<td data-sort="invoice-number" class="invoice-number table-sort"><?= $t('Invoice number') ?>
+					<td data-sort="invoice-status" class="status invoice-status table-sort"><?= $t('Invoice status') ?>
+					<td data-sort="shipment-number" class="shipment-number table-sort"><?= $t('Shipment number') ?>
+					<td data-sort="shipment-status" class="status shipment-status table-sort"><?= $t('Shipment status') ?>
+					<td class="date created"><?= $t('Created') ?>
+					<td class="date modified list-sort desc"><?= $t('Modified') ?>
+					<td class="actions">
 			</thead>
-			<tbody class="list">
+			<tbody>
 				<?php foreach ($data as $item): ?>
 					<?php $user = $item->user() ?>
 				<tr data-id="<?= $item->id ?>">
@@ -87,6 +95,10 @@ $this->set([
 					<td class="date created">
 						<time datetime="<?= $this->date->format($item->created, 'w3c') ?>">
 							<?= $this->date->format($item->created, 'date') ?>
+						</time>
+					<td class="date modified">
+						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
+							<?= $this->date->format($item->modified, 'date') ?>
 						</time>
 					<td class="actions">
 <!--
