@@ -40,14 +40,24 @@ class Carts extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\StatusChange'
 	];
 
+	public $hasOne = [
+		'Order' => [
+			'to' => 'ecommerce_core\models\Orders',
+			'key' => 'ecommerce_cart_id'
+		]
+	];
+
 	public $hasMany = [
-		'CartPositions' => [
-			'class' => 'ecommerce_core\models\CartPositions',
+		'Positions' => [
+			'to' => 'ecommerce_core\models\CartPositions',
 			'key' => 'ecommerce_cart_id'
 		]
 	];
 
 	public function order($entity, array $query = []) {
+		if ($entity->order && !$query) {
+			return $entity->order;
+		}
 		return Orders::find('first', [
 			'conditions' => [
 				'ecommerce_cart_id' => $entity->id
@@ -56,7 +66,7 @@ class Carts extends \base_core\models\Base {
 	}
 
 	public function positions($entity) {
-		return CartPositions::find('all', [
+		return $entity->positions ?: CartPositions::find('all', [
 			'conditions' => [
 				'ecommerce_cart_id' => $entity->id
 			]

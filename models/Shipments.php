@@ -44,6 +44,13 @@ class Shipments extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\StatusChange'
 	];
 
+	public $hasOne = [
+		'Order' => [
+			'to' => 'ecommerce_core\models\Orders',
+			'key' => 'ecommerce_shipment_id'
+		]
+	];
+
 	public static $enum = [
 		'status' => [
 			'created',

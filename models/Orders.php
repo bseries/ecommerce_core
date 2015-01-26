@@ -51,13 +51,25 @@ class Orders extends \base_core\models\Base {
 	];
 
 	public $belongsTo = [
-		'Invoice' => [
-			'class' => 'billing_core\models\Invoice',
+		'User' => [
+			'to' => 'base_core\models\Users',
+			'key' => 'user_id'
+		],
+		'VirtualUser' => [
+			'to' => 'base_core\models\VirtualUsers',
+			'key' => 'virtual_user_id'
+		],
+		'Invoices' => [
+			'to' => 'billing_core\models\Invoices',
 			'key' => 'billing_invoice_id'
 		],
 		'Shipment' => [
-			'class' => 'ecommerce_core\models\Shipment',
+			'to' => 'ecommerce_core\models\Shipments',
 			'key' => 'ecommerce_shipment_id'
+		],
+		'Cart' => [
+			'to' => 'ecommerce_core\models\Carts',
+			'key' => 'ecommerce_cart_id'
 		]
 	];
 
@@ -155,7 +167,7 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function cart($entity, array $query = []) {
-		return Carts::find('first', [
+		return $entity->cart ?: Carts::find('first', [
 			'conditions' => [
 				'id' => $entity->ecommerce_cart_id
 			]
@@ -163,6 +175,9 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function invoice($entity) {
+		if ($entity->invoice && $entity->invoice->id) {
+			return $entity->invoice;
+		}
 		return Invoices::find('first', [
 			'conditions' => [
 				'id' => $entity->billing_invoice_id
@@ -171,6 +186,9 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function shipment($entity) {
+		if ($entity->shipment && $entity->shipment->id) {
+			return $entity->shipment;
+		}
 		return Shipments::find('first', [
 			'conditions' => [
 				'id' => $entity->ecommerce_shipment_id

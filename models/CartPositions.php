@@ -27,7 +27,7 @@ class CartPositions extends \base_core\models\Base {
 
 	public $belongsTo = [
 		'Cart' => [
-			'class' => 'ecommerce_core\models\Cart',
+			'to' => 'ecommerce_core\models\Carts',
 			'key' => 'ecommerce_cart_id'
 		]
 	];
