@@ -76,6 +76,10 @@ class Products extends \base_core\models\Base {
 		);
 	}
 
+	// Will autoselect the correct price for the user.
+	//
+	// TODO Use hasAccess as a last access check. But use
+	//      user information to map to correct price.
 	public function price($entity, $user) {
 		foreach ($this->prices($entity) as $price) {
 			if ($price->hasAccess($user)) {
