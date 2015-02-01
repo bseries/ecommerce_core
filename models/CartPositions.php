@@ -29,10 +29,17 @@ class CartPositions extends \base_core\models\Base {
 		'Cart' => [
 			'to' => 'ecommerce_core\models\Carts',
 			'key' => 'ecommerce_cart_id'
+		],
+		'Product' => [
+			'to' => 'ecommerce_core\models\Products',
+			'key' => 'ecommerce_product_id'
 		]
 	];
 
 	public function product($entity) {
+		if ($entity->product) {
+			return $entity->product;
+		}
 		return Products::find('first', [
 			'conditions' => [
 				'id' => $entity->ecommerce_product_id

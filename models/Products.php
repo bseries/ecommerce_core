@@ -33,6 +33,21 @@ class Products extends \base_core\models\Base {
 		'CoverMedia' => [
 			'to' => 'base_media\models\Media',
 			'key' => 'cover_media_id'
+		],
+		'Group' => [
+			'to' => 'ecommerce_core\models\ProductGroups',
+			'key' => 'ecommerce_product_group_id'
+		]
+	];
+
+	public $hasMany = [
+		'Prices' => [
+			'to' => 'ecommerce_core\models\ProductPrices',
+			'key' => 'ecommerce_product_id'
+		],
+		'Attributes' => [
+			'to' => 'ecommerce_core\models\ProductAttributes',
+			'key' => 'ecommerce_product_id'
 		]
 	];
 
@@ -91,7 +106,7 @@ class Products extends \base_core\models\Base {
 				]);
 			}
 		}
-		$prices = ProductPrices::find('all', [
+		$prices = $entity->prices ?: ProductPrices::find('all', [
 			'conditions' => [
 				'ecommerce_product_id' => $entity->id
 			]
@@ -103,7 +118,7 @@ class Products extends \base_core\models\Base {
 	}
 
 	public function group($entity) {
-		return ProductGroups::find('first', [
+		return $entity->group ?: ProductGroups::find('first', [
 			'conditions' => [
 				'id' => $entity->ecommerce_product_group_id
 			]
@@ -111,7 +126,7 @@ class Products extends \base_core\models\Base {
 	}
 
 	public function attributes($entity) {
-		return ProductAttributes::find('all', [
+		return $entity->attributes ?: ProductAttributes::find('all', [
 			'conditions' => [
 				'ecommerce_product_id' => $entity->id
 			]
