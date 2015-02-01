@@ -48,8 +48,15 @@ class CartPositions extends \base_core\models\Base {
 		return $entity->product()->price($user)->amount();
 	}
 
+	public function total($entity, $user) {
+		return $entity->product()->price($user)->amount()->multiply($entity->quantity);
+	}
+
+	/* Deprecated */
+
 	public function totalAmount($entity, $user) {
-		return $entity->amount($user)->multiply($entity->quantity);
+		trigger_error('CartPositions::totalAmount has been deprecated in favor of total().', E_USER_DEPRECATED);
+		return $entity->total($user);
 	}
 }
 
