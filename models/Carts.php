@@ -55,6 +55,9 @@ class Carts extends \base_core\models\Base {
 	];
 
 	public function order($entity, array $query = []) {
+		if ($query) {
+			trigger_error('Carts::order with query has been deprecated.', E_USER_DEPRECATED);
+		}
 		if ($entity->order && !$query) {
 			return $entity->order;
 		}
