@@ -13,7 +13,7 @@
 namespace ecommerce_core\models;
 
 use li3_access\security\Access;
-use Finance\Price;
+use AD\Finance\Price\NullPrice;
 use lithium\util\Collection;
 
 class PaymentMethods extends \base_core\models\Base {
@@ -31,7 +31,7 @@ class PaymentMethods extends \base_core\models\Base {
 			'title' => null,
 			'access' => ['user.role:admin'],
 			'price' => function($user, $cart) {
-				return new Price(0, 'EUR', 'net');
+				return new NullPrice();
 			},
 			'info' => function($context, $format, $renderer, $order) {
 				// Dependent on $format return either HTML or plaintext.

@@ -32,8 +32,15 @@ class ShipmentPositions extends \base_core\models\Base {
 		]
 	];
 
+	public $belongsTo = [
+		'Shipment' => [
+			'to' => 'ecommerce_core\models\Shipments',
+			'key' => 'ecommerce_shipment_id'
+		]
+	];
+
 	public function shipment($entity) {
-		return Shipments::find('first', [
+		return $entity->shipment ?: Shipments::find('first', [
 			'conditions' => [
 				'id' => $entity->ecommerce_shipment_id
 			]
@@ -42,14 +49,14 @@ class ShipmentPositions extends \base_core\models\Base {
 
 	public function amount($entity) {
 		return new Price(
-			$entity->amount,
+			(integer) $entity->amount,
 			$entity->amount_currency,
-			$entity->amount_type, // FIXME Hardcode to net?
+			$entity->amount_type,
 			(integer) $entity->tax_rate
 		);
 	}
 
-	public function totalAmount($entity) {
+	public function total($entity) {
 		return $entity->amount()->multiply($entity->quantity);
 	}
 
@@ -67,6 +74,13 @@ class ShipmentPositions extends \base_core\models\Base {
 			throw new Exception('Failed to extract item title from description.');
 		}
 		return $matches[1];
+	}
+
+	/* Deprecated */
+
+	public function totalAmount($entity) {
+		trigger_error('ShipmentPositions::totalAmount has been deprecated in favor of total().', E_USER_DEPRECATED);
+		return $entity->total();
 	}
 }
 
