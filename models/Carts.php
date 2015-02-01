@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use Finance\Price;
+use AD\Finance\Price;
 use base_core\extensions\cms\Settings;
 use ecommerce_core\models\CartPositions;
 use DateTime;
@@ -73,29 +73,20 @@ class Carts extends \base_core\models\Base {
 		]);
 	}
 
+	// We need the user to determine if she has access to the price.
+	public function totals($entity, $user) {
+		$result = new Prices();
+
+		foreach ($entity->positions() as $position) {
+			$result = $result->add($position->total($user));
+		}
+		return $result->sum();
+	}
+
 	public function totalQuantity($entity) {
 		return array_reduce($this->positions($entity)->data(), function($carry, $item) {
 			return $carry += $item['quantity'];
 		}, 0);
-	}
-
-	public function totalAmount($entity, $user) {
-		$sum = null;
-
-		foreach ($entity->positions() as $position) {
-			$result = $position->totalAmount($user);
-
-			if ($sum) {
-				$sum = $sum->add($result);
-			} else {
-				$sum = $result;
-			}
-		}
-		return $sum ?: new Price(0, 'EUR', 'net');
-	}
-
-	public function totalTax($entity, $user) {
-		return $entity->totalAmount($user)->getTax();
 	}
 
 	// Not all carts must have an associated order, i.e.
@@ -127,6 +118,16 @@ class Carts extends \base_core\models\Base {
 				break;
 		}
 		return true;
+	}
+
+	/* Deprecated */
+
+	public function totalAmount($entity, $user) {
+		throw new Exception("Carts::totalAmount() has been deprecated in favor of totals().");
+	}
+
+	public function totalTax($entity, $user) {
+		throw new Exception("Carts::totalTax has been deprecated.");
 	}
 }
 

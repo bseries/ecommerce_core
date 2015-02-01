@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use Finance\Price;
+use AD\Finance\Price;
 use ecommerce_core\models\ProductPriceGroups;
 use li3_access\security\Access;
 use billing_core\models\TaxTypes;
@@ -39,11 +39,9 @@ class ProductPrices extends \base_core\models\Base {
 		]);
 	}
 
-	// Prices may be retrieved using a temporary user.
-	// That user must at a minimum have tax country and vat_reg_no fields set.
 	public function amount($entity) {
 		return new Price(
-			$entity->amount,
+			(integer) $entity->amount,
 			$entity->amount_currency,
 			$entity->amount_type,
 			(integer) $entity->tax_rate
