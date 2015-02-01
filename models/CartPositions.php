@@ -37,10 +37,7 @@ class CartPositions extends \base_core\models\Base {
 	];
 
 	public function product($entity) {
-		if ($entity->product) {
-			return $entity->product;
-		}
-		return Products::find('first', [
+		return $entity->product ?: Products::find('first', [
 			'conditions' => [
 				'id' => $entity->ecommerce_product_id
 			]
