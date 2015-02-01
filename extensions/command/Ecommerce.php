@@ -77,7 +77,6 @@ class Ecommerce extends \lithium\console\Command {
 
 		foreach ($results as $result) {
 			$result->tax_type = 'DE.vat.standard';
-			$result->tax_rate = 19;
 
 			if ($result->group == 'merchant') {
 				$result->group = 'DE.merchant';
@@ -86,23 +85,66 @@ class Ecommerce extends \lithium\console\Command {
 			}
 			$r = $result->save(null, [
 				'validate' => false,
-				'whitelist' => ['tax_type', 'tax_rate', 'group']
+				'whitelist' => ['tax_type', 'group']
 			]);
 			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
 		}
 		$this->out('All done.');
 
+		$this->out('Migrating invoices...');
+		$results = Invoices::find('all');
+
+		foreach ($results as $result) {
+			if (!empty($result->terms)) {
+				$result->terms .= "\n" . $result->tax_note;
+			} else {
+				$result->terms = $result->tax_note;
+			}
+			if (!$result->user_id) {
+				$result->user_id = null;
+			}
+			if (!$result->virtual_user_id) {
+				$result->virtual_user_id = null;
+			}
+
+			$r = $result->save(null, [
+				'validate' => false,
+				'whitelist' => ['terms', 'user_id', 'virtual_user_id']
+			]);
+			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
+		}
+
+		$this->out('Migrating invoice positions...');
+		$results = InvoicePositionss::find('all');
+
+		foreach ($results as $result) {
+			if (!$result->user_id) {
+				$result->user_id = null;
+			}
+			if (!$result->virtual_user_id) {
+				$result->virtual_user_id = null;
+			}
+			if ($invoice = $result->invoice()) {
+				$result->user_id = $invoice->user_id;
+				$result->virtual_user_id = $invoice->virtual_user_id;
+			}
+			$r = $result->save(null, [
+				'validate' => false,
+				'whitelist' => ['user_id', 'virtual_user_id']
+			]);
+			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
+		}
+		$this->out('All done.');
 
 		$this->out('Migrating shipments...');
 		$results = Shipments::find('all');
 
 		foreach ($results as $result) {
-			$result->tax_rate = 19;
-			$result->tax_note = 'Enthält 19% MwSt.';
+			$result->terms = 'Enthält 19% MwSt.';
 
 			$r = $result->save(null, [
 				'validate' => false,
-				'whitelist' => ['tax_note', 'tax_rate']
+				'whitelist' => ['terms']
 			]);
 			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
 		}
@@ -114,9 +156,6 @@ class Ecommerce extends \lithium\console\Command {
 				'status' => 'checked-out'
 			]
 		]);
-		// $invoices = Invoices::find('all');
-		// $shipments = Shipments::find('all');
-
 		foreach ($orders as $order) {
 			$shipment = $order->shipment();
 			$invoice = $order->invoice();
@@ -136,7 +175,9 @@ class Ecommerce extends \lithium\console\Command {
 					'quantity' => $iPos->quantity,
 					'amount_currency' => $iPos->amount_currency,
 					'amount_type' => $iPos->amount_type,
-					'amount' => $iPos->amount
+					'amount' => $iPos->amount,
+					'tax_type' => $iPos->tax_type,
+					'tax_rate' => $iPos->tax_rate
 				]);
 
 				$r = $sPos->save(null, [
