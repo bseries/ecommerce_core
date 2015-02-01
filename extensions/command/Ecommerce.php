@@ -13,6 +13,7 @@
 namespace ecommerce_core\extensions\command;
 
 use billing_core\models\Invoices;
+use billing_core\models\InvoicePositions;
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\ShipmentPositions;
 use ecommerce_core\models\Products;
@@ -115,7 +116,7 @@ class Ecommerce extends \lithium\console\Command {
 		}
 
 		$this->out('Migrating invoice positions...');
-		$results = InvoicePositionss::find('all');
+		$results = InvoicePositions::find('all');
 
 		foreach ($results as $result) {
 			if (!$result->user_id) {
