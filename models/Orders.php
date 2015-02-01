@@ -212,18 +212,15 @@ class Orders extends \base_core\models\Base {
 		]);
 	}
 
-	public function totalAmount($entity, $user) {
+	// Should equal the invoice, once one is attached.
+	public function totals($entity, $user) {
 		$cart = $entity->cart();
 
-		$result = $cart->totalAmount($user);
+		$result = $cart->totals($user);
 		$result = $result->add($entity->shippingMethod()->price($user, $cart));
 		$result = $result->add($entity->paymentMethod()->price($user, $cart));
 
 		return $result;
-	}
-
-	public function totalTax($entity, $user, $cart) {
-		return $entity->totalAmount($user, $cart)->getTax();
 	}
 
 	public function generateShipment($entity, $user, $cart, array $data = []) {
@@ -466,6 +463,16 @@ class Orders extends \base_core\models\Base {
 				break;
 		}
 		return true;
+	}
+
+	/* Deprecated */
+
+	public function totalAmount($entity, $user) {
+		throw new Exception('Orders::totalAmount is deprecated in favor of totals.');
+	}
+
+	public function totalTax($entity, $user, $cart) {
+		throw new Exception('Orders::totalTax is deprecated.');
 	}
 }
 

@@ -83,7 +83,7 @@ class Carts extends \base_core\models\Base {
 		foreach ($entity->positions() as $position) {
 			$result = $result->add($position->total($user));
 		}
-		return $result->sum();
+		return $result;
 	}
 
 	public function totalQuantity($entity) {
