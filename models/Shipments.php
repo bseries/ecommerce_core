@@ -12,11 +12,12 @@
 
 namespace ecommerce_core\models;
 
+use Exception;
 use lithium\g11n\Message;
 use lithium\analysis\Logger;
 use li3_mailer\action\Mailer;
-use Finance\Price;
-use Finance\PriceSum;
+use AD\Finance\Price;
+use AD\Finance\Price\Prices;
 
 use base_core\extensions\cms\Settings;
 use base_address\models\Addresses;
@@ -179,15 +180,19 @@ class Shipments extends \base_core\models\Base {
 
 	// This is the total value of the shipment. Used i.e. for
 	// calculating the inssurrance value needed.
-	public function totalAmount($entity) {
-		$result = new PriceSum();
+	public function totals($entity) {
+		$result = new Prices();
 
-		$positions = $this->positions($entity);
-
-		foreach ($positions as $position) {
-			$result = $result->add($position->totalAmount());
+		foreach ($entity->positions() as $position) {
+			$result = $result->add($position->total());
 		}
 		return $result;
+	}
+
+	/* Deprecated */
+
+	public function totalAmount($entity) {
+		throw new Exception('Replaced by totals().');
 	}
 }
 

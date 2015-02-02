@@ -166,14 +166,14 @@ $this->set([
 								<?= $this->form->field("positions.{$key}.amount", [
 									'type' => 'text',
 									'label' => false,
-									'value' => $this->money->format($child->amount(), 'decimal')
+									'value' => $this->money->format($child->amount, ['currency' => false])
 								]) ?>
 							<td>
 								<?= $this->form->field("positions.{$key}.total_net", [
 									'type' => 'text',
 									'label' => false,
 									'disabled' => true,
-									'value' => $this->money->format($child->totalAmount()->getNet(), 'decimal')
+									'value' => $this->money->format($child->total()->getNet(), ['currency' => false])
 								]) ?>
 							<td class="actions">
 								<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
@@ -218,7 +218,7 @@ $this->set([
 								<?= $this->form->button($t('add position'), ['type' => 'button', 'class' => 'button add-nested']) ?>
 						<tr>
 							<td colspan="6"><?= $t('Total value (net)') ?>
-							<td><?= ($money = $item->totalAmount()) ? $this->money->format($money->getNet(), 'money') : null ?>
+							<td><?= $this->price->format($item->totals(), 'net') ?>
 						<tr>
 					</tfoot>
 				</table>

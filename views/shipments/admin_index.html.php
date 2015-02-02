@@ -59,7 +59,7 @@ $this->set([
 						<?php else: ?>
 							-
 						<?php endif ?>
-					<td><?= ($money = $item->totalAmount()) ? $this->money->format($money->getNet(), 'money') : null ?>
+					<td><?= $this->price->format($item->totals(), 'net') ?>
 					<td class="date modified">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>

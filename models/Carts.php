@@ -12,7 +12,9 @@
 
 namespace ecommerce_core\models;
 
-use AD\Finance\Price;
+use Exception;
+use AD\Finance\Price\Prices;
+use AD\Finance\Money\Monies;
 use base_core\extensions\cms\Settings;
 use ecommerce_core\models\CartPositions;
 use DateTime;
@@ -90,6 +92,19 @@ class Carts extends \base_core\models\Base {
 		return array_reduce($this->positions($entity)->data(), function($carry, $item) {
 			return $carry += $item['quantity'];
 		}, 0);
+	}
+
+	// Returns the total net/gross value of the cart as *Monies* object.
+	public function totalValues($entity, $type = 'net', $user) {
+		$compare = new Monies();
+		$byMethod = 'get' . ucfirst($type);
+
+		foreach ($entity->totals($user)->sum() as $rate => $currencies) {
+			foreach ($currencies as $currency => $price) {
+				$compare = $compare->add($r = $price->{$byMethod}());
+			}
+		}
+		return $compare;
 	}
 
 	// Not all carts must have an associated order, i.e.

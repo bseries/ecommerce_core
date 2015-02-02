@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\models;
 
-use Finance\Price;
+use AD\Finance\Price;
 use ecommerce_core\models\Shipments;
 use Exception;
 
