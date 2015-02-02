@@ -30,6 +30,7 @@ $this->set([
 					<td data-sort="is-promoted" class="flag is-promoted table-sort"><?= $t('prom.?') ?>
 					<td class="media">
 					<td data-sort="title" class="emphasize title table-sort"><?= $t('Title') ?>
+					<td><?= $t('# Products') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
 			</thead>
@@ -45,6 +46,7 @@ $this->set([
 							]) ?>
 						<?php endif ?>
 					<td class="emphasize title"><?= $item->title ?>
+					<td><?= $item->products()->count() ?>
 					<td class="date modified">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>

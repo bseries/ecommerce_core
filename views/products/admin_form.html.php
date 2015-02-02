@@ -190,7 +190,7 @@ $this->set([
 								<?= $this->form->field("prices.{$key}.amount", [
 									'type' => 'text',
 									'label' => false,
-									'value' => $this->money->format($child->amount, 'decimal')
+									'value' => $this->money->format($child->amount, ['currency' => false])
 								]) ?>
 							<td>
 								<?= $this->form->field("prices.{$key}.tax_type", [
