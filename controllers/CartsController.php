@@ -20,15 +20,9 @@ use li3_flash_message\extensions\storage\FlashMessage;
 
 class CartsController extends \base_core\controllers\BaseController {
 
+	use \base_core\controllers\AdminIndexTrait;
 	use \base_core\controllers\AdminEditTrait;
 	use \base_core\controllers\AdminDeleteTrait;
-
-	public function admin_index() {
-		$data = Carts::find('all', [
-			'order' => ['created' => 'desc']
-		]);
-		return compact('data') + $this->_selects();
-	}
 
 	protected function _selects($item = null) {
 		extract(Message::aliases());

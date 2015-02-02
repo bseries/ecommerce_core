@@ -34,7 +34,7 @@ $this->set([
 					<td data-sort="modified" class="date table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
 			</thead>
-			<tbody class="list">
+			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="flag"><?= ($item->is_published ? '✓' : '×') ?>

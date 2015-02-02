@@ -22,15 +22,9 @@ use base_core\models\Currencies;
 
 class ShipmentsController extends \base_core\controllers\BaseController {
 
+	use \base_core\controllers\AdminIndexTrait;
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
-
-	public function admin_index() {
-		$data = Shipments::find('all', [
-			'order' => ['number' => 'DESC']
-		]);
-		return compact('data') + $this->_selects();
-	}
 
 	public function admin_ship() {
 		extract(Message::aliases());
