@@ -10,7 +10,6 @@
     },
     "require": {
         "php": ">=5.5.0",
-        "yohang/finite": "1.*",
         "composer/installers": "~1.0",
         "unionofrad/lithium": "dev-dev",
         "atelierdisko/li3_flash_message": "1.0.*@beta",
