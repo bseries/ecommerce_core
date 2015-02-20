@@ -130,20 +130,6 @@ class Ecommerce extends \lithium\console\Command {
 		}
 		$this->out('All done.');
 
-		$this->out('Migrating shipments...');
-		$results = Shipments::find('all');
-
-		foreach ($results as $result) {
-			$result->terms = 'Enthält 19% MwSt.';
-
-			$r = $result->save(null, [
-				'validate' => false,
-				'whitelist' => ['terms']
-			]);
-			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
-		}
-		$this->out('All done.');
-
 		$this->out('Migrating shipment positions...');
 		$orders = Orders::find('all', [
 			'conditions' => [
