@@ -77,8 +77,6 @@ class Ecommerce extends \lithium\console\Command {
 		$results = ProductPrices::find('all');
 
 		foreach ($results as $result) {
-			$result->tax_type = 'DE.vat.standard';
-
 			if ($result->group == 'merchant') {
 				$result->group = 'DE.merchant';
 			} else {
@@ -86,7 +84,7 @@ class Ecommerce extends \lithium\console\Command {
 			}
 			$r = $result->save(null, [
 				'validate' => false,
-				'whitelist' => ['tax_type', 'group']
+				'whitelist' => ['group']
 			]);
 			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
 		}
