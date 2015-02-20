@@ -128,8 +128,8 @@ class Products extends \base_core\models\Base {
 		]);
 	}
 
-	public function attributes($entity) {
-		return $entity->attributes ?: ProductAttributes::find('all', [
+	public function attributes($entity, $force = false) {
+		return !$force && $entity->attributes ? $entity->attributes : ProductAttributes::find('all', [
 			'conditions' => [
 				'ecommerce_product_id' => $entity->id
 			]
@@ -270,7 +270,7 @@ Products::applyFilter('save', function($self, $params, $chain) {
 	//
 	// Key/Value Pairs must be unique.
 	if ($entity->attributes) {
-		$entity->attributes()->delete();
+		$entity->attributes(true)->delete();
 
 		$created = [];
 		foreach ($entity->attributes as $key => $data) {
