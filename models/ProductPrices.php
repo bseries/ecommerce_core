@@ -15,7 +15,6 @@ namespace ecommerce_core\models;
 use Exception;
 use AD\Finance\Price;
 use billing_core\models\ClientGroups;
-use li3_access\security\Access;
 
 class ProductPrices extends \base_core\models\Base {
 
@@ -48,15 +47,14 @@ class ProductPrices extends \base_core\models\Base {
 		);
 	}
 
-	public function hasAccess($entity, $user) {
-		return Access::check('entity', $user, ['request' => $entity], [
-			'rules' => $entity->group()->data('access')
-		]) === [];
-	}
-
 	// @deprecated
 	public function taxType($entity) {
 		throw new Exception('Removed.');
+	}
+
+	// @deprecated
+	public function hasAccess($entity, $user) {
+		throw new Exception('Removed; map user to client group then find price by group.');
 	}
 }
 

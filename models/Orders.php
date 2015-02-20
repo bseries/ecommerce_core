@@ -24,6 +24,7 @@ use base_core\extensions\cms\Features;
 use base_core\extensions\cms\Settings;
 use billing_core\models\InvoicePositions;
 use billing_core\models\Invoices;
+use billing_core\models\ClientGroups;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\PaymentMethods;
@@ -272,9 +273,17 @@ class Orders extends \base_core\models\Base {
 	public function generateInvoice($entity, $user, $cart, array $data = []) {
 		extract(Message::aliases());
 
+		$group = ClientGroups::find('first', ['conditions' => compact('user')]);
+
+		if (!$group) {
+			return false;
+		}
+
 		$invoice = Invoices::create([
 			$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id,
 			'user_vat_reg_no' => $user->vat_reg_no,
+			'tax_type' => $group->taxType,
+			'tax_note' => $group->taxType()->note,
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
 			'note' => $t('Order No.') . ': ' . $entity->number,
