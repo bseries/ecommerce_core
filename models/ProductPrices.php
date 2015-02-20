@@ -12,10 +12,10 @@
 
 namespace ecommerce_core\models;
 
+use Exception;
 use AD\Finance\Price;
-use ecommerce_core\models\ProductPriceGroups;
+use billing_core\models\ClientGroups;
 use li3_access\security\Access;
-use billing_core\models\TaxTypes;
 
 class ProductPrices extends \base_core\models\Base {
 
@@ -32,7 +32,7 @@ class ProductPrices extends \base_core\models\Base {
 	];
 
 	public function group($entity) {
-		return ProductPriceGroups::find('first', [
+		return ClientGroups::find('first', [
 			'conditions' => [
 				'id' => $entity->group
 			]
@@ -48,14 +48,15 @@ class ProductPrices extends \base_core\models\Base {
 		);
 	}
 
-	public function taxType($entity) {
-		return TaxTypes::find('first', ['conditions' => ['id' => $entity->tax_type]]);
-	}
-
 	public function hasAccess($entity, $user) {
 		return Access::check('entity', $user, ['request' => $entity], [
 			'rules' => $entity->group()->data('access')
 		]) === [];
+	}
+
+	// @deprecated
+	public function taxType($entity) {
+		throw new Exception('Removed.');
 	}
 }
 
