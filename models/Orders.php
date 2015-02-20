@@ -252,8 +252,7 @@ class Orders extends \base_core\models\Base {
 				'ecommerce_shipment_id' => $shipment->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
-				'tax_type' => $price->tax_type,
-				'tax_rate' => $price->tax_rate,
+				'amount_rate' => $price->amount_rate,
 				'amount_type' => $price->amount_type,
 				'amount_currency' => $price->amount_currency,
 				'amount' => $price->amount
@@ -304,8 +303,7 @@ class Orders extends \base_core\models\Base {
 				'billing_invoice_id' => $invoice->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
-//				'tax_type' => $price->tax_type,
-				'tax_rate' => $price->tax_rate,
+				'amount_rate' => $price->tax_rate, // FIXME rename prices tax_rate -> amount_rate?
 				'amount_type' => $price->amount_type,
 				'amount_currency' => $price->amount_currency,
 				'amount' => $price->amount,
@@ -321,8 +319,7 @@ class Orders extends \base_core\models\Base {
 				'billing_invoice_id' => $invoice->id,
 				'description' => $entity->shippingMethod()->title,
 				'quantity' => 1,
-//				'tax_type' => null,
-				'tax_rate' => $price->getRate(),
+				'amount_rate' => $price->getRate(),
 				'amount_currency' => $price->getCurrency(),
 				'amount_type' => $price->getType(),
 				'amount' => $price->getAmount()
@@ -336,8 +333,7 @@ class Orders extends \base_core\models\Base {
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
 				'description' => $entity->paymentMethod()->title,
-//				'tax_type' => $price->getType(),
-				'tax_rate' => $price->getRate(),
+				'amount_rate' => $price->getRate(),
 				'amount_currency' => $price->getCurrency(),
 				'amount_type' => $price->getType(),
 				'amount' => $price->getAmount()
