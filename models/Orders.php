@@ -155,10 +155,10 @@ class Orders extends \base_core\models\Base {
 
 		// This will select the last address used in checkout as user's new default address.
 		$result = $result && $user->save([$typeIdField => $address->id], [
-			'whitelist' => [$typeIdField]
+			'whitelist' => [$typeIdField, 'id']
 		]);
 		$result = $result && $entity->save([$typeIdField => $address->id], [
-			'whitelist' => [$typeIdField]
+			'whitelist' => [$typeIdField, 'id']
 		]);
 		if (!$result) {
 			return false;
@@ -304,7 +304,7 @@ class Orders extends \base_core\models\Base {
 				'billing_invoice_id' => $invoice->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
-				'tax_type' => $price->tax_type,
+//				'tax_type' => $price->tax_type,
 				'tax_rate' => $price->tax_rate,
 				'amount_type' => $price->amount_type,
 				'amount_currency' => $price->amount_currency,
@@ -321,7 +321,8 @@ class Orders extends \base_core\models\Base {
 				'billing_invoice_id' => $invoice->id,
 				'description' => $entity->shippingMethod()->title,
 				'quantity' => 1,
-				// TODO TAX
+//				'tax_type' => null,
+				'tax_rate' => $price->getRate(),
 				'amount_currency' => $price->getCurrency(),
 				'amount_type' => $price->getType(),
 				'amount' => $price->getAmount()
@@ -335,7 +336,8 @@ class Orders extends \base_core\models\Base {
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
 				'description' => $entity->paymentMethod()->title,
-				// TODO TAX
+//				'tax_type' => $price->getType(),
+				'tax_rate' => $price->getRate(),
 				'amount_currency' => $price->getCurrency(),
 				'amount_type' => $price->getType(),
 				'amount' => $price->getAmount()
@@ -474,6 +476,7 @@ class Orders extends \base_core\models\Base {
 	public function totalTax($entity, $user, $cart) {
 		throw new Exception('Orders::totalTax is deprecated.');
 	}
+
 }
 
 Orders::init();

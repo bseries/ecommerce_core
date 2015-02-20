@@ -96,11 +96,6 @@ class Ecommerce extends \lithium\console\Command {
 		$results = Invoices::find('all');
 
 		foreach ($results as $result) {
-			if (!empty($result->terms)) {
-				$result->terms .= "\n" . $result->tax_note;
-			} else {
-				$result->terms = $result->tax_note;
-			}
 			if (!$result->user_id) {
 				$result->user_id = null;
 			}

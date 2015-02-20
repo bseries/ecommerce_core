@@ -16,7 +16,6 @@ use base_core\models\Currencies;
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
-use billing_core\models\TaxTypes;
 use lithium\g11n\Message;
 
 class ProductsController extends \base_core\controllers\BaseController {
@@ -40,9 +39,8 @@ class ProductsController extends \base_core\controllers\BaseController {
 				'size' => $t('size'),
 				'color' => $t('color')
 			]);
-			$taxTypes = TaxTypes::find('list');
 		}
-		return compact('productGroups', 'currencies', 'attributeKeys', 'taxTypes');
+		return compact('productGroups', 'currencies', 'attributeKeys');
 	}
 }
 

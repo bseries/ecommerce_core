@@ -148,7 +148,6 @@ $this->set([
 							<td><?= $t('Type') ?>
 							<td><?= $t('Currency') ?>
 							<td><?= $t('Amount') ?>
-							<td><?= $t('Tax type') ?>
 							<td><?= $t('Tax rate (%)') ?>
 							<td>
 					</thead>
@@ -191,14 +190,6 @@ $this->set([
 									'type' => 'text',
 									'label' => false,
 									'value' => $this->money->format($child->amount, ['currency' => false])
-								]) ?>
-							<td>
-								<?= $this->form->field("prices.{$key}.tax_type", [
-									'type' => 'select',
-									'label' => false,
-									'list' => $taxTypes,
-									// 'disabled' => true,
-									'value' => $child->tax_type
 								]) ?>
 							<td>
 								<?= $this->form->field("prices.{$key}.tax_rate", [
