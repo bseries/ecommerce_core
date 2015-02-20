@@ -22,20 +22,14 @@ $this->set([
 		<table>
 			<thead>
 				<tr>
-					<td data-sort="number" class="number emphasize table-sort desc"><?= $t('Number') ?>
+					<td data-sort="number" class="number emphasize table-sort"><?= $t('Number') ?>
 					<td data-sort="order" class="order table-sort"><?= $t('Order') ?>
 					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
 					<td data-sort="method" class="method table-sort"><?= $t('Method') ?>
 					<td data-sort="user" class="user table-sort"><?= $t('Recipient') ?>
 					<td><?= $t('Total (net)') ?>
-					<td data-sort="modified" class="date modified table-sort"><?= $t('Modified') ?>
+					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
-						<?= $this->form->field('search', [
-							'type' => 'search',
-							'label' => false,
-							'placeholder' => $t('Filter'),
-							'class' => 'list-search'
-						]) ?>
 			</thead>
 			<tbody>
 				<?php foreach ($data as $item): ?>

@@ -43,7 +43,7 @@ class ProductPrices extends \base_core\models\Base {
 			(integer) $entity->amount,
 			$entity->amount_currency,
 			$entity->amount_type,
-			(integer) $entity->tax_rate
+			(integer) $entity->amount_rate
 		);
 	}
 

@@ -76,13 +76,16 @@ class Products extends \base_core\models\Base {
 		);
 	}
 
-	// Will autoselect the correct price for the user.
-	//
-	// TODO Use hasAccess as a last access check. But use
-	//      user information to map to correct price.
+	// Will autoselect the correct price for the user,
+	// depending on its association in client group.
 	public function price($entity, $user) {
+		$group = ClientGroups::find('first', ['conditions' => compact('user')]);
+		if (!$group) {
+			throw new Exception('Could not map user to client group.');
+		}
+
 		foreach ($this->prices($entity) as $price) {
-			if ($price->hasAccess($user)) {
+			if ($price->group === $group->id) {
 				return $price;
 			}
 		}
