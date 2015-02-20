@@ -145,10 +145,10 @@ $this->set([
 					<thead>
 						<tr>
 							<td><?= $t('Name') ?>
-							<td><?= $t('Type') ?>
-							<td><?= $t('Currency') ?>
 							<td><?= $t('Amount') ?>
-							<td><?= $t('Tax rate (%)') ?>
+							<td><?= $t('Currency') ?>
+							<td><?= $t('Type') ?>
+							<td><?= $t('Rate (%)') ?>
 							<td>
 					</thead>
 					<tbody>
@@ -171,6 +171,20 @@ $this->set([
 									'label' => false
 								]) ?>
 							<td>
+								<?= $this->form->field("prices.{$key}.amount", [
+									'type' => 'text',
+									'label' => false,
+									'value' => $this->money->format($child->amount, ['currency' => false])
+								]) ?>
+							<td>
+								<?= $this->form->field("prices.{$key}.amount_currency", [
+									'type' => 'select',
+									'label' => false,
+									'disabled' => true,
+									'list' => $currencies,
+									'value' => $child->amount_currency
+								]) ?>
+							<td>
 								<?= $this->form->field("prices.{$key}.amount_type", [
 									'type' => 'select',
 									'label' => false,
@@ -178,24 +192,10 @@ $this->set([
 									'value' => $child->amount_type
 								]) ?>
 							<td>
-								<?= $this->form->field("prices.{$key}.amount_currency", [
-									'type' => 'select',
-									'label' => false,
-									// 'disabled' => true,
-									'list' => $currencies,
-									'value' => $child->amount_currency
-								]) ?>
-							<td>
-								<?= $this->form->field("prices.{$key}.amount", [
+								<?= $this->form->field("prices.{$key}.amount_rate", [
 									'type' => 'text',
-									'label' => false,
-									'value' => $this->money->format($child->amount, ['currency' => false])
-								]) ?>
-							<td>
-								<?= $this->form->field("prices.{$key}.tax_rate", [
-									'type' => 'text',
-									// 'disabled' => true,
-									'value' => $child->tax_rate,
+									'disabled' => true,
+									'value' => $child->amount_rate,
 									'label' => false
 								]) ?>
 							<td>
