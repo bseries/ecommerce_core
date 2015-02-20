@@ -303,7 +303,7 @@ class Orders extends \base_core\models\Base {
 				'billing_invoice_id' => $invoice->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
-				'amount_rate' => $price->tax_rate, // FIXME rename prices tax_rate -> amount_rate?
+				'amount_rate' => $price->amount_rate,
 				'amount_type' => $price->amount_type,
 				'amount_currency' => $price->amount_currency,
 				'amount' => $price->amount,

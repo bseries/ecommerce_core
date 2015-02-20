@@ -18,7 +18,7 @@ use ecommerce_core\models\Carts;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\ProductPrices;
-use ecommerce_core\models\ProductPriceGroups;
+use billing_core\models\ClientGroups;
 use Exception;
 use lithium\util\Inflector;
 use lithium\util\Collection;
@@ -100,13 +100,12 @@ class Products extends \base_core\models\Base {
 		$results = [];
 
 		if (!$options['sparse']) {
-			foreach (ProductPriceGroups::find('all') as $group) {
+			foreach (ClientGroups::find('all') as $group) {
 				$results[$group->id] = ProductPrices::create([
 					'group' => $group->id,
 					'amount_currency' => $group->amountCurrency,
 					'amount_type' => $group->amountType,
-					'tax_type' => $group->taxType,
-					'tax_rate' => $group->taxType()->rate
+					'amount_rate' => $group->taxType()->rate
 				]);
 			}
 		}
