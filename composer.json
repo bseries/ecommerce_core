@@ -12,6 +12,7 @@
         "php": ">=5.5.0",
         "composer/installers": "~1.0",
         "unionofrad/lithium": "dev-dev",
+		"davidpersson/li3_translate": "2.*@dev",
         "atelierdisko/li3_flash_message": "1.0.*@beta",
         "atelierdisko/li3_access": "1.0.*@beta",
         "atelierdisko/li3_mailer": "1.0.*@beta",
