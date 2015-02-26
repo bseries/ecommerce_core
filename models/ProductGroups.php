@@ -18,6 +18,8 @@ use li3_access\security\Access;
 
 class ProductGroups extends \base_core\models\Base {
 
+	use \base_core\models\SlugTrait;
+
 	protected $_meta = [
 		'source' => 'ecommerce_product_groups'
 	];
@@ -37,6 +39,7 @@ class ProductGroups extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_media\extensions\data\behavior\Coupler' => [
 			'bindings' => [
 				'cover' => [
@@ -61,21 +64,6 @@ class ProductGroups extends \base_core\models\Base {
 			'filters' => ['strtolower']
 		]
 	];
-
-	public function products($entity, array $query = []) {
-		if (isset($entity->products)) {
-			return $entity->products;
-		}
-		return Products::find('all', [
-			'conditions' => [
-				'ecommerce_product_group_id' => $entity->id
-			]
-		] + $query);
-	}
-
-	public function slug($entity) {
-		return strtolower(Inflector::slug($entity->title));
-	}
 
 	public function hasAccess($entity, $user) {
 		return Access::check('entity', $user, ['request' => $entity], [

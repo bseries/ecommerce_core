@@ -25,6 +25,8 @@ use lithium\util\Collection;
 
 class Products extends \base_core\models\Base {
 
+	use \base_core\models\SlugTrait;
+
 	protected $_meta = [
 		'source' => 'ecommerce_products'
 	];
@@ -52,6 +54,7 @@ class Products extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_media\extensions\data\behavior\Coupler' => [
 			'bindings' => [
 				'cover' => [
@@ -69,11 +72,17 @@ class Products extends \base_core\models\Base {
 	];
 
 	public static function init() {
-		$model = static::_object();
-
 		static::behavior('base_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('product.number')
 		);
+		if (PROJECT_LOCALE !== PROJECT_LOCALES) {
+			static::bindBehavior('li3_translate\extensions\data\behavior\Translatable', [
+				'fields' => ['title'],
+				'locale' => PROJECT_LOCALE,
+				'locales' => explode(' ', PROJECT_LOCALES),
+				'strategy' => 'inline'
+			]);
+		}
 	}
 
 	// Will autoselect the correct price for the user,
@@ -121,22 +130,6 @@ class Products extends \base_core\models\Base {
 			$results[$price->group] = $price;
 		}
 		return new Collection(['data' => $results]);
-	}
-
-	public function group($entity) {
-		return $entity->group ?: ProductGroups::find('first', [
-			'conditions' => [
-				'id' => $entity->ecommerce_product_group_id
-			]
-		]);
-	}
-
-	public function attributes($entity, $force = false) {
-		return !$force && $entity->attributes ? $entity->attributes : ProductAttributes::find('all', [
-			'conditions' => [
-				'ecommerce_product_id' => $entity->id
-			]
-		]);
 	}
 
 	protected static $_lastModifiedCarts = null;
@@ -220,10 +213,6 @@ class Products extends \base_core\models\Base {
 			$shipmentSubtract = $cached;
 		}
 		return $result - array_sum($cartSubtract) - array_sum($shipmentSubtract);
-	}
-
-	public function slug($entity) {
-		return strtolower(Inflector::slug($entity->title));
 	}
 }
 
