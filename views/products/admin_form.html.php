@@ -33,7 +33,7 @@ $this->set([
 						<?= $this->form->field("i18n.title.{$locale}", [
 							'type' => 'text',
 							'label' => $t('Title') . ' (' . $this->g11n->name($locale) . ')',
-							'class' => 'use-for-title',
+							'class' => $locale === PROJECT_LOCALE ? 'use-for-title' : null,
 							'value' => $value
 						]) ?>
 					<?php endforeach ?>
