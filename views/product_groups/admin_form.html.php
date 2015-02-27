@@ -19,11 +19,35 @@ $this->set([
 
 		<div class="grid-row">
 			<div class="grid-column-left">
-				<?= $this->form->field('title', [
-					'type' => 'text',
-					'label' => $t('Title'),
-					'class' => 'use-for-title'
-				]) ?>
+				<?php if ($isTranslated): ?>
+					<?php foreach ($item->translate('title') as $locale => $value): ?>
+						<?= $this->form->field("i18n.title.{$locale}", [
+							'type' => 'text',
+							'label' => $t('Title') . ' (' . $this->g11n->name($locale) . ')',
+							'class' => 'use-for-title',
+							'value' => $value
+						]) ?>
+					<?php endforeach ?>
+				<?php else: ?>
+					<?= $this->form->field('title', [
+						'type' => 'text',
+						'label' => $t('Title'),
+						'class' => 'use-for-title'
+					]) ?>
+				<?php endif ?>
+			</div>
+			<div class="grid-column-right">
+				<div class="media-attachment use-media-attachment-direct">
+					<?= $this->form->label('ProductsCoverMediaId', $t('Cover')) ?>
+					<?= $this->form->hidden('cover_media_id') ?>
+					<div class="selected"></div>
+					<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid-row">
+			<div class="grid-column-left">
 			</div>
 			<div class="grid-column-right">
 				<?= $this->form->field('access', [
@@ -51,21 +75,23 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
-			<div class="media-attachment use-media-attachment-direct">
-				<?= $this->form->label('ProductsCoverMediaId', $t('Cover')) ?>
-				<?= $this->form->hidden('cover_media_id') ?>
-				<div class="selected"></div>
-				<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
-			</div>
-		</div>
-
-		<div class="grid-row">
 			<div class="grid-column-left">
-				<?= $this->form->field('description', [
-					'type' => 'textarea',
-					'label' => $t('Description'),
-					'wrap' => ['class' => 'body use-editor editor-basic editor-link'],
-				]) ?>
+				<?php if ($isTranslated): ?>
+					<?php foreach ($item->translate('description') as $locale => $value): ?>
+						<?= $this->form->field("i18n.description.{$locale}", [
+							'type' => 'textarea',
+							'label' => $t('Text') . ' (' . $this->g11n->name($locale) . ')',
+							'wrap' => ['class' => 'editor-size--gamma use-editor editor-basic editor-link'],
+							'value' => $value
+						]) ?>
+					<?php endforeach ?>
+				<?php else: ?>
+					<?= $this->form->field('description', [
+						'type' => 'textarea',
+						'label' => $t('Text'),
+						'wrap' => ['class' => 'editor-size--gamma use-editor editor-basic editor-link']
+					]) ?>
+				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
 			</div>

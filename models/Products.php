@@ -77,7 +77,7 @@ class Products extends \base_core\models\Base {
 		);
 		if (PROJECT_LOCALE !== PROJECT_LOCALES) {
 			static::bindBehavior('li3_translate\extensions\data\behavior\Translatable', [
-				'fields' => ['title'],
+				'fields' => ['title', 'description'],
 				'locale' => PROJECT_LOCALE,
 				'locales' => explode(' ', PROJECT_LOCALES),
 				'strategy' => 'inline'

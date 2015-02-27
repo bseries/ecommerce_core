@@ -17,17 +17,64 @@ $this->set([
 	<?=$this->form->create($item) ?>
 		<div class="grid-row">
 			<div class="grid-column-left">
-				<?= $this->form->field('title', [
-					'type' => 'text',
-					'label' => $t('Title'),
-					'class' => 'use-for-title'
-				]) ?>
 				<?= $this->form->field('number', [
 					'type' => 'text',
 					'label' => $t('Number/SKU'),
 				]) ?>
 			</div>
 			<div class="grid-column-right">
+			</div>
+		</div>
+
+		<div class="grid-row">
+			<div class="grid-column-left">
+				<?php if ($isTranslated): ?>
+					<?php foreach ($item->translate('title') as $locale => $value): ?>
+						<?= $this->form->field("i18n.title.{$locale}", [
+							'type' => 'text',
+							'label' => $t('Title') . ' (' . $this->g11n->name($locale) . ')',
+							'class' => 'use-for-title',
+							'value' => $value
+						]) ?>
+					<?php endforeach ?>
+				<?php else: ?>
+					<?= $this->form->field('title', [
+						'type' => 'text',
+						'label' => $t('Title'),
+						'class' => 'use-for-title'
+					]) ?>
+				<?php endif ?>
+			</div>
+			<div class="grid-column-right">
+				<div class="media-attachment use-media-attachment-direct">
+					<?= $this->form->label('ProductsCoverMediaId', $t('Cover')) ?>
+					<?= $this->form->hidden('cover_media_id') ?>
+					<div class="selected"></div>
+					<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid-row">
+			<div class="grid-column-left">
+			</div>
+			<div class="grid-column-right">
+				<div class="media-attachment use-media-attachment-joined">
+					<?= $this->form->label('ProductsMedia', $t('Media')) ?>
+					<?php foreach ($item->media() as $media): ?>
+						<?= $this->form->hidden('media.' . $media->id . '.id', ['value' => $media->id]) ?>
+					<?php endforeach ?>
+
+					<div class="selected"></div>
+					<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="grid-row">
+			<div class="grid-column-left">
 				<?= $this->form->field('stock', [
 					'type' => 'number',
 					'label' => $t('Stock'),
@@ -41,6 +88,13 @@ $this->set([
 						]) ?>
 					<?php endif ?>
 				</div>
+			</div>
+			<div class="grid-column-right">
+			</div>
+		</div>
+
+		<div class="grid-row">
+			<div class="grid-column-left">
 				<?= $this->form->field('ecommerce_product_group_id', [
 					'type' => 'select',
 					'label' => $t('Contained in product group'),
@@ -51,12 +105,6 @@ $this->set([
 
 		<div class="grid-row">
 			<div class="grid-column-left">
-				<div class="media-attachment use-media-attachment-direct">
-					<?= $this->form->label('ProductsCoverMediaId', $t('Cover')) ?>
-					<?= $this->form->hidden('cover_media_id') ?>
-					<div class="selected"></div>
-					<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
-				</div>
 			</div>
 			<div class="grid-column-right">
 				<section class="use-nested">
@@ -119,28 +167,30 @@ $this->set([
 
 		<div class="grid-row">
 			<div class="grid-column-left">
-				<?= $this->form->field('description', [
-					'type' => 'textarea',
-					'label' => $t('Description'),
-					'wrap' => ['class' => 'body use-editor editor-basic editor-link'],
-				]) ?>
+				<?php if ($isTranslated): ?>
+					<?php foreach ($item->translate('description') as $locale => $value): ?>
+						<?= $this->form->field("i18n.description.{$locale}", [
+							'type' => 'textarea',
+							'label' => $t('Text') . ' (' . $this->g11n->name($locale) . ')',
+							'wrap' => ['class' => 'editor-size--gamma use-editor editor-basic editor-link'],
+							'value' => $value
+						]) ?>
+					<?php endforeach ?>
+				<?php else: ?>
+					<?= $this->form->field('description', [
+						'type' => 'textarea',
+						'label' => $t('Text'),
+						'wrap' => ['class' => 'editor-size--gamma use-editor editor-basic editor-link']
+					]) ?>
+				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
-				<div class="media-attachment use-media-attachment-joined">
-					<?= $this->form->label('ProductsMedia', $t('Media')) ?>
-					<?php foreach ($item->media() as $media): ?>
-						<?= $this->form->hidden('media.' . $media->id . '.id', ['value' => $media->id]) ?>
-					<?php endforeach ?>
-
-					<div class="selected"></div>
-					<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
-				</div>
 			</div>
 		</div>
 
 		<div class="grid-row">
+			<h1 class="h-gamma"><?= $t('Prices') ?></h1>
 			<section class="use-nested">
-				<h1 class="h-gamma"><?= $t('Prices') ?></h1>
 				<table>
 					<thead>
 						<tr>

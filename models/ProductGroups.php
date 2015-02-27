@@ -65,11 +65,24 @@ class ProductGroups extends \base_core\models\Base {
 		]
 	];
 
+	public static function init() {
+		if (PROJECT_LOCALE !== PROJECT_LOCALES) {
+			static::bindBehavior('li3_translate\extensions\data\behavior\Translatable', [
+				'fields' => ['title', 'description'],
+				'locale' => PROJECT_LOCALE,
+				'locales' => explode(' ', PROJECT_LOCALES),
+				'strategy' => 'inline'
+			]);
+		}
+	}
+
 	public function hasAccess($entity, $user) {
 		return Access::check('entity', $user, ['request' => $entity], [
 			'rules' => $entity->access
 		]) === [];
 	}
 }
+
+ProductGroups::init();
 
 ?>
