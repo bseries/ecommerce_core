@@ -12,7 +12,7 @@
 
 namespace ecommerce_core\controllers;
 
-use base_core\models\Currencies;
+use billing_core\models\Currencies;
 use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
