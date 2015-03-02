@@ -94,21 +94,21 @@ class Orders extends \base_core\models\Base {
 		});
 
 		$model->validates['shipping_method'] = [
-			[
+			'notEmpty' => [
 				'notEmpty',
 				'on' => ['checkoutShipping'],
 				'message' => $t('You must select a method.')
 			]
 		];
 		$model->validates['payment_method'] = [
-			[
+			'notEmpty' => [
 				'notEmpty',
 				'on' => ['checkoutPayment'],
 				'message' => $t('You must select a method.')
 			]
 		];
 		$model->validates['has_accepted_terms'] = [
-			[
+			'checked' => [
 				'checked',
 				'on' => ['checkoutConfirm'],
 				'message' => $t('You must accept the terms.')
