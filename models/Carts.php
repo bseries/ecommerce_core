@@ -119,6 +119,11 @@ class Carts extends \base_core\models\Base {
 		foreach ($data as $item) {
 			if ($item->isExpired()) {
 				$item->save(['status' => 'expired']);
+/*
+				foreach ($item->positions() as $position) {
+					$position->product()->unreserveStock($position->quantity);
+			}
+ */
 				Logger::write('debug', "Cart `{$item->id}` expired.");
 			}
 		}

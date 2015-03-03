@@ -35,4 +35,9 @@ Settings::register('shipment.sendShippedMail', false);
 
 Settings::register('stock.check', true);
 
+// Enable if the stock_remote field is populated by
+// an external service and that it should preferred
+// over our local stock.
+Settings::register('stock.remote', false);
+
 ?>

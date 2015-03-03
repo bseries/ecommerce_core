@@ -20,6 +20,7 @@ use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\ProductPrices;
+use ecommerce_core\models\Carts;
 
 class Ecommerce extends \lithium\console\Command {
 
@@ -27,7 +28,7 @@ class Ecommerce extends \lithium\console\Command {
 	 * Allows you run an inventory on the stock of your products.
 	 * Will deduce orders with a shipment status of `shipping` from real stock.
 	 */
-	public function recoverStock() {
+	public function takeManualInventory() {
 		$products = Products::find('all');
 		$orders = Orders::find('all', [
 			'conditions' => [
@@ -166,12 +167,89 @@ class Ecommerce extends \lithium\console\Command {
 				$this->out("ID {$sPos->id}: " . ($r ? 'OK' : 'FAILED!'));
 			}
 		}
-		$this->out('All done.');
 
-		$this->migrateTo13();
+		$this->_ensureVatOnInvoices();
+		$this->out('All done 1.0 -> 1.3.');
 	}
 
-	public function migrateTo13() {
+
+	public function migrateTo1213() {
+		$this->_ensureVatOnInvoices();
+		$this->_convertStock();
+
+		$this->out('All done 1.2 -> 1.3.');
+	}
+
+	protected function _convertStock() {
+		$this->out('Converting stock...');
+		$results = Products::find('all');
+
+		foreach ($results as $product) {
+			$virtual = $this->_oldStock($product, 'virtual');
+			$reserved = $product->stock - $virtual;
+
+			$r = $product->save([
+				'stock' => $product->stock,
+				'stock_reserved' => $reserved
+			], ['whitelist' => ['stock', 'stock_reserved']]);
+
+			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
+		}
+	}
+
+	protected function _oldStock($entity, $stock = 'virtual') {
+		$result = (integer) $entity->stock;
+
+		if ($type !== 'virtual') {
+			return $result;
+		}
+
+		$cartSubtract = [];
+		$carts = Carts::find('all', [
+			'conditions' => [
+				'status' => 'open'
+			]
+		]);
+		foreach ($carts as $cart) {
+			foreach ($cart->positions() as $position) {
+				if ($position->ecommerce_product_id != $entity->id) {
+					continue;
+				}
+				$cartSubtract[$position->id] = (integer) $position->quantity;
+			}
+		}
+
+		$shipmentSubtract = [];
+		$shipments = Shipments::find('all', [
+			'conditions' => [
+				'status' => [
+					// When in one of the following statuses, will decrement from real.
+					'created',
+					// When cancelled, we free stock and do not count it.
+					'shipping-scheduled',
+					'shipping-error',
+					'shipping',
+					// When status is `shipped` the stock has been decremented already.
+				]
+			]
+		]);
+		foreach ($shipments as $shipment) {
+			$positions = $shipment
+				->order(['fields' => ['ecommerce_cart_id']])
+				->cart(['fields' => ['id']])
+				->positions();
+
+			foreach ($positions as $position) {
+				if ($position->ecommerce_product_id != $entity->id) {
+					continue;
+				}
+				$shipmentSubtract[$position->id] = (integer) $position->quantity;
+			}
+		}
+		return $result - array_sum($cartSubtract) - array_sum($shipmentSubtract);
+	}
+
+	protected function _ensureVatOnInvoices() {
 		$this->out('Ensuring user_vat_reg_no is set on all invoices...');
 		$results = Invoices::find('all');
 
@@ -188,8 +266,9 @@ class Ecommerce extends \lithium\console\Command {
 			]);
 			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
 		}
-		$this->out('All done.');
 	}
+
+
 }
 
 ?>
