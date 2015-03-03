@@ -20,46 +20,25 @@ use ecommerce_core\models\Products;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\ProductPrices;
+use ecommerce_core\models\Carts;
 
 class Ecommerce extends \lithium\console\Command {
 
 	/**
 	 * Allows you run an inventory on the stock of your products.
-	 * Will deduce orders with a shipment status of `shipping` from real stock.
 	 */
-	public function recoverStock() {
-		$products = Products::find('all');
-		$orders = Orders::find('all', [
-			'conditions' => [
-				'status' => ['checked-out', 'processed']
-			]
-		]);
+	public function manualInventory() {
+		$this->out('Manual Inventory');
 
-		foreach ($products as $product) {
+		foreach (Products::find('all') as $product) {
 			$this->out("Product #{$product->number}, `{$product->title}`");
 			$this->out('Current real stock: ' . $product->stock('real'));
 			$this->out('Current virtual stock: ' . $product->stock('virtual'));
+			$this->out('Current remote stock: ' . $product->stock('remote'));
+			$this->out('Currently reserved of stock: ' . $product->stock('reserved'));
+
 			$stock = $this->in('Enter new real stock:', ['default' => $product->stock('real')]);
 
-			$this->out('Now checking how much we need to deduce from real...');
-			foreach ($orders as $order) {
-				$cartPositions = $order->cart()->positions();
-
-				$shipment = $order->shipment();
-				if (!in_array($shipment->status, ['shipping'])) {
-					continue;
-				}
-
-				foreach ($cartPositions as $cartPosition) {
-					$cartProduct = $cartPosition->product();
-
-					if ($cartProduct->id == $product->id) {
-						$this->out('Found order #' . $order->number . ' with shipment in status `shipping`.');
-						$stock -= $cartPosition->quantity;
-					}
-				}
-			}
-			$this->out("Final real stock is {$stock}; saving...");
 			$result = $product->save([
 				'stock' => $stock
 			], [
@@ -67,8 +46,32 @@ class Ecommerce extends \lithium\console\Command {
 			]);
 			$this->out($result ? 'OK' : 'FAILED!');
 		}
+		$this->out('COMPLETED');
 	}
 
+	/**
+	 * Will use stock_remote as new stock. Run only when stock_remote
+	 * is actually used. Otherwise will reset all stocks to 0.
+	 */
+	public function autoInventory() {
+		$this->out('Auto Inventory');
+
+		foreach (Products::find('all') as $product) {
+			$this->out("Product #{$product->number}, `{$product->title}`");
+			$this->out('Current real stock: ' . $product->stock('real'));
+			$this->out('Current virtual stock: ' . $product->stock('virtual'));
+			$this->out('Current remote stock: ' . $product->stock('remote'));
+			$this->out('Currently reserved of stock: ' . $product->stock('reserved'));
+
+			$result = $product->save([
+				'stock' => $product->stock('remote')
+			], [
+				'whitelist' => ['id', 'stock']
+			]);
+			$this->out($result ? 'OK' : 'FAILED!');
+		}
+		$this->out('COMPLETED');
+	}
 	public function migrate10to13() {
 		// Assumes source was all German and certain
 		// tax customer type mappings are valid.
@@ -166,12 +169,88 @@ class Ecommerce extends \lithium\console\Command {
 				$this->out("ID {$sPos->id}: " . ($r ? 'OK' : 'FAILED!'));
 			}
 		}
-		$this->out('All done.');
 
-		$this->migrateTo13();
+		$this->_ensureVatOnInvoices();
+		$this->out('All done 1.0 -> 1.3.');
 	}
 
-	public function migrateTo13() {
+	public function migrateTo1213() {
+		$this->_ensureVatOnInvoices();
+		$this->_convertStock();
+
+		$this->out('All done 1.2 -> 1.3.');
+	}
+
+	protected function _convertStock() {
+		$this->out('Converting stock...');
+		$results = Products::find('all');
+
+		foreach ($results as $product) {
+			$virtual = $this->_oldStock($product, 'virtual');
+			$reserved = $product->stock - $virtual;
+
+			$r = $product->save([
+				'stock' => $product->stock,
+				'stock_reserved' => $reserved
+			], ['whitelist' => ['stock', 'stock_reserved']]);
+
+			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
+		}
+	}
+
+	protected function _oldStock($entity, $stock = 'virtual') {
+		$result = (integer) $entity->stock;
+
+		if ($type !== 'virtual') {
+			return $result;
+		}
+
+		$cartSubtract = [];
+		$carts = Carts::find('all', [
+			'conditions' => [
+				'status' => 'open'
+			]
+		]);
+		foreach ($carts as $cart) {
+			foreach ($cart->positions() as $position) {
+				if ($position->ecommerce_product_id != $entity->id) {
+					continue;
+				}
+				$cartSubtract[$position->id] = (integer) $position->quantity;
+			}
+		}
+
+		$shipmentSubtract = [];
+		$shipments = Shipments::find('all', [
+			'conditions' => [
+				'status' => [
+					// When in one of the following statuses, will decrement from real.
+					'created',
+					// When cancelled, we free stock and do not count it.
+					'shipping-scheduled',
+					'shipping-error',
+					'shipping',
+					// When status is `shipped` the stock has been decremented already.
+				]
+			]
+		]);
+		foreach ($shipments as $shipment) {
+			$positions = $shipment
+				->order(['fields' => ['ecommerce_cart_id']])
+				->cart(['fields' => ['id']])
+				->positions();
+
+			foreach ($positions as $position) {
+				if ($position->ecommerce_product_id != $entity->id) {
+					continue;
+				}
+				$shipmentSubtract[$position->id] = (integer) $position->quantity;
+			}
+		}
+		return $result - array_sum($cartSubtract) - array_sum($shipmentSubtract);
+	}
+
+	protected function _ensureVatOnInvoices() {
 		$this->out('Ensuring user_vat_reg_no is set on all invoices...');
 		$results = Invoices::find('all');
 
@@ -188,8 +267,9 @@ class Ecommerce extends \lithium\console\Command {
 			]);
 			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
 		}
-		$this->out('All done.');
 	}
+
+
 }
 
 ?>

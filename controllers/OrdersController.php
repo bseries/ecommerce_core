@@ -42,10 +42,8 @@ class OrdersController extends \base_core\controllers\BaseController {
 			'created' => $t('created'),
 			'cancelled' => $t('cancelled'),
 			'shipping-scheduled' => $t('shipping scheduled'),
-			'shipping-error' => $t('shipping error'),
 			'shipping' => $t('shipping'),
-			'shipped' => $t('shipped'),
-			'delivered' => $t('delivered')
+			'shipped' => $t('shipped')
 		]);
 		$invoiceStatuses = Invoices::enum('status', [
 			'created' => $t('created'), // open

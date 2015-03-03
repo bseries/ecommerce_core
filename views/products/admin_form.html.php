@@ -74,22 +74,27 @@ $this->set([
 
 
 		<div class="grid-row">
-			<div class="grid-column-left">
+			<h1><?= $t('Stock') ?></h1>
+
+			<div class="grid-column-right">
 				<?= $this->form->field('stock', [
 					'type' => 'number',
-					'label' => $t('Stock'),
+					'label' => $t('Stock (real)'),
+				]) ?>
+				<?= $this->form->field('stock_remote', [
+					'type' => 'number',
+					'label' => $t('Stock (remote)'),
 				]) ?>
 				<div class="help">
-					<?= $t('Updates real stock.') ?>
-					<?php if ($item->exists()): ?>
-						<?= $t('Current real stock is {:realCount}, current virtual stock is {:virtualCount}.', [
-							'realCount' => $item->stock('real'),
-							'virtualCount' => $item->stock('virtual')
-						]) ?>
-					<?php endif ?>
+					<?= $t('Remote should equal the real stock.') ?>
 				</div>
-			</div>
-			<div class="grid-column-right">
+				<?= $this->form->field('stock_reserved', [
+					'type' => 'number',
+					'label' => $t('Stock (reserved)'),
+				]) ?>
+				<div class="help">
+					<?= $t('Number of items reserved.') ?>
+				</div>
 			</div>
 		</div>
 

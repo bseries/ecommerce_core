@@ -13,6 +13,7 @@
 namespace ecommerce_core\models;
 
 use AD\Finance\Price;
+use ecommerce_core\models\Products;
 use ecommerce_core\models\Shipments;
 use Exception;
 
@@ -61,19 +62,15 @@ class ShipmentPositions extends \base_core\models\Base {
 	}
 
 	// Assumes format "Foobar (#12345)".
-	public function itemNumber($entity) {
+	public function product($entity) {
 		if (!preg_match('/\(#(.*)\)/', $entity->description, $matches)) {
-			throw new Exception('Failed to extract item number from description.');
+			return false;
 		}
-		return $matches[1];
-	}
-
-	// Assumes format "Foobar (#12345)".
-	public function itemTitle($entity) {
-		if (!preg_match('/^(.*)\(/', $entity->description, $matches)) {
-			throw new Exception('Failed to extract item title from description.');
-		}
-		return $matches[1];
+		return Products::find('first', [
+			'conditions' => [
+				'number' => $matches[1]
+			]
+		]);
 	}
 
 	/* Deprecated */
@@ -82,6 +79,27 @@ class ShipmentPositions extends \base_core\models\Base {
 		trigger_error('ShipmentPositions::totalAmount has been deprecated in favor of total().', E_USER_DEPRECATED);
 		return $entity->total();
 	}
+
+	// Assumes format "Foobar (#12345)".
+	public function itemNumber($entity) {
+		trigger_error('itemNumber() has been deprecated, use product() instead.', E_USER_DEPRECATED);
+
+		if (!preg_match('/\(#(.*)\)/', $entity->description, $matches)) {
+			throw new Exception('Failed to extract item number from description.');
+		}
+		return $matches[1];
+	}
+
+	// Assumes format "Foobar (#12345)".
+	public function itemTitle($entity) {
+		trigger_error('itemTitle() has been deprecated, use product() instead.', E_USER_DEPRECATED);
+
+		if (!preg_match('/^(.*)\(/', $entity->description, $matches)) {
+			throw new Exception('Failed to extract item title from description.');
+		}
+		return $matches[1];
+	}
+
 }
 
 ?>

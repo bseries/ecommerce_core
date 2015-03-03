@@ -56,11 +56,19 @@ class Shipments extends \base_core\models\Base {
 		'status' => [
 			'created',
 			'cancelled',
-			'shipping', // When entering state will decrement stock.
+
+			// Shipping is used *only* when there is
+			// remote shipping handling. User schedules shipping,
+			// it is picked up than switches to "shipping".
+			// Once we receive the remote confirmation we
+			// switch to "shipped".
 			'shipping-scheduled',
-			'shipping-error',
-			'shipped',
-			'delivered'
+			'shipping',
+
+			// Used diretly when manually shipping. Stock
+			// reservation transfer happens here. Also
+			// notifications are sent here.
+			'shipped'
 		]
 	];
 
@@ -97,24 +105,22 @@ class Shipments extends \base_core\models\Base {
 
 		switch ($to) {
 			case 'cancelled':
-				// If shipment went through `shipping` status
-				// we must increment stock back again.
-				if (strpos($from, 'ship') === 0) {
-					$order = $entity->order();
-					$positions = $order->cart()->positions();
+				foreach ($entity->positions() as $position) {
+					$product = $position->product();
 
-					foreach ($positions as $position) {
-						$product = $position->product();
-						$product->increment('stock', $position->quantity);
-
-						if (!$product->save()) {
+					if ($from === 'shipped') {
+						if (!$product->putStock($position->quantity)) {
 							return false;
 						}
-						$message  = "Shipment status changed to `cancelled`, incrementing stock ";
-						$message .= "for product {$product->id} by {$position->quantity}. ";
-						$message .= "Stock is now `{$product->stock}`.";
-						Logger::write('debug', $message);
+					} else {
+						if (!$product->unreserveStock($position->quantity)) {
+							return false;
+						}
 					}
+					$message  = "Shipment status changed to `cancelled`, put/unreserved ";
+					$message .= "stock for product {$product->id} by {$position->quantity}. ";
+					$message .= "Real stock is now `{$product->stock}`, reserved is `{$product->stock_reserved}`.";
+					Logger::write('debug', $message);
 				}
 				return true;
 			case 'shipped':
@@ -124,21 +130,24 @@ class Shipments extends \base_core\models\Base {
 
 				foreach ($positions as $position) {
 					$product = $position->product();
-					$product->decrement('stock', $position->quantity);
 
-					if (!$product->save()) {
+					// Transfer stock into taken state.
+					if (!$product->takeStock($position->quantity)) {
 						return false;
 					}
-					$message  = "Shipment status changed to `shipping`, decremented stock ";
+					if (!$product->unreserveStock($position->quantity)) {
+						return false;
+					}
+					$message  = "Shipment status changed to `shipped`, transferred ";
+					$message .= "stock taken -> reserved ";
 					$message .= "for product {$product->id} by {$position->quantity}. ";
-					$message .= "Stock is now `{$product->stock}`.";
+					$message .= "Real stock is now `{$product->stock}`, reserved is `{$product->stock_reserved}`.";
 					Logger::write('debug', $message);
 				}
 
 				if (!Settings::read('shipment.sendShippedMail')) {
 					return true;
 				}
-
 				if (!$user->is_notified) {
 					return true;
 				}

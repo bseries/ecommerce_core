@@ -118,7 +118,11 @@ class Carts extends \base_core\models\Base {
 		]);
 		foreach ($data as $item) {
 			if ($item->isExpired()) {
-				$item->save(['status' => 'expired']);
+				if (!$item->save(['status' => 'expired'])) {
+					return false;
+				}
+				// Stock for reserved products is automatically unreserved
+				// in the Carts::statusChange() method.
 				Logger::write('debug', "Cart `{$item->id}` expired.");
 			}
 		}
@@ -132,7 +136,22 @@ class Carts extends \base_core\models\Base {
 	public function statusChange($entity, $from, $to) {
 		switch ($to) {
 			case 'cancelled':
-				return !$entity->order();
+				// Carts can only be cancelled if there isn't already an order for it.
+				if ($entity->order()) {
+					return false;
+				}
+				// Fall through.
+			case 'expired':
+				// Once cart has shipment that is used for reservations.
+				// Instead of checking the cart's status will query of a shipment.
+				if (!$entity->order() || !$entity->order->shipment()) {
+					foreach ($entity->positions() as $position) {
+						if (!$position->product()->unreserveStock($position->quantity)) {
+							return false;
+						}
+					}
+				}
+				return true;
 			default:
 				break;
 		}

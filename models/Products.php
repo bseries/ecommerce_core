@@ -22,6 +22,7 @@ use billing_core\models\ClientGroups;
 use Exception;
 use lithium\util\Inflector;
 use lithium\util\Collection;
+use lithium\analysis\Logger;
 
 class Products extends \base_core\models\Base {
 
@@ -132,87 +133,59 @@ class Products extends \base_core\models\Base {
 		return new Collection(['data' => $results]);
 	}
 
-	protected static $_lastModifiedCarts = null;
-
-	protected static $_lastModifiedShipments = null;
-
+	// There are 4 types of stock:
+	//
+	// - _local_ stock, this is what the online system knows.
+	// - _reserved_ stock, how many stock are reserved?
+	// - _virtual_ stock, calculated from local stock subtracted by reserved stock.
+	// - _remote_ stock, optional will only be used when another external system is involved.
+	//
+	// The stock counts are denormalized in the mode schema for
+	// performance reasons. Stock is a pretty common field to
+	// display or sort for and can only be cached in a complex way.
+	//
 	public function stock($entity, $type = 'virtual') {
-		$result = (integer) $entity->stock;
-
-		if ($type !== 'virtual') {
-			return $result;
-		}
-		$cacheKeyBase = 'stock_real_' . $entity->id;
-
-		if (static::$_lastModifiedCarts === null) {
-			static::$_lastModifiedCarts = Carts::find('first', [
-				'order' => ['modified' => 'DESC'],
-				'fields' => ['modified']
-			]) ?: false;
-		}
-		$cacheKey = $cacheKeyBase . '_carts_' . (static::$_lastModifiedCarts ? md5(static::$_lastModifiedCarts->modified) : 'initial');
-
-		$cartSubtract = [];
-		if (!($cached = Cache::read('default', $cacheKey)) && $cached !== []) {
-			$carts = Carts::find('all', [
-				'conditions' => [
-					'status' => 'open'
-				]
-			]);
-			foreach ($carts as $cart) {
-				foreach ($cart->positions() as $position) {
-					if ($position->ecommerce_product_id != $entity->id) {
-						continue;
-					}
-					$cartSubtract[$position->id] = (integer) $position->quantity;
+		switch ($type) {
+			case 'real':
+			case 'local':
+				return $entity->stock;
+			case 'reserved':
+				return $entity->stock_reserved;
+			case 'virtual':
+				return $entity->stock - $entity->stock_reserved;
+			case 'remote':
+				if (!Settings::read('stock.remote')) {
+					throw new Exception('Remote stock is disabled.');
 				}
-			}
-			Cache::write('default', $cacheKey, $cartSubtract, Cache::PERSIST);
-		} else {
-			$cartSubtract = $cached;
+				return $entity->stock_remote;
+			default:
+				throw new Exception("Invalid stock type `{$type}`.");
 		}
+	}
 
-		if (static::$_lastModifiedShipments === null) {
-			static::$_lastModifiedShipments = Shipments::find('first', [
-				'order' => ['modified' => 'DESC'],
-				'fields' => ['modified']
-			]) ?: false;
-		}
-		$cacheKey = $cacheKeyBase . '_shipments_' . (static::$_lastModifiedShipments ? md5(static::$_lastModifiedShipments->modified) : 'initial');
+	// "Takes" stock items and persistently decrements
+	// real stock.
+	public function takeStock($entity, $quantity = 1) {
+		$entity->decrement('stock', $quantity);
+		return $entity->save(null, ['whitelist' => ['stock']]);
+	}
 
-		$shipmentSubtract = [];
-		if (!($cached = Cache::read('default', $cacheKey)) && $cached !== []) {
-			$shipments = Shipments::find('all', [
-				'conditions' => [
-					'status' => [
-						// When in one of the following statuses, will decrement from real.
-						'created',
-						// When cancelled, we free stock and do not count it.
-						'shipping-scheduled',
-						'shipping-error',
-						'shipping',
-						// When status is `shipped` the stock has been decremented already.
-					]
-				]
-			]);
-			foreach ($shipments as $shipment) {
-				$positions = $shipment
-					->order(['fields' => ['ecommerce_cart_id']])
-					->cart(['fields' => ['id']])
-					->positions();
+	// "Puts back" stock items and persistently increments
+	// real stock.
+	public function putStock($entity, $quantity = 1) {
+		$entity->increment('stock', $quantity);
+		return $entity->save(null, ['whitelist' => ['stock']]);
+	}
 
-				foreach ($positions as $position) {
-					if ($position->ecommerce_product_id != $entity->id) {
-						continue;
-					}
-					$shipmentSubtract[$position->id] = (integer) $position->quantity;
-				}
-			}
-			Cache::write('default', $cacheKey, $shipmentSubtract, Cache::PERSIST);
-		} else {
-			$shipmentSubtract = $cached;
-		}
-		return $result - array_sum($cartSubtract) - array_sum($shipmentSubtract);
+	// Persistently reserves one or multiple items.
+	public function reserveStock($entity, $quantity = 1) {
+		$entity->increment('stock_reserved', $quantity);
+		return $entity->save(null, ['whitelist' => ['stock_reserved']]);
+	}
+
+	public function unreserveStock($entity, $quantity = 1) {
+		$entity->decrement('stock_reserved', $quantity);
+		return $entity->save(null, ['whitelist' => ['stock_reserved']]);
 	}
 }
 

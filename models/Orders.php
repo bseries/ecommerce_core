@@ -439,6 +439,9 @@ class Orders extends \base_core\models\Base {
 				$user    = $order->user();
 				$invoice = $entity->invoice();
 
+				// Implicitly transfer cart reservation into shipment reservations.
+				// Once an order is checked-out reservations are determined by shipment.
+
 				if (!$user->is_notified) {
 					return true;
 				}

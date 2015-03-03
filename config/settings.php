@@ -27,12 +27,20 @@ Settings::register('product.number', [
 ]);
 
 Settings::register('service.paypal.default.email', 'billing@example.com');
+
+// strtotime()-compatible string with time in future, when a cart
+// should expire.
 Settings::register('checkout.expire', '+1 week');
-Settings::register('cart.limitItemsPerPosition', false); // false to disable check
+
+// Allows to limit the maximum number of items of onte product
+// that can be put into cart. Use `false` to disable check.
+Settings::register('cart.limitItemsPerPosition', false);
 
 Settings::register('ecommerce.shipmentTerms', null);
 Settings::register('shipment.sendShippedMail', false);
 
+// Enable if we should actually check if there is stock
+// available when user takes product.
 Settings::register('stock.check', true);
 
 ?>
