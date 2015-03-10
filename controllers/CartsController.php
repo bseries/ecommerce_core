@@ -28,10 +28,10 @@ class CartsController extends \base_core\controllers\BaseController {
 		extract(Message::aliases());
 
 		$statuses = Carts::enum('status', [
-			'cancelled' => $t('cancelled'),
-			'expired' => $t('expired'),
-			'closed' => $t('closed'),
-			'open' => $t('open')
+			'cancelled' => $t('cancelled', ['scope' => 'ecommerce_core']),
+			'expired' => $t('expired', ['scope' => 'ecommerce_core']),
+			'closed' => $t('closed', ['scope' => 'ecommerce_core']),
+			'open' => $t('open', ['scope' => 'ecommerce_core'])
 		]);
 
 		return compact('statuses');
@@ -47,10 +47,14 @@ class CartsController extends \base_core\controllers\BaseController {
 		]);
 		if ($item->save(['status' => 'cancelled'], ['whitelist' => ['status']])) {
 			Carts::pdo()->commit();
-			FlashMessage::write($t('Successfully cancelled.'), ['level' => 'success']);
+			FlashMessage::write($t('Successfully cancelled.', ['scope' => 'ecommerce_core']), [
+				'level' => 'success'
+			]);
 		} else {
 			Carts::pdo()->rollback();
-			FlashMessage::write($t('Failed to cancel.'), ['level' => 'error']);
+			FlashMessage::write($t('Failed to cancel.', ['scope' => 'ecommerce_core']), [
+				'level' => 'error'
+			]);
 		}
 		return $this->redirect($this->request->referer());
 	}

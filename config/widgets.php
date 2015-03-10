@@ -25,13 +25,13 @@ Widgets::register('carts', function() use ($t) {
 	$expired = Carts::find('count', ['conditions' => ['status' => 'expired']]);
 
 	return [
-		'title' => $t('Carts'),
+		'title' => $t('Carts', ['scope' => 'ecommerce_core']),
 		'url' => [
 			'controller' => 'Carts', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
 		'data' => [
-			$t('Open') => $open,
-			$t('Expired') => $expired
+			$t('Open', ['scope' => 'ecommerce_core']) => $open,
+			$t('Expired', ['scope' => 'ecommerce_core']) => $expired
 		]
 	];
 }, [
@@ -51,7 +51,7 @@ Widgets::register('users', function() use ($t) {
 
 	return [
 		'data' => [
-			$t('Customers') => $total
+			$t('Customers', ['scope' => 'ecommerce_core']) => $total
 		]
 	];
 }, [
@@ -78,8 +78,8 @@ Widgets::register('total_products', function() use ($t) {
 		],
 		'title' => $t('Products'),
 		'data' => [
-			$t('Total') => $products->count(),
-			$t('In stock') => $stock
+			$t('Total', ['scope' => 'ecommerce_core']) => $products->count(),
+			$t('In stock', ['scope' => 'ecommerce_core']) => $stock
 		]
 	];
 }, [
@@ -99,14 +99,14 @@ Widgets::register('ecommerce_pending', function() use ($t) {
 		]
 	]);
 	return [
-		'title' => $t('Pending'),
+		'title' => $t('Pending', ['scope' => 'ecommerce_core']),
 		'class' => $orders || $products ? 'negative' : 'positive',
 		'url' => [
 			'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
 		'data' => [
-			$t('Orders') => $orders,
-			$t('Out of Stock') => $products
+			$t('Orders', ['scope' => 'ecommerce_core']) => $orders,
+			$t('Out of Stock', ['scope' => 'ecommerce_core']) => $products
 		]
 	];
 }, [

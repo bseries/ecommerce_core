@@ -156,6 +156,7 @@ class Shipments extends \base_core\models\Base {
 					'to' => $user->email,
 					'subject' => $t('Order #{:number} shipped.', [
 						'locale' => $user->locale,
+						'scope' => 'ecommerce_core',
 						'number' => $order->number
 					]),
 					'data' => [

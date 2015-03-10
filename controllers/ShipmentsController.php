@@ -39,9 +39,13 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 			['whitelist' => ['status'], 'validate' => false]
 		);
 		if ($result) {
-			FlashMessage::write($t('Status changed.'), ['level' => 'success']);
+			FlashMessage::write($t('Status changed.', ['scope' => 'ecommerce_core']), [
+				'level' => 'success'
+			]);
 		} else {
-			FlashMessage::write($t('Failed to change status.'), ['level' => 'error']);
+			FlashMessage::write($t('Failed to change status.', ['scope' => 'ecommerce_core']), [
+				'level' => 'error'
+			]);
 		}
 		return $this->redirect($this->request->referer());
 	}
@@ -50,11 +54,11 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 		extract(Message::aliases());
 
 		$statuses = Shipments::enum('status', [
-			'created' => $t('created'),
-			'cancelled' => $t('cancelled'),
-			'shipping-scheduled' => $t('shipping scheduled'),
-			'shipping' => $t('shipping'),
-			'shipped' => $t('shipped')
+			'created' => $t('created', ['scope' => 'ecommerce_core']),
+			'cancelled' => $t('cancelled', ['scope' => 'ecommerce_core']),
+			'shipping-scheduled' => $t('shipping scheduled', ['scope' => 'ecommerce_core']),
+			'shipping' => $t('shipping', ['scope' => 'ecommerce_core']),
+			'shipped' => $t('shipped', ['scope' => 'ecommerce_core']),
 		]);
 		$methods = ShippingMethods::find('list');
 		$currencies = Currencies::find('list');

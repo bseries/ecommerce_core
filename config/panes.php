@@ -16,33 +16,33 @@ use lithium\g11n\Message;
 extract(Message::aliases());
 
 Panes::register('ecommerce', [
-	'title' => $t('eCommerce'),
+	'title' => $t('eCommerce', ['scope' => 'ecommerce_core']),
 	'weight' => 30
 ]);
 
 $base = ['controller' => 'ecommerce', 'library' => 'ecommerce_core', 'admin' => true];
 Panes::register('ecommerce.orders', [
-	'title' => $t('Orders'),
+	'title' => $t('Orders', ['scope' => 'ecommerce_core']),
 	'url' => ['controller' => 'Orders', 'action' => 'index'] + $base,
 	'weight' => 0
 ]);
 Panes::register('ecommerce.productGroups', [
-	'title' => $t('Product Groups'),
+	'title' => $t('Product Groups', ['scope' => 'ecommerce_core']),
 	'url' => ['controller' => 'ProductGroups', 'action' => 'index'] + $base,
 	'weight' => 11
 ]);
 Panes::register('ecommerce.products', [
-	'title' => $t('Products'),
+	'title' => $t('Products', ['scope' => 'ecommerce_core']),
 	'url' => ['controller' => 'Products', 'action' => 'index'] + $base,
 	'weight' => 10
 ]);
 Panes::register('ecommerce.shipments', [
-	'title' => $t('Shipments'),
+	'title' => $t('Shipments', ['scope' => 'ecommerce_core']),
 	'url' => ['controller' => 'Shipments', 'action' => 'index'] + $base,
 	'weight' => 2
 ]);
 Panes::register('ecommerce.carts', [
-	'title' => $t('Carts'),
+	'title' => $t('Carts', ['scope' => 'ecommerce_core']),
 	'url' => ['controller' => 'Carts', 'action' => 'index'] + $base,
 	'weight' => 50
 ]);

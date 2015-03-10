@@ -90,21 +90,21 @@ class Orders extends \base_core\models\Base {
 			'notEmpty' => [
 				'notEmpty',
 				'on' => ['checkoutShipping'],
-				'message' => $t('You must select a method.')
+				'message' => $t('You must select a method.', ['scope' => 'ecommerce_core'])
 			]
 		];
 		$model->validates['payment_method'] = [
 			'notEmpty' => [
 				'notEmpty',
 				'on' => ['checkoutPayment'],
-				'message' => $t('You must select a method.')
+				'message' => $t('You must select a method.', ['scope' => 'ecommerce_core'])
 			]
 		];
 		$model->validates['has_accepted_terms'] = [
 			'checked' => [
 				'checked',
 				'on' => ['checkoutConfirm'],
-				'message' => $t('You must accept the terms.')
+				'message' => $t('You must accept the terms.', ['scope' => 'ecommerce_core'])
 			]
 		];
 	}
@@ -194,7 +194,7 @@ class Orders extends \base_core\models\Base {
 			$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->shipping_method,
-			'note' => $t('Order No.') . ': ' . $entity->number,
+			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
 			'terms' => Settings::read('ecommerce.shipmentTerms')
 		]);
 		$shipment = $entity->address('shipping')->copy($shipment, 'address_');
@@ -249,7 +249,7 @@ class Orders extends \base_core\models\Base {
 			'tax_note' => $group->taxType()->note,
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
-			'note' => $t('Order No.') . ': ' . $entity->number,
+			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
 			'terms' => Settings::read('billing.paymentTerms')
 		]);
 		$invoice = $user->address('billing')->copy($invoice, 'address_');
@@ -414,6 +414,7 @@ class Orders extends \base_core\models\Base {
 					'bcc' => $contact['email'],
 					'subject' => $t('Your order #{:number}.', [
 						'locale' => $user->locale,
+						'scope' => 'ecommerce_core',
 						'number' => $order->number
 					]),
 					'data' => [

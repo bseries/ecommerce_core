@@ -43,8 +43,8 @@ class ProductAttributes extends \base_core\models\Base {
 		extract(Message::aliases());
 
 		$map = [
-			'size' => $t('size'),
-			'color' => $t('color')
+			'size' => $t('size', ['scope' => 'ecommerce_core']),
+			'color' => $t('color', ['scope' => 'ecommerce_core'])
 		];
 		if (!isset($map[$entity->key])) {
 			return $entity->key;

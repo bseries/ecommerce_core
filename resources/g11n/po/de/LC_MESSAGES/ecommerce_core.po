@@ -1,0 +1,693 @@
+# German translations for ecommerce_core package.
+# Copyright (C) 2015 Atelier Disko
+# This file is distributed under the same license as the ecommerce_core package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ecommerce_core 1.0\n"
+"Report-Msgid-Bugs-To: info@atelierdisko.de\n"
+"POT-Creation-Date: 2015-03-10 18:26+0100\n"
+"PO-Revision-Date: 2015-03-10 18:26+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: config/panes.php:19
+msgid "eCommerce"
+msgstr ""
+
+#: config/panes.php:25 config/widgets.php:106
+msgid "Orders"
+msgstr ""
+
+#: config/panes.php:30
+msgid "Product Groups"
+msgstr ""
+
+#: config/panes.php:35 config/widgets.php:78
+msgid "Products"
+msgstr ""
+
+#: config/panes.php:40
+msgid "Shipments"
+msgstr ""
+
+#: config/panes.php:45 config/widgets.php:28
+msgid "Carts"
+msgstr ""
+
+#: config/widgets.php:33
+msgid "Open"
+msgstr ""
+
+#: config/widgets.php:34
+msgid "Expired"
+msgstr ""
+
+#: config/widgets.php:54
+msgid "Customers"
+msgstr ""
+
+#: config/widgets.php:80
+msgid "Total"
+msgstr ""
+
+#: config/widgets.php:81
+msgid "In stock"
+msgstr ""
+
+#: config/widgets.php:100
+msgid "Pending"
+msgstr ""
+
+#: config/widgets.php:107
+msgid "Out of Stock"
+msgstr ""
+
+#: controllers/CartsController.php:31 controllers/OrdersController.php:34
+#: controllers/OrdersController.php:43 controllers/OrdersController.php:54
+#: controllers/ShipmentsController.php:58
+msgid "cancelled"
+msgstr ""
+
+#: controllers/CartsController.php:32 controllers/OrdersController.php:39
+msgid "expired"
+msgstr ""
+
+#: controllers/CartsController.php:33
+msgid "closed"
+msgstr ""
+
+#: controllers/CartsController.php:34 views/orders/admin_index.html.php:83
+#: views/product_groups/admin_index.html.php:58
+#: views/products/admin_index.html.php:59
+#: views/shipments/admin_index.html.php:62
+msgid "open"
+msgstr ""
+
+#: controllers/CartsController.php:50
+msgid "Successfully cancelled."
+msgstr ""
+
+#: controllers/CartsController.php:55
+msgid "Failed to cancel."
+msgstr ""
+
+#: controllers/OrdersController.php:32
+msgid "refunding"
+msgstr ""
+
+#: controllers/OrdersController.php:33
+msgid "on backorder"
+msgstr ""
+
+#: controllers/OrdersController.php:35
+msgid "processed"
+msgstr ""
+
+#: controllers/OrdersController.php:36
+msgid "processing"
+msgstr ""
+
+#: controllers/OrdersController.php:37
+msgid "checking out"
+msgstr ""
+
+#: controllers/OrdersController.php:38
+msgid "checked out"
+msgstr ""
+
+#: controllers/OrdersController.php:42 controllers/OrdersController.php:51
+#: controllers/ShipmentsController.php:57
+msgid "created"
+msgstr ""
+
+#: controllers/OrdersController.php:44 controllers/ShipmentsController.php:59
+msgid "shipping scheduled"
+msgstr ""
+
+#: controllers/OrdersController.php:45 controllers/ShipmentsController.php:60
+msgid "shipping error"
+msgstr ""
+
+#: controllers/OrdersController.php:46 controllers/ShipmentsController.php:61
+msgid "shipping"
+msgstr ""
+
+#: controllers/OrdersController.php:47 controllers/ShipmentsController.php:62
+msgid "shipped"
+msgstr ""
+
+#: controllers/OrdersController.php:48 controllers/ShipmentsController.php:63
+msgid "delivered"
+msgstr ""
+
+#: controllers/OrdersController.php:52
+msgid "sent"
+msgstr ""
+
+#: controllers/OrdersController.php:53
+msgid "paid"
+msgstr ""
+
+#: controllers/OrdersController.php:56
+msgid "awaiting payment"
+msgstr ""
+
+#: controllers/OrdersController.php:57
+msgid "payment accepted"
+msgstr ""
+
+#: controllers/OrdersController.php:58
+msgid "payment remotely accepted"
+msgstr ""
+
+#: controllers/OrdersController.php:59
+msgid "payment error"
+msgstr ""
+
+#: controllers/ProductsController.php:39 models/ProductAttributes.php:42
+msgid "size"
+msgstr ""
+
+#: controllers/ProductsController.php:40 models/ProductAttributes.php:43
+msgid "color"
+msgstr ""
+
+#: controllers/ShipmentsController.php:42
+msgid "Status changed."
+msgstr ""
+
+#: controllers/ShipmentsController.php:46
+msgid "Failed to change status."
+msgstr ""
+
+#: models/Orders.php:100 models/Orders.php:107
+msgid "You must select a method."
+msgstr ""
+
+#: models/Orders.php:114
+msgid "You must accept the terms."
+msgstr ""
+
+#: models/Orders.php:234 models/Orders.php:289
+msgid "Order No."
+msgstr ""
+
+#: models/Orders.php:449
+msgid "Your order #{:number}."
+msgstr ""
+
+#: models/Shipments.php:148
+msgid "Order #{:number} shipped."
+msgstr ""
+
+#: views/carts/admin_form.html.php:3
+msgid "Untitled"
+msgstr ""
+
+#: views/carts/admin_form.html.php:6
+msgid "creating"
+msgstr ""
+
+#: views/carts/admin_form.html.php:6
+msgid "editing"
+msgstr ""
+
+#: views/carts/admin_form.html.php:8 views/orders/admin_form.html.php:12
+msgid "order"
+msgstr ""
+
+#: views/carts/admin_form.html.php:8 views/orders/admin_index.html.php:6
+msgid "orders"
+msgstr ""
+
+#: views/carts/admin_form.html.php:22 views/orders/admin_form.html.php:27
+#: views/orders/admin_form.html.php:84 views/orders/admin_form.html.php:129
+#: views/orders/admin_form.html.php:193 views/products/admin_index.html.php:32
+#: views/shipments/admin_form.html.php:28
+#: views/shipments/admin_index.html.php:25
+msgid "Number"
+msgstr ""
+
+#: views/carts/admin_form.html.php:26
+msgid "The order number is automatically generated."
+msgstr ""
+
+#: views/carts/admin_form.html.php:30
+msgid "Invoice number"
+msgstr ""
+
+#: views/carts/admin_form.html.php:37 views/orders/admin_form.html.php:168
+#: views/orders/admin_index.html.php:39
+msgid "Shipment"
+msgstr ""
+
+#: views/carts/admin_form.html.php:42 views/orders/admin_form.html.php:224
+#: views/product_groups/admin_form.html.php:111
+#: views/products/admin_form.html.php:267
+#: views/shipments/admin_form.html.php:229
+msgid "save"
+msgstr ""
+
+#: views/carts/admin_index.html.php:6
+msgid "carts"
+msgstr ""
+
+#: views/carts/admin_index.html.php:25 views/orders/admin_form.html.php:39
+#: views/orders/admin_form.html.php:123 views/orders/admin_form.html.php:186
+#: views/orders/admin_index.html.php:35 views/shipments/admin_form.html.php:45
+#: views/shipments/admin_index.html.php:27
+msgid "Status"
+msgstr ""
+
+#: views/carts/admin_index.html.php:26 views/orders/admin_index.html.php:34
+#: views/shipments/admin_index.html.php:26
+msgid "Order"
+msgstr ""
+
+#: views/carts/admin_index.html.php:27 views/orders/admin_form.html.php:69
+#: views/orders/admin_index.html.php:36 views/shipments/admin_form.html.php:78
+msgid "User"
+msgstr ""
+
+#: views/carts/admin_index.html.php:28
+msgid "Total value (net) "
+msgstr ""
+
+#: views/carts/admin_index.html.php:29
+msgid "Total quantity"
+msgstr ""
+
+#: views/carts/admin_index.html.php:30 views/orders/admin_index.html.php:41
+#: views/product_groups/admin_index.html.php:34
+#: views/products/admin_index.html.php:34
+#: views/shipments/admin_index.html.php:31
+msgid "Modified"
+msgstr ""
+
+#: views/carts/admin_index.html.php:71
+msgid "cancel"
+msgstr ""
+
+#: views/carts/admin_index.html.php:77 views/orders/admin_index.html.php:88
+#: views/product_groups/admin_index.html.php:63
+#: views/products/admin_index.html.php:64
+#: views/shipments/admin_index.html.php:67
+msgid "No items available, yet."
+msgstr ""
+
+#: views/orders/admin_form.html.php:32
+msgid "ID"
+msgstr ""
+
+#: views/orders/admin_form.html.php:43 views/orders/admin_form.html.php:134
+#: views/orders/admin_form.html.php:198 views/shipments/admin_form.html.php:55
+msgid "Created"
+msgstr ""
+
+#: views/orders/admin_form.html.php:54
+msgid "Note from user"
+msgstr ""
+
+#: views/orders/admin_form.html.php:61
+msgid "Private note"
+msgstr ""
+
+#: views/orders/admin_form.html.php:63
+msgid "Never visible to user."
+msgstr ""
+
+#: views/orders/admin_form.html.php:72 views/products/admin_form.html.php:121
+#: views/products/admin_form.html.php:203
+msgid "Name"
+msgstr ""
+
+#: views/orders/admin_form.html.php:77
+msgid "Email"
+msgstr ""
+
+#: views/orders/admin_form.html.php:89
+msgid "Signed up"
+msgstr ""
+
+#: views/orders/admin_form.html.php:95
+msgid "open user"
+msgstr ""
+
+#: views/orders/admin_form.html.php:105 views/orders/admin_index.html.php:37
+msgid "Invoice"
+msgstr ""
+
+#: views/orders/admin_form.html.php:110 views/orders/admin_form.html.php:173
+#: views/shipments/admin_form.html.php:66
+msgid "Address"
+msgstr ""
+
+#: views/orders/admin_form.html.php:115 views/orders/admin_form.html.php:178
+msgid "Phone"
+msgstr ""
+
+#: views/orders/admin_form.html.php:139
+#: views/shipments/admin_index.html.php:30
+msgid "Total (net)"
+msgstr ""
+
+#: views/orders/admin_form.html.php:145
+msgid "PDF"
+msgstr ""
+
+#: views/orders/admin_form.html.php:150
+msgid "XLSX"
+msgstr ""
+
+#: views/orders/admin_form.html.php:155
+msgid "open invoice"
+msgstr ""
+
+#: views/orders/admin_form.html.php:163
+msgid "There is no invoice attached to this order."
+msgstr ""
+
+#: views/orders/admin_form.html.php:203 views/shipments/admin_form.html.php:38
+msgid "Tracking Number"
+msgstr ""
+
+#: views/orders/admin_form.html.php:207 views/shipments/admin_form.html.php:40
+msgid "Tracking is available once status is `shipped`."
+msgstr ""
+
+#: views/orders/admin_form.html.php:211
+msgid "open shipment"
+msgstr ""
+
+#: views/orders/admin_form.html.php:219
+msgid "There is no shipment attached to this order."
+msgstr ""
+
+#: views/orders/admin_index.html.php:23
+msgid ""
+"Cancelling an order will also cancel associated invoice and shipment - if "
+"possible."
+msgstr ""
+
+#: views/orders/admin_index.html.php:24
+msgid ""
+"Once the order was shipped and the invoice paid, mark the order as "
+"`processed` to close it."
+msgstr ""
+
+#: views/orders/admin_index.html.php:25
+msgid ""
+"When the order has been checked out, an email along with the invoice is sent "
+"to the user."
+msgstr ""
+
+#: views/orders/admin_index.html.php:26
+msgid ""
+"The basic workflow is: 1. take the order and mark it as `processing`, 2. "
+"check the invoice and register payment, mark the invoice as `paid`, 3. "
+"handle the shipment, 4. mark the order as `processed`."
+msgstr ""
+
+#: views/orders/admin_index.html.php:38 views/orders/admin_index.html.php:40
+msgid "status"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:13
+#: views/products/admin_form.html.php:13
+msgid "untitled"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:14
+msgid "product group"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:17
+msgid "promoted"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:17
+msgid "unpromoted"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:18
+#: views/products/admin_form.html.php:17
+msgid "published"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:18
+#: views/products/admin_form.html.php:17
+msgid "unpublished"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:32
+#: views/product_groups/admin_form.html.php:40
+#: views/product_groups/admin_index.html.php:32
+#: views/products/admin_form.html.php:41 views/products/admin_form.html.php:49
+#: views/products/admin_index.html.php:31
+msgid "Title"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:47
+#: views/products/admin_form.html.php:56
+msgid "Cover"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:50
+#: views/products/admin_form.html.php:59 views/products/admin_form.html.php:75
+msgid "select"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:63
+msgid "Access"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:74
+msgid "Brand"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:79
+msgid "Tags"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:89
+#: views/product_groups/admin_form.html.php:97
+#: views/products/admin_form.html.php:180
+#: views/products/admin_form.html.php:188
+msgid "Text"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:108
+#: views/product_groups/admin_index.html.php:56
+msgid "promote"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:108
+#: views/product_groups/admin_index.html.php:56
+msgid "unpromote"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:109
+#: views/product_groups/admin_index.html.php:57
+#: views/products/admin_form.html.php:265
+#: views/products/admin_index.html.php:58
+msgid "publish"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:109
+#: views/product_groups/admin_index.html.php:57
+#: views/products/admin_form.html.php:265
+#: views/products/admin_index.html.php:58
+msgid "unpublish"
+msgstr ""
+
+#: views/product_groups/admin_index.html.php:6
+msgid "product groups"
+msgstr ""
+
+#: views/product_groups/admin_index.html.php:22
+msgid "new product group"
+msgstr ""
+
+#: views/product_groups/admin_index.html.php:29
+#: views/products/admin_index.html.php:29
+msgid "publ.?"
+msgstr ""
+
+#: views/product_groups/admin_index.html.php:30
+msgid "prom.?"
+msgstr ""
+
+#: views/product_groups/admin_index.html.php:33
+msgid "# Products"
+msgstr ""
+
+#: views/product_groups/admin_index.html.php:55
+#: views/products/admin_form.html.php:146
+#: views/products/admin_form.html.php:161
+#: views/products/admin_index.html.php:57
+#: views/shipments/admin_form.html.php:179
+#: views/shipments/admin_form.html.php:213
+msgid "delete"
+msgstr ""
+
+#: views/products/admin_form.html.php:14 views/products/admin_index.html.php:6
+msgid "products"
+msgstr ""
+
+#: views/products/admin_form.html.php:28
+msgid "Number/SKU"
+msgstr ""
+
+#: views/products/admin_form.html.php:69
+msgid "Media"
+msgstr ""
+
+#: views/products/admin_form.html.php:86
+#: views/products/admin_index.html.php:33
+msgid "Stock"
+msgstr ""
+
+#: views/products/admin_form.html.php:89
+msgid "Updates real stock."
+msgstr ""
+
+#: views/products/admin_form.html.php:91
+msgid ""
+"Current real stock is {:realCount}, current virtual stock is {:virtualCount}."
+msgstr ""
+
+#: views/products/admin_form.html.php:106
+msgid "Contained in product group"
+msgstr ""
+
+#: views/products/admin_form.html.php:107
+msgid "Create new product group"
+msgstr ""
+
+#: views/products/admin_form.html.php:117
+msgid "Attributes"
+msgstr ""
+
+#: views/products/admin_form.html.php:122
+msgid "Value"
+msgstr ""
+
+#: views/products/admin_form.html.php:166
+msgid "add"
+msgstr ""
+
+#: views/products/admin_form.html.php:198
+msgid "Prices"
+msgstr ""
+
+#: views/products/admin_form.html.php:204
+msgid "Amount"
+msgstr ""
+
+#: views/products/admin_form.html.php:205
+#: views/shipments/admin_form.html.php:122
+msgid "Currency"
+msgstr ""
+
+#: views/products/admin_form.html.php:206
+#: views/shipments/admin_form.html.php:123
+msgid "Type"
+msgstr ""
+
+#: views/products/admin_form.html.php:207
+msgid "Rate (%)"
+msgstr ""
+
+#: views/products/admin_form.html.php:247
+#: views/shipments/admin_form.html.php:163
+#: views/shipments/admin_form.html.php:204
+msgid "gross"
+msgstr ""
+
+#: views/products/admin_form.html.php:247
+#: views/shipments/admin_form.html.php:163
+#: views/shipments/admin_form.html.php:204
+msgid "net"
+msgstr ""
+
+#: views/products/admin_index.html.php:22
+msgid "new product"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:10
+msgid "shipment"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:31
+msgid "Leave empty to autogenerate number."
+msgstr ""
+
+#: views/shipments/admin_form.html.php:34
+#: views/shipments/admin_index.html.php:28
+msgid "Method"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:50
+msgid ""
+"The user will be notified by e-mail when the status is changed to `shipped`."
+msgstr ""
+
+#: views/shipments/admin_form.html.php:90
+msgid "real user"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:101
+msgid "Terms"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:103
+#: views/shipments/admin_form.html.php:110
+msgid "Visible to recipient."
+msgstr ""
+
+#: views/shipments/admin_form.html.php:108
+msgid "Note"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:116
+msgid "Positions"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:120
+msgid "Description"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:121
+msgid "Quantity"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:124
+msgid "Unit value"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:125
+msgid "Line total value (net)"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:218
+msgid "add position"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:220
+msgid "Total value (net)"
+msgstr ""
+
+#: views/shipments/admin_index.html.php:6
+msgid "shipments"
+msgstr ""
+
+#: views/shipments/admin_index.html.php:29
+msgid "Recipient"
+msgstr ""

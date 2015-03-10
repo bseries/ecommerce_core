@@ -36,8 +36,8 @@ class ProductsController extends \base_core\controllers\BaseController {
 
 		if ($item) {
 			$attributeKeys = ProductAttributes::enum('key', [
-				'size' => $t('size'),
-				'color' => $t('color')
+				'size' => $t('size', ['scope' => 'ecommerce_core']),
+				'color' => $t('color', ['scope' => 'ecommerce_core'])
 			]);
 		}
 		return compact('productGroups', 'currencies', 'attributeKeys');
