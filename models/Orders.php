@@ -450,6 +450,7 @@ class Orders extends \base_core\models\Base {
 					'to' => $user->email,
 					'bcc' => $contact['email'],
 					'subject' => $t('Your order #{:number}.', [
+						'locale' => $user->locale,
 						'number' => $order->number
 					]),
 					'data' => [
