@@ -30,7 +30,7 @@ $this->set([
 					<td class="media">
 					<td data-sort="title" class="emphasize table-sort"><?= $t('Title') ?>
 					<td data-sort="number" class="emphasize number table-sort"><?= $t('Number') ?>
-					<td data-sort="stock" class="stock table-sort"><?= $t('Stock') ?>
+					<td data-sort="stock" class="stock table-sort"><?= $t('Stock (V/R/C)') ?>
 					<td data-sort="modified" class="date table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
 			</thead>
@@ -48,7 +48,10 @@ $this->set([
 					<td class="emphasize number"><?= $item->number ?: '–' ?>
 					<td class="emphasize stock">
 						<span><?= $item->stock('virtual') ?></span>
+						/
 						<span class="minor"><?= $item->stock('real') ?></span>
+						/
+						<span class="minor"><?= $item->stock('target') ?></span>
 					<td class="date">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>

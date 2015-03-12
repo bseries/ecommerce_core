@@ -138,7 +138,7 @@ class Products extends \base_core\models\Base {
 	// - _local_ stock, this is what the online system knows.
 	// - _reserved_ stock, how many stock are reserved?
 	// - _virtual_ stock, calculated from local stock subtracted by reserved stock.
-	// - _remote_ stock, optional will only be used when another external system is involved.
+	// - _target_ stock, optional will only be used when another external system is involved.
 	//
 	// The stock counts are denormalized in the mode schema for
 	// performance reasons. Stock is a pretty common field to
@@ -153,11 +153,8 @@ class Products extends \base_core\models\Base {
 				return $entity->stock_reserved;
 			case 'virtual':
 				return $entity->stock - $entity->stock_reserved;
-			case 'remote':
-				if (!Settings::read('stock.remote')) {
-					throw new Exception('Remote stock is disabled.');
-				}
-				return $entity->stock_remote;
+			case 'target':
+				return $entity->stock_target;
 			default:
 				throw new Exception("Invalid stock type `{$type}`.");
 		}

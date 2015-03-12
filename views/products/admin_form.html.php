@@ -81,12 +81,12 @@ $this->set([
 					'type' => 'number',
 					'label' => $t('Stock (real)'),
 				]) ?>
-				<?= $this->form->field('stock_remote', [
+				<?= $this->form->field('stock_target', [
 					'type' => 'number',
-					'label' => $t('Stock (remote)'),
+					'label' => $t('Stock (target)'),
 				]) ?>
 				<div class="help">
-					<?= $t('Remote should equal the real stock.') ?>
+					<?= $t('Compare stock should equal the real stock.') ?>
 				</div>
 				<?= $this->form->field('stock_reserved', [
 					'type' => 'number',

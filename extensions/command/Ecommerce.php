@@ -34,7 +34,7 @@ class Ecommerce extends \lithium\console\Command {
 			$this->out("Product #{$product->number}, `{$product->title}`");
 			$this->out('Current real stock: ' . $product->stock('real'));
 			$this->out('Current virtual stock: ' . $product->stock('virtual'));
-			$this->out('Current remote stock: ' . $product->stock('remote'));
+			$this->out('Current target stock: ' . $product->stock('target'));
 			$this->out('Currently reserved of stock: ' . $product->stock('reserved'));
 
 			$stock = $this->in('Enter new real stock:', ['default' => $product->stock('real')]);
@@ -50,7 +50,7 @@ class Ecommerce extends \lithium\console\Command {
 	}
 
 	/**
-	 * Will use stock_remote as new stock. Run only when stock_remote
+	 * Will use stock_target as new stock. Run only when stock_target
 	 * is actually used. Otherwise will reset all stocks to 0.
 	 */
 	public function autoInventory() {
@@ -60,11 +60,11 @@ class Ecommerce extends \lithium\console\Command {
 			$this->out("Product #{$product->number}, `{$product->title}`");
 			$this->out('Current real stock: ' . $product->stock('real'));
 			$this->out('Current virtual stock: ' . $product->stock('virtual'));
-			$this->out('Current remote stock: ' . $product->stock('remote'));
+			$this->out('Current target stock: ' . $product->stock('target'));
 			$this->out('Currently reserved of stock: ' . $product->stock('reserved'));
 
 			$result = $product->save([
-				'stock' => $product->stock('remote')
+				'stock' => $product->stock('target')
 			], [
 				'whitelist' => ['id', 'stock']
 			]);
