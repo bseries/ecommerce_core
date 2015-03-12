@@ -66,10 +66,11 @@ Widgets::register('total_products', function() use ($t) {
 		]
 	]);
 
-	$stock = 0;
-	foreach ($products as $product) {
-		$stock += $product->stock();
-	}
+	$stock = Products::find('first', [
+		'fields' => [
+			'SUM(stock - stock_reserved) as stock_virtual'
+		]
+	])->stock_virtual;
 
 	return [
 		'url' => [
@@ -92,10 +93,11 @@ Widgets::register('ecommerce_pending', function() use ($t) {
 			'status NOT' => ['processed', 'cancelled', 'expired', 'checking-out']
 		]
 	]);
-	$products = Products::find('all')->find(function($item) {
-		return $item->stock() <= 0;
-	})->count();
-
+	$products = Products::find('count', [
+		'conditions' => [
+			'(stock - stock_reserved)' => ['<=' => 0]
+		]
+	]);
 	return [
 		'title' => $t('Pending'),
 		'class' => $orders || $products ? 'negative' : 'positive',
