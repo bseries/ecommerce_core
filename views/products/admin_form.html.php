@@ -86,7 +86,7 @@ $this->set([
 					'label' => $t('Stock (target)'),
 				]) ?>
 				<div class="help">
-					<?= $t('Compare stock should equal the real stock.') ?>
+					<?= $t('Target stock should equal the real stock.') ?>
 				</div>
 				<?= $this->form->field('stock_reserved', [
 					'type' => 'number',

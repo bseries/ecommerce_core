@@ -30,7 +30,8 @@ $this->set([
 					<td class="media">
 					<td data-sort="title" class="emphasize table-sort"><?= $t('Title') ?>
 					<td data-sort="number" class="emphasize number table-sort"><?= $t('Number') ?>
-					<td data-sort="stock" class="stock table-sort"><?= $t('Stock (V/R/C)') ?>
+					<td data-sort="stock" class="stock table-sort" title="<?= $t('V = virtual, R = real, T = target') ?>">
+						<?= $t('Stock (V/R/T)') ?>
 					<td data-sort="modified" class="date table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
 			</thead>
