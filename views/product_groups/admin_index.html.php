@@ -37,7 +37,18 @@ $this->set([
 			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="flag is-published"><?= ($item->is_published ? '✓' : '×') ?>
+					<td class="flag is-published">
+						<?php
+							$hasPublishedProducts = (boolean) $item->products()->find(function($p) {
+								return $p->is_published;
+							})->count();
+
+							if ($hasPublishedProducts) {
+								echo ($item->is_published ? '✓' : '×');
+							} else {
+								echo '(' . ($item->is_published ? '✓' : '×') . ')';
+							}
+						?>
 					<td class="flag is-promoted"><?= ($item->is_promoted ? '✓' : '×') ?>
 					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
