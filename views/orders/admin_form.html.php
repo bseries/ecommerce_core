@@ -39,6 +39,9 @@ $this->set([
 					'label' => $t('Status'),
 					'list' => $statuses
 				]) ?>
+				<div class="help">
+					<?= $t('Cancelling an order will also cancel associated invoice and shipment - if possible.') ?>
+				</div>
 				<?= $this->form->field('created', [
 					'label' => $t('Created'),
 					'disabled' => true,
