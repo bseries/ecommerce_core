@@ -72,6 +72,7 @@ class Ecommerce extends \lithium\console\Command {
 		}
 		$this->out('COMPLETED');
 	}
+
 	public function migrate10to13() {
 		// Assumes source was all German and certain
 		// tax customer type mappings are valid.
@@ -174,7 +175,7 @@ class Ecommerce extends \lithium\console\Command {
 		$this->out('All done 1.0 -> 1.3.');
 	}
 
-	public function migrateTo1213() {
+	public function migrate12To13() {
 		$this->_ensureVatOnInvoices();
 		$this->_convertStock();
 
@@ -194,11 +195,11 @@ class Ecommerce extends \lithium\console\Command {
 				'stock_reserved' => $reserved
 			], ['whitelist' => ['stock', 'stock_reserved']]);
 
-			$this->out("ID {$result->id}: " . ($r ? 'OK' : 'FAILED!'));
+			$this->out("ID {$product->id}: " . ($r ? 'OK' : 'FAILED!'));
 		}
 	}
 
-	protected function _oldStock($entity, $stock = 'virtual') {
+	protected function _oldStock($entity, $type = 'virtual') {
 		$result = (integer) $entity->stock;
 
 		if ($type !== 'virtual') {
