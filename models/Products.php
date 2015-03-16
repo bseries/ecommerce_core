@@ -232,7 +232,7 @@ Products::applyFilter('save', function($self, $params, $chain) {
 	//
 	// Key/Value Pairs must be unique.
 	if ($entity->attributes) {
-		$entity->attributes(true)->delete();
+		$entity->attributes(['force' => true])->delete();
 
 		$created = [];
 		foreach ($entity->attributes as $key => $data) {
