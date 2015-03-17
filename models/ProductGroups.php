@@ -12,7 +12,6 @@
 
 namespace ecommerce_core\models;
 
-use ecommerce_core\models\Products;
 use lithium\util\Inflector;
 use li3_access\security\Access;
 

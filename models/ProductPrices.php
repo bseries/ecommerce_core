@@ -22,7 +22,15 @@ class ProductPrices extends \base_core\models\Base {
 		'source' => 'ecommerce_product_prices'
 	];
 
+	public $belongsTo = [
+		'Product' => [
+			'to' => 'ecommerce_core\models\Products',
+			'key' => 'ecommerce_product_id'
+		]
+	];
+
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Localizable' => [
 			'fields' => [
 				'amount' => 'money'

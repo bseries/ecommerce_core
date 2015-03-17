@@ -40,6 +40,7 @@ class Shipments extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\ReferenceNumber',
 		'base_core\extensions\data\behavior\StatusChange'
@@ -50,6 +51,13 @@ class Shipments extends \base_core\models\Base {
 			'to' => 'ecommerce_core\models\Orders',
 			'key' => 'ecommerce_shipment_id'
 		]
+	];
+
+	public $hasMany = [
+		'Positions' => [
+			'to' => 'ecommerce_core\models\ShipmentPositions',
+			'key' => 'ecommerce_shipment_id'
+		],
 	];
 
 	public static $enum = [
@@ -86,14 +94,6 @@ class Shipments extends \base_core\models\Base {
 				'id' => $entity->method
 			]
 		]);
-	}
-
-	public function order($entity, array $query = []) {
-		return Orders::find('first', [
-			'conditions' => [
-				'ecommerce_shipment_id' => $entity->id
-			]
-		] + $query);
 	}
 
 	public function address($entity) {
@@ -177,14 +177,6 @@ class Shipments extends \base_core\models\Base {
 			'cancelled',
 			'shipping-scheduled',
 			'shipping-error'
-		]);
-	}
-
-	public function positions($entity) {
-		return !$entity->id ? [] : ShipmentPositions::find('all', [
-			'conditions' => [
-				'ecommerce_shipment_id' => $entity->id
-			]
 		]);
 	}
 

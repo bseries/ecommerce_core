@@ -57,28 +57,6 @@ class Carts extends \base_core\models\Base {
 		]
 	];
 
-	public function order($entity, array $query = []) {
-		if ($query) {
-			trigger_error('Carts::order with query has been deprecated.', E_USER_DEPRECATED);
-		}
-		if ($entity->order && !$query) {
-			return $entity->order;
-		}
-		return Orders::find('first', [
-			'conditions' => [
-				'ecommerce_cart_id' => $entity->id
-			]
-		] + $query);
-	}
-
-	public function positions($entity) {
-		return $entity->positions ?: CartPositions::find('all', [
-			'conditions' => [
-				'ecommerce_cart_id' => $entity->id
-			]
-		]);
-	}
-
 	// We need the user to determine if she has access to the price.
 	public function totals($entity, $user) {
 		$result = new Prices();

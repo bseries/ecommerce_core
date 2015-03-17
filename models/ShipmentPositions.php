@@ -24,6 +24,7 @@ class ShipmentPositions extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\Localizable' => [
 			'fields' => [
@@ -39,14 +40,6 @@ class ShipmentPositions extends \base_core\models\Base {
 			'key' => 'ecommerce_shipment_id'
 		]
 	];
-
-	public function shipment($entity) {
-		return $entity->shipment ?: Shipments::find('first', [
-			'conditions' => [
-				'id' => $entity->ecommerce_shipment_id
-			]
-		]);
-	}
 
 	public function amount($entity) {
 		return new Price(

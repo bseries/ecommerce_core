@@ -22,6 +22,7 @@ class CartPositions extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp'
 	];
 
@@ -35,14 +36,6 @@ class CartPositions extends \base_core\models\Base {
 			'key' => 'ecommerce_product_id'
 		]
 	];
-
-	public function product($entity) {
-		return $entity->product ?: Products::find('first', [
-			'conditions' => [
-				'id' => $entity->ecommerce_product_id
-			]
-		]);
-	}
 
 	public function amount($entity, $user) {
 		return $entity->product()->price($user)->amount();

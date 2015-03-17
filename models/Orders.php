@@ -52,15 +52,7 @@ class Orders extends \base_core\models\Base {
 	];
 
 	public $belongsTo = [
-		'User' => [
-			'to' => 'base_core\models\Users',
-			'key' => 'user_id'
-		],
-		'VirtualUser' => [
-			'to' => 'base_core\models\VirtualUsers',
-			'key' => 'virtual_user_id'
-		],
-		'Invoices' => [
+		'Invoice' => [
 			'to' => 'billing_core\models\Invoices',
 			'key' => 'billing_invoice_id'
 		],
@@ -75,6 +67,7 @@ class Orders extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\Uuid',
 		'base_core\extensions\data\behavior\ReferenceNumber',
@@ -165,36 +158,6 @@ class Orders extends \base_core\models\Base {
 			return false;
 		}
 		return $entity->{$typeField} = $address;
-	}
-
-	public function cart($entity, array $query = []) {
-		return $entity->cart ?: Carts::find('first', [
-			'conditions' => [
-				'id' => $entity->ecommerce_cart_id
-			]
-		] + $query);
-	}
-
-	public function invoice($entity) {
-		if ($entity->invoice && $entity->invoice->id) {
-			return $entity->invoice;
-		}
-		return Invoices::find('first', [
-			'conditions' => [
-				'id' => $entity->billing_invoice_id
-			]
-		]);
-	}
-
-	public function shipment($entity) {
-		if ($entity->shipment && $entity->shipment->id) {
-			return $entity->shipment;
-		}
-		return Shipments::find('first', [
-			'conditions' => [
-				'id' => $entity->ecommerce_shipment_id
-			]
-		]);
 	}
 
 	public function paymentMethod($entity) {
