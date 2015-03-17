@@ -39,11 +39,15 @@ class Shipments extends \base_core\models\Base {
 		'source' => 'ecommerce_shipments'
 	];
 
-	protected static $_actsAs = [
-		'base_core\extensions\data\behavior\RelationsPlus',
-		'base_core\extensions\data\behavior\Timestamp',
-		'base_core\extensions\data\behavior\ReferenceNumber',
-		'base_core\extensions\data\behavior\StatusChange'
+	public $belongsTo = [
+		'User' => [
+			'to' => 'base_core\models\Users',
+			'key' => 'user_id'
+		],
+		'VirtualUser' => [
+			'to' => 'base_core\models\VirtualUsers',
+			'key' => 'virtual_user_id'
+		]
 	];
 
 	public $hasOne = [
@@ -58,6 +62,13 @@ class Shipments extends \base_core\models\Base {
 			'to' => 'ecommerce_core\models\ShipmentPositions',
 			'key' => 'ecommerce_shipment_id'
 		],
+	];
+
+	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
+		'base_core\extensions\data\behavior\Timestamp',
+		'base_core\extensions\data\behavior\ReferenceNumber',
+		'base_core\extensions\data\behavior\StatusChange'
 	];
 
 	public static $enum = [

@@ -52,6 +52,14 @@ class Orders extends \base_core\models\Base {
 	];
 
 	public $belongsTo = [
+		'User' => [
+			'to' => 'base_core\models\Users',
+			'key' => 'user_id'
+		],
+		'VirtualUser' => [
+			'to' => 'base_core\models\VirtualUsers',
+			'key' => 'virtual_user_id'
+		],
 		'Invoice' => [
 			'to' => 'billing_core\models\Invoices',
 			'key' => 'billing_invoice_id'

@@ -37,10 +37,15 @@ class Carts extends \base_core\models\Base {
 		'source' => 'ecommerce_carts'
 	];
 
-	protected static $_actsAs = [
-		'base_core\extensions\data\behavior\RelationsPlus',
-		'base_core\extensions\data\behavior\Timestamp',
-		'base_core\extensions\data\behavior\StatusChange'
+	public $belongsTo = [
+		'User' => [
+			'to' => 'base_core\models\Users',
+			'key' => 'user_id'
+		],
+		'VirtualUser' => [
+			'to' => 'base_core\models\VirtualUsers',
+			'key' => 'virtual_user_id'
+		]
 	];
 
 	public $hasOne = [
@@ -55,6 +60,12 @@ class Carts extends \base_core\models\Base {
 			'to' => 'ecommerce_core\models\CartPositions',
 			'key' => 'ecommerce_cart_id'
 		]
+	];
+
+	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\RelationsPlus',
+		'base_core\extensions\data\behavior\Timestamp',
+		'base_core\extensions\data\behavior\StatusChange'
 	];
 
 	// We need the user to determine if she has access to the price.
