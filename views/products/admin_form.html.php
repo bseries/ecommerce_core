@@ -171,26 +171,22 @@ $this->set([
 
 
 		<div class="grid-row">
-			<div class="grid-column-left">
-				<?php if ($isTranslated): ?>
-					<?php foreach ($item->translate('description') as $locale => $value): ?>
-						<?= $this->form->field("i18n.description.{$locale}", [
-							'type' => 'textarea',
-							'label' => $t('Text') . ' (' . $this->g11n->name($locale) . ')',
-							'wrap' => ['class' => 'editor-size--gamma use-editor editor-basic editor-link'],
-							'value' => $value
-						]) ?>
-					<?php endforeach ?>
-				<?php else: ?>
-					<?= $this->form->field('description', [
+			<?php if ($isTranslated): ?>
+				<?php foreach ($item->translate('description') as $locale => $value): ?>
+					<?= $this->form->field("i18n.description.{$locale}", [
 						'type' => 'textarea',
-						'label' => $t('Text'),
-						'wrap' => ['class' => 'editor-size--gamma use-editor editor-basic editor-link']
+						'label' => $t('Text') . ' (' . $this->g11n->name($locale) . ')',
+						'wrap' => ['class' => 'editor-size--gamma use-editor editor-basic editor-link'],
+						'value' => $value
 					]) ?>
-				<?php endif ?>
-			</div>
-			<div class="grid-column-right">
-			</div>
+				<?php endforeach ?>
+			<?php else: ?>
+				<?= $this->form->field('description', [
+					'type' => 'textarea',
+					'label' => $t('Text'),
+					'wrap' => ['class' => 'editor-size--gamma use-editor editor-basic editor-link']
+				]) ?>
+			<?php endif ?>
 		</div>
 
 		<div class="grid-row">
