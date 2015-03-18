@@ -123,6 +123,7 @@ class Shipments extends \base_core\models\Base {
 
 	public function statusChange($entity, $from, $to) {
 		extract(Message::aliases());
+		Logger::write('debug', "Changing shipment status `{$from}`->`{$to}`.");
 
 		switch ($to) {
 			case 'cancelled':
@@ -138,10 +139,6 @@ class Shipments extends \base_core\models\Base {
 							return false;
 						}
 					}
-					$message  = "Shipment status changed to `cancelled`, put/unreserved ";
-					$message .= "stock for product {$product->id} by {$position->quantity}. ";
-					$message .= "Real stock is now `{$product->stock}`, reserved is `{$product->stock_reserved}`.";
-					Logger::write('debug', $message);
 				}
 				return true;
 			case 'shipped':
@@ -159,11 +156,6 @@ class Shipments extends \base_core\models\Base {
 					if (!$product->unreserveStock($position->quantity)) {
 						return false;
 					}
-					$message  = "Shipment status changed to `shipped`, transferred ";
-					$message .= "stock taken -> reserved ";
-					$message .= "for product {$product->id} by {$position->quantity}. ";
-					$message .= "Real stock is now `{$product->stock}`, reserved is `{$product->stock_reserved}`.";
-					Logger::write('debug', $message);
 				}
 
 				if (!Settings::read('shipment.sendShippedMail')) {

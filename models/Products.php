@@ -170,6 +170,11 @@ class Products extends \base_core\models\Base {
 	// real stock.
 	public function takeStock($entity, $quantity = 1) {
 		$entity->decrement('stock', $quantity);
+
+		$message .= "TAKE stock for product `{$entity->id}` by {$quantity}. ";
+		$message .= "Real stock is now `{$entity->stock}`.";
+		Logger::write('debug', $message);
+
 		return $entity->save(null, ['whitelist' => ['stock']]);
 	}
 
@@ -177,17 +182,32 @@ class Products extends \base_core\models\Base {
 	// real stock.
 	public function putStock($entity, $quantity = 1) {
 		$entity->increment('stock', $quantity);
+
+		$message .= "PUT stock for product `{$entity->id}` by {$quantity}. ";
+		$message .= "Real stock is now `{$entity->stock}`.";
+		Logger::write('debug', $message);
+
 		return $entity->save(null, ['whitelist' => ['stock']]);
 	}
 
 	// Persistently reserves one or multiple items.
 	public function reserveStock($entity, $quantity = 1) {
 		$entity->increment('stock_reserved', $quantity);
+
+		$message .= "RESERVE stock for product `{$entity->id}` by {$quantity}. ";
+		$message .= "Reserved stock is now `{$entity->stock_reserved}`.";
+		Logger::write('debug', $message);
+
 		return $entity->save(null, ['whitelist' => ['stock_reserved']]);
 	}
 
 	public function unreserveStock($entity, $quantity = 1) {
 		$entity->decrement('stock_reserved', $quantity);
+
+		$message .= "UNRESERVE stock for product `{$entity->id}` by {$quantity}. ";
+		$message .= "Reserved stock is now `{$entity->stock_reserved}`.";
+		Logger::write('debug', $message);
+
 		return $entity->save(null, ['whitelist' => ['stock_reserved']]);
 	}
 }
