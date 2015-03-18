@@ -131,11 +131,11 @@ class Shipments extends \base_core\models\Base {
 					$product = $position->product();
 
 					if ($from === 'shipped') {
-						if (!$product->putStock($position->quantity)) {
+						if (!$product->putStock((integer) $position->quantity)) {
 							return false;
 						}
 					} else {
-						if (!$product->unreserveStock($position->quantity)) {
+						if (!$product->unreserveStock((integer) $position->quantity)) {
 							return false;
 						}
 					}

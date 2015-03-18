@@ -96,18 +96,19 @@ CartPositions::applyFilter('save', function($self, $params, $chain) {
 	if (!$result = $chain->next($self, $params, $chain)) {
 		return false;
 	}
-	return Carts::touchTimestamp($params['entity']->ecommerce_cart_id, 'modified');
+	return Carts::touchTimestamp($entity->ecommerce_cart_id, 'modified');
 });
 CartPositions::applyFilter('delete', function($self, $params, $chain) {
 	$entity =& $params['entity'];
+	$cart = $entity->ecommerce_cart_id;
 
-	if ($entity->product()->unreserveStock($entity->quantity)) {
+	if (!$entity->product()->unreserveStock($entity->quantity)) {
 		return false;
 	}
 	if (!$result = $chain->next($self, $params, $chain)) {
 		return false;
 	}
-	return Carts::touchTimestamp($params['entity']->ecommerce_cart_id, 'modified');
+	return Carts::touchTimestamp($cart, 'modified');
 });
 
 
