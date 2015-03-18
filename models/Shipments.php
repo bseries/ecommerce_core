@@ -68,7 +68,17 @@ class Shipments extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\ReferenceNumber',
-		'base_core\extensions\data\behavior\StatusChange'
+		'base_core\extensions\data\behavior\StatusChange',
+		'base_core\extensions\data\behavior\Searchable' => [
+			'fields' => [
+				'number',
+				'tracking',
+				'method',
+				'status',
+				'address_recipient',
+				'address_organization'
+			]
+		]
 	];
 
 	public static $enum = [

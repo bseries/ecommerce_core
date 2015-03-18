@@ -46,8 +46,7 @@ $this->set([
 							'label' => false,
 							'placeholder' => $t('Filter'),
 							'class' => 'table-search',
-							'value' => $this->_request->filter,
-							'div' => false
+							'value' => $this->_request->filter
 						]) ?>
 			</thead>
 			<tbody>

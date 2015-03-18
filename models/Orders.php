@@ -79,7 +79,15 @@ class Orders extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\Uuid',
 		'base_core\extensions\data\behavior\ReferenceNumber',
-		'base_core\extensions\data\behavior\StatusChange'
+		'base_core\extensions\data\behavior\StatusChange',
+		'base_core\extensions\data\behavior\Searchable' => [
+			'fields' => [
+				'number',
+				'shipping_method',
+				'payment_method',
+				'status'
+			]
+		]
 	];
 
 	public static function init() {
