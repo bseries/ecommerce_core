@@ -138,7 +138,7 @@ class Carts extends \base_core\models\Base {
 			case 'expired':
 				// Once cart has shipment that is used for reservations.
 				// Instead of checking the cart's status will query of a shipment.
-				if (!$entity->order() || !$entity->order->shipment()) {
+				if (!$entity->order() || !$entity->order()->shipment()) {
 					foreach ($entity->positions() as $position) {
 						if (!$position->product()->unreserveStock($position->quantity)) {
 							return false;
