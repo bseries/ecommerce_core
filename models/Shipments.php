@@ -97,7 +97,9 @@ class Shipments extends \base_core\models\Base {
 			// Used diretly when manually shipping. Stock
 			// reservation transfer happens here. Also
 			// notifications are sent here.
-			'shipped'
+			'shipped',
+
+			'shipping-error'
 		]
 	];
 
@@ -189,7 +191,8 @@ class Shipments extends \base_core\models\Base {
 		return in_array($entity->status, [
 			'created',
 			'cancelled',
-			'shipping-scheduled'
+			'shipping-scheduled',
+			'shipping-error'
 		]);
 	}
 

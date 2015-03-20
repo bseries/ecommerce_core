@@ -59,6 +59,7 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 			'shipping-scheduled' => $t('shipping scheduled', ['scope' => 'ecommerce_core']),
 			'shipping' => $t('shipping', ['scope' => 'ecommerce_core']),
 			'shipped' => $t('shipped', ['scope' => 'ecommerce_core']),
+			'shipping-error' => $t('shipping error', ['scope' => 'ecommerce_core']),
 		]);
 		$methods = ShippingMethods::find('list');
 		$currencies = Currencies::find('list');
