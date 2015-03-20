@@ -186,8 +186,17 @@ class Ecommerce extends \lithium\console\Command {
 		$this->out('Converting stock...');
 		$results = Products::find('all');
 
+		$original = [];
+
 		foreach ($results as $product) {
+			$original[] = [
+				'product_id' => $product->id,
+				'stock' => $product->stock,
+				'stock_virtual' => $this->_oldStock($product, 'virtual')
+			];
+
 			$virtual = $this->_oldStock($product, 'virtual');
+
 			$reserved = $product->stock - $virtual;
 
 			$r = $product->save([
@@ -197,6 +206,8 @@ class Ecommerce extends \lithium\console\Command {
 
 			$this->out("ID {$product->id}: " . ($r ? 'OK' : 'FAILED!'));
 		}
+		$this->out('Saving stock backup file.');
+		file_put_contents(PROJECT_PATH . '/data/stock.php', serialize($original));
 	}
 
 	protected function _oldStock($entity, $type = 'virtual') {
