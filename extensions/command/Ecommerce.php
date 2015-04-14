@@ -147,12 +147,9 @@ class Ecommerce extends \lithium\console\Command {
 
 			foreach ($invoice->positions() as $iPos) {
 				// Skip non items.
-				try {
-					$iPos->itemNumber();
-				} catch (\Exception $e) {
+				if (!$iPos->product()) {
 					continue;
 				}
-
 				$sPos = ShipmentPositions::create([
 					'ecommerce_shipment_id' => $shipment->id,
 					'description' => $iPos->description,
