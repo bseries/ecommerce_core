@@ -218,10 +218,16 @@ Products::applyFilter('save', function($self, $params, $chain) {
 
 	// Create new product group.
 	if (isset($data['ecommerce_product_group_id']) && $data['ecommerce_product_group_id'] == 'new') {
-		$group = ProductGroups::create([
-			'title' => $data['title'],
+		$group = [
 			'cover_media_id' => $data['cover_media_id']
-		]);
+		];
+		if (isset($data['i18n'])) {
+			$group['i18n']['title'] = $data['i18n']['title'];
+		} else {
+			$group['title']  = $data['title'];
+		}
+		$group = ProductGroups::create($group);
+
 		if (!$group->save()) {
 			return false;
 		}
