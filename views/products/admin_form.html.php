@@ -251,7 +251,6 @@ $this->set([
 							<td>
 								<?= $this->form->field("prices.{$key}.amount_rate", [
 									'type' => 'text',
-									'disabled' => true,
 									'value' => $child->amount_rate,
 									'label' => false
 								]) ?>
