@@ -70,7 +70,18 @@ $this->set([
 						echo '–';
 					}
 					?>
-					<td class="status"><?= $sub ? $invoiceStatuses[$sub->status] : '–' ?>
+					<td class="status">
+					<?php
+					if ($sub) {
+						if (isset($invoiceStatuses[$sub->status])) {
+							echo $invoiceStatuses[$sub->status];
+						} else {
+							echo $sub->status;
+						}
+					} else {
+						echo '–';
+					}
+					?>
 					<td class="number">
 					<?php
 					if ($sub = $shipment = $item->shipment()) {
