@@ -71,17 +71,7 @@ $this->set([
 					}
 					?>
 					<td class="status">
-					<?php
-					if ($sub) {
-						if (isset($invoiceStatuses[$sub->status])) {
-							echo $invoiceStatuses[$sub->status];
-						} else {
-							echo $sub->status;
-						}
-					} else {
-						echo '–';
-					}
-					?>
+						<?= $sub && $sub->status ? $invoiceStatuses[$sub->status] : '–' ?>
 					<td class="number">
 					<?php
 					if ($sub = $shipment = $item->shipment()) {
@@ -90,7 +80,7 @@ $this->set([
 						echo '–';
 					}
 					?>
-					<td class="status"><?= $sub ? $shipmentStatuses[$sub->status] : '–' ?>
+					<td class="status"><?= $sub && $sub->status ? $shipmentStatuses[$sub->status] : '–' ?>
 					<td class="date">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>
