@@ -68,7 +68,10 @@ class Carts extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\StatusChange',
 		'base_core\extensions\data\behavior\Searchable' => [
 			'fields' => [
-				'status'
+				'status',
+				'modified',
+				'User.number',
+				'VirtualUser.number'
 			]
 		]
 	];

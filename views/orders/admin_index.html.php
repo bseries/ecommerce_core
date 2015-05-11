@@ -31,11 +31,11 @@ $this->set([
 				<tr>
 					<td data-sort="number" class="emphasize id number table-sort"><?= $t('Order') ?>
 					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
-					<td data-sort="user.number" class="user table-sort"><?= $t('User') ?>
-					<td data-sort="invoice.number" class="number table-sort"><?= $t('Invoice') ?>
-					<td data-sort="invoice.status" class="status table-sort">…<?= $t('status') ?>
-					<td data-sort="shipment.number" class="number table-sort"><?= $t('Shipment') ?>
-					<td data-sort="shipment.status" class="status table-sort">…<?= $t('status') ?>
+					<td data-sort="User.number" class="user table-sort"><?= $t('User') ?>
+					<td data-sort="Invoice.number" class="number table-sort"><?= $t('Invoice') ?>
+					<td data-sort="Invoice.status" class="status table-sort">…<?= $t('status') ?>
+					<td data-sort="Shipment.number" class="number table-sort"><?= $t('Shipment') ?>
+					<td data-sort="Shipment.status" class="status table-sort">…<?= $t('status') ?>
 					<td data-sort="modified" class="date table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
 						<?= $this->form->field('search', [

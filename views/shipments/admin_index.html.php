@@ -33,7 +33,7 @@ $this->set([
 					<td data-sort="order" class="order table-sort"><?= $t('Order') ?>
 					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
 					<td data-sort="method" class="method table-sort"><?= $t('Method') ?>
-					<td data-sort="user.number" class="user table-sort"><?= $t('Recipient') ?>
+					<td data-sort="User.number" class="user table-sort"><?= $t('Recipient') ?>
 					<td><?= $t('Total (net)') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">

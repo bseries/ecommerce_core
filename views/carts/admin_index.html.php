@@ -30,8 +30,8 @@ $this->set([
 			<thead>
 				<tr>
 					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
-					<td data-sort="order.number" class="order table-sort"><?= $t('Order') ?>
-					<td data-sort="user.number" class="user table-sort"><?= $t('User') ?>
+					<td data-sort="Order.number" class="order table-sort"><?= $t('Order') ?>
+					<td data-sort="User.number" class="user table-sort"><?= $t('User') ?>
 					<td><?= $t('Total value (net) ') ?>
 					<td data-sort="total-quantity" class="total-quantity table-sort"><?= $t('Total quantity') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>

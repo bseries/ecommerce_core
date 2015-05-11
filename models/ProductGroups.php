@@ -65,7 +65,8 @@ class ProductGroups extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\Searchable' => [
 			'fields' => [
 				'title',
-				'tags'
+				'tags',
+				'modified'
 			]
 		]
 	];

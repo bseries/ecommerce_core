@@ -76,7 +76,10 @@ class Shipments extends \base_core\models\Base {
 				'method',
 				'status',
 				'address_recipient',
-				'address_organization'
+				'address_organization',
+				'modified',
+				'User.number',
+				'VirtualUser.number'
 			]
 		]
 	];
