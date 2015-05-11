@@ -32,7 +32,7 @@ $this->set([
 					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
 					<td data-sort="Order.number" class="order table-sort"><?= $t('Order') ?>
 					<td data-sort="User.number" class="user table-sort"><?= $t('User') ?>
-					<td><?= $t('Total value (net) ') ?>
+					<td class="money"><?= $t('Total value (net) ') ?>
 					<td data-sort="total-quantity" class="total-quantity table-sort"><?= $t('Total quantity') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
@@ -69,7 +69,7 @@ $this->set([
 					<?php else: ?>
 						–
 					<?php endif ?>
-					<td class="total-amount">
+					<td class="total-amount money">
 					<?php if ($user): ?>
 						<?= $this->money->format($R = $item->totalValues('net', $user)) ?>
 					<?php else: ?>
