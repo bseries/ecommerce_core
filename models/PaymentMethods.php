@@ -12,9 +12,10 @@
 
 namespace ecommerce_core\models;
 
+use lithium\core\Environment;
+use lithium\util\Collection;
 use li3_access\security\Access;
 use AD\Finance\Price\NullPrice;
-use lithium\util\Collection;
 
 class PaymentMethods extends \base_core\models\Base {
 
@@ -28,7 +29,9 @@ class PaymentMethods extends \base_core\models\Base {
 		$data += [
 			'id' => $name,
 			'name' => $name,
-			'title' => null,
+			'title' => function($locale) {
+				return null;
+			},
 			'access' => ['user.role:admin'],
 			'price' => function($user, $cart) {
 				return new NullPrice();
@@ -56,8 +59,14 @@ class PaymentMethods extends \base_core\models\Base {
 		}
 	}
 
-	public function title($entity) {
-		return $entity->title;
+	public function title($entity, $locale = null) {
+		$locale = $locale ?: Environment::get('locale');
+		$value = $entity->data('title');
+
+		if (is_string($value)) {
+			return $value;
+		}
+		return $value($locale);
 	}
 
 	public function hasAccess($entity, $user) {

@@ -12,8 +12,9 @@
 
 namespace ecommerce_core\models;
 
-use billing_core\extensions\financial\Price;
+use lithium\core\Environment;
 use lithium\util\Collection;
+use billing_core\extensions\financial\Price;
 use li3_access\security\Access;
 
 class ShippingMethods extends \base_core\models\Base {
@@ -28,7 +29,9 @@ class ShippingMethods extends \base_core\models\Base {
 		$data += [
 			'id' => $name,
 			'name' => $name,
-			'title' => null,
+			'title' => function($locale) {
+				return null;
+			},
 			'access' => ['user.role:admin'],
 			'delegate' => false,
 			'price' => function($user, $cart) {
@@ -54,8 +57,14 @@ class ShippingMethods extends \base_core\models\Base {
 		}
 	}
 
-	public function title($entity) {
-		return $entity->title;
+	public function title($entity, $locale) {
+		$locale = $locale ?: Environment::get('locale');
+		$value = $entity->data('title');
+
+		if (is_string($value)) {
+			return $value;
+		}
+		return $value($locale);
 	}
 
 	public function hasAccess($entity, $user) {
