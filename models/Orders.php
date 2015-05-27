@@ -29,6 +29,7 @@ use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\PaymentMethods;
 use ecommerce_core\models\ShippingMethods;
+use ecommerce_core\models\Products;
 
 class Orders extends \base_core\models\Base {
 
@@ -226,7 +227,11 @@ class Orders extends \base_core\models\Base {
 		$entity->ecommerce_shipment_id = $shipment->id;
 
 		foreach ($cart->positions() as $cartPosition) {
-			$product = $cartPosition->product();
+			if (Products::hasBehavior('Translatable')) {
+				$product = $cartPosition->product(['translate' => $user->locale]);
+			} else {
+				$product = $cartPosition->product();
+			}
 
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
@@ -285,7 +290,11 @@ class Orders extends \base_core\models\Base {
 		$currency = $invoice->currency;
 
 		foreach ($cart->positions() as $cartPosition) {
-			$product = $cartPosition->product();
+			if (Products::hasBehavior('Translatable')) {
+				$product = $cartPosition->product(['translate' => $user->locale]);
+			} else {
+				$product = $cartPosition->product();
+			}
 
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
