@@ -263,6 +263,7 @@ class Orders extends \base_core\models\Base {
 		extract(Message::aliases());
 
 		$group = ClientGroups::find('first', ['conditions' => compact('user')]);
+		$terms = Settings::read('billing.paymentTerms');
 
 		if (!$group) {
 			return false;
@@ -276,7 +277,7 @@ class Orders extends \base_core\models\Base {
 			'date' => date('Y-m-d'),
 			'status' => 'awaiting-payment',
 			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
-			'terms' => Settings::read('billing.paymentTerms')
+			'terms' => $terms($user)
 		]);
 		$invoice = $user->address('billing')->copy($invoice, 'address_');
 
