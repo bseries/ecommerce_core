@@ -320,7 +320,7 @@ class Orders extends \base_core\models\Base {
 		if ($price->getAmount()) {
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
-				'description' => $entity->shippingMethod()->title,
+				'description' => $entity->shippingMethod()->title(),
 				'quantity' => 1,
 				'amount_rate' => $price->getRate(),
 				'amount_currency' => $price->getCurrency(),
@@ -335,7 +335,7 @@ class Orders extends \base_core\models\Base {
 		if ($price->getAmount()) {
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
-				'description' => $entity->paymentMethod()->title,
+				'description' => $entity->paymentMethod()->title(),
 				'amount_rate' => $price->getRate(),
 				'amount_currency' => $price->getCurrency(),
 				'amount_type' => $price->getType(),
