@@ -57,14 +57,13 @@ class ShippingMethods extends \base_core\models\Base {
 		}
 	}
 
-	public function title($entity, $locale) {
-		$locale = $locale ?: Environment::get('locale');
+	public function title($entity) {
 		$value = $entity->data('title');
 
 		if (is_string($value)) {
 			return $value;
 		}
-		return $value($locale);
+		return $value(Environment::get('locale'));
 	}
 
 	public function hasAccess($entity, $user) {
