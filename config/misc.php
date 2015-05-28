@@ -11,7 +11,6 @@
  */
 
 use li3_access\security\Access;
-use base_tag\models\Tags;
 
 $rules = Access::adapter('entity');
 
@@ -21,7 +20,5 @@ $rules->add('user.role:merchant', function($user, $entity, $options) {
 $rules->add('user.role:customer', function($user, $entity, $options) {
 	return $user->role == 'customer';
 });
-
-Tags::registerDependent('ecommerce_core\models\ProductGroups');
 
 ?>
