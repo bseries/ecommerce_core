@@ -236,16 +236,10 @@ class Orders extends \base_core\models\Base {
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
 
-			$price = $cartPosition->product()->price($user);
-
 			$shipmentPosition = ShipmentPositions::create([
 				'ecommerce_shipment_id' => $shipment->id,
 				'description' => $description,
-				'quantity' => $cartPosition->quantity,
-				'amount_rate' => $price->amount_rate,
-				'amount_type' => $price->amount_type,
-				'amount_currency' => $price->amount_currency,
-				'amount' => $price->amount
+				'quantity' => $cartPosition->quantity
 			]);
 			if (!$shipmentPosition->save(null, ['localize' => false])) {
 				return false;
