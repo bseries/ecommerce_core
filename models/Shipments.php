@@ -13,6 +13,7 @@
 namespace ecommerce_core\models;
 
 use Exception;
+use lithium\core\Libraries;
 use lithium\g11n\Message;
 use lithium\analysis\Logger;
 use li3_mailer\action\Mailer;
@@ -20,6 +21,7 @@ use AD\Finance\Price;
 use AD\Finance\Price\Prices;
 
 use base_core\extensions\cms\Settings;
+use base_address\models\Contacts;
 use base_address\models\Addresses;
 use ecommerce_core\models\ShippingMethods;
 
@@ -208,6 +210,39 @@ class Shipments extends \base_core\models\Base {
 			$result = $result->add($position->total());
 		}
 		return $result;
+	}
+
+	public function exportAsPdf($entity) {
+		extract(Message::aliases());
+
+		$stream = fopen('php://temp', 'w+');
+
+		$user = $entity->user();
+
+		$document = Libraries::locate('document', 'Shipment');
+		$document = new $document();
+
+		$sender = Contacts::create(Settings::read('contact.shipping'));
+
+		$document
+			->type($t('Shipment', [
+				'scope' => 'ecommerce_core',
+				'locale' => $user->locale
+			]))
+			->invoice($entity)
+			->recipient($user)
+			->sender($sender)
+			->subject($t('Shipment #{:number}', [
+				'number' => $entity->number,
+				'locale' => $user->locale,
+				'scope' => 'ecommerce_core'
+			]));
+
+		$document->compile();
+		$document->render($stream);
+
+		rewind($stream);
+		return $stream;
 	}
 
 	/* Deprecated */

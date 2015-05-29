@@ -26,6 +26,27 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
 
+	public function admin_export_pdf() {
+		extract(Message::aliases());
+
+		$item = Shipments::find('first', [
+			'conditions' => [
+				'id' => $this->request->id
+			]
+		]);
+		$stream = $item->exportAsPdf();
+
+		$this->_renderDownload(
+			$this->_downloadBasename(
+				null,
+				'shipment',
+				$item->number . '.pdf'
+			),
+			$stream
+		);
+		fclose($stream);
+	}
+
 	public function admin_ship() {
 		extract(Message::aliases());
 

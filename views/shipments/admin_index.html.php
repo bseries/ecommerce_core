@@ -73,7 +73,8 @@ $this->set([
 							<?= $this->date->format($item->modified, 'date') ?>
 						</time>
 					<td class="actions">
-						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?= $this->html->link($t('PDF'), ['id' => $item->id, 'action' => 'export_pdf'], ['class' => 'button']) ?>
+						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit'], ['class' => 'button']) ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>
