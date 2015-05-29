@@ -47,30 +47,6 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 		fclose($stream);
 	}
 
-	public function admin_ship() {
-		extract(Message::aliases());
-
-		$model = $this->_model;
-
-		$item = $model::first($this->request->id);
-		$status = $item->method()->delegate ? 'shipping-scheduled' : 'shipped';
-
-		$result = $item->save(
-			['status' => $status],
-			['whitelist' => ['status'], 'validate' => false]
-		);
-		if ($result) {
-			FlashMessage::write($t('Status changed.', ['scope' => 'ecommerce_core']), [
-				'level' => 'success'
-			]);
-		} else {
-			FlashMessage::write($t('Failed to change status.', ['scope' => 'ecommerce_core']), [
-				'level' => 'error'
-			]);
-		}
-		return $this->redirect($this->request->referer());
-	}
-
 	protected function _selects($item = null) {
 		extract(Message::aliases());
 
