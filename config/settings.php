@@ -26,8 +26,6 @@ Settings::register('product.number', [
 	'generate' => '%Y%%04.d'
 ]);
 
-Settings::register('service.paypal.default.email', 'billing@example.com');
-
 // strtotime()-compatible string with time in future, when a cart
 // should expire.
 Settings::register('checkout.expire', '+1 week');
