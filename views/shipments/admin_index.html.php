@@ -34,7 +34,6 @@ $this->set([
 					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
 					<td data-sort="method" class="method table-sort"><?= $t('Method') ?>
 					<td data-sort="User.number" class="user table-sort"><?= $t('Recipient') ?>
-					<td class="money"><?= $t('Total (net)') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
@@ -67,7 +66,6 @@ $this->set([
 						<?php else: ?>
 							-
 						<?php endif ?>
-					<td class="money"><?= $this->price->format($item->totals(), 'net') ?>
 					<td class="date modified">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>

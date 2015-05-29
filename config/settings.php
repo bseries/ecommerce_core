@@ -12,6 +12,8 @@
 
 use base_core\extensions\cms\Settings;
 
+Settings::register('contact.shipping', Settings::read('contact.default'));
+
 // Number Format
 Settings::register('order.number', [
 	'extract' => '/[0-9]{4}([0-9]{4})/',

@@ -12,10 +12,9 @@
 
 namespace ecommerce_core\models;
 
-use AD\Finance\Price;
+use Exception;
 use ecommerce_core\models\Products;
 use ecommerce_core\models\Shipments;
-use Exception;
 
 class ShipmentPositions extends \base_core\models\Base {
 
@@ -40,19 +39,6 @@ class ShipmentPositions extends \base_core\models\Base {
 			'key' => 'ecommerce_shipment_id'
 		]
 	];
-
-	public function amount($entity) {
-		return new Price(
-			(integer) $entity->amount,
-			$entity->amount_currency,
-			$entity->amount_type,
-			(integer) $entity->amount_rate
-		);
-	}
-
-	public function total($entity) {
-		return $entity->amount()->multiply($entity->quantity);
-	}
 
 	// Assumes format "Foobar (#12345)".
 	public function product($entity) {
