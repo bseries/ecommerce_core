@@ -216,7 +216,7 @@ class Shipments extends \base_core\models\Base {
 				'scope' => 'ecommerce_core',
 				'locale' => $user->locale
 			]))
-			->invoice($entity)
+			->entity($entity)
 			->recipient($user)
 			->sender($sender)
 			->subject($t('Shipment #{:number}', [
