@@ -163,7 +163,6 @@ $this->set([
 								'value' => 1,
 								'label' => false
 							]) ?>
-						<td>
 						<td class="actions">
 							<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
 					</tbody>
