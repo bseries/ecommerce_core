@@ -21,6 +21,7 @@ use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\ProductPrices;
 use ecommerce_core\models\Carts;
+use base_tag\models\Tags;
 
 class Ecommerce extends \lithium\console\Command {
 
@@ -278,8 +279,10 @@ class Ecommerce extends \lithium\console\Command {
 		}
 	}
 
-	public function migrateAutoTags() {
-		$this->out('Migrate Auto Tags');
+	public function migrateTags() {
+		$this->out('Migrate Auto/Size Tags');
+
+		Tags::collect();
 
 		foreach (ProductGroups::find('all') as $group) {
 			$this->out('Tags before: ' . $group->tags);
@@ -292,8 +295,29 @@ class Ecommerce extends \lithium\console\Command {
 			$this->out('Tags after: ' . $group->tags);
 			$this->out($result ? 'OK' : 'FAILED!');
 		}
+
+		foreach (ProductGroups::find('all') as $group) {
+			$this->out('Tags before: ' . $group->tags);
+
+			$group->removeTags(['look:available']);
+
+			foreach ($group->tags(['serialized' => false]) as $tag) {
+				if (preg_match('/^(size|part|look)\:[mslx\-\/]{1,3}$/i', $tag)) {
+					$group->removeTags([$tag]);
+				}
+			}
+
+			$result = $group->save([
+				'tags' => $group->tags
+			], [
+				'whitelist' => ['id', 'tags']
+			]);
+			$this->out('Tags after: ' . $group->tags);
+			$this->out($result ? 'OK' : 'FAILED!');
+		}
 		$this->out('COMPLETED');
 
+		Tags::clean();
 	}
 }
 
