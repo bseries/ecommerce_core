@@ -164,7 +164,6 @@ $this->set([
 									'type' => 'select',
 									'label' => false,
 									'value' => $child->amount_type,
-									'disabled' => true,
 									'list' => ['net' => $t('net'), 'gross' => $t('gross')]
 								]) ?>
 							<td>
@@ -205,7 +204,6 @@ $this->set([
 							<?= $this->form->field("positions.new.amount_type", [
 								'type' => 'select',
 								'label' => false,
-								'disabled' => true,
 								'list' => ['net' => $t('net'), 'gross' => $t('gross')]
 							]) ?>
 						<td>
