@@ -278,7 +278,23 @@ class Ecommerce extends \lithium\console\Command {
 		}
 	}
 
+	public function migrateAutoTags() {
+		$this->out('Migrate Auto Tags');
 
+		foreach (ProductGroups::find('all') as $group) {
+			$this->out('Tags before: ' . $group->tags);
+			$result = $group->save([
+				'title' => $group->title,
+				'tags' => $group->tags
+			], [
+				'whitelist' => ['id', 'title', 'tags']
+			]);
+			$this->out('Tags after: ' . $group->tags);
+			$this->out($result ? 'OK' : 'FAILED!');
+		}
+		$this->out('COMPLETED');
+
+	}
 }
 
 ?>
