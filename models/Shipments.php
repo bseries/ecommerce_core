@@ -17,6 +17,8 @@ use lithium\core\Libraries;
 use lithium\g11n\Message;
 use lithium\analysis\Logger;
 use li3_mailer\action\Mailer;
+use AD\Finance\Price;
+use AD\Finance\Price\Prices;
 
 use base_core\extensions\cms\Settings;
 use base_address\models\Contacts;
@@ -197,6 +199,17 @@ class Shipments extends \base_core\models\Base {
 			'shipping-scheduled',
 			'shipping-error'
 		]);
+	}
+
+	// This is the total value of the shipment. Used i.e. for
+	// calculating the inssurrance value needed.
+	public function totals($entity) {
+		$result = new Prices();
+
+		foreach ($entity->positions() as $position) {
+			$result = $result->add($position->total());
+		}
+		return $result;
 	}
 
 	public function exportAsPdf($entity) {
