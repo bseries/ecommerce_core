@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ecommerce_core 1.0\n"
 "Report-Msgid-Bugs-To: info@atelierdisko.de\n"
-"POT-Creation-Date: 2015-05-29 17:42+0200\n"
+"POT-Creation-Date: 2015-06-03 12:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,7 +86,7 @@ msgstr ""
 #: controllers/CartsController.php:34 views/orders/admin_index.html.php:89
 #: views/product_groups/admin_index.html.php:83
 #: views/products/admin_index.html.php:77
-#: views/shipments/admin_index.html.php:75
+#: views/shipments/admin_index.html.php:77
 msgid "open"
 msgstr ""
 
@@ -183,24 +183,24 @@ msgstr ""
 msgid "You must accept the terms."
 msgstr ""
 
-#: models/Orders.php:219 models/Orders.php:273
+#: models/Orders.php:219 models/Orders.php:279
 msgid "Order No."
 msgstr ""
 
-#: models/Orders.php:440
+#: models/Orders.php:446
 msgid "Your order #{:number}."
 msgstr ""
 
-#: models/Shipments.php:175
+#: models/Shipments.php:177
 msgid "Order #{:number} shipped."
 msgstr ""
 
-#: models/Shipments.php:215 views/carts/admin_form.html.php:43
+#: models/Shipments.php:228 views/carts/admin_form.html.php:43
 #: views/orders/admin_form.html.php:176 views/orders/admin_index.html.php:37
 msgid "Shipment"
 msgstr ""
 
-#: models/Shipments.php:222
+#: models/Shipments.php:235
 msgid "Shipment #{:number}"
 msgstr ""
 
@@ -243,7 +243,7 @@ msgstr ""
 #: views/carts/admin_form.html.php:48 views/orders/admin_form.html.php:232
 #: views/product_groups/admin_form.html.php:107
 #: views/products/admin_form.html.php:267
-#: views/shipments/admin_form.html.php:188
+#: views/shipments/admin_form.html.php:240
 msgid "save"
 msgstr ""
 
@@ -279,14 +279,14 @@ msgstr ""
 #: views/carts/admin_index.html.php:37 views/orders/admin_index.html.php:39
 #: views/product_groups/admin_index.html.php:41
 #: views/products/admin_index.html.php:42
-#: views/shipments/admin_index.html.php:37
+#: views/shipments/admin_index.html.php:38
 msgid "Modified"
 msgstr ""
 
 #: views/carts/admin_index.html.php:42 views/orders/admin_index.html.php:44
 #: views/product_groups/admin_index.html.php:46
 #: views/products/admin_index.html.php:47
-#: views/shipments/admin_index.html.php:42
+#: views/shipments/admin_index.html.php:43
 msgid "Filter"
 msgstr ""
 
@@ -297,7 +297,7 @@ msgstr ""
 #: views/carts/admin_index.html.php:91 views/orders/admin_index.html.php:94
 #: views/product_groups/admin_index.html.php:88
 #: views/products/admin_index.html.php:82
-#: views/shipments/admin_index.html.php:80
+#: views/shipments/admin_index.html.php:82
 msgid "No items available, yet."
 msgstr ""
 
@@ -359,12 +359,13 @@ msgid "Phone"
 msgstr ""
 
 #: views/orders/admin_form.html.php:147
+#: views/shipments/admin_index.html.php:37
 msgid "Total (net)"
 msgstr ""
 
 #: views/orders/admin_form.html.php:153
-#: views/shipments/admin_form.html.php:182
-#: views/shipments/admin_index.html.php:74
+#: views/shipments/admin_form.html.php:234
+#: views/shipments/admin_index.html.php:76
 msgid "PDF"
 msgstr ""
 
@@ -513,8 +514,8 @@ msgstr ""
 #: views/products/admin_form.html.php:151
 #: views/products/admin_form.html.php:166
 #: views/products/admin_index.html.php:75
-#: views/shipments/admin_form.html.php:152
-#: views/shipments/admin_form.html.php:167
+#: views/shipments/admin_form.html.php:183
+#: views/shipments/admin_form.html.php:216
 msgid "delete"
 msgstr ""
 
@@ -584,10 +585,12 @@ msgid "Amount"
 msgstr ""
 
 #: views/products/admin_form.html.php:206
+#: views/shipments/admin_form.html.php:127
 msgid "Currency"
 msgstr ""
 
 #: views/products/admin_form.html.php:207
+#: views/shipments/admin_form.html.php:128
 msgid "Type"
 msgstr ""
 
@@ -596,10 +599,14 @@ msgid "Rate (%)"
 msgstr ""
 
 #: views/products/admin_form.html.php:248
+#: views/shipments/admin_form.html.php:167
+#: views/shipments/admin_form.html.php:207
 msgid "gross"
 msgstr ""
 
 #: views/products/admin_form.html.php:248
+#: views/shipments/admin_form.html.php:167
+#: views/shipments/admin_form.html.php:207
 msgid "net"
 msgstr ""
 
@@ -662,8 +669,20 @@ msgstr ""
 msgid "Quantity"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:172
+#: views/shipments/admin_form.html.php:129
+msgid "Unit value"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:130
+msgid "Line total value (net)"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:221
 msgid "add position"
+msgstr ""
+
+#: views/shipments/admin_form.html.php:223
+msgid "Total value (net)"
 msgstr ""
 
 #: views/shipments/admin_index.html.php:12
