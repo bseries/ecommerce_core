@@ -43,12 +43,11 @@ $this->set([
 				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
-				<div class="media-attachment use-media-attachment-direct">
-					<?= $this->form->label('ProductsCoverMediaId', $t('Cover')) ?>
-					<?= $this->form->hidden('cover_media_id') ?>
-					<div class="selected"></div>
-					<?= $this->html->link($t('select'), '#', ['class' => 'button select']) ?>
-				</div>
+				<?= $this->media->field('cover_media_id', [
+					'label' => $t('Cover'),
+					'attachment' => 'direct',
+					'value' => $item->cover()
+				]) ?>
 			</div>
 		</div>
 
