@@ -10,7 +10,7 @@
     },
     "require": {
         "php": ">=5.5.0",
-        "composer/installers": "~1.0",
+        "composer/installers": "1.*@stable",
         "unionofrad/lithium": "1.0.*@dev",
 		"davidpersson/li3_translate": "2.*@beta",
         "atelierdisko/li3_flash_message": "1.0.*@beta",
