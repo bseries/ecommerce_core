@@ -212,7 +212,7 @@ class Orders extends \base_core\models\Base {
 	public function generateShipment($entity, $user, $cart, array $data = []) {
 		extract(Message::aliases());
 
-		$shipment = Shipments::create([
+		$shipment = Shipments::create($data + [
 			$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->shipping_method,
@@ -269,7 +269,7 @@ class Orders extends \base_core\models\Base {
 			return false;
 		}
 
-		$invoice = Invoices::create([
+		$invoice = Invoices::create($data + [
 			$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id,
 			'user_vat_reg_no' => $user->vat_reg_no,
 			'tax_type' => $group->taxType,
