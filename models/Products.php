@@ -26,8 +26,6 @@ use lithium\analysis\Logger;
 
 class Products extends \base_core\models\Base {
 
-	use \base_core\models\SlugTrait;
-
 	protected $_meta = [
 		'source' => 'ecommerce_products'
 	];
@@ -55,6 +53,7 @@ class Products extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\Sluggable',
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_media\extensions\data\behavior\Coupler' => [
 			'bindings' => [
