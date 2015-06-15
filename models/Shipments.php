@@ -35,8 +35,6 @@ use ecommerce_core\models\ShippingMethods;
 // @see billing_core\models\Invoices
 class Shipments extends \base_core\models\Base {
 
-	use \base_core\models\UserTrait;
-
 	protected $_meta = [
 		'source' => 'ecommerce_shipments'
 	];
@@ -67,6 +65,7 @@ class Shipments extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\Ownable',
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\ReferenceNumber',
