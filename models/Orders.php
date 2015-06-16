@@ -83,15 +83,17 @@ class Orders extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\StatusChange',
 		'base_core\extensions\data\behavior\Searchable' => [
 			'fields' => [
-				'number',
 				'shipping_method',
 				'payment_method',
-				'status',
 				'modified',
+				'number',
 				'User.number',
 				'VirtualUser.number',
 				'Invoice.number',
-				'Shipment.number'
+				'Shipment.number',
+				'status',
+				'Invoice.status',
+				'Shipment.status'
 			]
 		]
 	];
