@@ -11,7 +11,13 @@
  */
 
 use li3_access\security\Access;
+use base_core\security\Gate;
 
+// Register additional roles.
+Gate::registerRole('merchant');
+Gate::registerRole('customer');
+
+// Add additional entity rules.
 $rules = Access::adapter('entity');
 
 $rules->add('user.role:merchant', function($user, $entity, $options) {
