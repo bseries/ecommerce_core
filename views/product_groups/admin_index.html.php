@@ -52,17 +52,17 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="flag is-published">
-						<?php
+						<i class="material-icons"><?php
 							$hasPublishedProducts = (boolean) $item->products()->find(function($p) {
 								return $p->is_published;
 							})->count();
 
-							if ($hasPublishedProducts) {
-								echo ($item->is_published ? '✓' : '×');
+							if ($hasPublishedProducts && $item->is_published) {
+								echo 'done';
 							} else {
-								echo '(' . ($item->is_published ? '✓' : '×') . ')';
+								echo '(done)';
 							}
-						?>
+						?></i>
 					<td class="flag is-promoted"><?= ($item->is_promoted ? '✓' : '×') ?>
 					<td class="media">
 						<?php if ($cover = $item->cover()): ?>

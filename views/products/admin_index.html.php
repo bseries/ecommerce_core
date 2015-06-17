@@ -52,7 +52,7 @@ $this->set([
 			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="flag"><?= ($item->is_published ? '✓' : '×') ?>
+					<td class="flag"><i class="material-icons"><?= ($item->is_published ? 'done' : '') ?></i>
 					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
 							<?= $this->media->image($cover->version('fix3admin'), [
