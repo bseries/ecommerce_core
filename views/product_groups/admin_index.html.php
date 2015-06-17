@@ -51,7 +51,7 @@ $this->set([
 			<tbody>
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
-					<td class="flag is-published">
+					<td class="flag">
 						<i class="material-icons"><?php
 							$hasPublishedProducts = (boolean) $item->products()->find(function($p) {
 								return $p->is_published;
@@ -63,7 +63,7 @@ $this->set([
 								echo '(done)';
 							}
 						?></i>
-					<td class="flag is-promoted"><?= ($item->is_promoted ? '✓' : '×') ?>
+					<td class="flag"><i class="material-icons"><?= ($item->is_promoted ? 'done' : '') ?></i>
 					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
 							<?= $this->media->image($cover->version('fix3admin'), [
