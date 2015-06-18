@@ -36,6 +36,7 @@ class ProductGroups extends \base_core\models\Base {
 	];
 
 	protected static $_actsAs = [
+		'base_core\extensions\data\behavior\Access',
 		'base_core\extensions\data\behavior\Sluggable',
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_media\extensions\data\behavior\Coupler' => [
@@ -80,12 +81,6 @@ class ProductGroups extends \base_core\models\Base {
 				'strategy' => 'inline'
 			]);
 		}
-	}
-
-	public function hasAccess($entity, $user) {
-		return Access::check('entity', $user, ['request' => $entity], [
-			'rules' => $entity->access
-		]) === [];
 	}
 }
 
