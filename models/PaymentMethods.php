@@ -14,7 +14,6 @@ namespace ecommerce_core\models;
 
 use lithium\core\Environment;
 use lithium\util\Collection;
-use li3_access\security\Access;
 use AD\Finance\Price\NullPrice;
 
 class PaymentMethods extends \base_core\models\Base {

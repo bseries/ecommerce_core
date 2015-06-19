@@ -15,7 +15,6 @@ namespace ecommerce_core\models;
 use lithium\core\Environment;
 use lithium\util\Collection;
 use billing_core\extensions\financial\Price;
-use li3_access\security\Access;
 
 class ShippingMethods extends \base_core\models\Base {
 

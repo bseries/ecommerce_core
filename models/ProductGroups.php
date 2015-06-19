@@ -13,7 +13,6 @@
 namespace ecommerce_core\models;
 
 use lithium\util\Inflector;
-use li3_access\security\Access;
 
 class ProductGroups extends \base_core\models\Base {
 
