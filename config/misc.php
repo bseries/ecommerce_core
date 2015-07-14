@@ -18,12 +18,10 @@ Gate::registerRole('merchant');
 Gate::registerRole('customer');
 
 // Add additional entity rules.
-$rules = Access::adapter('entity');
-
-$rules->add('user.role:merchant', function($user, $entity, $options) {
+Access::add('entity', 'user.role:merchant', function($user, $entity) {
 	return $user->role == 'merchant';
 });
-$rules->add('user.role:customer', function($user, $entity, $options) {
+Access::add('entity', 'user.role:customer', function($user, $entity) {
 	return $user->role == 'customer';
 });
 
