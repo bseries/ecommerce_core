@@ -52,7 +52,7 @@ class Products extends \base_core\models\Base {
 		]
 	];
 
-	public $actsAs = [
+	protected $_actsAs = [
 		'base_core\extensions\data\behavior\Sluggable',
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_media\extensions\data\behavior\Coupler' => [

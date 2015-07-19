@@ -22,7 +22,7 @@ class ShippingMethods extends \base_core\models\Base {
 		'connection' => false
 	];
 
-	public $actsAs = [
+	protected $_actsAs = [
 		'base_core\extensions\data\behavior\Access'
 	];
 
