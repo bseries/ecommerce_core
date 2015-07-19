@@ -29,7 +29,7 @@ class ProductPrices extends \base_core\models\Base {
 		]
 	];
 
-	protected static $_actsAs = [
+	public $actsAs = [
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Localizable' => [
 			'fields' => [

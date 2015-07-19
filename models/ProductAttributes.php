@@ -28,7 +28,7 @@ class ProductAttributes extends \base_core\models\Base {
 		'source' => 'ecommerce_product_attributes'
 	];
 
-	protected static $_actsAs = [
+	public $actsAs = [
 		'base_core\extensions\data\behavior\RelationsPlus'
 	];
 
