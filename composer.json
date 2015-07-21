@@ -16,7 +16,7 @@
         "atelierdisko/li3_flash_message": "1.0.*@beta",
         "atelierdisko/li3_access": "1.0.*@beta",
         "atelierdisko/li3_mailer": "1.0.*@beta",
-        "atelierdisko/finance": "2.0.*@beta",
+        "atelierdisko/finance": "2.0.*",
         "atelierdisko/base_core": "1.3.*",
         "atelierdisko/base_media": "1.3.*",
         "atelierdisko/base_tag": "1.3.*",
