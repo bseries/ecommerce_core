@@ -44,7 +44,7 @@ msgstr "Warenkörbe"
 
 #: config/widgets.php:33
 msgid "Open"
-msgstr "Öffnen"
+msgstr "Offen"
 
 #: config/widgets.php:34
 msgid "Expired"
@@ -56,7 +56,7 @@ msgstr "Kunden"
 
 #: config/widgets.php:81
 msgid "Total"
-msgstr "Summe"
+msgstr "Gesamt"
 
 #: config/widgets.php:82
 msgid "In stock"
@@ -68,7 +68,7 @@ msgstr "Unerledigt"
 
 #: config/widgets.php:109
 msgid "Out of Stock"
-msgstr "Nicht mehr auf Lager"
+msgstr "Nicht auf Lager"
 
 #: controllers/CartsController.php:31 controllers/OrdersController.php:34
 #: controllers/OrdersController.php:43 controllers/OrdersController.php:53
