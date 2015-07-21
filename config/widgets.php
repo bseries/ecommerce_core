@@ -76,7 +76,7 @@ Widgets::register('total_products', function() use ($t) {
 		'url' => [
 			'controller' => 'ProductGroups', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
-		'title' => $t('Products'),
+		'title' => $t('Products', ['scope' => 'ecommerce_core']),
 		'data' => [
 			$t('Total', ['scope' => 'ecommerce_core']) => $products->count(),
 			$t('In stock', ['scope' => 'ecommerce_core']) => $stock
