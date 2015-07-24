@@ -20,7 +20,7 @@ $this->set([
 ]);
 
 ?>
-<article class="view-<?= $this->_config['controller'] . '-' . $this->_config['template'] ?>">
+<article>
 	<?=$this->form->create($item) ?>
 
 		<div class="grid-row">
