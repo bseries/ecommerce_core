@@ -260,8 +260,11 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function generateInvoice($entity, $user, $cart, array $data = []) {
-		$invoice = Invoices::create($data);
+		extract(Message::aliases());
 
+		$invoice = Invoices::create($data + [
+			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
+		]);
 		if (!$invoice->save()) {
 			return false;
 		}
