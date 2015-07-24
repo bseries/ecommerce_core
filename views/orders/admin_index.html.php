@@ -65,7 +65,11 @@ $this->set([
 					<td class="number">
 					<?php
 					if ($sub = $item->invoice()) {
-						echo $this->html->link($sub->number, ['controller' => 'invoices', 'library' => 'billing_core', 'id' => $sub->id, 'action' => 'edit']);
+						echo $this->html->link($sub->number, [
+							'library' => 'billing_invoice',
+							'controller' => 'invoices', 'action' => 'edit'
+							'id' => $sub->id,
+						]);
 					} else {
 						echo '–';
 					}

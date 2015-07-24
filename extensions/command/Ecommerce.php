@@ -12,8 +12,8 @@
 
 namespace ecommerce_core\extensions\command;
 
-use billing_core\models\Invoices;
-use billing_core\models\InvoicePositions;
+use billing_invoice\models\Invoices;
+use billing_invoice\models\InvoicePositions;
 use ecommerce_core\models\Shipments;
 use ecommerce_core\models\ShipmentPositions;
 use ecommerce_core\models\Products;

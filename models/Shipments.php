@@ -32,7 +32,7 @@ use ecommerce_core\models\ShippingMethods;
 //
 // Position price can be thought of the "value".
 //
-// @see billing_core\models\Invoices
+// @see billing_invoice\models\Invoices
 class Shipments extends \base_core\models\Base {
 
 	protected $_meta = [

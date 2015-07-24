@@ -22,8 +22,8 @@ use lithium\util\Validator;
 use base_address\models\Addresses;
 use base_core\extensions\cms\Features;
 use base_core\extensions\cms\Settings;
-use billing_core\models\InvoicePositions;
-use billing_core\models\Invoices;
+use billing_invoice\models\InvoicePositions;
+use billing_invoice\models\Invoices;
 use billing_core\models\ClientGroups;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
@@ -60,7 +60,7 @@ class Orders extends \base_core\models\Base {
 			'key' => 'virtual_user_id'
 		],
 		'Invoice' => [
-			'to' => 'billing_core\models\Invoices',
+			'to' => 'billing_invoice\models\Invoices',
 			'key' => 'billing_invoice_id'
 		],
 		'Shipment' => [

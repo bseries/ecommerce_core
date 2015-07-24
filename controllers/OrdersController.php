@@ -14,7 +14,7 @@ namespace ecommerce_core\controllers;
 
 use base_core\models\Users;
 use ecommerce_core\models\Orders;
-use billing_core\models\Invoices;
+use billing_invoice\models\Invoices;
 use ecommerce_core\models\Shipments;
 use lithium\g11n\Message;
 
