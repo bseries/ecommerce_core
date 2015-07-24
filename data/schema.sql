@@ -160,8 +160,8 @@ CREATE TABLE `ecommerce_shipments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Augment other tables
-ALTER TABLE `users` ADD `has_accepted_terms` TINYINT(1)  UNSIGNED  NOT NULL  DEFAULT '0'  COMMENT 'ecommerce_core' AFTER `is_notified`;
-ALTER TABLE `users` ADD `shipping_address_id` int(11) unsigned DEFAULT NULL COMMENT 'ecommerce_core' AFTER `billing_address_id`;
+ALTER TABLE `users` ADD `has_accepted_terms` TINYINT(1)  UNSIGNED  NOT NULL  DEFAULT '0'  COMMENT 'ecommerce' AFTER `is_notified`;
+ALTER TABLE `users` ADD `shipping_address_id` int(11) unsigned DEFAULT NULL COMMENT 'ecommerce' AFTER `billing_address_id`;
 
-ALTER TABLE `virtual_users` ADD `has_accepted_terms` TINYINT(1)  UNSIGNED  NOT NULL  DEFAULT '0'  COMMENT 'ecommerce_core' AFTER `is_notified`;
-ALTER TABLE `virtual_users` ADD `shipping_address_id` int(11) unsigned DEFAULT NULL COMMENT 'ecommerce_core' AFTER `billing_address_id`;
+ALTER TABLE `virtual_users` ADD `has_accepted_terms` TINYINT(1)  UNSIGNED  NOT NULL  DEFAULT '0'  COMMENT 'ecommerce' AFTER `is_notified`;
+ALTER TABLE `virtual_users` ADD `shipping_address_id` int(11) unsigned DEFAULT NULL COMMENT 'ecommerce' AFTER `billing_address_id`;
