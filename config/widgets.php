@@ -16,7 +16,6 @@ use ecommerce_core\models\Carts;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\Products;
 use base_core\models\Users;
-use base_core\models\VirtualUsers;
 
 extract(Message::aliases());
 
@@ -41,10 +40,6 @@ Widgets::register('carts', function() use ($t) {
 
 Widgets::register('users', function() use ($t) {
 	$total = Users::find('count', ['conditions' => [
-		'is_active' => true,
-		'role' => ['customer', 'merchant']
-	]]);
-	$total += VirtualUsers::find('count', ['conditions' => [
 		'is_active' => true,
 		'role' => ['customer', 'merchant']
 	]]);

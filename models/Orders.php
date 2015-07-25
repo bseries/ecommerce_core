@@ -54,10 +54,6 @@ class Orders extends \base_core\models\Base {
 			'to' => 'base_core\models\Users',
 			'key' => 'user_id'
 		],
-		'VirtualUser' => [
-			'to' => 'base_core\models\VirtualUsers',
-			'key' => 'virtual_user_id'
-		],
 		'Invoice' => [
 			'to' => 'billing_invoice\models\Invoices',
 			'key' => 'billing_invoice_id'
@@ -73,7 +69,6 @@ class Orders extends \base_core\models\Base {
 	];
 
 	protected $_actsAs = [
-		'base_core\extensions\data\behavior\User',
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\Uuid',
@@ -86,7 +81,6 @@ class Orders extends \base_core\models\Base {
 				'modified',
 				'number',
 				'User.number',
-				'VirtualUser.number',
 				'Invoice.number',
 				'Shipment.number',
 				'status',
@@ -155,7 +149,7 @@ class Orders extends \base_core\models\Base {
 		}
 		$exists = Addresses::find('first', [
 			'conditions' =>  [
-				$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id
+				'user_id' => $user->id
 			] + $address->data()
 		]);
 		if ($exists) {
@@ -163,7 +157,7 @@ class Orders extends \base_core\models\Base {
 			$result = true;
 		} else {
 			$address = Addresses::create([
-				$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id
+				'user_id' => $user->id
 			] + $address->data());
 
 			$result = $address->save(null, ['validate' => false]);
@@ -213,7 +207,7 @@ class Orders extends \base_core\models\Base {
 		extract(Message::aliases());
 
 		$shipment = Shipments::create($data + [
-			$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id,
+			'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->shipping_method,
 			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,

@@ -60,18 +60,10 @@ $this->set([
 						-
 					<?php endif ?>
 					<td class="user">
-					<?php if ($user): ?>
-						<?= $this->html->link($user->number, [
-							'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
-							'action' => 'edit', 'id' => $user->id,
-							'library' => 'base_core'
-						]) ?>
-					<?php else: ?>
-						–
-					<?php endif ?>
+						<?= $this->user->link($user) ?>
 					<td class="total-amount money">
 					<?php if ($user): ?>
-						<?= $this->money->format($R = $item->totalValues('net', $user)) ?>
+						<?= $this->money->format($item->totalValues('net', $user)) ?>
 					<?php else: ?>
 						–
 					<?php endif ?>

@@ -58,15 +58,7 @@ $this->set([
 					<td class="status"><?= $statuses[$item->status] ?>
 					<td class="method"><?= $item->method ?>
 					<td class="user">
-						<?php if ($user): ?>
-							<?= $this->html->link($user->number, [
-								'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
-								'action' => 'edit', 'id' => $user->id,
-								'library' => 'base_core'
-							]) ?>
-						<?php else: ?>
-							-
-						<?php endif ?>
+						<?= $this->user->link($user) ?>
 					<td class="money"><?= $this->price->format($item->totals(), 'net') ?>
 					<td class="date modified">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">

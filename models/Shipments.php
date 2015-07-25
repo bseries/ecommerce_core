@@ -43,10 +43,6 @@ class Shipments extends \base_core\models\Base {
 		'User' => [
 			'to' => 'base_core\models\Users',
 			'key' => 'user_id'
-		],
-		'VirtualUser' => [
-			'to' => 'base_core\models\VirtualUsers',
-			'key' => 'virtual_user_id'
 		]
 	];
 
@@ -65,7 +61,6 @@ class Shipments extends \base_core\models\Base {
 	];
 
 	protected $_actsAs = [
-		'base_core\extensions\data\behavior\User',
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\ReferenceNumber',
@@ -79,8 +74,7 @@ class Shipments extends \base_core\models\Base {
 				'address_recipient',
 				'address_organization',
 				'modified',
-				'User.number',
-				'VirtualUser.number'
+				'User.number'
 			]
 		]
 	];
@@ -277,7 +271,7 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 		} else {
 			$item = ShipmentPositions::create($data + [
 				'ecommerce_shipment_id' => $entity->id,
-				$user->isVirtual() ? 'virtual_user_id' : 'user_id' => $user->id
+				'user_id' => $user->id
 			]);
 		}
 		if (!$item->save($data)) {

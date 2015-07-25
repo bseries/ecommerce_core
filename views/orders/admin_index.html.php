@@ -53,22 +53,14 @@ $this->set([
 					<td class="emphasize number"><?= $item->number ?: '–' ?>
 					<td class="status"><?= $item->status ? $statuses[$item->status] : '–' ?>
 					<td class="user number">
-						<?php if ($user): ?>
-							<?= $this->html->link($user->number, [
-								'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
-								'action' => 'edit', 'id' => $user->id,
-								'library' => 'base_core'
-							]) ?>
-						<?php else: ?>
-							-
-						<?php endif ?>
+						<?= $this->user->link($user) ?>
 					<td class="number">
 					<?php
 					if ($sub = $item->invoice()) {
 						echo $this->html->link($sub->number, [
 							'library' => 'billing_invoice',
-							'controller' => 'invoices', 'action' => 'edit'
-							'id' => $sub->id,
+							'controller' => 'invoices', 'action' => 'edit',
+							'id' => $sub->id
 						]);
 					} else {
 						echo '–';

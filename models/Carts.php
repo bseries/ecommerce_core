@@ -39,10 +39,6 @@ class Carts extends \base_core\models\Base {
 		'User' => [
 			'to' => 'base_core\models\Users',
 			'key' => 'user_id'
-		],
-		'VirtualUser' => [
-			'to' => 'base_core\models\VirtualUsers',
-			'key' => 'virtual_user_id'
 		]
 	];
 
@@ -61,7 +57,6 @@ class Carts extends \base_core\models\Base {
 	];
 
 	protected $_actsAs = [
-		'base_core\extensions\data\behavior\User',
 		'base_core\extensions\data\behavior\RelationsPlus',
 		'base_core\extensions\data\behavior\Timestamp',
 		'base_core\extensions\data\behavior\StatusChange',
@@ -69,8 +64,7 @@ class Carts extends \base_core\models\Base {
 			'fields' => [
 				'status',
 				'modified',
-				'User.number',
-				'VirtualUser.number'
+				'User.number'
 			]
 		]
 	];

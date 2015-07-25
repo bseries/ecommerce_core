@@ -101,7 +101,7 @@ $this->set([
 			</div>
 			<div class="actions">
 				<?= $this->html->link($t('open user'), [
-					'controller' => $user->isVirtual() ? 'VirtualUsers' : 'Users',
+					'controller' => 'Users',
 					'action' => 'edit',
 					'id' => $user->id,
 					'library' => 'base_core'
