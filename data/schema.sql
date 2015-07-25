@@ -71,7 +71,6 @@ CREATE TABLE `ecommerce_product_groups` (
   `is_promoted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `access` varchar(250) NOT NULL DEFAULT 'any',
   `cover_media_id` int(11) unsigned DEFAULT NULL,
-  `ecommerce_brand_id` int(11) unsigned DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
