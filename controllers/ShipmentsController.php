@@ -52,16 +52,7 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 	}
 
 	protected function _selects($item = null) {
-		extract(Message::aliases());
-
-		$statuses = Shipments::enum('status', [
-			'created' => $t('created', ['scope' => 'ecommerce_core']),
-			'cancelled' => $t('cancelled', ['scope' => 'ecommerce_core']),
-			'shipping-scheduled' => $t('shipping scheduled', ['scope' => 'ecommerce_core']),
-			'shipping' => $t('shipping', ['scope' => 'ecommerce_core']),
-			'shipped' => $t('shipped', ['scope' => 'ecommerce_core']),
-			'shipping-error' => $t('shipping error', ['scope' => 'ecommerce_core']),
-		]);
+		$statuses = Shipments::enum('status');
 		$methods = ShippingMethods::find('list');
 		$currencies = Currencies::find('list');
 		$users = [null => '-'] + Users::find('list', ['order' => 'name']);

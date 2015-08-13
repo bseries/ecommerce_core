@@ -30,14 +30,7 @@ class CartsController extends \base_core\controllers\BaseController {
 	use \base_core\controllers\AdminDeleteTrait;
 
 	protected function _selects($item = null) {
-		extract(Message::aliases());
-
-		$statuses = Carts::enum('status', [
-			'cancelled' => $t('cancelled', ['scope' => 'ecommerce_core']),
-			'expired' => $t('expired', ['scope' => 'ecommerce_core']),
-			'closed' => $t('closed', ['scope' => 'ecommerce_core']),
-			'open' => $t('open', ['scope' => 'ecommerce_core'])
-		]);
+		$statuses = Carts::enum('status');
 
 		return compact('statuses');
 	}
