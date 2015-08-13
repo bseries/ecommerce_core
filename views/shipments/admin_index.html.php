@@ -55,7 +55,7 @@ $this->set([
 						'controller' => 'Orders', 'action' => 'edit', 'id' => $order->id,
 						'library' => 'ecommerce_core'
 					]) ?>
-					<td class="status"><?= $statuses[$item->status] ?>
+					<td class="status"><?= $item->status ?>
 					<td class="method"><?= $item->method ?>
 					<td class="user">
 						<?php if ($user): ?>
