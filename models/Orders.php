@@ -407,27 +407,34 @@ class Orders extends \base_core\models\Base {
 
 		switch ($to) {
 			case 'cancelled':
-				$invoice = $entity->invoice();
-				$shipment = $entity->shipment();
+				// Relies on transactional rollback on error.
 
-				if (($invoice && !$invoice->isCancelable()) || !$shipment->isCancelable()) {
-					return false;
+				if ($invoice = $entity->invoice()) {
+					if (!$invoice->isCancelable()) {
+						return false;
+					}
+					$result = $invoice->save(['status' => 'cancelled'], [
+						'whitelist' => ['status'],
+						'validate' => false
+					]);
+					if (!$result) {
+						return false;
+					}
 				}
-				$result = $invoice->save(['status' => 'cancelled'], [
-					'whitelist' => ['status'],
-					'validate' => false
-				]);
-				if (!$result) {
-					return false;
-				}
-				$result = $shipment->save(['status' => 'cancelled'], [
-					'whitelist' => ['status'],
-					'validate' => false
-				]);
-				if (!$result) {
-					return false;
+				if ($shipment = $entity->shipment()) {
+					if (!$shipment->isCancelable()) {
+						return false;
+					}
+					$result = $shipment->save(['status' => 'cancelled'], [
+						'whitelist' => ['status'],
+						'validate' => false
+					]);
+					if (!$result) {
+						return false;
+					}
 				}
 				return true;
+
 			case 'checked-out':
 				$contact = Settings::read('contact.billing');
 
