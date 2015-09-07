@@ -224,7 +224,16 @@ $this->set([
 		</div>
 
 		<div class="bottom-actions">
-			<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large save']) ?>
+			<div class="bottom-actions__left">
+				<!-- cancel -->
+			</div>
+			<div class="bottom-actions__right">
+				<?= $this->form->button($t('save'), [
+					'type' => 'submit',
+					'class' => 'button large save'
+				]) ?>
+			</div>
 		</div>
+
 	<?=$this->form->end() ?>
 </article>

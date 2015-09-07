@@ -45,7 +45,21 @@ $this->title("{$title['title']} - {$title['object'][1]}");
 			'list' => $shipments
 		]) ?>
 
-		<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large']) ?>
+		<div class="bottom-actions">
+			<div class="bottom-actions__left">
+				<?php if ($item->exists()): ?>
+					<?= $this->html->link($t('delete'), [
+						'action' => 'delete', 'id' => $item->id
+					], ['class' => 'button large delete']) ?>
+				<?php endif ?>
+			</div>
+			<div class="bottom-actions__right">
+				<?= $this->form->button($t('save'), [
+					'type' => 'submit',
+					'class' => 'button large save'
+				]) ?>
+			</div>
+		</div>
 
 	<?=$this->form->end() ?>
 </article>

@@ -212,15 +212,22 @@ $this->set([
 		</div>
 
 		<div class="bottom-actions">
-			<?php if ($item->exists()): ?>
-
-				<?= $this->html->link($t('PDF'), [
-					'controller' => 'Shipments',
-					'id' => $item->id, 'action' => 'export_pdf',
-				], ['class' => 'button large']) ?>
-
-			<?php endif ?>
-			<?= $this->form->button($t('save'), ['type' => 'submit', 'class' => 'button large save']) ?>
+			<div class="bottom-actions__left">
+				<!-- cancel -->
+			</div>
+			<div class="bottom-actions__right">
+				<?php if ($item->exists()): ?>
+					<?= $this->html->link($t('PDF'), [
+						'controller' => 'Shipments',
+						'id' => $item->id, 'action' => 'export_pdf',
+					], ['class' => 'button large']) ?>
+				<?php endif ?>
+				<?= $this->form->button($t('save'), [
+					'type' => 'submit',
+					'class' => 'button large save'
+				]) ?>
+			</div>
 		</div>
+
 	<?=$this->form->end() ?>
 </article>
