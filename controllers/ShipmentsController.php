@@ -29,6 +29,7 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 	use \base_core\controllers\AdminIndexTrait;
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
+	use \base_core\controllers\DownloadTrait;
 
 	public function admin_export_pdf() {
 		extract(Message::aliases());
