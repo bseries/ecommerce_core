@@ -24,11 +24,11 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 	protected $_layout = 'shipment';
 
-	protected function _compileHeaderFooter() {
+	protected function _preparePage() {
 		$backupHeight = $this->_currentHeight;
-		$backup = $this->_borderHorizontal;
+		$backup = $this->_margin;
 
-		$this->_borderHorizontal = [33, 33];
+		$this->_margin = [100, 33, 100, 33];
 		$this->_currentHeight = 800;
 
 		foreach (explode("\n", $this->_sender->address()->format('postal')) as $key => $line) {
@@ -39,14 +39,14 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 		$this->_currentHeight = 90;
 
-		$this->_borderHorizontal = $backup;
+		$this->_margin = $backup;
 		$this->_currentHeight = $backupHeight;
 	}
 
 	// 1.
 	protected function _compileRecipientAddressField() {
 		foreach (explode("\n", $this->_recipient->address('shipping')->format('postal')) as $key => $line) {
-			$this->_drawText($line, 'left', [
+			$this->_drawText($line, 'right', [
 				'offsetY' => $key ? $this->_skipLines() : 685
 			]);
 		}
@@ -76,8 +76,9 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 	// 3.
 	protected function _compileType() {
-		$backup = $this->_borderHorizontal;
-		$this->_borderHorizontal = [33, 33];
+		$backup = $this->_margin;
+
+		$this->_margin = [100, 33, 100, 33];
 		$this->_setFont(24, true);
 
 		$this->_drawText(strtoupper($this->_type), 'right', [
@@ -85,15 +86,15 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 		]);
 
 		$this->_setFont($this->_fontSize);
-		$this->_borderHorizontal = $backup;
+		$this->_margin = $backup;
 	}
 
 	// 4.
 	protected function _compileNumbers() {
 		extract(Message::aliases());
 
-		$backup = $this->_borderHorizontal;
-		$this->_borderHorizontal = [33, 33];
+		$backup = $this->_margin;
+		$this->_margin = [100, 33, 100, 33];
 
 		$this->_drawText($t('{:number} — Client No.', [
 			'scope' => 'base_document',
@@ -110,7 +111,7 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 			'offsetY' => $this->_skipLines()
 		]);
 
-		$this->_borderHorizontal = $backup;
+		$this->_margin = $backup;
 	}
 
 	// 5.
@@ -123,23 +124,11 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 		$this->_setFont($this->_fontSize);
 	}
 
-	// 6.
-	protected function _compileHello() {
-		$this->_drawText($t('Dear {:name},', [
-			'scope' => 'base_document',
-			'locale' => $this->_recipient->locale,
-			'name' => $this->_recipient->name
-		]), 'left', [
-			'offsetY' => $this->_skipLines(2)
-		]);
-	}
+	// 6. No Hello
+	protected function _compileHello() {}
 
-	//  7.
-	protected function _compileIntro() {
-		$this->_drawText($this->_intro, 'left', [
-			'offsetY' => $this->_skipLines(2)
-		]);
-	}
+	//  7. No Intro
+	protected function _compileIntro() {}
 
 	// 8.
 	protected function _compileTableHeader() {
