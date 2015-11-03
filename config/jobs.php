@@ -15,7 +15,7 @@
  * License. If not, see http://atelierdisko.de/licenses.
  */
 
-use base_core\extensions\cms\Jobs;
+use base_core\async\Jobs;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\Carts;
 
