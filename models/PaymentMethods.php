@@ -19,7 +19,7 @@ namespace ecommerce_core\models;
 
 class PaymentMethods extends \billing_core\models\PaymentMethods {
 
-	public static function register($name, array $data) {
+	public static function register($name, array $data = []) {
 		trigger_error('PaymentMethods has been moved into billing_core.', E_USER_DEPRECATED);
 		return parent::register($name, $data);
 	}
