@@ -75,22 +75,12 @@ class Ecommerce extends \lithium\console\Command {
 	public function migrateTags() {
 		$this->out('Migrate Auto/Size Tags');
 
+		$this->out('Collecting tags...');
 		Tags::collect();
 
+		$this->out('Updating auot tags...');
 		foreach (ProductGroups::find('all') as $group) {
-			$this->out('Tags before: ' . $group->tags);
-			$result = $group->save([
-				'title' => $group->title,
-				'tags' => $group->tags
-			], [
-				'whitelist' => ['id', 'title', 'tags']
-			]);
-			$this->out('Tags after: ' . $group->tags);
-			$this->out($result ? 'OK' : 'FAILED!');
-		}
-
-		foreach (ProductGroups::find('all') as $group) {
-			$this->out('Tags before: ' . $group->tags);
+			$before = $group->tags;
 
 			$group->removeTags(['look:available']);
 
@@ -101,12 +91,16 @@ class Ecommerce extends \lithium\console\Command {
 			}
 
 			$result = $group->save([
+				'title' => $group->title,
 				'tags' => $group->tags
 			], [
-				'whitelist' => ['id', 'tags']
+				'whitelist' => ['id', 'title', 'tags']
 			]);
-			$this->out('Tags after: ' . $group->tags);
-			$this->out($result ? 'OK' : 'FAILED!');
+			if ($group->tags != $before) {
+				$this->out('Tags before: ' . $before);
+				$this->out('Tags after: ' . $group->tags);
+				$this->out($result ? 'OK' : 'FAILED!');
+			}
 		}
 		$this->out('COMPLETED');
 
