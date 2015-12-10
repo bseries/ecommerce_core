@@ -27,6 +27,7 @@ $this->set([
 					'type' => 'text',
 					'label' => $t('Number/SKU'),
 				]) ?>
+				<div class="help"><?= $t('Leave empty to autogenerate number.') ?></div>
 			</div>
 			<div class="grid-column-right">
 			</div>
