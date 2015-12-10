@@ -86,6 +86,12 @@ class ProductGroups extends \base_core\models\Base {
 			]);
 		}
 	}
+
+	public function hasAnyPublishedProducts($entity) {
+		return (boolean) $entity->products()->find(function($p) {
+			return $p->is_published;
+		})->count();
+	}
 }
 
 ProductGroups::init();

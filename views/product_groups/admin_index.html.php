@@ -52,17 +52,11 @@ $this->set([
 				<?php foreach ($data as $item): ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="flag">
-						<i class="material-icons"><?php
-							$hasPublishedProducts = (boolean) $item->products()->find(function($p) {
-								return $p->is_published;
-							})->count();
-
-							if ($hasPublishedProducts && $item->is_published) {
-								echo 'done';
-							} else {
-								echo '(done)';
-							}
-						?></i>
+						<?php if ($item->is_published): ?>
+							<?php if (!$hasAny = $item->hasAnyPublishedProducts()): ?>(<?php endif ?>
+							<i class="material-icons">done</i>
+							<?php if (!$hasAny): ?>)<?php endif ?>
+						<?php endif ?>
 					<td class="flag"><i class="material-icons"><?= ($item->is_promoted ? 'done' : '') ?></i>
 					<td class="media">
 						<?php if ($cover = $item->cover()): ?>
