@@ -45,6 +45,8 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 	// 1.
 	protected function _compileRecipientAddressField() {
+		$this->_useStyle('gamma');
+
 		foreach (explode("\n", $this->_recipient->address('shipping')->format('postal')) as $key => $line) {
 			$this->_drawText($line, 'left', [
 				'offsetY' => $key ? $this->_skipLines() : 685
@@ -54,6 +56,8 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 	// 2.
 	protected function _compileDateAndCity() {
+		$this->_useStyle('gamma');
+
 		extract(Message::aliases());
 
 		$formatter = new IntlDateFormatter(
@@ -76,21 +80,23 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 	// 3.
 	protected function _compileType() {
+		$this->_useStyle('beta--bold');
+
 		$backup = $this->_margin;
 
 		$this->_margin = [100, 33, 100, 33];
-		$this->_setFont(24, true);
 
 		$this->_drawText(strtoupper($this->_type), 'right', [
 			'offsetY' => 680
 		]);
 
-		$this->_setFont($this->_fontSize);
 		$this->_margin = $backup;
 	}
 
 	// 4.
 	protected function _compileNumbers() {
+		$this->_useStyle('gamma');
+
 		extract(Message::aliases());
 
 		$backup = $this->_margin;
@@ -116,12 +122,11 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 	// 5.
 	protected function _compileSubject() {
-		$this->_setFont($this->_fontSize, true);
+		$this->_useStyle('gamma--bold');
 
 		$this->_drawText($this->_subject, 'left', [
 			'offsetY' => 540
 		]);
-		$this->_setFont($this->_fontSize);
 	}
 
 	// 6. No Hello
@@ -132,12 +137,12 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 	// 8.
 	protected function _compileTableHeader() {
+		$this->_useStyle('gamma--bold');
+
 		extract(Message::aliases());
 
 		$showNet = in_array($this->_recipient->role, ['merchant', 'admin']);
 		$this->_currentHeight = 435;
-
-		$this->_setFont(11, true);
 
 		$this->_drawText($t('Description', [
 			'scope' => 'base_document',
@@ -156,12 +161,12 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 		$this->_currentHeight = $this->_skipLines();
 
-		$this->_setFont($this->_fontSize, false);
 		$this->_drawHorizontalLine();
 	}
 
 	// 9.
 	protected function _compileTablePosition($position) {
+		$this->_useStyle('gamma');
 		extract(Message::aliases());
 
 		$this->_currentHeight = $this->_skipLines();
@@ -184,7 +189,8 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 
 	// 10.
 	protected function _compileTableFooter() {
-		$this->_setFont($this->_fontSize);
+		$this->_useStyle('gamma');
+
 		$this->_currentHeight = $this->_skipLines(3);
 		$this->_drawHorizontalLine();
 
