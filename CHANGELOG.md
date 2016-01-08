@@ -12,4 +12,4 @@
 
 ### Backwards Incompatible Changes
 
-- PaymentMethods modl has been moved into billing_core
+- PaymentMethods model has been moved into billing_payment
