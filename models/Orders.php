@@ -31,7 +31,7 @@ use billing_invoice\models\InvoicePositions;
 use billing_invoice\models\Invoices;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
-use billing_core\models\PaymentMethods;
+use billing_payment\models\PaymentMethods;
 use ecommerce_core\models\ShippingMethods;
 use ecommerce_core\models\Products;
 

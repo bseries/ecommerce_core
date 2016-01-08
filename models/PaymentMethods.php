@@ -17,15 +17,15 @@
 
 namespace ecommerce_core\models;
 
-class PaymentMethods extends \billing_core\models\PaymentMethods {
+class PaymentMethods extends \billing_payment\models\PaymentMethods {
 
 	public static function register($name, array $data = []) {
-		trigger_error('PaymentMethods has been moved into billing_core.', E_USER_DEPRECATED);
+		trigger_error('PaymentMethods has been moved into billing_payment.', E_USER_DEPRECATED);
 		return parent::register($name, $data);
 	}
 
 	public static function find($type, array $options = []) {
-		trigger_error('PaymentMethods has been moved into billing_core.', E_USER_DEPRECATED);
+		trigger_error('PaymentMethods has been moved into billing_payment.', E_USER_DEPRECATED);
 		return parent::find($type, $options);
 	}
 }
