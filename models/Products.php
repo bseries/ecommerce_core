@@ -23,7 +23,7 @@ use ecommerce_core\models\Carts;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\ProductPrices;
-use billing_core\models\ClientGroups;
+use billing_core\billing\ClientGroup;
 use Exception;
 use lithium\util\Inflector;
 use lithium\util\Collection;
@@ -100,7 +100,9 @@ class Products extends \base_core\models\Base {
 	// Will autoselect the correct price for the user,
 	// depending on its association in client group.
 	public function price($entity, $user) {
-		$group = ClientGroups::find('first', ['conditions' => compact('user')]);
+		$group = ClientGroup::config(true)->first(function($item) use ($user) {
+			return $item->conditions($user);
+		});
 		if (!$group) {
 			throw new Exception('Could not map user to client group.');
 		}
@@ -124,9 +126,9 @@ class Products extends \base_core\models\Base {
 		$results = [];
 
 		if (!$options['sparse']) {
-			foreach (ClientGroups::find('all') as $group) {
-				$results[$group->id] = ProductPrices::create([
-					'group' => $group->id,
+			foreach (ClientGroup::find(true) as $name => $group) {
+				$results[$name] = ProductPrices::create([
+					'group' => $name,
 					'amount_currency' => $group->amountCurrency,
 					'amount_type' => $group->amountType,
 					'amount_rate' => $group->taxType()->rate
