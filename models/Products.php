@@ -126,7 +126,7 @@ class Products extends \base_core\models\Base {
 		$results = [];
 
 		if (!$options['sparse']) {
-			foreach (ClientGroup::find(true) as $name => $group) {
+			foreach (ClientGroup::config(true) as $name => $group) {
 				$results[$name] = ProductPrices::create([
 					'group' => $name,
 					'amount_currency' => $group->amountCurrency,
