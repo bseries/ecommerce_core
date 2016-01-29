@@ -34,6 +34,8 @@ class ShippingMethods extends \base_core\models\Base {
 	protected static $_data = [];
 
 	public static function register($name, array $data) {
+		trigger_error('ShippingMethods is deprecated in favor of ecommerce\ShippingMethods.', E_USER_DEPRECATED);
+
 		$data += [
 			'id' => $name,
 			'name' => $name,
@@ -51,6 +53,8 @@ class ShippingMethods extends \base_core\models\Base {
 	}
 
 	public static function find($type, array $options = []) {
+		trigger_error('ShippingMethods is deprecated in favor of ecommerce\ShippingMethods.', E_USER_DEPRECATED);
+
 		if ($type == 'all') {
 			return new Collection(['data' => static::$_data]);
 		} elseif ($type == 'first') {
@@ -66,6 +70,8 @@ class ShippingMethods extends \base_core\models\Base {
 	}
 
 	public function title($entity) {
+		trigger_error('ShippingMethods is deprecated in favor of ecommerce\ShippingMethods.', E_USER_DEPRECATED);
+
 		$value = $entity->data('title');
 
 		if (is_string($value)) {
@@ -75,6 +81,8 @@ class ShippingMethods extends \base_core\models\Base {
 	}
 
 	public function price($entity, $user, $cart) {
+		trigger_error('ShippingMethods is deprecated in favor of ecommerce\ShippingMethods.', E_USER_DEPRECATED);
+
 		$value = $entity->data('price');
 		return $value($user, $cart);
 	}
