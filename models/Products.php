@@ -100,15 +100,18 @@ class Products extends \base_core\models\Base {
 	// Will autoselect the correct price for the user,
 	// depending on its association in client group.
 	public function price($entity, $user) {
-		$group = ClientGroups::registry(true)->first(function($item) use ($user) {
-			return $item->conditions($user);
-		});
+		$group = null;
+		foreach (ClientGroups::registry(true) as $name => $item) {
+			if ($item->conditions($user)) {
+				$group = $name;
+				break;
+			}
+		}
 		if (!$group) {
 			throw new Exception('Could not map user to client group.');
 		}
-
 		foreach ($this->prices($entity) as $price) {
-			if ($price->group === $group->id) {
+			if ($price->group === $group) {
 				return $price;
 			}
 		}
