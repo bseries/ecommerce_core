@@ -15,13 +15,13 @@
  * License. If not, see http://atelierdisko.de/licenses.
  */
 
-namespace ecommerce_core\ecommerce;
+namespace ecommerce_core\ecommerce\shipping;
 
 use BadMethodCallException;
 use billing_core\extensions\financial\NullPrice;
 use li3_access\security\Access;
 
-class ShippingMethod {
+class Method {
 
 	protected $_config = [];
 

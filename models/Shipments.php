@@ -17,18 +17,17 @@
 
 namespace ecommerce_core\models;
 
-use Exception;
-use lithium\core\Libraries;
-use lithium\g11n\Message;
-use lithium\analysis\Logger;
-use li3_mailer\action\Mailer;
 use AD\Finance\Price;
 use AD\Finance\Price\Prices;
-
-use base_core\extensions\cms\Settings;
-use base_address\models\Contacts;
+use Exception;
 use base_address\models\Addresses;
-use ecommerce_core\models\ShippingMethods;
+use base_address\models\Contacts;
+use base_core\extensions\cms\Settings;
+use ecommerce_core\ecommerce\shipping\Methods as ShippingMethods;
+use li3_mailer\action\Mailer;
+use lithium\analysis\Logger;
+use lithium\core\Libraries;
+use lithium\g11n\Message;
 
 // Shipments are very similar to invoices in that
 // they also have positions. In general shipments
@@ -115,11 +114,7 @@ class Shipments extends \base_core\models\Base {
 	}
 
 	public function method($entity) {
-		return ShippingMethods::find('first', [
-			'conditions' => [
-				'id' => $entity->method
-			]
-		]);
+		return ShippingMethods::registry($entity->method);
 	}
 
 	public function address($entity) {

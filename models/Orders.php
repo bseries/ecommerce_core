@@ -32,7 +32,7 @@ use billing_invoice\models\Invoices;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
 use billing_payment\billing\payment\Methods as PaymentMethods;
-use ecommerce_core\models\ShippingMethods;
+use ecommerce_core\ecommerce\shipping\Methods as ShippingMethods;
 use ecommerce_core\models\Products;
 
 class Orders extends \base_core\models\Base {
@@ -186,11 +186,7 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function shippingMethod($entity) {
-		return ShippingMethods::find('first', [
-			'conditions' => [
-				'id' => $entity->shipping_method
-			]
-		]);
+		return ShippingMethods::registry($entity->shipping_method);
 	}
 
 	// Should equal the invoice, once one is attached.

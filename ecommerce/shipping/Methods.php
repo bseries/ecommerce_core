@@ -15,17 +15,17 @@
  * License. If not, see http://atelierdisko.de/licenses.
  */
 
-namespace ecommerce_core\ecommerce;
+namespace ecommerce_core\ecommerce\shipping;
 
-use ecommerce_core\ecommerce\ShippingMethod;
+use ecommerce_core\ecommerce\shipping\Method;
 
-class ShippingMethods {
+class Methods {
 
 	use \base_core\core\Registerable;
 	use \base_core\core\RegisterableEnumeration;
 
 	public static function register($name, array $object) {
-		static::$_registry[$name] = new ShippingMethod($object);
+		static::$_registry[$name] = new Method($object);
 	}
 }
 
