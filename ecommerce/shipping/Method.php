@@ -17,8 +17,8 @@
 
 namespace ecommerce_core\ecommerce\shipping;
 
+use AD\Finance\Price\NullPrice;
 use BadMethodCallException;
-use billing_core\extensions\financial\NullPrice;
 use li3_access\security\Access;
 
 class Method {
