@@ -31,7 +31,7 @@ use billing_invoice\models\InvoicePositions;
 use billing_invoice\models\Invoices;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\Shipments;
-use billing_payment\billing\payment\Method as PaymentMethod;
+use billing_payment\billing\payment\Methods as PaymentMethods;
 use ecommerce_core\models\ShippingMethods;
 use ecommerce_core\models\Products;
 
@@ -182,7 +182,7 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function paymentMethod($entity) {
-		return PaymentMethod::config($entity->payment_method);
+		return PaymentMethods::registry($entity->payment_method);
 	}
 
 	public function shippingMethod($entity) {

@@ -129,9 +129,9 @@ class Products extends \base_core\models\Base {
 			foreach (ClientGroups::registry(true) as $name => $group) {
 				$results[$name] = ProductPrices::create([
 					'group' => $name,
-					'amount_currency' => $group->amountCurrency,
-					'amount_type' => $group->amountType,
-					'amount_rate' => $group->taxType()->rate
+					'amount_currency' => $group->amountCurrency(),
+					'amount_type' => $group->amountType(),
+					'amount_rate' => $group->taxType()->rate()
 				]);
 			}
 		}
