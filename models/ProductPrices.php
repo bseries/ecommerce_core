@@ -19,7 +19,7 @@ namespace ecommerce_core\models;
 
 use Exception;
 use AD\Finance\Price;
-use billing_core\models\ClientGroups;
+use billing_core\billing\ClientGroups;
 
 class ProductPrices extends \base_core\models\Base {
 
@@ -44,11 +44,7 @@ class ProductPrices extends \base_core\models\Base {
 	];
 
 	public function group($entity) {
-		return ClientGroups::find('first', [
-			'conditions' => [
-				'id' => $entity->group
-			]
-		]);
+		return ClientGroups::registry($entity->group);
 	}
 
 	public function amount($entity) {

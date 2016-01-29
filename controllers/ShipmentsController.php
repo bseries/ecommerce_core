@@ -19,7 +19,7 @@ namespace ecommerce_core\controllers;
 
 use billing_core\models\Currencies;
 use ecommerce_core\models\Shipments;
-use ecommerce_core\models\ShippingMethods;
+use ecommerce_core\ecommerce\shipping\Methods as ShippingMethods;
 use base_core\models\Users;
 use lithium\g11n\Message;
 use li3_flash_message\extensions\storage\FlashMessage;
@@ -54,7 +54,7 @@ class ShipmentsController extends \base_core\controllers\BaseController {
 
 	protected function _selects($item = null) {
 		$statuses = Shipments::enum('status');
-		$methods = ShippingMethods::find('list');
+		$methods = ShippingMethods::enum();
 		$currencies = Currencies::find('list');
 		$users = [null => '-'] + Users::find('list', ['order' => 'name']);
 
