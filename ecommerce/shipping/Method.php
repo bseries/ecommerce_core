@@ -30,6 +30,8 @@ class Method {
 			$config['access'] = (array) $config['access'];
 		}
 		return $this->_config = $config + [
+			'name' => null,
+
 			// The (display) title of the method, can also be an anonymous function.
 			'title' => null,
 
