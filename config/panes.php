@@ -21,7 +21,7 @@ use lithium\g11n\Message;
 extract(Message::aliases());
 
 Panes::register('ecommerce', [
-	'title' => $t('eCommerce', ['scope' => 'ecommerce_core']),
+	'title' => $t('Boutique', ['scope' => 'ecommerce_core']),
 	'weight' => 30
 ]);
 
