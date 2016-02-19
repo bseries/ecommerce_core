@@ -59,54 +59,48 @@ Widgets::register('users', function() use ($t) {
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
-Widgets::register('total_products', function() use ($t) {
-	$products = Products::find('all', [
+Widgets::register('ecommerce_orders', function() use ($t) {
+	$pending = Orders::find('count', [
 		'conditions' => [
-			'is_published' => true
+			'status NOT' => ['processed', 'cancelled', 'expired', 'checking-out']
 		]
 	]);
-
-	$stock = Products::find('first', [
-		'fields' => [
-			'SUM(stock - stock_reserved) as stock_virtual'
-		]
-	])->stock_virtual;
+	$total = Orders::find('count');
 
 	return [
+		'title' => $t('Orders', ['scope' => 'ecommerce_core']),
+		'class' => $pending ? 'negative' : 'positive',
 		'url' => [
-			'controller' => 'ProductGroups', 'action' => 'index', 'library' => 'ecommerce_core'
+			'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
-		'title' => $t('Products', ['scope' => 'ecommerce_core']),
 		'data' => [
-			$t('Total', ['scope' => 'ecommerce_core']) => $products->count(),
-			$t('In stock', ['scope' => 'ecommerce_core']) => $stock
+			$t('Total', ['scope' => 'ecommerce_core']) => $total,
+			$t('Pending', ['scope' => 'ecommerce_core']) => $pending,
 		]
 	];
 }, [
 	'type' => Widgets::TYPE_COUNTER,
 	'group' => Widgets::GROUP_DASHBOARD,
+	'weight' => Widgets::WEIGHT_LOW
 ]);
 
-Widgets::register('ecommerce_pending', function() use ($t) {
-	$orders = Orders::find('count', [
-		'conditions' => [
-			'status NOT' => ['processed', 'cancelled', 'expired', 'checking-out']
-		]
-	]);
-	$products = Products::find('count', [
+Widgets::register('ecommerce_products', function() use ($t) {
+	$total = Products::find('count');
+
+	$outOfStock = Products::find('count', [
 		'conditions' => [
 			'(stock - stock_reserved)' => ['<=' => 0]
 		]
 	]);
 	return [
-		'title' => $t('Pending', ['scope' => 'ecommerce_core']),
-		'class' => $orders || $products ? 'negative' : 'positive',
+		'title' => $t('Products', ['scope' => 'ecommerce_core']),
+		'class' => $outOfStock ? 'negative' : 'positive',
 		'url' => [
-			'controller' => 'Orders', 'action' => 'index', 'library' => 'ecommerce_core'
+			'controller' => 'Products', 'action' => 'index', 'library' => 'ecommerce_core'
 		],
 		'data' => [
-			$t('Orders', ['scope' => 'ecommerce_core']) => $orders,
-			$t('Out of Stock', ['scope' => 'ecommerce_core']) => $products
+			$t('Total', ['scope' => 'ecommerce_core']) => $total,
+			$t('Out of Stock', ['scope' => 'ecommerce_core']) => $outOfStock
 		]
 	];
 }, [
