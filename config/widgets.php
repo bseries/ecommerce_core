@@ -43,22 +43,6 @@ Widgets::register('carts', function() use ($t) {
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
-Widgets::register('users', function() use ($t) {
-	$total = Users::find('count', ['conditions' => [
-		'is_active' => true,
-		'role' => ['customer', 'merchant']
-	]]);
-
-	return [
-		'data' => [
-			$t('Customers', ['scope' => 'ecommerce_core']) => $total
-		]
-	];
-}, [
-	'type' => Widgets::TYPE_COUNTER,
-	'group' => Widgets::GROUP_DASHBOARD,
-]);
-
 Widgets::register('ecommerce_orders', function() use ($t) {
 	$pending = Orders::find('count', [
 		'conditions' => [
