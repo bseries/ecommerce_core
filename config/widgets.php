@@ -59,7 +59,7 @@ Widgets::register('ecommerce_orders', function() use ($t) {
 		],
 		'data' => [
 			$t('Total', ['scope' => 'ecommerce_core']) => $total,
-			$t('Pending', ['scope' => 'ecommerce_core']) => $pending,
+			$t('Open', ['scope' => 'ecommerce_core']) => $pending,
 		]
 	];
 }, [
