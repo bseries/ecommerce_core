@@ -218,7 +218,7 @@ $this->set([
 								<?= $this->form->field("prices.{$key}.group.title", [
 									'type' => 'text',
 									'disabled' => true,
-									'value' => $child->group()->title,
+									'value' => $child->group()->title(),
 									'label' => false
 								]) ?>
 							<td>
