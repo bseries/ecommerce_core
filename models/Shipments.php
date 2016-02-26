@@ -36,6 +36,11 @@ use lithium\g11n\Message;
 //
 // Position price can be thought of the "value".
 //
+// When new positions are added to a newly created
+// shipment, the stock for the products (if available)
+// must be reserved manually. After shipment creation
+// that process is automated.
+//
 // @see billing_invoice\models\Invoices
 class Shipments extends \base_core\models\Base {
 
