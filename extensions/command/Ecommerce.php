@@ -103,9 +103,6 @@ class Ecommerce extends \lithium\console\Command {
 					$data[$field] = 0;
 				}
 			}
-			if ($product->stock_reserved > $product->stock) {
-				$data['stock'] = $product->stock_reserved;
-			}
 			if (!$data) {
 				continue;
 			}
