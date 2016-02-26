@@ -124,6 +124,9 @@ class Carts extends \base_core\models\Base {
 	}
 
 	public function isExpired($entity) {
+		if ($entity->status !== 'open') {
+			return false;
+		}
 		$date = DateTime::createFromFormat('Y-m-d H:i:s', $entity->modified);
 		return strtotime(Settings::read('checkout.expire'), $date->getTimestamp()) < time();
 	}
