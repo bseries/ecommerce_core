@@ -128,8 +128,12 @@ class Shipments extends \base_core\models\Base {
 		switch ($to) {
 			case 'cancelled':
 				foreach ($entity->positions() as $position) {
-					$product = $position->product();
-
+					if (!$product = $position->product()) {
+						$message  = "Failed to get product for shipment ({$entity->id}) position with `{$position->description}`. ";
+						$message .= "Cannot return stock automatically.";
+						Logger::write($message);
+						continue;
+					}
 					if ($from === 'shipped') {
 						if (!$product->putStock((integer) $position->quantity)) {
 							return false;
@@ -147,7 +151,12 @@ class Shipments extends \base_core\models\Base {
 				$positions = $order->cart()->positions();
 
 				foreach ($positions as $position) {
-					$product = $position->product();
+					if (!$product = $position->product()) {
+						$message  = "Failed to get product for shipment ({$entity->id}) position with `{$position->description}`. ";
+						$message .= "Cannot return stock automatically.";
+						Logger::write($message);
+						continue;
+					}
 
 					// Transfer stock into taken state.
 					if (!$product->takeStock($position->quantity)) {
