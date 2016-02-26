@@ -94,7 +94,7 @@ class Ecommerce extends \lithium\console\Command {
 	}
 
 	public function repairInvalidStock() {
-		$this->header('Repair Stock field below 0');
+		$this->header('Repair Stock field below 0 and Reserved but no Real');
 
 		foreach (Products::find('all') as $product) {
 			$data = [];
@@ -102,6 +102,9 @@ class Ecommerce extends \lithium\console\Command {
 				if ($product->{$field} < 0) {
 					$data[$field] = 0;
 				}
+			}
+			if ($product->stock_reserved > $product->stock) {
+				$data['stock'] = $product->stock_reserved;
 			}
 			if (!$data) {
 				continue;
