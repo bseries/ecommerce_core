@@ -1,6 +1,7 @@
 <?php
 
 use lithium\g11n\Message;
+use base_core\extensions\cms\Settings;
 
 $t = function($message, array $options = []) {
 	return Message::translate($message, $options + ['scope' => 'ecommerce_core', 'default' => $message]);
@@ -76,24 +77,45 @@ $this->set([
 		<div class="grid-row">
 			<h1><?= $t('Stock') ?></h1>
 
-			<div class="grid-column-right">
+			<div class="grid-column-left">
 				<?= $this->form->field('stock', [
 					'type' => 'number',
-					'label' => $t('Stock (real)'),
-				]) ?>
-				<?= $this->form->field('stock_target', [
-					'type' => 'number',
-					'label' => $t('Stock (target)'),
+					'label' => $t('Stock (physically available)'),
 				]) ?>
 				<div class="help">
-					<?= $t('Target stock should equal the real stock.') ?>
+					<?= $t('Stock that is physically available i.e. items in storage not shipped.') ?>
 				</div>
 				<?= $this->form->field('stock_reserved', [
 					'type' => 'number',
 					'label' => $t('Stock (reserved)'),
 				]) ?>
 				<div class="help">
-					<?= $t('Number of items reserved.') ?>
+					<?= $t("Items reserved because they are held in a user's cart.") ?>
+				</div>
+			</div>
+			<div class="grid-column-right">
+				<?= $this->form->field('stock_calculated', [
+					'type' => 'text',
+					'label' => $t('Stock (calculated)'),
+					'disabled' => true,
+					'value' =>  $item->stock('virtual')
+				]) ?>
+				<div class="help">
+					<?= $t('Amount of stock as presented to users.') ?>
+					<?php if (!Settings::read('stock.check')): ?>
+						<strong>
+							<?= $t('Stock checking is disabled, even if this number is 0, users will be able to buy the product.') ?>
+						</strong>
+					<?php endif ?>
+					<?= $t('Calculated from: (physically available - reserved).') ?>
+				</div>
+				<?= $this->form->field('stock_target', [
+					'type' => 'number',
+					'label' => $t('Stock (inventory)'),
+				]) ?>
+				<div class="help">
+					<?= $t('Field for inventory. Physically available stock should equal inventory.') ?>
+					<?= $t('This field is for your note taking and is not used to calculate availability for users.') ?>
 				</div>
 			</div>
 		</div>

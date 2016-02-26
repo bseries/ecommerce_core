@@ -1,6 +1,7 @@
 <?php
 
 use lithium\g11n\Message;
+use base_core\extensions\cms\Settings;
 
 $t = function($message, array $options = []) {
 	return Message::translate($message, $options + ['scope' => 'ecommerce_core', 'default' => $message]);
@@ -84,5 +85,13 @@ $this->set([
 	<?php endif ?>
 
 	<?=$this->view()->render(['element' => 'paging'], compact('paginator'), ['library' => 'base_core']) ?>
+
+	<div class="bottom-help">
+		<?= $t('When a cart is created all contained items are marked as reserved.') ?>
+		<?php if ($count = Settings::read('cart.limitItemsPerPosition')): ?>
+			<strong><?= $t('Cart item limiting is enabled.') ?></strong>
+			<?= $t('A maximum of {:count} items can be hold per cart.', compact('count')) ?>
+		<?php endif ?>
+	</div>
 
 </article>
