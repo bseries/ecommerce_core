@@ -148,9 +148,8 @@ class Shipments extends \base_core\models\Base {
 			case 'shipped':
 				$order = $entity->order();
 				$user = $order->user();
-				$positions = $order->cart()->positions();
 
-				foreach ($positions as $position) {
+				foreach ($entity->positions() as $position) {
 					if (!$product = $position->product()) {
 						$message  = "Failed to get product for shipment ({$entity->id}) position with `{$position->description}`. ";
 						$message .= "Cannot return stock automatically.";
@@ -269,7 +268,11 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 			continue;
 		}
 		if (isset($data['id'])) {
-			$item = ShipmentPositions::find('first', ['conditions' => ['id' => $data['id']]]);
+			$item = ShipmentPositions::find('first', [
+				'conditions' => [
+					'id' => $data['id']
+				]
+			]);
 
 			if ($data['_delete']) {
 				if (!$item->delete()) {
@@ -277,14 +280,31 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 				}
 				continue;
 			}
+			if (!$item->save($data)) {
+				return false;
+			}
 		} else {
 			$item = ShipmentPositions::create($data + [
 				'ecommerce_shipment_id' => $entity->id,
 				'user_id' => $user->id
 			]);
-		}
-		if (!$item->save($data)) {
-			return false;
+			if (!$item->save($data)) {
+				return false;
+			}
+
+			if (!$product = $item->product()) {
+				$message  = "Failed to get product for shipment ({$entity->id}) position with `{$item->description}`. ";
+				$message .= "Cannot reserve stock automatically.";
+				Logger::write($message);
+				continue;
+			}
+			// If adding a new position/product and setting status
+			// to shipped at the same time, the product will be
+			// reserved here than - as the behavior comes after
+			// this filter - tranferred to taken.
+			if (!$product->reserveStock((integer) $item->quantity)) {
+				return false;
+			}
 		}
 	}
 	return true;
