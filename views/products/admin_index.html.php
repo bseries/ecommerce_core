@@ -65,9 +65,9 @@ $this->set([
 					<td class="emphasize stock">
 						<span><?= $item->stock('virtual') ?></span>
 						/
-						<span class="minor"><?= $item->stock('reserved') ?></span>
-						/
 						<span class="minor"><?= $item->stock('real') ?></span>
+						/
+						<span class="minor"><?= $item->stock('reserved') ?></span>
 						/
 						<span class="minor"><?= $item->stock('target') ?></span>
 					<td class="date">
