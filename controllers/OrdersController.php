@@ -18,9 +18,11 @@
 namespace ecommerce_core\controllers;
 
 use base_core\models\Users;
-use ecommerce_core\models\Orders;
 use billing_invoice\models\Invoices;
+use ecommerce_core\models\Orders;
 use ecommerce_core\models\Shipments;
+use li3_flash_message\extensions\storage\FlashMessage;
+use lithium\g11n\Message;
 
 class OrdersController extends \base_core\controllers\BaseController {
 
@@ -28,6 +30,28 @@ class OrdersController extends \base_core\controllers\BaseController {
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
 	use \base_core\controllers\AdminUpdateStatusTrait;
+
+	public function admin_mark_processed() {
+		extract(Message::aliases());
+
+		$model = $this->_model;
+		$model::pdo()->beginTransaction();
+
+		$item = $model::first($this->request->id);
+
+		if ($item->save(['status' => 'processed'], ['whitelist' => ['status']])) {
+			$model::pdo()->commit();
+			FlashMessage::write($t('Successfully set status.', ['scope' => 'ecommerce_core']), [
+				'level' => 'success'
+			]);
+		} else {
+			$model::pdo()->rollback();
+			FlashMessage::write($t('Failed to change status.', ['scope' => 'ecommerce_core']), [
+				'level' => 'error'
+			]);
+		}
+		return $this->redirect($this->request->referer());
+	}
 
 	protected function _selects($item = null) {
 		$statuses = Orders::enum('status');

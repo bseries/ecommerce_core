@@ -82,7 +82,18 @@ $this->set([
 							<?= $this->date->format($item->modified, 'date') ?>
 						</time>
 					<td class="actions">
-						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
+						<?php if ($item->status !== 'processed'): ?>
+							<?= $this->html->link($t('processed'), [
+								'id' => $item->id,
+								'action' => 'mark_processed',
+								'library' => 'ecommerce_core'
+							], ['class' => 'button']) ?>
+						<?php endif ?>
+						<?= $this->html->link($t('open'), [
+							'id' => $item->id,
+							'action' => 'edit',
+							'library' => 'ecommerce_core'
+						], ['class' => 'button']) ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>
