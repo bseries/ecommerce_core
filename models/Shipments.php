@@ -136,7 +136,7 @@ class Shipments extends \base_core\models\Base {
 					if (!$product = $position->product()) {
 						$message  = "Failed to get product for shipment ({$entity->id}) position with `{$position->description}`. ";
 						$message .= "Cannot return stock automatically.";
-						Logger::write($message);
+						Logger::write('debug', $message);
 						continue;
 					}
 					if ($from === 'shipped') {
@@ -158,7 +158,7 @@ class Shipments extends \base_core\models\Base {
 					if (!$product = $position->product()) {
 						$message  = "Failed to get product for shipment ({$entity->id}) position with `{$position->description}`. ";
 						$message .= "Cannot return stock automatically.";
-						Logger::write($message);
+						Logger::write('debug', $message);
 						continue;
 					}
 
@@ -300,7 +300,7 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 			if (!$product = $item->product()) {
 				$message  = "Failed to get product for shipment ({$entity->id}) position with `{$item->description}`. ";
 				$message .= "Cannot reserve stock automatically.";
-				Logger::write($message);
+				Logger::write('debug', $message);
 				continue;
 			}
 			// If adding a new position/product and setting status
