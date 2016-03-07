@@ -181,6 +181,12 @@ class Products extends \base_core\models\Base {
 	public function takeStock($entity, $quantity = 1) {
 		$entity->decrement('stock', $quantity);
 
+		if ($entity->stock < 0) {
+			$entity->stock = 0;
+
+			$message = "Capping stock at 0 for product `{$entity->id}`.";
+			Logger::write('notice', $message);
+		}
 		$message  = "TAKE stock for product `{$entity->id}` by {$quantity}. ";
 		$message .= "Real stock is now `{$entity->stock}`.";
 		Logger::write('debug', $message);
@@ -214,6 +220,12 @@ class Products extends \base_core\models\Base {
 	public function unreserveStock($entity, $quantity = 1) {
 		$entity->decrement('stock_reserved', $quantity);
 
+		if ($entity->stock_reserved < 0) {
+			$entity->stock_reserved = 0;
+
+			$message = "Capping reserved stock at 0 for product `{$entity->id}`.";
+			Logger::write('notice', $message);
+		}
 		$message  = "UNRESERVE stock for product `{$entity->id}` by {$quantity}. ";
 		$message .= "Reserved stock is now `{$entity->stock_reserved}`.";
 		Logger::write('debug', $message);
