@@ -205,24 +205,19 @@ class Products extends \base_core\models\Base {
 	// "Takes" stock items and persistently decrements
 	// real stock.
 	public function takeStock($entity, $quantity = 1) {
-		// Activate once we are sure all clients know that they need to keep
-		// stock numbers correct.
-		/*
-		if (Settings::read('stock.check') && $entity->stock('virtual') < $quantity) {
-			$message  = "Failed TAKE stock for product `{$entity->id}` by {$quantity}. ";
-			Logger::write('notice', $message);
-
-			return false;
-		}
-		*/
+		// if (Settings::read('stock.check') && $entity->stock('virtual') < $quantity) {
+			// FIXME Fail here once we know all clients keep their numbers clean
+			// and take only if there is stock.
+		// }
 		$entity->decrement('stock', $quantity);
 
-		if ($entity->stock < 0) {
-			$entity->stock = 0;
-
+		if (Settings::read('stock.check') && $entity->stock < 0) {
 			$message = "Capping stock at 0 for product `{$entity->id}`.";
 			Logger::write('notice', $message);
+
+			$entity->stock = 0;
 		}
+
 		$message  = "TAKE stock for product `{$entity->id}` by {$quantity}. ";
 		$message .= "Real stock is now `{$entity->stock}`.";
 		Logger::write('debug', $message);
@@ -244,16 +239,10 @@ class Products extends \base_core\models\Base {
 
 	// Persistently reserves one or multiple items.
 	public function reserveStock($entity, $quantity = 1) {
-		// Activate once we are sure all clients know that they need to keep
-		// stock numbers correct.
-		/*
-		if (Settings::read('stock.check') && $entity->stock('virtual') < $quantity) {
-			$message  = "Failed RESERVE stock for product `{$entity->id}` by {$quantity}. ";
-			Logger::write('notice', $message);
-
-			return false;
-		}
-		*/
+		// if (Settings::read('stock.check') && $entity->stock('virtual') < $quantity) {
+			// FIXME Fail here once we know all clients keep their numbers clean
+			// and reserve only if there is stock.
+		// }
 		$entity->increment('stock_reserved', $quantity);
 
 		$message  = "RESERVE stock for product `{$entity->id}` by {$quantity}. ";
@@ -267,10 +256,12 @@ class Products extends \base_core\models\Base {
 		$entity->decrement('stock_reserved', $quantity);
 
 		if ($entity->stock_reserved < 0) {
-			$entity->stock_reserved = 0;
-
+			// FIXME Fail here once we know all clients keep their numbers clean
+			// and unreserve only if it was previously reserved.
 			$message = "Capping reserved stock at 0 for product `{$entity->id}`.";
 			Logger::write('notice', $message);
+
+			$entity->stock_reserved = 0;
 		}
 		$message  = "UNRESERVE stock for product `{$entity->id}` by {$quantity}. ";
 		$message .= "Reserved stock is now `{$entity->stock_reserved}`.";
