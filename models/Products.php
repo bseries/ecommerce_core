@@ -151,10 +151,14 @@ class Products extends \base_core\models\Base {
 
 	// There are 4 types of stock:
 	//
-	// - _local_ stock, this is what the online system knows.
-	// - _reserved_ stock, how many stock are reserved?
-	// - _virtual_ stock, calculated from local stock subtracted by reserved stock.
-	// - _target_ stock, optional will only be used when another external system is involved.
+	// - _local_ stock   : this is what the online system knows.
+	//                     May become negative.
+	// - _reserved_ stock: how many stock are reserved?
+	//                     Can never become negative.
+	// - _virtual_ stock : calculated from local stock subtracted by reserved stock.
+	//                     Can never become negative.
+	// - _target_ stock  : optional will only be used when another external system is involved.
+	//                     May be negative.
 	//
 	// The stock counts are denormalized in the mode schema for
 	// performance reasons. Stock is a pretty common field to
@@ -168,7 +172,29 @@ class Products extends \base_core\models\Base {
 			case 'reserved':
 				return $entity->stock_reserved;
 			case 'virtual':
-				return $entity->stock - $entity->stock_reserved;
+				// Prevents virtual becoming negative when stock_reserved is positive
+				// and real stock is 0. This should generally not happen as the system
+				// is laid out to prevent this kind of case. However manual
+				// intervention by the user (setting stock to 0) may break
+				// these assumptions.
+
+				// Note: Negative real stock is allowed to happen. But it is assumed
+				// stock_reserved cannot be negative (that is safeguarded in unreserveStock).
+
+				$result = $entity->stock - $entity->stock_reserved;
+
+				if ($result < 0) {
+					if (Settings::read('stock.check')) {
+						$message  = "Prevented invalid virtual stock result";
+						$message .= " for product `{$entity->id}` with reserved ";
+						$message .= "{$entity->stock_reserved} > real {$entity->stock}; capping at 0.";
+						Logger::write('notice', $message);
+
+						return 0;
+					}
+				}
+				return $result;
+
 			case 'target':
 				return $entity->stock_target;
 			default:
@@ -179,6 +205,16 @@ class Products extends \base_core\models\Base {
 	// "Takes" stock items and persistently decrements
 	// real stock.
 	public function takeStock($entity, $quantity = 1) {
+		// Activate once we are sure all clients know that they need to keep
+		// stock numbers correct.
+		/*
+		if (Settings::read('stock.check') && $entity->stock('virtual') < $quantity) {
+			$message  = "Failed TAKE stock for product `{$entity->id}` by {$quantity}. ";
+			Logger::write('notice', $message);
+
+			return false;
+		}
+		*/
 		$entity->decrement('stock', $quantity);
 
 		if ($entity->stock < 0) {
@@ -208,6 +244,16 @@ class Products extends \base_core\models\Base {
 
 	// Persistently reserves one or multiple items.
 	public function reserveStock($entity, $quantity = 1) {
+		// Activate once we are sure all clients know that they need to keep
+		// stock numbers correct.
+		/*
+		if (Settings::read('stock.check') && $entity->stock('virtual') < $quantity) {
+			$message  = "Failed RESERVE stock for product `{$entity->id}` by {$quantity}. ";
+			Logger::write('notice', $message);
+
+			return false;
+		}
+		*/
 		$entity->increment('stock_reserved', $quantity);
 
 		$message  = "RESERVE stock for product `{$entity->id}` by {$quantity}. ";

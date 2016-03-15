@@ -103,8 +103,8 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
+			<h1 class="h-gamma"><?= $t('Positions') ?></h1>
 			<section class="use-nested">
-				<h1 class="h-gamma"><?= $t('Positions') ?></h1>
 				<table>
 					<thead>
 						<tr>
@@ -211,6 +211,18 @@ $this->set([
 						<tr>
 					</tfoot>
 				</table>
+					<div class="help">
+						<?= $t('To reference products in positions add the product number in braces to the description i.e. `(#123)`.') ?>
+						<strong>
+						<?php if ($item->status === 'shipped'): ?>
+							<?= $t('Referenced products have their stock taken.') ?>
+						<?php elseif($item->status === 'cancelled'): ?>
+							<?= $t('Referenced products have their stock not taken or reserved.') ?>
+						<?php elseif ($item->status): ?>
+							<?= $t('Referenced products have their stock reserved.') ?>
+						<?php endif ?>
+						</strong>
+					</div>
 			</section>
 		</div>
 

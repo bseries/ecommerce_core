@@ -162,11 +162,12 @@ class Shipments extends \base_core\models\Base {
 						continue;
 					}
 
-					// Transfer stock into taken state.
-					if (!$product->takeStock($position->quantity)) {
+					// Transfer stock into taken state. Unreserve must come first
+					// as stock checks will otherwise prevent us taking stock.
+					if (!$product->unreserveStock($position->quantity)) {
 						return false;
 					}
-					if (!$product->unreserveStock($position->quantity)) {
+					if (!$product->takeStock($position->quantity)) {
 						return false;
 					}
 				}
