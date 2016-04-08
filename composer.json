@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-		"davidpersson/li3_translate": "2.*@beta",
+		"davidpersson/li3_translate": "2.*",
         "atelierdisko/base_address": "1.4.*",
         "atelierdisko/base_core": "1.4.*",
         "atelierdisko/base_document": "1.4.*",
@@ -21,9 +21,9 @@
         "atelierdisko/billing_invoice": "1.4.*",
         "atelierdisko/billing_payment": "1.4.*",
         "atelierdisko/finance": "2.0.*",
-        "atelierdisko/li3_access": "2.0.*@beta",
-        "atelierdisko/li3_flash_message": "1.0.*@beta",
-        "atelierdisko/li3_mailer": "1.0.*@beta",
+        "atelierdisko/li3_access": "2.0.*",
+        "atelierdisko/li3_flash_message": "1.0.*",
+        "atelierdisko/li3_mailer": "1.0.*",
         "composer/installers": "1.*@stable",
         "php": ">=5.5.0",
         "unionofrad/lithium": "1.0.*@dev"
