@@ -369,7 +369,7 @@ class Orders extends \base_core\models\Base {
 	}
 
 	public function isExpired($entity) {
-		if ($enity->status !== 'checking-out') {
+		if ($entity->status !== 'checking-out') {
 			return false;
 		}
 		$date = DateTime::createFromFormat('Y-m-d H:i:s', $entity->modified);
