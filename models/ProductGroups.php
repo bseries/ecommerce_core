@@ -17,6 +17,7 @@
 
 namespace ecommerce_core\models;
 
+use base_core\extensions\cms\Settings;
 use lithium\util\Inflector;
 
 class ProductGroups extends \base_core\models\Base {
@@ -64,8 +65,7 @@ class ProductGroups extends \base_core\models\Base {
 		'li3_taggable\extensions\data\behavior\Taggable' => [
 			'field' => 'tags',
 			'tagsModel' => 'base_tag\models\Tags',
-			'filters' => ['strtolower'],
-			'autoMatch' => ['title']
+			'filters' => ['strtolower']
 		],
 		'base_core\extensions\data\behavior\Searchable' => [
 			'fields' => [
@@ -84,6 +84,9 @@ class ProductGroups extends \base_core\models\Base {
 				'locales' => explode(' ', PROJECT_LOCALES),
 				'strategy' => 'inline'
 			]);
+		}
+		if (Settings::read('productGroup.useAutoTagging')) {
+			static::behavior('Taggable')->config('autoMatch', ['title']);
 		}
 	}
 

@@ -48,4 +48,7 @@ Settings::register('shipment.sendShippedMail', false);
 // available when user takes product.
 Settings::register('stock.check', true);
 
+// Enables automatic tagging of entities, once saved.
+Settings::register('productGroup.useAutoTagging', false);
+
 ?>
