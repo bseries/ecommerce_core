@@ -131,63 +131,59 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
-			<div class="grid-column-left">
-			</div>
-			<div class="grid-column-right">
-				<section class="use-nested">
-					<h1><?= $t('Attributes') ?></h1>
-					<table>
-						<thead>
-							<tr>
-								<td><?= $t('Name') ?>
-								<td><?= $t('Value') ?>
-								<td>
-						</thead>
-						<tbody>
-						<?php foreach ($item->attributes() as $key => $child): ?>
-							<tr class="nested-item">
-								<td>
-									<?= $this->form->field("attributes.{$key}.id", [
-										'type' => 'hidden',
-										'value' => $child->id,
-									]) ?>
-									<?= $this->form->field("attributes.{$key}.key", [
-										'type' => 'select',
-										'value' => $child->key,
-										'list' => $attributeKeys,
-										'label' => false,
-									]) ?>
-								<td>
-									<?= $this->form->field("attributes.{$key}.value", [
-										'type' => 'text',
-										'value' => $child->value,
-										'label' => false
-									]) ?>
-								<td class="actions">
-									<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
-						<?php endforeach ?>
-							<tr class="nested-add nested-item">
-								<td>
-									<?= $this->form->field('attributes.new.key', [
-										'type' => 'select',
-										'list' => $attributeKeys,
-										'label' => false,
-									]) ?>
-								<td>
-									<?= $this->form->field('attributes.new.value', [
-										'type' => 'text',
-										'label' => false
-									]) ?>
-								<td class="actions">
-									<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="3" class="nested-add-action">
-									<?= $this->form->button($t('add'), ['type' => 'button', 'class' => 'button add-nested']) ?>
-						</tfoot>
-					</table>
-				</section>
+			<h1><?= $t('Attributes') ?></h1>
+			<div class="grid-column-right use-nested">
+				<table>
+					<thead>
+						<tr>
+							<td><?= $t('Name') ?>
+							<td><?= $t('Value') ?>
+							<td>
+					</thead>
+					<tbody>
+					<?php foreach ($item->attributes() as $key => $child): ?>
+						<tr class="nested-item">
+							<td>
+								<?= $this->form->field("attributes.{$key}.id", [
+									'type' => 'hidden',
+									'value' => $child->id,
+								]) ?>
+								<?= $this->form->field("attributes.{$key}.key", [
+									'type' => 'select',
+									'value' => $child->key,
+									'list' => $attributeKeys,
+									'label' => false,
+								]) ?>
+							<td>
+								<?= $this->form->field("attributes.{$key}.value", [
+									'type' => 'text',
+									'value' => $child->value,
+									'label' => false
+								]) ?>
+							<td class="actions">
+								<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
+					<?php endforeach ?>
+						<tr class="nested-add nested-item">
+							<td>
+								<?= $this->form->field('attributes.new.key', [
+									'type' => 'select',
+									'list' => $attributeKeys,
+									'label' => false,
+								]) ?>
+							<td>
+								<?= $this->form->field('attributes.new.value', [
+									'type' => 'text',
+									'label' => false
+								]) ?>
+							<td class="actions">
+								<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3" class="nested-add-action">
+								<?= $this->form->button($t('add'), ['type' => 'button', 'class' => 'button add-nested']) ?>
+					</tfoot>
+				</table>
 			</div>
 		</div>
 
