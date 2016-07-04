@@ -17,17 +17,18 @@
 
 namespace ecommerce_core\models;
 
-use lithium\storage\Cache;
+use Exception;
 use base_core\extensions\cms\Settings;
+use billing_core\billing\ClientGroups;
+use ecommerce_core\ecommerce\aquisition\Methods as AquisitionMethods;
 use ecommerce_core\models\Carts;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\ProductPrices;
-use billing_core\billing\ClientGroups;
-use Exception;
-use lithium\util\Inflector;
-use lithium\util\Collection;
 use lithium\analysis\Logger;
+use lithium\storage\Cache;
+use lithium\util\Collection;
+use lithium\util\Inflector;
 
 class Products extends \base_core\models\Base {
 
@@ -129,13 +130,16 @@ class Products extends \base_core\models\Base {
 		$results = [];
 
 		if (!$options['sparse']) {
-			foreach (ClientGroups::registry(true) as $name => $group) {
-				$results[$name] = ProductPrices::create([
-					'group' => $name,
-					'amount_currency' => $group->amountCurrency(),
-					'amount_type' => $group->amountType(),
-					'amount_rate' => $group->taxType()->rate()
-				]);
+			foreach (AquisitionMethods::registry(true) as $aName => $aquisitionMethod) {
+				foreach (ClientGroups::registry(true) as $gName => $group) {
+					$results[$gName . '#' . $aName] = ProductPrices::create([
+						'group' => $gName,
+						'method' => $aName,
+						'amount_currency' => $group->amountCurrency(),
+						'amount_type' => $group->amountType(),
+						'amount_rate' => $group->taxType()->rate()
+					]);
+				}
 			}
 		}
 		$prices = $entity->prices ?: ProductPrices::find('all', [
@@ -144,7 +148,7 @@ class Products extends \base_core\models\Base {
 			]
 		]);
 		foreach ($prices as $price) {
-			$results[$price->group] = $price;
+			$results[$price->group . '#' . $price->method] = $price;
 		}
 		return new Collection(['data' => $results]);
 	}

@@ -18,9 +18,10 @@
 namespace ecommerce_core\controllers;
 
 use billing_core\models\Currencies;
-use ecommerce_core\models\Products;
+use ecommerce_core\ecommerce\aquisition\Methods as AquisitionMethods;
 use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
+use ecommerce_core\models\Products;
 use lithium\g11n\Message;
 
 class ProductsController extends \base_core\controllers\BaseController {
@@ -36,6 +37,7 @@ class ProductsController extends \base_core\controllers\BaseController {
 		extract(Message::aliases());
 
 		$productGroups = ProductGroups::find('list');
+		$aquisitionMethods = AquisitionMethods::enum();
 		$currencies = Currencies::find('list');
 		$attributeKeys = [];
 
@@ -45,7 +47,7 @@ class ProductsController extends \base_core\controllers\BaseController {
 				'color' => $t('color', ['scope' => 'ecommerce_core'])
 			]);
 		}
-		return compact('productGroups', 'currencies', 'attributeKeys');
+		return compact('productGroups', 'aquisitionMethods', 'currencies', 'attributeKeys');
 	}
 }
 

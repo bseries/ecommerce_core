@@ -20,6 +20,7 @@ namespace ecommerce_core\models;
 use Exception;
 use AD\Finance\Price;
 use billing_core\billing\ClientGroups;
+use ecommerce_core\ecommerce\aquisition\Methods as AquisitionMethods;
 
 class ProductPrices extends \base_core\models\Base {
 
@@ -42,6 +43,10 @@ class ProductPrices extends \base_core\models\Base {
 			]
 		]
 	];
+
+	public function method($entity) {
+		return AquisitionMethods::registry($entity->method);
+	}
 
 	public function group($entity) {
 		return ClientGroups::registry($entity->group);

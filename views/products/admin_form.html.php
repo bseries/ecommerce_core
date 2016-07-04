@@ -214,6 +214,7 @@ $this->set([
 					<thead>
 						<tr>
 							<td><?= $t('Name') ?>
+							<td><?= $t('Acq. Method') ?>
 							<td><?= $t('Amount') ?>
 							<td><?= $t('Currency') ?>
 							<td><?= $t('Type') ?>
@@ -233,11 +234,22 @@ $this->set([
 									'type' => 'hidden',
 									'value' => $child->group,
 								]) ?>
+								<?= $this->form->field("prices.{$key}.tax_type", [
+									'type' => 'hidden',
+									'value' => $child->tax_type ?: $child->group()->taxType()->name(),
+								]) ?>
 								<?= $this->form->field("prices.{$key}.group.title", [
 									'type' => 'text',
 									'disabled' => true,
 									'value' => $child->group()->title(),
 									'label' => false
+								]) ?>
+							<td>
+								<?= $this->form->field("prices.{$key}.method", [
+									'type' => 'select',
+									'label' => false,
+									'list' => $aquisitionMethods,
+									'value' => $child->method
 								]) ?>
 							<td>
 								<?= $this->form->field("prices.{$key}.amount", [
