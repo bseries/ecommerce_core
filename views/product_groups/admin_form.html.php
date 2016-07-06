@@ -24,6 +24,20 @@ $this->set([
 	<?=$this->form->create($item) ?>
 
 		<div class="grid-row">
+			<h1><?= $t('Access') ?></h1>
+			<div class="grid-column-left"></div>
+			<div class="grid-column-right">
+				<?= $this->form->field('access', [
+					'type' => 'select',
+					'multiple' => true,
+					'list' => $rules,
+					'label' => $t('Visible for…'),
+				]) ?>
+			</div>
+		</div>
+
+
+		<div class="grid-row">
 			<div class="grid-column-left">
 				<?php if ($isTranslated): ?>
 					<?php foreach ($item->translate('title') as $locale => $value): ?>
@@ -52,20 +66,8 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
-			<div class="grid-column-left">
-			</div>
+			<div class="grid-column-left"></div>
 			<div class="grid-column-right">
-				<?= $this->form->field('access', [
-					'type' => 'select',
-					'multiple' => true,
-					'list' => $rules,
-					'label' => $t('Access'),
-				]) ?>
-			</div>
-		</div>
-
-		<div class="grid-row">
-			<div class="grid-column-left">
 				<?php if (isset($brands)): ?>
 					<?= $this->form->field('ecommerce_brand_id', [
 						'type' => 'select',
@@ -73,8 +75,6 @@ $this->set([
 						'label' => $t('Brand')
 					]) ?>
 				<?php endif ?>
-			</div>
-			<div class="grid-column-right">
 				<?= $this->form->field('tags', [
 					'value' => $item->tags(),
 					'label' => $t('Tags'),
@@ -100,6 +100,66 @@ $this->set([
 					'size' => 'gamma',
 					'features' => 'minimal'
 				]) ?>
+			<?php endif ?>
+		</div>
+
+		<div class="grid-row">
+			<h1><?= $t('Products') ?></h1>
+			<?php if ($item->products()->count()): ?>
+				<table>
+					<thead>
+						<tr>
+							<td data-sort="is-published" class="flag table-sort"><?= $t('publ.?') ?>
+							<td class="media">
+							<td data-sort="title" class="emphasize table-sort"><?= $t('Title') ?>
+							<td data-sort="number" class="emphasize number table-sort"><?= $t('Number') ?>
+							<td data-sort="stock" class="stock table-sort" title="<?= $t('C = calculated, A = physically available, R = reserved, I = inventory') ?>">
+								<?= $t('Stock (C/A/R/I)') ?>
+							<td data-sort="modified" class="date table-sort desc"><?= $t('Modified') ?>
+							<td class="actions">
+					</thead>
+					<tbody>
+						<?php foreach ($item->products() as $_item): ?>
+						<tr data-id="<?= $_item->id ?>">
+							<td class="flag"><i class="material-icons"><?= ($_item->is_published ? 'done' : '') ?></i>
+							<td class="media">
+								<?php if ($cover = $_item->cover()): ?>
+									<?= $this->media->image($cover->version('fix3admin'), [
+										'data-media-id' => $cover->id, 'alt' => 'preview'
+									]) ?>
+								<?php endif ?>
+							<td class="emphasize title"><?= $_item->title ?>
+							<td class="emphasize number"><?= $_item->number ?: '–' ?>
+							<td class="emphasize stock">
+								<span><?= $_item->stock('virtual') ?></span>
+								/
+								<span class="minor"><?= $_item->stock('real') ?></span>
+								/
+								<span class="minor"><?= $_item->stock('reserved') ?></span>
+								/
+								<span class="minor"><?= $_item->stock('target') ?></span>
+							<td class="date">
+								<time datetime="<?= $this->date->format($_item->modified, 'w3c') ?>">
+									<?= $this->date->format($_item->modified, 'date') ?>
+								</time>
+							<td class="actions">
+								<?= $this->html->link($_item->is_published ? $t('unpublish') : $t('publish'), [
+									'library' => 'ecommerce_core',
+									'controller' => 'Products',
+									'action' => $_item->is_published ? 'unpublish': 'publish',
+									'id' => $_item->id
+								], ['class' => 'button']) ?>
+								<?= $this->html->link($t('open'), [
+									'library' => 'ecommerce_core',
+									'controller' => 'Products',
+									'action' => 'edit',
+									'id' => $_item->id
+								], ['class' => 'button']) ?>
+						<?php endforeach ?>
+					</tbody>
+				</table>
+			<?php else: ?>
+				<div class="none-available"><?= $t('No items available, yet.') ?></div>
 			<?php endif ?>
 		</div>
 

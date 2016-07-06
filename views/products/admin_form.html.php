@@ -127,6 +127,14 @@ $this->set([
 					'label' => $t('Contained in product group'),
 					'list' => ['new' => '-- ' . $t('Create new product group') . ' --'] + $productGroups
 				]) ?>
+				<?php if ($item->exists() && $item->ecommerce_product_group_id): ?>
+					<?= $this->html->link($t('open'), [
+						'library' => 'ecommerce_core',
+						'controller' => 'ProductGroups',
+						'action' => 'edit',
+						'id' => $item->ecommerce_product_group_id
+					], ['class' => 'button']) ?>
+				<?php endif ?>
 			</div>
 		</div>
 
