@@ -43,11 +43,11 @@ class CartPositions extends \base_core\models\Base {
 	];
 
 	public function amount($entity, $user) {
-		return $entity->product()->price($user)->amount();
+		return $entity->product()->price($user, $entity->method)->amount();
 	}
 
 	public function total($entity, $user) {
-		return $entity->product()->price($user)->amount()->multiply($entity->quantity);
+		return $entity->product()->price($user, $entity->method)->amount()->multiply($entity->quantity);
 	}
 
 	/* Deprecated */
