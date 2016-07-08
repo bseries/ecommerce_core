@@ -151,8 +151,8 @@ class Shipments extends \base_core\models\Base {
 				}
 				return true;
 			case 'shipped':
+				$user = $entity->user();
 				$order = $entity->order();
-				$user = $order->user();
 
 				foreach ($entity->positions() as $position) {
 					if (!$product = $position->product()) {
@@ -178,17 +178,26 @@ class Shipments extends \base_core\models\Base {
 				if (!$user->is_notified) {
 					return true;
 				}
-				return Mailer::deliver('shipment_shipped', [
-					'library' => 'ecommerce_core',
-					'to' => $user->email,
-					'subject' => $t('Order #{:number} shipped.', [
+				if ($order) {
+					$subject = $t('Order #{:number} shipped.', [
 						'locale' => $user->locale,
 						'scope' => 'ecommerce_core',
 						'number' => $order->number
-					]),
+					]);
+				} else {
+					$subject = $t('Shipment #{:number} shipped.', [
+						'locale' => $user->locale,
+						'scope' => 'ecommerce_core',
+						'number' => $shipment->number
+					]);
+				}
+				return Mailer::deliver('shipment_shipped', [
+					'library' => 'ecommerce_core',
+					'to' => $user->email,
+					'subject' => $subject,
 					'data' => [
 						'user' => $user,
-						'order' => $order,
+						'order' => $order ?: null,
 						'shipment' => $entity
 					]
 				]);
@@ -282,6 +291,15 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 
 			if ($data['_delete']) {
 				if (!$item->delete()) {
+					return false;
+				}
+				if (!$product = $item->product()) {
+					$message  = "Failed to get product for shipment ({$entity->id}) position with `{$item->description}`. ";
+					$message .= "Cannot unreserve stock automatically.";
+					Logger::write('debug', $message);
+					continue;
+				}
+				if (!$product->unreserveStock((integer) $item->quantity)) {
 					return false;
 				}
 				continue;

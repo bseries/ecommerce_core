@@ -25,6 +25,10 @@ $this->set([
 	]) ?>"
 >
 
+	<div class="top-actions">
+		<?= $this->html->link($t('shipment'), ['action' => 'add'], ['class' => 'button add']) ?>
+	</div>
+
 	<?php if ($data->count()): ?>
 		<table>
 			<thead>
@@ -48,13 +52,19 @@ $this->set([
 			<tbody>
 				<?php foreach ($data as $item): ?>
 					<?php $user = $item->user() ?>
-					<?php $order = $item->order() ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="number"><?= $item->number ?>
-					<td class="order"><?= $this->html->link($order->number, [
-						'controller' => 'Orders', 'action' => 'edit', 'id' => $order->id,
-						'library' => 'ecommerce_core'
-					]) ?>
+					<td class="order">
+					<?php
+						if ($order = $item->order()) {
+							echo $this->html->link($order->number, [
+								'controller' => 'Orders', 'action' => 'edit', 'id' => $order->id,
+								'library' => 'ecommerce_core'
+							]);
+						} else {
+							echo '–';
+						}
+					?>
 					<td class="status"><?= $item->status ?>
 					<td class="method"><?= $item->method ?>
 					<td class="user">

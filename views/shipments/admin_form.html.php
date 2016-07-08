@@ -166,8 +166,11 @@ $this->set([
 									'value' => $this->money->format($child->total()->getNet(), ['currency' => false])
 								]) ?>
 							<td class="actions">
-								<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
+								<?php if ($item->status === 'created'): ?>
+									<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
+								<?php endif ?>
 					<?php endforeach ?>
+					<?php if ($item->status === 'created'): ?>
 					<tr class="nested-add nested-item">
 						<td>
 							<?= $this->form->field('positions.new.description', [
@@ -200,11 +203,14 @@ $this->set([
 						<td>
 						<td class="actions">
 							<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
+					<?php endif ?>
 					</tbody>
 					<tfoot>
+						<?php if ($item->status === 'created'): ?>
 						<tr>
 							<td colspan="7" class="nested-add-action">
 								<?= $this->form->button($t('add position'), ['type' => 'button', 'class' => 'button add-nested']) ?>
+						<?php endif ?>
 						<tr>
 							<td colspan="6"><?= $t('Total value (net)') ?>
 							<td><?= $this->price->format($item->totals(), 'net') ?>
