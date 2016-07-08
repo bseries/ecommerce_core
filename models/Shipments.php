@@ -274,7 +274,6 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 	}
 	$entity = $params['entity'];
 	$data = $params['data'];
-	$user = $entity->user();
 
 	// Save nested positions.
 	$new = isset($data['positions']) ? $data['positions'] : [];
@@ -309,8 +308,7 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 			}
 		} else {
 			$item = ShipmentPositions::create($data + [
-				'ecommerce_shipment_id' => $entity->id,
-				'user_id' => $user->id
+				'ecommerce_shipment_id' => $entity->id
 			]);
 			if (!$item->save($data)) {
 				return false;
