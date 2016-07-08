@@ -34,11 +34,10 @@ $this->set([
 			<thead>
 				<tr>
 					<td data-sort="number" class="number emphasize table-sort id"><?= $t('Number') ?>
-					<td data-sort="order" class="order table-sort"><?= $t('Order') ?>
 					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
-					<td data-sort="method" class="method table-sort"><?= $t('Method') ?>
 					<td data-sort="User.number" class="user table-sort"><?= $t('Recipient') ?>
-					<td class="money"><?= $t('Total (net)') ?>
+					<td data-sort="order" class="order number table-sort"><?= $t('Order') ?>
+					<td data-sort="method" class="method table-sort"><?= $t('Method') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
@@ -54,7 +53,10 @@ $this->set([
 					<?php $user = $item->user() ?>
 				<tr data-id="<?= $item->id ?>">
 					<td class="number"><?= $item->number ?>
-					<td class="order">
+					<td class="status"><?= $item->status ?>
+					<td class="user">
+						<?= $this->user->link($user) ?>
+					<td class="order number">
 					<?php
 						if ($order = $item->order()) {
 							echo $this->html->link($order->number, [
@@ -65,11 +67,7 @@ $this->set([
 							echo '–';
 						}
 					?>
-					<td class="status"><?= $item->status ?>
 					<td class="method"><?= $item->method ?>
-					<td class="user">
-						<?= $this->user->link($user) ?>
-					<td class="money"><?= $this->price->format($item->totals(), 'net') ?>
 					<td class="date modified">
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>
