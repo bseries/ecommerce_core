@@ -269,11 +269,23 @@ class Shipments extends \base_core\models\Base {
 }
 
 Shipments::applyFilter('save', function($self, $params, $chain) {
+	$entity = $params['entity'];
+	$data =& $params['data'];
+
+	if (!$entity->exists()) {
+		$entity->user_id = $entity->user_id ?: $data['user_id'];
+		$user = $entity->user();
+		$data = $user->address('shipping')->copy($data, 'address_');
+
+		if (empty($data['terms'])) {
+			$terms = Settings::read('ecommerce.shipmentTerms');
+			$data['terms'] = !is_bool($terms) ? (is_callable($terms) ? $terms($user) : $terms) : null;
+		}
+	}
+
 	if (!$result = $chain->next($self, $params, $chain)) {
 		return false;
 	}
-	$entity = $params['entity'];
-	$data = $params['data'];
 
 	// Save nested positions.
 	$new = isset($data['positions']) ? $data['positions'] : [];
