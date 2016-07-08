@@ -91,11 +91,11 @@ class Carts extends \base_core\models\Base {
 	}
 
 	// Returns the total net/gross value of the cart as *Monies* object.
-	public function totalValues($entity, $type = 'net', $user, $method) {
+	public function totalValues($entity, $type = 'net', $user) {
 		$compare = new Monies();
 		$byMethod = 'get' . ucfirst($type);
 
-		foreach ($entity->totals($user, $method)->sum() as $rate => $currencies) {
+		foreach ($entity->totals($user)->sum() as $rate => $currencies) {
 			foreach ($currencies as $currency => $price) {
 				$compare = $compare->add($r = $price->{$byMethod}());
 			}
