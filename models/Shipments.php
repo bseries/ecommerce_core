@@ -273,10 +273,6 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 	$data =& $params['data'];
 
 	if (!$entity->exists()) {
-		// Will otherwise confuse the following code and lead to nested not being saved, as
-		// this will be interpreted to be an already existing entity.
-		unset($data['id']);
-
 		$entity->user_id = $entity->user_id ?: $data['user_id'];
 		$user = $entity->user();
 		$data = $user->address('shipping')->copy($data, 'address_');
@@ -293,18 +289,17 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 
 	// Save nested positions.
 	$new = isset($data['positions']) ? $data['positions'] : [];
-	foreach ($new as $key => $data) {
+	foreach ($new as $key => $value) {
 		if ($key === 'new') {
 			continue;
 		}
-		if (isset($data['id'])) {
-			$item = ShipmentPositions::find('first', [
-				'conditions' => [
-					'id' => $data['id']
-				]
+		// On nested forms id is always present, but on create empty.
+		if (!empty($value['id'])) {
+			$item = ProductPrices::find('first', [
+				'conditions' => ['id' => $value['id']]
 			]);
 
-			if ($data['_delete']) {
+			if ($value['_delete']) {
 				if (!$item->delete()) {
 					return false;
 				}
@@ -319,7 +314,7 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 				}
 				continue;
 			}
-			if (!$item->save($data)) {
+			if (!$item->save($value)) {
 				return false;
 			}
 		} else {
