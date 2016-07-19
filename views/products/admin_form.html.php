@@ -214,7 +214,6 @@ $this->set([
 				]) ?>
 			<?php endif ?>
 		</div>
-
 		<div class="grid-row">
 			<h1 class="h-gamma"><?= $t('Prices') ?></h1>
 			<section class="use-nested">
@@ -230,7 +229,6 @@ $this->set([
 					</thead>
 					<tbody>
 					<?php foreach ($item->prices() as $key => $child): ?>
-						<?php $key = md5($key); // Prevent making sub fields with name and dots. ?>
 						<tr class="nested-item">
 							<td class="position-description--f">
 								<?= $this->form->field("prices.{$key}.id", [

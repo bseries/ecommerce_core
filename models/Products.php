@@ -127,20 +127,11 @@ class Products extends \base_core\models\Base {
 				trigger_error('Prices are now always sparse.', E_USER_DEPRECATED);
 			}
 		}
-		$prices = $entity->prices ?: ProductPrices::find('all', [
+		return $entity->prices ?: ProductPrices::find('all', [
 			'conditions' => [
 				'ecommerce_product_id' => $entity->id
 			]
 		]);
-		$results = [];
-		foreach ($prices as $price) {
-			if (isset($results[$price->group . '#' . $price->method])) {
-				trigger_error('Detected duplicate price group/method.', E_USER_NOTICE);
-				continue;
-			}
-			$results[$price->group . '#' . $price->method] = $price;
-		}
-		return new Collection(['data' => $results]);
 	}
 
 	// There are 4 types of stock:
