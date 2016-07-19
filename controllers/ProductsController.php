@@ -17,6 +17,7 @@
 
 namespace ecommerce_core\controllers;
 
+use billing_core\billing\ClientGroups;
 use billing_core\models\Currencies;
 use ecommerce_core\ecommerce\aquisition\Methods as AquisitionMethods;
 use ecommerce_core\models\ProductAttributes;
@@ -40,6 +41,7 @@ class ProductsController extends \base_core\controllers\BaseController {
 		$aquisitionMethods = AquisitionMethods::enum();
 		$currencies = Currencies::find('list');
 		$attributeKeys = [];
+		$clientGroups = ClientGroups::enum();
 
 		if ($item) {
 			$attributeKeys = ProductAttributes::enum('key', [
@@ -47,7 +49,13 @@ class ProductsController extends \base_core\controllers\BaseController {
 				'color' => $t('color', ['scope' => 'ecommerce_core'])
 			]);
 		}
-		return compact('productGroups', 'aquisitionMethods', 'currencies', 'attributeKeys');
+		return compact(
+			'productGroups',
+			'aquisitionMethods',
+			'currencies',
+			'attributeKeys',
+			'clientGroups'
+		);
 	}
 }
 

@@ -72,4 +72,17 @@ class ProductPrices extends \base_core\models\Base {
 	}
 }
 
+// On save derive tax type from group
+ProductPrices::applyFilter('save', function($self, $params, $chain) {
+	$entity = $params['entity'];
+	$data =& $params['data'];
+
+	if (isset($data['group'])) {
+		$group = Client::registry($data['group']);
+		$data['tax_type'] = $group->taxType()->name();
+		$data['amount_rate'] = $group->taxType()->rate();
+	}
+	return $chain->next($self, $params, $chain);
+});
+
 ?>

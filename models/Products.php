@@ -301,23 +301,30 @@ Products::applyFilter('save', function($self, $params, $chain) {
 		return false;
 	}
 
-	// Save nested prices. We don't need to drop the whole prices
-	// to get a clean start as price groups only get added never removed. This
-	// however might change in future versions and behavior will then be
-	// similar to the one how attributes are saved.
-	if ($entity->prices) {
-		foreach ($entity->prices as $key => $data) {
-			if (!empty($data['id'])) {
-				$item = ProductPrices::find('first', ['conditions' => ['id' => $data['id']]]);
-				$item->set($data);
-			} else {
-				$item = ProductPrices::create($data + [
-					'ecommerce_product_id' => $entity->id
-				]);
+	// Save nested prices.
+	$new = isset($data['prices']) ? $data['prices'] : [];
+	foreach ($new as $key => $value) {
+		if ($key === 'new') {
+			continue;
+		}
+		// On nested forms id is always present, but on create empty.
+		if (!empty($value['id'])) {
+			$item = ProductPrices::find('first', [
+				'conditions' => ['id' => $value['id']]
+			]);
+			if ($value['_delete']) {
+				if (!$item->delete()) {
+					return false;
+				}
+				continue;
 			}
-			if (!$item->save()) {
-				return false;
-			}
+		} else {
+			$item = ProductPrices::create($value + [
+				'ecommerce_product_id' => $entity->id
+			]);
+		}
+		if (!$item->save($value)) {
+			return false;
 		}
 	}
 
@@ -346,7 +353,6 @@ Products::applyFilter('save', function($self, $params, $chain) {
 			$created[] = $data['key'];
 		}
 	}
-
 	return true;
 });
 Products::applyFilter('delete', function($self, $params, $chain) {
