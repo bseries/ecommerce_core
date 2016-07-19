@@ -273,6 +273,10 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 	$data =& $params['data'];
 
 	if (!$entity->exists()) {
+		// Will otherwise confuse the following code and lead to nested not being saved, as
+		// this will be interpreted to be an already existing entity.
+		unset($data['id']);
+
 		$entity->user_id = $entity->user_id ?: $data['user_id'];
 		$user = $entity->user();
 		$data = $user->address('shipping')->copy($data, 'address_');
