@@ -229,7 +229,7 @@ $this->set([
 							<td>
 					</thead>
 					<tbody>
-					<?php foreach ($item->prices(['sparse' => true]) as $key => $child): ?>
+					<?php foreach ($item->prices() as $key => $child): ?>
 						<?php $key = md5($key); // Prevent making sub fields with name and dots. ?>
 						<tr class="nested-item">
 							<td class="position-description--f">
@@ -319,6 +319,9 @@ $this->set([
 								<?= $this->form->button($t('add price'), ['type' => 'button', 'class' => 'button add-nested']) ?>
 					</tfoot>
 				</table>
+				<div class="help">
+					<?= $t('There should ever be just one price for a client group/acq. method combination.') ?>
+				</div>
 			</section>
 		</div>
 

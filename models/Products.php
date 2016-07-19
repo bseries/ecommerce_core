@@ -120,26 +120,11 @@ class Products extends \base_core\models\Base {
 	}
 
 	// Returns prices for the product keyed by price group.
-	//
-	// When the sparse option is disabled will always return
-	// a complete mapping of price groups => prices.
-	public function prices($entity, array $options = []) {
-		$options += [
-			'sparse' => false
-		];
-		$results = [];
-
-		if (!$options['sparse']) {
-			foreach (AquisitionMethods::registry(true) as $aName => $aquisitionMethod) {
-				foreach (ClientGroups::registry(true) as $gName => $group) {
-					$results[$gName . '#' . $aName] = ProductPrices::create([
-						'group' => $gName,
-						'method' => $aName,
-						'amount_currency' => $group->amountCurrency(),
-						'amount_type' => $group->amountType(),
-						'amount_rate' => $group->taxType()->rate()
-					]);
-				}
+	public function prices($entity) {
+		if (func_num_args() > 1) {
+			$options = func_get_args()[1];
+			if (isset($options['sparse'])) {
+				trigger_error('Prices are now always sparse.', E_USER_DEPRECATED);
 			}
 		}
 		$prices = $entity->prices ?: ProductPrices::find('all', [
@@ -147,7 +132,12 @@ class Products extends \base_core\models\Base {
 				'ecommerce_product_id' => $entity->id
 			]
 		]);
+		$results = [];
 		foreach ($prices as $price) {
+			if (isset($results[$price->group . '#' . $price->method])) {
+				trigger_error('Detected duplicate price group/method.', E_USER_NOTICE);
+				continue;
+			}
 			$results[$price->group . '#' . $price->method] = $price;
 		}
 		return new Collection(['data' => $results]);
@@ -360,7 +350,7 @@ Products::applyFilter('delete', function($self, $params, $chain) {
 	$result = $chain->next($self, $params, $chain);
 
 	// Delete nested/dependent items.
-	$entity->prices(['sparse' => true])->delete();
+	$entity->prices()->delete();
 	$entity->attributes()->delete();
 
 	return $result;
