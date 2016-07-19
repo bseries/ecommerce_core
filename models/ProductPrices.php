@@ -78,7 +78,7 @@ ProductPrices::applyFilter('save', function($self, $params, $chain) {
 	$data =& $params['data'];
 
 	if (isset($data['group'])) {
-		$group = Client::registry($data['group']);
+		$group = ClientGroups::registry($data['group']);
 		$data['tax_type'] = $group->taxType()->name();
 		$data['amount_rate'] = $group->taxType()->rate();
 	}
