@@ -237,6 +237,9 @@ $this->set([
 									'type' => 'hidden',
 									'value' => $child->id,
 								]) ?>
+								<?= $this->form->field("prices.{$key}._delete", [
+									'type' => 'hidden'
+								]) ?>
 								<?= $this->form->field("prices.{$key}.group", [
 									'type' => 'select',
 									'label' => false,
