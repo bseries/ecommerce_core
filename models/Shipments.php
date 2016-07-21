@@ -304,7 +304,8 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 					return false;
 				}
 				if (!$product = $item->product()) {
-					$message  = "Failed to get product for shipment ({$entity->id}) position with `{$item->description}`. ";
+					$message  = "Failed to get product for shipment ({$entity->id}) ";
+					$message  = "position with `{$item->description}`. ";
 					$message .= "Cannot unreserve stock automatically.";
 					Logger::write('debug', $message);
 					continue;
@@ -326,7 +327,8 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 			}
 
 			if (!$product = $item->product()) {
-				$message  = "Failed to get product for shipment ({$entity->id}) position with `{$item->description}`. ";
+				$message  = "Failed to get product for shipment ({$entity->id}) ";
+				$message  = "position with `{$item->description}`. ";
 				$message .= "Cannot reserve stock automatically.";
 				Logger::write('debug', $message);
 				continue;
