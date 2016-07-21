@@ -319,10 +319,10 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 				return false;
 			}
 		} else {
-			$item = ShipmentPositions::create($data + [
+			$item = ShipmentPositions::create([
 				'ecommerce_shipment_id' => $entity->id
 			]);
-			if (!$item->save($data)) {
+			if (!$item->save($value)) {
 				return false;
 			}
 
