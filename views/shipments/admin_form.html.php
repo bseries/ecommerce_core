@@ -155,8 +155,8 @@ $this->set([
 							<td><?= $t('Quantity') ?>
 							<td><?= $t('Currency') ?>
 							<td><?= $t('Type') ?>
-							<td><?= $t('Unit value') ?>
-							<td><?= $t('Line total value (net)') ?>
+							<td class="money--f price-amount--f"><?= $t('Unit value') ?>
+							<td class="money--f position-total--f"><?= $t('Line total value (net)') ?>
 							<td class="actions">
 					</thead>
 					<tbody>
@@ -195,19 +195,15 @@ $this->set([
 									'value' => $child->amount_type,
 									'list' => ['net' => $t('net'), 'gross' => $t('gross')]
 								]) ?>
-							<td>
+							<td class="money--f price-amount--f">
 								<?= $this->form->field("positions.{$key}.amount", [
 									'type' => 'text',
 									'label' => false,
-									'value' => $this->money->format($child->amount, ['currency' => false])
+									'value' => $this->money->format($child->amount, ['currency' => false]),
+									'class' => 'input--money'
 								]) ?>
-							<td>
-								<?= $this->form->field("positions.{$key}.total_net", [
-									'type' => 'text',
-									'label' => false,
-									'disabled' => true,
-									'value' => $this->money->format($child->total()->getNet(), ['currency' => false])
-								]) ?>
+							<td class="money--f position-total--f">
+								<?= $this->money->format($child->total()->getNet()) ?>
 							<td class="actions">
 								<?php if ($item->status === 'created'): ?>
 									<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
@@ -238,12 +234,13 @@ $this->set([
 								'label' => false,
 								'list' => ['net' => $t('net'), 'gross' => $t('gross')]
 							]) ?>
-						<td>
+						<td class="money--f price-amount--f">
 							<?= $this->form->field('positions.new.amount', [
 								'type' => 'text',
-								'label' => false
+								'label' => false,
+								'class' => 'input--money'
 							]) ?>
-						<td>
+						<td class="position-total--f">
 						<td class="actions">
 							<?= $this->form->button($t('delete'), ['class' => 'button delete delete-nested']) ?>
 					<?php endif ?>
@@ -254,8 +251,8 @@ $this->set([
 							<td colspan="7" class="nested-add-action">
 								<?= $this->form->button($t('add position'), ['type' => 'button', 'class' => 'button add-nested']) ?>
 						<?php endif ?>
-						<tr>
-							<td colspan="6"><?= $t('Total value (net)') ?>
+						<tr class="totals">
+							<td colspan="5"><?= $t('Total value (net)') ?>
 							<td><?= $this->price->format($item->totals(), 'net') ?>
 						<tr>
 					</tfoot>
