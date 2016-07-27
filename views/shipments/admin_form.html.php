@@ -64,7 +64,8 @@ $this->set([
 				<?= $this->form->field('user_id', [
 					'type' => 'select',
 					'label' => $t('User'),
-					'list' => $users
+					'list' => $users,
+					'disabled' => $item->exists()
 				]) ?>
 
 			</div>
@@ -103,6 +104,8 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
+			<h1 class="h-gamma"><?= $t('Recipient') ?></h1>
+
 			<div class="grid-column-left">
 				<?= $this->form->field('address', [
 					'type' => 'textarea',
