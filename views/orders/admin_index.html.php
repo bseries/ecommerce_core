@@ -52,7 +52,7 @@ $this->set([
 				<tr data-id="<?= $item->id ?>">
 					<td class="emphasize number"><?= $item->number ?: '–' ?>
 					<td class="status"><?= $item->status ?: '–' ?>
-					<td class="user number">
+					<td class="user">
 						<?= $this->user->link($user) ?>
 					<td class="number">
 					<?php
