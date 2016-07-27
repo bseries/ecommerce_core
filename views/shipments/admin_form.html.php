@@ -59,6 +59,50 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
+			<h1 class="h-gamma"><?= $t('User') ?></h1>
+			<div class="grid-column-left">
+				<?= $this->form->field('user_id', [
+					'type' => 'select',
+					'label' => $t('User'),
+					'list' => $users
+				]) ?>
+
+			</div>
+			<?php if ($user = $item->user()): ?>
+			<div class="grid-column-right">
+				<?= $this->form->field('user.number', [
+					'label' => $t('Number'),
+					'disabled' => true,
+					'value' => $user->number
+				]) ?>
+				<?= $this->form->field('user.name', [
+					'label' => $t('Name'),
+					'disabled' => true,
+					'value' => $user->name
+				]) ?>
+				<?= $this->form->field('user.email', [
+					'label' => $t('Email'),
+					'disabled' => true,
+					'value' => $user->email
+				]) ?>
+				<?= $this->form->field('user.created', [
+					'label' => $t('Signed up'),
+					'disabled' => true,
+					'value' => $this->date->format($user->created, 'datetime')
+				]) ?>
+			</div>
+			<div class="actions">
+				<?= $this->html->link($t('open user'), [
+					'controller' => 'Users',
+					'action' => 'edit',
+					'id' => $user->id,
+					'library' => 'base_core'
+				], ['class' => 'button']) ?>
+			</div>
+			<?php endif ?>
+		</div>
+
+		<div class="grid-row">
 			<div class="grid-column-left">
 				<?= $this->form->field('address', [
 					'type' => 'textarea',
@@ -97,44 +141,6 @@ $this->set([
 				<div class="help"><?= $t('Visible to recipient.') ?></div>
 			</section>
 		</div>
-
-		<?php $user = $item->user() ?>
-		<div class="grid-row">
-			<h1 class="h-gamma"><?= $t('User') ?></h1>
-			<div class="grid-column-left">
-				<?= $this->form->field('user.name', [
-					'label' => $t('Name'),
-					'disabled' => true,
-					'value' => $user->name
-				]) ?>
-				<?= $this->form->field('user.email', [
-					'label' => $t('Email'),
-					'disabled' => true,
-					'value' => $user->email
-				]) ?>
-			</div>
-			<div class="grid-column-right">
-				<?= $this->form->field('user.number', [
-					'label' => $t('Number'),
-					'disabled' => true,
-					'value' => $user->number
-				]) ?>
-				<?= $this->form->field('user.created', [
-					'label' => $t('Signed up'),
-					'disabled' => true,
-					'value' => $this->date->format($user->created, 'datetime')
-				]) ?>
-			</div>
-			<div class="actions">
-				<?= $this->html->link($t('open user'), [
-					'controller' => 'Users',
-					'action' => 'edit',
-					'id' => $user->id,
-					'library' => 'base_core'
-				], ['class' => 'button']) ?>
-			</div>
-		</div>
-
 
 		<div class="grid-row">
 			<h1 class="h-gamma"><?= $t('Positions') ?></h1>

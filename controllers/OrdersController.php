@@ -30,6 +30,7 @@ class OrdersController extends \base_core\controllers\BaseController {
 	use \base_core\controllers\AdminAddTrait;
 	use \base_core\controllers\AdminEditTrait;
 	use \base_core\controllers\AdminUpdateStatusTrait;
+	use \base_core\controllers\UsersTrait;
 
 	public function admin_mark_processed() {
 		extract(Message::aliases());
@@ -58,7 +59,11 @@ class OrdersController extends \base_core\controllers\BaseController {
 		$shipmentStatuses = Shipments::enum('status');
 		$invoiceStatuses = Invoices::enum('status');
 
-		return compact('statuses', 'invoiceStatuses', 'shipmentStatuses');
+		if ($item) {
+			$users = $this->_users($item, ['field' => 'user_id', 'empty' => true]);
+		}
+
+		return compact('statuses', 'invoiceStatuses', 'shipmentStatuses', 'users');
 	}
 }
 

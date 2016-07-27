@@ -58,26 +58,23 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
-			<div class="grid-column-left">
-				<?= $this->form->field('user_note', [
-					'type' => 'textarea',
-					'label' => $t('Note from user'),
-					'disabled' => true
-				]) ?>
-			</div>
-			<div class="grid-column-right">
-				<?= $this->form->field('internal_note', [
-					'type' => 'textarea',
-					'label' => $t('Private note'),
-				]) ?>
-				<div class="help"><?= $t('Never visible to user.') ?></div>
-			</div>
-		</div>
-
-		<?php $user = $item->user() ?>
-		<div class="grid-row">
 			<h1 class="h-gamma"><?= $t('User') ?></h1>
 			<div class="grid-column-left">
+				<?= $this->form->field('user_id', [
+					'type' => 'select',
+					'label' => $t('User'),
+					'list' => $users,
+					'disabled' => true
+				]) ?>
+
+			</div>
+			<?php if ($user = $item->user()): ?>
+			<div class="grid-column-right">
+				<?= $this->form->field('user.number', [
+					'label' => $t('Number'),
+					'disabled' => true,
+					'value' => $user->number
+				]) ?>
 				<?= $this->form->field('user.name', [
 					'label' => $t('Name'),
 					'disabled' => true,
@@ -87,13 +84,6 @@ $this->set([
 					'label' => $t('Email'),
 					'disabled' => true,
 					'value' => $user->email
-				]) ?>
-			</div>
-			<div class="grid-column-right">
-				<?= $this->form->field('user.number', [
-					'label' => $t('Number'),
-					'disabled' => true,
-					'value' => $user->number
 				]) ?>
 				<?= $this->form->field('user.created', [
 					'label' => $t('Signed up'),
@@ -108,6 +98,24 @@ $this->set([
 					'id' => $user->id,
 					'library' => 'base_core'
 				], ['class' => 'button']) ?>
+			</div>
+			<?php endif ?>
+		</div>
+
+		<div class="grid-row">
+			<div class="grid-column-left">
+				<?= $this->form->field('user_note', [
+					'type' => 'textarea',
+					'label' => $t('Note from user'),
+					'disabled' => true
+				]) ?>
+			</div>
+			<div class="grid-column-right">
+				<?= $this->form->field('internal_note', [
+					'type' => 'textarea',
+					'label' => $t('Private note'),
+				]) ?>
+				<div class="help"><?= $t('Never visible to user.') ?></div>
 			</div>
 		</div>
 
@@ -179,11 +187,6 @@ $this->set([
 						'disabled' => true,
 						'value' => $shipment->address()->format('postal', $locale)
 					]) ?>
-					<?= $this->form->field('shipping.address_phone', [
-						'label' => $t('Phone'),
-						'disabled' => true,
-						'value' => $shipment->address()->phone
-					]) ?>
 				</div>
 				<div class="grid-column-right">
 					<?= $this->form->field('shipment.status', [
@@ -204,12 +207,6 @@ $this->set([
 						'disabled' => true,
 						'value' => $this->date->format($shipment->created, 'datetime')
 					]) ?>
-					<?= $this->form->field('shipment.tracking', [
-						'label' => $t('Tracking Number'),
-						'disabled' => true,
-						'value' => $shipment->tracking
-					]) ?>
-					<div class="help"><?= $t('Tracking is available once status is `shipped`.') ?></div>
 				</div>
 
 				<div class="actions">
