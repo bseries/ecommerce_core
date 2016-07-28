@@ -49,27 +49,43 @@ $this->set([
 						</strong>
 					<?php endif ?>
 				</div>
-
 				<?= $this->form->field('created', [
 					'label' => $t('Created'),
 					'disabled' => true,
 					'value' => $this->date->format($item->created, 'datetime')
 				]) ?>
+				<?= $this->form->field('method', [
+					'type' => 'select',
+					'label' => $t('Method'),
+					'list' => $methods
+				]) ?>
+				<?= $this->form->field('tracking', [
+					'label' => $t('Tracking Number'),
+				]) ?>
+				<div class="help"><?= $t('Tracking is available once status is `shipped`.') ?></div>
 			</div>
 		</div>
 
 		<div class="grid-row">
-			<h1 class="h-gamma"><?= $t('User') ?></h1>
+			<h1 class="h-gamma"><?= $t('User') ?> / <?= $t('Recpient') ?></h1>
 			<div class="grid-column-left">
+				<?= $this->form->field('address', [
+					'type' => 'textarea',
+					'label' => $t('Receiving Address'),
+					'disabled' => true,
+					'value' => $item->address()->format('postal', $locale),
+					'placeholder' => $t('Automatically uses address assigned to user.')
+				]) ?>
+			</div>
+			<?php if (!$item->exists()): ?>
+			<div class="grid-column-right">
 				<?= $this->form->field('user_id', [
 					'type' => 'select',
 					'label' => $t('User'),
-					'list' => $users,
-					'disabled' => $item->exists()
+					'list' => $users
 				]) ?>
-
 			</div>
-			<?php if ($user = $item->user()): ?>
+			<?php elseif ($user = $item->user()): ?>
 			<div class="grid-column-right">
 				<?= $this->form->field('user.number', [
 					'label' => $t('Number'),
@@ -81,11 +97,6 @@ $this->set([
 					'disabled' => true,
 					'value' => $user->name
 				]) ?>
-				<?= $this->form->field('user.email', [
-					'label' => $t('Email'),
-					'disabled' => true,
-					'value' => $user->email
-				]) ?>
 			</div>
 			<div class="actions">
 				<?= $this->html->link($t('open user'), [
@@ -96,31 +107,6 @@ $this->set([
 				], ['class' => 'button']) ?>
 			</div>
 			<?php endif ?>
-		</div>
-
-		<div class="grid-row">
-			<h1 class="h-gamma"><?= $t('Recipient') ?></h1>
-
-			<div class="grid-column-left">
-				<?= $this->form->field('address', [
-					'type' => 'textarea',
-					'label' => $t('Receiving Address'),
-					'disabled' => true,
-					'value' => $item->address()->format('postal', $locale)
-				]) ?>
-			</div>
-			<div class="grid-column-right">
-				<?= $this->form->field('method', [
-					'type' => 'select',
-					'label' => $t('Method'),
-					'list' => $methods
-				]) ?>
-				<?= $this->form->field('tracking', [
-					'label' => $t('Tracking Number'),
-				]) ?>
-				<div class="help"><?= $t('Tracking is available once status is `shipped`.') ?></div>
-
-			</div>
 		</div>
 
 		<div class="grid-row">
@@ -246,9 +232,9 @@ $this->set([
 							<td colspan="7" class="nested-add-action">
 								<?= $this->form->button($t('add position'), ['type' => 'button', 'class' => 'button add-nested']) ?>
 						<?php endif ?>
-						<tr class="totals">
+						<tr class="totals totals--grandtotal">
 							<td colspan="5"><?= $t('Total value (net)') ?>
-							<td><?= $this->price->format($item->totals(), 'net') ?>
+							<td colspan="2"><?= $this->price->format($item->totals(), 'net') ?>
 						<tr>
 					</tfoot>
 				</table>
