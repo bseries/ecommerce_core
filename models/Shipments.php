@@ -116,6 +116,14 @@ class Shipments extends \base_core\models\Base {
 		static::behavior('base_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('shipment.number')
 		);
+
+		$model->validates['user_id'] = [
+			'notEmpty' => [
+				'notEmpty',
+				'on' => ['create'],
+				'message' => $t('This field cannot be empty.', ['scope' => 'ecommerce_core'])
+			]
+		];
 	}
 
 	public function method($entity) {
@@ -274,7 +282,9 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 
 	if (!$entity->exists()) {
 		$entity->user_id = $entity->user_id ?: $data['user_id'];
-		$user = $entity->user();
+		if (!$user = $entity->user()) {
+			return false;
+		}
 		$data = $user->address('shipping')->copy($data, 'address_');
 
 		if (empty($data['terms'])) {
