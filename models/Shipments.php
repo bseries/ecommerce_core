@@ -83,6 +83,7 @@ class Shipments extends \base_core\models\Base {
 				'address_recipient',
 				'address_organization',
 				'modified',
+				'User.name',
 				'User.number'
 			]
 		]

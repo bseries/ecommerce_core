@@ -69,6 +69,7 @@ class Carts extends \base_core\models\Base {
 			'fields' => [
 				'status',
 				'modified',
+				'User.name',
 				'User.number',
 				'Order.number'
 			]

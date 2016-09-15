@@ -85,6 +85,7 @@ class Orders extends \base_core\models\Base {
 				'payment_method',
 				'modified',
 				'number',
+				'User.name',
 				'User.number',
 				'Invoice.number',
 				'Shipment.number',
