@@ -308,9 +308,16 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 		}
 		// On nested forms id is always present, but on create empty.
 		if (!empty($value['id'])) {
-			$item = ProductPrices::find('first', [
+			$item = ShipmentPositions::find('first', [
 				'conditions' => ['id' => $value['id']]
 			]);
+
+			if (!$item) {
+				$message  = "Got update request for shipment position {$value['id']}, ";
+				$message .= "but position is not in database anymore; skipping.";
+				Logger::write('notice', $message);
+				return true;
+			}
 
 			if ($value['_delete']) {
 				if (!$item->delete()) {
