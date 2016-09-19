@@ -29,7 +29,7 @@ $this->set([
 		<?= $this->html->link($t('product group'), ['action' => 'add', 'library' => 'ecommerce_core'], ['class' => 'button add']) ?>
 	</div>
 
-	<?php if ($data->count()): ?>
+	<?php if ($data && $data->count()): ?>
 		<table>
 			<thead>
 				<tr>
