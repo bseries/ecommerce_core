@@ -15,6 +15,8 @@
  * License. If not, see http://atelierdisko.de/licenses.
  */
 
+namespace ecommerce_core\config;
+
 use base_core\extensions\cms\Settings;
 
 Settings::register('contact.shipping', Settings::read('contact.default'));
@@ -36,6 +38,8 @@ Settings::register('product.number', [
 // strtotime()-compatible string with time in future, when a cart
 // should expire.
 Settings::register('checkout.expire', '+1 week');
+
+Settings::register('order.sendCheckedOutMail', false);
 
 // Allows to limit the maximum number of items of onte product
 // that can be put into cart. Use `false` to disable check.

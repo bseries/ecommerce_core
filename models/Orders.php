@@ -411,44 +411,9 @@ class Orders extends \base_core\models\Base {
 				return true;
 
 			case 'checked-out':
-				$contact = Settings::read('contact.billing');
-
-				$order   = $entity;
-				$user    = $order->user();
-				$invoice = $entity->invoice();
-
 				// Implicitly transfer cart reservation into shipment reservations.
 				// Once an order is checked-out reservations are determined by shipment.
-
-				if (!$user->is_notified) {
-					return true;
-				}
-				return Mailer::deliver('order_checked_out', [
-					'library' => 'ecommerce_core',
-					'to' => $user->email,
-					'bcc' => $contact['email'],
-					'subject' => $t('Your order #{:number}.', [
-						'locale' => $user->locale,
-						'scope' => 'ecommerce_core',
-						'number' => $order->number
-					]),
-					'data' => [
-						'user' => $user,
-						'order' => $order,
-						// Orders without invoices are OK. But then we do
-						// pass an empty invoice into the template. The template
-						// will then have to deal with that. Also see conditional
-						// attachment below.
-						'invoice' => $invoice ?: null
-					],
-					'attach' => !$invoice ? [] : [
-						[
-							'data' => $invoice->exportAsPdf(),
-							'filename' => 'invoice_' . $invoice->number . '.pdf',
-							'content-type' => 'application/pdf'
-						]
-					]
-				]);
+				break;
 			default:
 				break;
 		}

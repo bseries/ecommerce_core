@@ -24,7 +24,6 @@ use base_address\models\Addresses;
 use base_address\models\Contacts;
 use base_core\extensions\cms\Settings;
 use ecommerce_core\ecommerce\shipping\Methods as ShippingMethods;
-use li3_mailer\action\Mailer;
 use lithium\analysis\Logger;
 use lithium\core\Libraries;
 use lithium\g11n\Message;
@@ -138,7 +137,6 @@ class Shipments extends \base_core\models\Base {
 	}
 
 	public function statusChange($entity, $from, $to) {
-		extract(Message::aliases());
 		Logger::write('debug', "Changing shipment status `{$from}`->`{$to}`.");
 
 		switch ($to) {
@@ -182,37 +180,7 @@ class Shipments extends \base_core\models\Base {
 						return false;
 					}
 				}
-
-				if (!Settings::read('shipment.sendShippedMail')) {
-					return true;
-				}
-				if (!$user->is_notified) {
-					return true;
-				}
-				if ($order) {
-					$subject = $t('Order #{:number} shipped.', [
-						'locale' => $user->locale,
-						'scope' => 'ecommerce_core',
-						'number' => $order->number
-					]);
-				} else {
-					$subject = $t('Shipment #{:number} shipped.', [
-						'locale' => $user->locale,
-						'scope' => 'ecommerce_core',
-						'number' => $shipment->number
-					]);
-				}
-				return Mailer::deliver('shipment_shipped', [
-					'library' => 'ecommerce_core',
-					'to' => $user->email,
-					'subject' => $subject,
-					'data' => [
-						'user' => $user,
-						'order' => $order ?: null,
-						'shipment' => $entity
-					]
-				]);
-				break;
+				return true;
 			default:
 				break;
 		}
