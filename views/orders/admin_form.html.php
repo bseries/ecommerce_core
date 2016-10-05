@@ -1,5 +1,6 @@
 <?php
 
+use base_core\extensions\cms\Settings;
 use lithium\core\Environment;
 use lithium\g11n\Message;
 
@@ -48,6 +49,11 @@ $this->set([
 				]) ?>
 				<div class="help">
 					<?= $t('Cancelling an order will also cancel associated invoice and shipment - if possible.') ?>
+					<?php if (Settings::read('shipment.sendCheckedOutMail')): ?>
+						<strong>
+							<?= $t('The user will be notified by e-mail when the status is changed to `checked-out`.') ?>
+						</strong>
+					<?php endif ?>
 				</div>
 				<?= $this->form->field('created', [
 					'label' => $t('Created'),
