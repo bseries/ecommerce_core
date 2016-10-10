@@ -18,7 +18,7 @@
 namespace ecommerce_core\models;
 
 use base_core\extensions\cms\Settings;
-use lithium\util\Inflector;
+use lithium\g11n\Message;
 
 class ProductGroups extends \base_core\models\Base {
 
@@ -77,6 +77,8 @@ class ProductGroups extends \base_core\models\Base {
 	];
 
 	public static function init() {
+		extract(Message::aliases());
+
 		if (PROJECT_LOCALE !== PROJECT_LOCALES) {
 			static::bindBehavior('li3_translate\extensions\data\behavior\Translatable', [
 				'fields' => ['title', 'description'],
@@ -88,6 +90,13 @@ class ProductGroups extends \base_core\models\Base {
 		if (Settings::read('productGroup.useAutoTagging')) {
 			static::behavior('Taggable')->config('autoMatch', ['title']);
 		}
+		$model->validates['tags'] = [
+			[
+				'noSpacesInTags',
+				'on' => ['create', 'update'],
+				'message' => $t('Tags cannot contain spaces.', ['scope' => 'ecommerce_core'])
+			]
+		];
 	}
 
 	public function hasAnyPublishedProducts($entity) {
