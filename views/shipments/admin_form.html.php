@@ -158,7 +158,8 @@ $this->set([
 								<?= $this->form->field("positions.{$key}.description", [
 									'type' => 'text',
 									'label' => false,
-									'value' => $child->description
+									'value' => $child->description,
+									'maxlength' => 250
 								]) ?>
 							<td>
 								<?= $this->form->field("positions.{$key}.quantity", [
@@ -199,7 +200,8 @@ $this->set([
 						<td>
 							<?= $this->form->field('positions.new.description', [
 								'type' => 'text',
-								'label' => false
+								'label' => false,
+								'maxlength' => 250
 							]) ?>
 						<td>
 							<?= $this->form->field('positions.new.quantity', [
