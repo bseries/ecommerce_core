@@ -62,7 +62,6 @@ $this->set([
 				<?= $this->form->field('tracking', [
 					'label' => $t('Tracking Number'),
 				]) ?>
-				<div class="help"><?= $t('Tracking is available once status is `shipped`.') ?></div>
 			</div>
 		</div>
 
