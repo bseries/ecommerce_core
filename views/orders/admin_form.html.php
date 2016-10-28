@@ -78,17 +78,17 @@ $this->set([
 			<div class="grid-column-right">
 				<?= $this->form->field('user.number', [
 					'label' => $t('Number'),
-					'disabled' => true,
+					'readonly' => true,
 					'value' => $user->number
 				]) ?>
 				<?= $this->form->field('user.name', [
 					'label' => $t('Name'),
-					'disabled' => true,
+					'readonly' => true,
 					'value' => $user->name
 				]) ?>
 				<?= $this->form->field('user.email', [
 					'label' => $t('Email'),
-					'disabled' => true,
+					'readonly' => true,
 					'value' => $user->email
 				]) ?>
 			</div>
