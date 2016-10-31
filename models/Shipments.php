@@ -219,6 +219,12 @@ class Shipments extends \base_core\models\Base {
 
 		$sender = Contacts::create(Settings::read('contact.shipping'));
 
+		$subjectAndTitle = $t('Shipment #{:number}', [
+			'number' => $entity->number,
+			'locale' => $user->locale,
+			'scope' => 'ecommerce_core'
+		]);
+
 		$document
 			->type($t('Shipment', [
 				'scope' => 'ecommerce_core',
@@ -227,13 +233,14 @@ class Shipments extends \base_core\models\Base {
 			->entity($entity)
 			->recipient($user)
 			->sender($sender)
-			->subject($t('Shipment #{:number}', [
-				'number' => $entity->number,
-				'locale' => $user->locale,
-				'scope' => 'ecommerce_core'
-			]));
+			->subject($subjectAndTitle);
 
 		$document->compile();
+
+		$document
+			->metaAuthor($sender->name)
+			->metaTitle($subjectAndTitle);
+
 		$document->render($stream);
 
 		rewind($stream);
