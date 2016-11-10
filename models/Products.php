@@ -29,6 +29,8 @@ use lithium\analysis\Logger;
 use lithium\storage\Cache;
 use lithium\util\Collection;
 use lithium\util\Inflector;
+use lithium\g11n\Message;
+use lithium\util\Validator;
 
 class Products extends \base_core\models\Base {
 
@@ -255,6 +257,28 @@ class Products extends \base_core\models\Base {
 		return $entity->save(null, ['whitelist' => ['stock_reserved']]);
 	}
 }
+
+Products::applyFilter('validates', function($self, $params, $chain) {
+	extract(Message::aliases());
+
+	$entity = $params['entity'];
+	$result = $chain->next($self, $params, $chain);
+
+	$hasPrice = false;
+	foreach ((array) $entity->prices as $key => $value) {
+		if ($key !== 'new') {
+			$hasPrice = true;
+			break;
+		}
+	}
+	if (!$hasPrice) {
+		$entity->errors([
+			'prices' => $t('You must define at least one price.', ['scope' => 'ecommerce_core'])
+		]);
+		return false;
+	}
+	return $result;
+});
 
 Products::applyFilter('save', function($self, $params, $chain) {
 	$entity = $params['entity'];

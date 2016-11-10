@@ -216,6 +216,7 @@ $this->set([
 		</div>
 		<div class="grid-row">
 			<h1 class="h-gamma"><?= $t('Prices') ?></h1>
+			<?= $this->form->error('prices') ?>
 			<section class="use-nested">
 				<table>
 					<thead>
