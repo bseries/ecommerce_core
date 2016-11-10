@@ -230,6 +230,7 @@ $this->set([
 					</thead>
 					<tbody>
 					<?php foreach ($item->prices() as $key => $child): ?>
+						<?php if ($key === 'new') continue ?>
 						<tr class="nested-item">
 							<td class="position-description--f">
 								<?= $this->form->field("prices.{$key}.id", [
