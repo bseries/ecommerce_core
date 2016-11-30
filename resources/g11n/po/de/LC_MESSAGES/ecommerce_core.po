@@ -262,7 +262,7 @@ msgstr "abbrechen"
 #: views/products/admin_index.html.php:84
 #: views/shipments/admin_index.html.php:82
 msgid "No items available, yet."
-msgstr "Es sind noch keine Elemente verfügbar."
+msgstr "Es sind noch keine Einträge verfügbar."
 
 #: views/carts/admin_index.html.php:90
 msgid "When a cart is created all contained items are marked as reserved."
