@@ -37,8 +37,6 @@ class Shipment extends \billing_core\documents\BaseFinancial {
 			]);
 		}
 
-		$this->_currentHeight = 90;
-
 		$this->_margin = $backup;
 		$this->_currentHeight = $backupHeight;
 	}
