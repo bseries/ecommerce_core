@@ -104,7 +104,7 @@ class Orders extends \base_core\models\Base {
 			Settings::read('order.number')
 		);
 
-		Validator::add('checked', function($value, $format, $options) {
+		Validator::add('Orders.checked', function($value, $format, $options) {
 			return $value === '1';
 		});
 
@@ -124,7 +124,7 @@ class Orders extends \base_core\models\Base {
 		];
 		$model->validates['has_accepted_terms'] = [
 			'checked' => [
-				'checked',
+				'Orders.checked',
 				'on' => ['checkoutConfirm'],
 				'message' => $t('You must accept the terms.', ['scope' => 'ecommerce_core'])
 			]
