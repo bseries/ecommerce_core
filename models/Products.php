@@ -209,7 +209,7 @@ class Products extends \base_core\models\Base {
 		$message .= "Real stock is now `{$entity->stock}`.";
 		Logger::write('debug', $message);
 
-		return $entity->save(null, ['whitelist' => ['stock']]);
+		return $entity->save(null, ['whitelist' => ['stock'], 'validate' => false]);
 	}
 
 	// "Puts back" stock items and persistently increments
@@ -221,7 +221,7 @@ class Products extends \base_core\models\Base {
 		$message .= "Real stock is now `{$entity->stock}`.";
 		Logger::write('debug', $message);
 
-		return $entity->save(null, ['whitelist' => ['stock']]);
+		return $entity->save(null, ['whitelist' => ['stock'], 'validate' => false]);
 	}
 
 	// Persistently reserves one or multiple items.
@@ -236,7 +236,7 @@ class Products extends \base_core\models\Base {
 		$message .= "Reserved stock is now `{$entity->stock_reserved}`.";
 		Logger::write('debug', $message);
 
-		return $entity->save(null, ['whitelist' => ['stock_reserved']]);
+		return $entity->save(null, ['whitelist' => ['stock_reserved'], 'validate' => false]);
 	}
 
 	public function unreserveStock($entity, $quantity = 1) {
