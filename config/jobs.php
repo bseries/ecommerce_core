@@ -20,8 +20,7 @@ use ecommerce_core\models\Orders;
 use ecommerce_core\models\Carts;
 
 Jobs::recur('ecommerce_core:expire', function() {
-	Orders::expire();
-	Carts::expire();
+	return Orders::expire() && Carts::expire();
 }, [
 	'frequency' => Jobs::FREQUENCY_LOW
 ]);
