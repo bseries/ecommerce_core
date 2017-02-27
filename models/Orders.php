@@ -451,7 +451,6 @@ class Orders extends \base_core\models\Base {
 				return Mailer::deliver('order_checked_out', [
 					'library' => 'ecommerce_core',
 					'to' => $user->email,
-					'bcc' => $contact['email'],
 					'subject' => $t('Your order #{:number}.', [
 						'locale' => $user->locale,
 						'scope' => 'ecommerce_core',
