@@ -84,7 +84,7 @@ $this->set([
 		<div class="none-available"><?= $t('No items available, yet.') ?></div>
 	<?php endif ?>
 
-	<?=$this->view()->render(['element' => 'paging'], compact('paginator'), ['library' => 'base_core']) ?>
+	<?=$this->_render('element', 'paging', compact('paginator'), ['library' => 'base_core']) ?>
 
 	<div class="bottom-help">
 		<?= $t('Stock keeping consists of 4 important numbers:') ?>
