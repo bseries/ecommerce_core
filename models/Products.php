@@ -209,7 +209,7 @@ class Products extends \base_core\models\Base {
 		$message .= "Real stock is now `{$entity->stock}`.";
 		Logger::write('debug', $message);
 
-		return $entity->save(null, ['whitelist' => ['stock']]);
+		return $entity->save(null, ['whitelist' => ['stock'], 'validate' => false]);
 	}
 
 	// "Puts back" stock items and persistently increments
@@ -221,7 +221,7 @@ class Products extends \base_core\models\Base {
 		$message .= "Real stock is now `{$entity->stock}`.";
 		Logger::write('debug', $message);
 
-		return $entity->save(null, ['whitelist' => ['stock']]);
+		return $entity->save(null, ['whitelist' => ['stock'], 'validate' => false]);
 	}
 
 	// Persistently reserves one or multiple items.
@@ -236,7 +236,7 @@ class Products extends \base_core\models\Base {
 		$message .= "Reserved stock is now `{$entity->stock_reserved}`.";
 		Logger::write('debug', $message);
 
-		return $entity->save(null, ['whitelist' => ['stock_reserved']]);
+		return $entity->save(null, ['whitelist' => ['stock_reserved'], 'validate' => false]);
 	}
 
 	public function unreserveStock($entity, $quantity = 1) {
@@ -258,11 +258,18 @@ class Products extends \base_core\models\Base {
 	}
 }
 
+// Implements a validation rule on nested collection (prices). We cannot use normal
+// validation rules as they are not executed on fields not present in the schema.
 Products::applyFilter('validates', function($self, $params, $chain) {
 	extract(Message::aliases());
 
 	$entity = $params['entity'];
 	$result = $chain->next($self, $params, $chain);
+
+	// Field was not submitted at all. Ensure we don't break save calls.
+	if ($entity->prices === null) {
+		return $result;
+	}
 
 	$hasPrice = false;
 	foreach ((array) $entity->prices as $key => $value) {

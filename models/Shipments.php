@@ -75,15 +75,15 @@ class Shipments extends \base_core\models\Base {
 		'base_core\extensions\data\behavior\StatusChange',
 		'base_core\extensions\data\behavior\Searchable' => [
 			'fields' => [
+				'User.name',
+				'User.number',
 				'number',
 				'tracking',
 				'method',
 				'status',
 				'address_recipient',
 				'address_organization',
-				'modified',
-				'User.name',
-				'User.number'
+				'modified'
 			]
 		]
 	];
