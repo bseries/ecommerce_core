@@ -227,7 +227,7 @@ class Orders extends \base_core\models\Base {
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
 
-			$price = $cartPosition->product()->price($user);
+			$price = $cartPosition->product()->price($user, $cartPosition->method);
 
 			$shipmentPosition = ShipmentPositions::create([
 				'ecommerce_shipment_id' => $shipment->id,
