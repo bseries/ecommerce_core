@@ -254,7 +254,10 @@ class Orders extends \base_core\models\Base {
 		extract(Message::aliases());
 
 		$invoice = Invoices::create($data + [
-			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
+			'user_id' => $user->id,
+			'status' => 'created',
+			'method' => $entity->payment_method,
+			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number
 		]);
 		if (!$invoice->save()) {
 			return false;
