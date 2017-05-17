@@ -208,8 +208,7 @@ class Orders extends \base_core\models\Base {
 			'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->shipping_method,
-			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
-			'terms' => Settings::read('ecommerce.shipmentTerms')
+			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number
 		]);
 		$shipment = $entity->address('shipping')->copy($shipment, 'address_');
 
