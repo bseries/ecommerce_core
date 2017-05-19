@@ -663,9 +663,8 @@ msgid ""
 "<strong>C</strong>, calculated, this is the stock amount as presented to the "
 "user. If this is 0 the item is unavailable."
 msgstr ""
-"<strong>C</strong>, berechnet, dies ist die Bestandsmenge, wie sie dem "
-"Benutzer präsentiert wird. Wenn dies der Fall ist, ist das Produkt nicht "
-"verfügbar."
+"<strong>C</strong>, berechnet, die Bestandsmenge wie sie angezeigt wird. "
+" Wenn hier 0 steht, ist das Produkt nicht verfügbar."
 
 #: views/products/admin_index.html.php:93
 msgid "<strong>A</strong>, the physically available stock in storage."
