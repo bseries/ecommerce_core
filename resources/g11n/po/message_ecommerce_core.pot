@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ecommerce_core 1.0\n"
 "Report-Msgid-Bugs-To: info@atelierdisko.de\n"
-"POT-Creation-Date: 2016-10-28 16:52+0200\n"
+"POT-Creation-Date: 2017-05-19 10:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,19 +94,19 @@ msgstr ""
 msgid "color"
 msgstr ""
 
-#: documents/Shipment.php:70
+#: documents/Shipment.php:68
 msgid "{:city}, the {:date}"
 msgstr ""
 
-#: documents/Shipment.php:105
+#: documents/Shipment.php:103
 msgid "{:number} — Client No."
 msgstr ""
 
-#: documents/Shipment.php:112
+#: documents/Shipment.php:110
 msgid "{:number} — Shipment No."
 msgstr ""
 
-#: documents/Shipment.php:147 views/product_groups/admin_form.html.php:91
+#: documents/Shipment.php:145 views/product_groups/admin_form.html.php:91
 #: views/product_groups/admin_form.html.php:99
 #: views/products/admin_form.html.php:203
 #: views/products/admin_form.html.php:211
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: documents/Shipment.php:154 views/shipments/admin_form.html.php:140
+#: documents/Shipment.php:152 views/shipments/admin_form.html.php:140
 msgid "Quantity"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 msgid "You must accept the terms."
 msgstr ""
 
-#: models/Orders.php:211 models/Orders.php:258
+#: models/Orders.php:211 models/Orders.php:260
 msgid "Order No."
 msgstr ""
 
@@ -134,17 +134,21 @@ msgstr ""
 msgid "Tags cannot contain spaces."
 msgstr ""
 
+#: models/Products.php:283
+msgid "You must define at least one price."
+msgstr ""
+
 #: models/Shipments.php:126
 msgid "This field cannot be empty."
 msgstr ""
 
-#: models/Shipments.php:223 views/carts/admin_form.html.php:43
-#: views/orders/admin_form.html.php:182 views/orders/admin_index.html.php:37
-msgid "Shipment"
+#: models/Shipments.php:222
+msgid "Shipment #{:number}"
 msgstr ""
 
-#: models/Shipments.php:230
-msgid "Shipment #{:number}"
+#: models/Shipments.php:229 views/carts/admin_form.html.php:43
+#: views/orders/admin_form.html.php:182 views/orders/admin_index.html.php:37
+msgid "Shipment"
 msgstr ""
 
 #: views/carts/admin_form.html.php:9
@@ -190,9 +194,9 @@ msgstr ""
 #: views/product_groups/admin_form.html.php:169
 #: views/products/admin_form.html.php:172
 #: views/products/admin_form.html.php:187
-#: views/products/admin_form.html.php:276
-#: views/products/admin_form.html.php:315
-#: views/products/admin_form.html.php:332
+#: views/products/admin_form.html.php:278
+#: views/products/admin_form.html.php:317
+#: views/products/admin_form.html.php:334
 #: views/shipments/admin_form.html.php:195
 #: views/shipments/admin_form.html.php:232
 msgid "delete"
@@ -200,7 +204,7 @@ msgstr ""
 
 #: views/carts/admin_form.html.php:57 views/orders/admin_form.html.php:231
 #: views/product_groups/admin_form.html.php:179
-#: views/products/admin_form.html.php:341
+#: views/products/admin_form.html.php:343
 #: views/shipments/admin_form.html.php:273
 msgid "save"
 msgstr ""
@@ -452,7 +456,7 @@ msgstr ""
 #: views/product_groups/admin_form.html.php:146
 #: views/product_groups/admin_form.html.php:177
 #: views/product_groups/admin_index.html.php:75
-#: views/products/admin_form.html.php:339
+#: views/products/admin_form.html.php:341
 #: views/products/admin_index.html.php:78
 msgid "publish"
 msgstr ""
@@ -460,7 +464,7 @@ msgstr ""
 #: views/product_groups/admin_form.html.php:146
 #: views/product_groups/admin_form.html.php:177
 #: views/product_groups/admin_index.html.php:75
-#: views/products/admin_form.html.php:339
+#: views/products/admin_form.html.php:341
 #: views/products/admin_index.html.php:78
 msgid "unpublish"
 msgstr ""
@@ -579,47 +583,47 @@ msgstr ""
 msgid "Prices"
 msgstr ""
 
-#: views/products/admin_form.html.php:223
+#: views/products/admin_form.html.php:224
 msgid "Client Group"
 msgstr ""
 
-#: views/products/admin_form.html.php:224
+#: views/products/admin_form.html.php:225
 msgid "Acq. Method"
 msgstr ""
 
-#: views/products/admin_form.html.php:225
+#: views/products/admin_form.html.php:226
 #: views/shipments/admin_form.html.php:141
 msgid "Currency"
 msgstr ""
 
-#: views/products/admin_form.html.php:226
+#: views/products/admin_form.html.php:227
 #: views/shipments/admin_form.html.php:142
 msgid "Type"
 msgstr ""
 
-#: views/products/admin_form.html.php:227
+#: views/products/admin_form.html.php:228
 msgid "Amount"
 msgstr ""
 
-#: views/products/admin_form.html.php:265
-#: views/products/admin_form.html.php:304
+#: views/products/admin_form.html.php:267
+#: views/products/admin_form.html.php:306
 #: views/shipments/admin_form.html.php:182
 #: views/shipments/admin_form.html.php:222
 msgid "gross"
 msgstr ""
 
-#: views/products/admin_form.html.php:265
-#: views/products/admin_form.html.php:304
+#: views/products/admin_form.html.php:267
+#: views/products/admin_form.html.php:306
 #: views/shipments/admin_form.html.php:182
 #: views/shipments/admin_form.html.php:222
 msgid "net"
 msgstr ""
 
-#: views/products/admin_form.html.php:320
+#: views/products/admin_form.html.php:322
 msgid "add price"
 msgstr ""
 
-#: views/products/admin_form.html.php:324
+#: views/products/admin_form.html.php:326
 msgid ""
 "There should ever be just one price for a client group/acq. method "
 "combination."

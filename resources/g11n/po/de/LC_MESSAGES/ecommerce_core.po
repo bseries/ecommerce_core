@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ecommerce_core 1.0\n"
 "Report-Msgid-Bugs-To: info@atelierdisko.de\n"
-"POT-Creation-Date: 2016-10-28 16:52+0200\n"
-"PO-Revision-Date: 2016-10-28 16:59+0200\n"
+"POT-Creation-Date: 2017-05-19 10:56+0200\n"
+"PO-Revision-Date: 2017-05-19 11:07+0200\n"
 "Last-Translator: David Persson <davidpersson@gmx.de>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #: config/panes.php:24
 msgid "Boutique"
@@ -95,19 +95,19 @@ msgstr "Größe"
 msgid "color"
 msgstr "Farbe"
 
-#: documents/Shipment.php:70
+#: documents/Shipment.php:68
 msgid "{:city}, the {:date}"
 msgstr "{:city}, der {:date}"
 
-#: documents/Shipment.php:105
+#: documents/Shipment.php:103
 msgid "{:number} — Client No."
 msgstr "{:number} — Kundennr."
 
-#: documents/Shipment.php:112
+#: documents/Shipment.php:110
 msgid "{:number} — Shipment No."
 msgstr "{:number} — Lieferungsnr."
 
-#: documents/Shipment.php:147 views/product_groups/admin_form.html.php:91
+#: documents/Shipment.php:145 views/product_groups/admin_form.html.php:91
 #: views/product_groups/admin_form.html.php:99
 #: views/products/admin_form.html.php:203
 #: views/products/admin_form.html.php:211
@@ -115,7 +115,7 @@ msgstr "{:number} — Lieferungsnr."
 msgid "Description"
 msgstr "Beschreibung"
 
-#: documents/Shipment.php:154 views/shipments/admin_form.html.php:140
+#: documents/Shipment.php:152 views/shipments/admin_form.html.php:140
 msgid "Quantity"
 msgstr "Anzahl"
 
@@ -127,7 +127,7 @@ msgstr "Sie müssen eine Art auswählen."
 msgid "You must accept the terms."
 msgstr "Sie müssen die AGB akzeptieren."
 
-#: models/Orders.php:211 models/Orders.php:258
+#: models/Orders.php:211 models/Orders.php:260
 msgid "Order No."
 msgstr "Bestellnr."
 
@@ -135,18 +135,22 @@ msgstr "Bestellnr."
 msgid "Tags cannot contain spaces."
 msgstr "Innerhalb von Tags können keine Leerzeichen genutzt werden."
 
+#: models/Products.php:283
+msgid "You must define at least one price."
+msgstr "Du musst mindestens einen Preis definieren."
+
 #: models/Shipments.php:126
 msgid "This field cannot be empty."
 msgstr "Dieses Feld darf nicht leer sein."
 
-#: models/Shipments.php:223 views/carts/admin_form.html.php:43
+#: models/Shipments.php:222
+msgid "Shipment #{:number}"
+msgstr "Lieferung #{:number}"
+
+#: models/Shipments.php:229 views/carts/admin_form.html.php:43
 #: views/orders/admin_form.html.php:182 views/orders/admin_index.html.php:37
 msgid "Shipment"
 msgstr "Lieferung"
-
-#: models/Shipments.php:230
-msgid "Shipment #{:number}"
-msgstr "Lieferung #{:number}"
 
 #: views/carts/admin_form.html.php:9
 msgid "Untitled"
@@ -191,9 +195,9 @@ msgstr "Rechnungsnummer"
 #: views/product_groups/admin_form.html.php:169
 #: views/products/admin_form.html.php:172
 #: views/products/admin_form.html.php:187
-#: views/products/admin_form.html.php:276
-#: views/products/admin_form.html.php:315
-#: views/products/admin_form.html.php:332
+#: views/products/admin_form.html.php:278
+#: views/products/admin_form.html.php:317
+#: views/products/admin_form.html.php:334
 #: views/shipments/admin_form.html.php:195
 #: views/shipments/admin_form.html.php:232
 msgid "delete"
@@ -201,7 +205,7 @@ msgstr "löschen"
 
 #: views/carts/admin_form.html.php:57 views/orders/admin_form.html.php:231
 #: views/product_groups/admin_form.html.php:179
-#: views/products/admin_form.html.php:341
+#: views/products/admin_form.html.php:343
 #: views/shipments/admin_form.html.php:273
 msgid "save"
 msgstr "speichern"
@@ -463,7 +467,7 @@ msgstr "Bestand (C/A/R/I)"
 #: views/product_groups/admin_form.html.php:146
 #: views/product_groups/admin_form.html.php:177
 #: views/product_groups/admin_index.html.php:75
-#: views/products/admin_form.html.php:339
+#: views/products/admin_form.html.php:341
 #: views/products/admin_index.html.php:78
 msgid "publish"
 msgstr "publizieren"
@@ -471,7 +475,7 @@ msgstr "publizieren"
 #: views/product_groups/admin_form.html.php:146
 #: views/product_groups/admin_form.html.php:177
 #: views/product_groups/admin_index.html.php:75
-#: views/products/admin_form.html.php:339
+#: views/products/admin_form.html.php:341
 #: views/products/admin_index.html.php:78
 msgid "unpublish"
 msgstr "depublizieren"
@@ -598,47 +602,47 @@ msgstr "hinzufügen"
 msgid "Prices"
 msgstr "Preise"
 
-#: views/products/admin_form.html.php:223
+#: views/products/admin_form.html.php:224
 msgid "Client Group"
 msgstr "Kundengruppe"
 
-#: views/products/admin_form.html.php:224
+#: views/products/admin_form.html.php:225
 msgid "Acq. Method"
 msgstr "Erwerbsart"
 
-#: views/products/admin_form.html.php:225
+#: views/products/admin_form.html.php:226
 #: views/shipments/admin_form.html.php:141
 msgid "Currency"
 msgstr "Währung"
 
-#: views/products/admin_form.html.php:226
+#: views/products/admin_form.html.php:227
 #: views/shipments/admin_form.html.php:142
 msgid "Type"
 msgstr "Art"
 
-#: views/products/admin_form.html.php:227
+#: views/products/admin_form.html.php:228
 msgid "Amount"
 msgstr "Betrag"
 
-#: views/products/admin_form.html.php:265
-#: views/products/admin_form.html.php:304
+#: views/products/admin_form.html.php:267
+#: views/products/admin_form.html.php:306
 #: views/shipments/admin_form.html.php:182
 #: views/shipments/admin_form.html.php:222
 msgid "gross"
 msgstr "brutto"
 
-#: views/products/admin_form.html.php:265
-#: views/products/admin_form.html.php:304
+#: views/products/admin_form.html.php:267
+#: views/products/admin_form.html.php:306
 #: views/shipments/admin_form.html.php:182
 #: views/shipments/admin_form.html.php:222
 msgid "net"
 msgstr "netto"
 
-#: views/products/admin_form.html.php:320
+#: views/products/admin_form.html.php:322
 msgid "add price"
 msgstr "Preis hinzufügen"
 
-#: views/products/admin_form.html.php:324
+#: views/products/admin_form.html.php:326
 msgid ""
 "There should ever be just one price for a client group/acq. method "
 "combination."
@@ -659,24 +663,32 @@ msgid ""
 "<strong>C</strong>, calculated, this is the stock amount as presented to the "
 "user. If this is 0 the item is unavailable."
 msgstr ""
+"<strong>C</strong>, berechnet, dies ist die Bestandsmenge, wie sie dem "
+"Benutzer präsentiert wird. Wenn dies der Fall ist, ist das Produkt nicht "
+"verfügbar."
 
 #: views/products/admin_index.html.php:93
 msgid "<strong>A</strong>, the physically available stock in storage."
-msgstr ""
+msgstr "<strong>A</strong>, der physisch verfügbare Bestand im Lager."
 
 #: views/products/admin_index.html.php:94
 msgid "<strong>R</strong>, the reserved stock in i.e. carts."
-msgstr ""
+msgstr "<strong>R</strong>, der reservierte Bestand in z.B. Warenkörben."
 
 #: views/products/admin_index.html.php:95
 msgid "<strong>I</strong>, for note taking should equal physically available."
 msgstr ""
+"<strong>I</strong>, funktioniert als Notiz und sollte gleich dem physisch "
+"verfügbaren Bestand sein."
 
 #: views/products/admin_index.html.php:99
 msgid ""
 "Stock checking is disabled, even if the the calculated cnumber is 0, users "
 "will be able to buy the product."
 msgstr ""
+"Die Bestandskontrolle ist momentan deaktiviert. Dies bedeutet, sollte der "
+"errechnet Bestand 0 erreichen, können Nutzer das Produkt trotzdem weiterhin "
+"kaufen."
 
 #: views/shipments/admin_form.html.php:15
 #: views/shipments/admin_index.html.php:29
@@ -688,6 +700,8 @@ msgid ""
 "When shipment is set to `shipped` the item stock will be moved from reserved "
 "to taken, and acutally be subtracted from physically available stock."
 msgstr ""
+"Sobald die Lieferung auf `shipped` gesetzt wird, wird Bestand der vorher nur "
+"reserviert war tatsächlich reduziert."
 
 #: views/shipments/admin_form.html.php:48
 msgid ""
@@ -755,18 +769,22 @@ msgid ""
 "To reference products in positions add the product number in braces to the "
 "description i.e. `(#123)`."
 msgstr ""
+"Um Produkte innerhalb von Positionen zu referenzieren, muss die "
+"Produktnummer in Klammern an die Beschreibung angehängt werden z.B. `(#123)`."
 
 #: views/shipments/admin_form.html.php:251
 msgid "Referenced products have their stock taken."
-msgstr ""
+msgstr "Bei hier referenzierten Produkten wird der Bestand reduziert."
 
 #: views/shipments/admin_form.html.php:253
 msgid "Referenced products have their stock not taken or reserved."
 msgstr ""
+"Wenn Produkte hier referenziert werden, wird deren Bestand weder reduziert "
+"noch reserviert."
 
 #: views/shipments/admin_form.html.php:255
 msgid "Referenced products have their stock reserved."
-msgstr ""
+msgstr "Der Bestand hier referenzierter Produkte wird reserviert."
 
 #: views/shipments/admin_index.html.php:12
 msgid "shipments"
