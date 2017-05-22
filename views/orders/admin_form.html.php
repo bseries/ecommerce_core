@@ -121,7 +121,7 @@ $this->set([
 		</div>
 
 		<div class="grid-row">
-			<h1 class="h-gamma"><?= $t('Invoice') ?></h1>
+			<h1 class="h-gamma"><?= $t('Payment') ?></h1>
 			<?php if ($invoice = $item->invoice()): ?>
 				<div class="grid-column-left">
 					<?= $this->form->field('billing_address', [
@@ -144,6 +144,12 @@ $this->set([
 						'disabled' => true,
 						'value' => $invoice->status
 					]) ?>
+
+					<?= $this->form->field('order.payment_method', [
+						'label' => $t('Payment method'),
+						'value' => $item->payment_method
+					]) ?>
+
 					<?= $this->form->field('invoice.number', [
 						'label' => $t('Number'),
 						'disabled' => true,
@@ -196,6 +202,11 @@ $this->set([
 						'list' => $shipmentStatuses,
 						'disabled' => true,
 						'value' => $shipment->status
+					]) ?>
+
+					<?= $this->form->field('order.shipping_method', [
+						'label' => $t('Shipping method'),
+						'value' => $item->shipping_method
 					]) ?>
 
 					<?= $this->form->field('shipment.number', [
