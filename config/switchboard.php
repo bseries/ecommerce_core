@@ -17,10 +17,11 @@
 
 namespace ecommerce_core\config;
 
-use ecommerce_core\models\Shipments;
-use lithium\g11n\Message;
 use base_core\extensions\cms\Settings;
+use ecommerce_core\models\Orders;
+use ecommerce_core\models\Shipments;
 use li3_mailer\action\Mailer;
+use lithium\g11n\Message;
 
 if (Settings::read('order.sendCheckedOutMail')) {
 	Orders::applyFilter('statusChange', function($self, $params, $chain) {
