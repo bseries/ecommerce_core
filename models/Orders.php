@@ -19,7 +19,6 @@ namespace ecommerce_core\models;
 
 use DateTime;
 use Exception;
-use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
 use lithium\analysis\Logger;
 use lithium\util\Validator;
