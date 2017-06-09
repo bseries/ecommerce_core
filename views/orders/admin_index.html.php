@@ -29,7 +29,7 @@ $this->set([
 		<table>
 			<thead>
 				<tr>
-					<td data-sort="number" class="emphasize id number table-sort"><?= $t('Order') ?>
+					<td data-sort="number" class="emphasize number table-sort"><?= $t('Order') ?>
 					<td data-sort="status" class="status table-sort"><?= $t('Status') ?>
 					<td data-sort="User.number" class="user table-sort"><?= $t('User') ?>
 					<td data-sort="Invoice.number" class="number table-sort"><?= $t('Invoice') ?>
