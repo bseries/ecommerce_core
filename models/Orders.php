@@ -19,7 +19,6 @@ namespace ecommerce_core\models;
 
 use DateTime;
 use Exception;
-use li3_mailer\action\Mailer;
 use lithium\g11n\Message;
 use lithium\analysis\Logger;
 use lithium\util\Validator;
@@ -208,8 +207,7 @@ class Orders extends \base_core\models\Base {
 			'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->shipping_method,
-			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
-			'terms' => Settings::read('ecommerce.shipmentTerms')
+			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number
 		]);
 		$shipment = $entity->address('shipping')->copy($shipment, 'address_');
 
@@ -228,7 +226,7 @@ class Orders extends \base_core\models\Base {
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
 
-			$price = $cartPosition->product()->price($user);
+			$price = $cartPosition->product()->price($user, $cartPosition->method);
 
 			$shipmentPosition = ShipmentPositions::create([
 				'ecommerce_shipment_id' => $shipment->id,
@@ -255,7 +253,10 @@ class Orders extends \base_core\models\Base {
 		extract(Message::aliases());
 
 		$invoice = Invoices::create($data + [
-			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
+			'user_id' => $user->id,
+			'status' => 'created',
+			'method' => $entity->payment_method,
+			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number
 		]);
 		if (!$invoice->save()) {
 			return false;
@@ -274,7 +275,7 @@ class Orders extends \base_core\models\Base {
 			$description  = $product->title . ' ';
 			$description .= '(#' . $product->number . ')';
 
-			$price = $product->price($user);
+			$price = $product->price($user, $cartPosition->method);
 
 			$invoicePosition = InvoicePositions::create([
 				'billing_invoice_id' => $invoice->id,
