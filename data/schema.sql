@@ -4,6 +4,7 @@ CREATE TABLE `ecommerce_cart_positions` (
   `ecommerce_cart_id` int(11) unsigned NOT NULL,
   `ecommerce_product_id` int(11) unsigned NOT NULL,
   `quantity` int(10) unsigned NOT NULL DEFAULT '0',
+  `method` varchar(50) NOT NULL DEFAULT '',
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ecommerce_cart_id` (`ecommerce_cart_id`),
@@ -13,7 +14,8 @@ CREATE TABLE `ecommerce_cart_positions` (
 -- Create syntax for TABLE 'ecommerce_carts'
 CREATE TABLE `ecommerce_carts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `user_session_key` varchar(250) DEFAULT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'open',
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
@@ -26,8 +28,8 @@ CREATE TABLE `ecommerce_carts` (
 CREATE TABLE `ecommerce_orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(200) NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
-  `user_session_id` varchar(250) NOT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `user_session_key` varchar(250) DEFAULT '',
   `number` varchar(100) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'created',
   `ecommerce_cart_id` int(11) NOT NULL,
@@ -71,6 +73,7 @@ CREATE TABLE `ecommerce_product_groups` (
   `is_promoted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `access` varchar(250) NOT NULL DEFAULT 'any',
   `cover_media_id` int(11) unsigned DEFAULT NULL,
+  `ecommerce_brand_id` int(11) unsigned DEFAULT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -88,6 +91,7 @@ CREATE TABLE `ecommerce_product_prices` (
   `amount_type` char(5) NOT NULL DEFAULT 'net',
   `amount_rate` int(5) unsigned NOT NULL DEFAULT '0',
   `amount` int(10) unsigned NOT NULL,
+  `method` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `ecommerce_product_id` (`ecommerce_product_id`)
 ) ENGINE=InnoDB CHARSET=utf8 COMMENT='no fixed tax_rate';
