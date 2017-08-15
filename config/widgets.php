@@ -43,7 +43,7 @@ Widgets::register('carts', function() use ($t) {
 	'group' => Widgets::GROUP_DASHBOARD,
 ]);
 
-Widgets::register('ecommerce_orders', function() use ($t) {
+Widgets::register('orders', function() use ($t) {
 	$pending = Orders::find('count', [
 		'conditions' => [
 			'status NOT' => ['processed', 'cancelled', 'expired', 'checking-out']
@@ -68,7 +68,7 @@ Widgets::register('ecommerce_orders', function() use ($t) {
 	'weight' => Widgets::WEIGHT_LOW
 ]);
 
-Widgets::register('ecommerce_products', function() use ($t) {
+Widgets::register('products', function() use ($t) {
 	$total = Products::find('count');
 
 	$outOfStock = Products::find('count', [
