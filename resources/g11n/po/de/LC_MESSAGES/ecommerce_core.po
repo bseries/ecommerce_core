@@ -154,7 +154,7 @@ msgstr "Lieferung"
 
 #: views/carts/admin_form.html.php:9
 msgid "Untitled"
-msgstr "Ohne Titel"
+msgstr "ohne Titel"
 
 #: views/carts/admin_form.html.php:12
 msgid "creating"
