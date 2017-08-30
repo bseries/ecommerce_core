@@ -99,7 +99,7 @@ class Carts extends \base_core\models\Base {
 
 		foreach ($entity->totals($user)->sum() as $rate => $currencies) {
 			foreach ($currencies as $currency => $price) {
-				$compare = $compare->add($r = $price->{$byMethod}());
+				$compare = $compare->add($price->{$byMethod}());
 			}
 		}
 		return $compare;
