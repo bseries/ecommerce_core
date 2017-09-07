@@ -27,6 +27,9 @@ $this->set([
 
 	<div class="top-actions">
 		<?= $this->html->link($t('product group'), ['action' => 'add', 'library' => 'ecommerce_core'], ['class' => 'button add']) ?>
+		<?= $this->_render('element', 'backlink', ['type' => 'multiple'], [
+			'library' => 'base_core'
+		]) ?>
 	</div>
 
 	<?php if ($data && $data->count()): ?>

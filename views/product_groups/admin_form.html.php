@@ -21,6 +21,12 @@ $this->set([
 
 ?>
 <article>
+	<div class="top-actions">
+		<?= $this->_render('element', 'backlink', ['type' => 'multiple'] + compact('item'), [
+			'library' => 'base_core'
+		]) ?>
+	</div>
+
 	<?=$this->form->create($item) ?>
 
 		<div class="grid-row">
