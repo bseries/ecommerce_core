@@ -47,7 +47,15 @@ class CartPositions extends \base_core\models\Base {
 	}
 
 	public function total($entity, $user) {
-		return $entity->product()->price($user, $entity->method)->amount()->multiply($entity->quantity);
+		return $entity->product()
+			->price($user, $entity->method)
+			->amount()
+			->multiply($entity->quantity);
+	}
+
+	// Checks if the positions quantity is available in stock.
+	public function checkStock($entity) {
+		return $entity->product()->stock() < (integer) $entity->quantity;
 	}
 
 	/* Deprecated */

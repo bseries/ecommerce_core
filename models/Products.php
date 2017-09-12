@@ -189,13 +189,13 @@ class Products extends \base_core\models\Base {
 		}
 	}
 
-	// "Takes" stock items and persistently decrements
-	// real stock.
+	// Ignores any reserved stock and looks only if enough local stock is available.
+	public function canTakeStock($entity, $quantity = 1) {
+		return $entity->stock('local') >= $quantity;
+	}
+
+	// "Takes" stock items and persistently decrements real stock.
 	public function takeStock($entity, $quantity = 1) {
-		// if (Settings::read('stock.check') && $entity->stock('virtual') < $quantity) {
-			// FIXME Fail here once we know all clients keep their numbers clean
-			// and take only if there is stock.
-		// }
 		$entity->decrement('stock', $quantity);
 
 		if (Settings::read('stock.check') && $entity->stock < 0) {
@@ -212,8 +212,7 @@ class Products extends \base_core\models\Base {
 		return $entity->save(null, ['whitelist' => ['stock'], 'validate' => false]);
 	}
 
-	// "Puts back" stock items and persistently increments
-	// real stock.
+	// "Puts back" stock items and persistently increments real stock.
 	public function putStock($entity, $quantity = 1) {
 		$entity->increment('stock', $quantity);
 
@@ -224,12 +223,12 @@ class Products extends \base_core\models\Base {
 		return $entity->save(null, ['whitelist' => ['stock'], 'validate' => false]);
 	}
 
+	public function canReserveStock($entity, $quantity = 1) {
+		return $entity->stock('virtual') >= $quantity;
+	}
+
 	// Persistently reserves one or multiple items.
 	public function reserveStock($entity, $quantity = 1) {
-		// if (Settings::read('stock.check') && $entity->stock('virtual') < $quantity) {
-			// FIXME Fail here once we know all clients keep their numbers clean
-			// and reserve only if there is stock.
-		// }
 		$entity->increment('stock_reserved', $quantity);
 
 		$message  = "RESERVE stock for product `{$entity->id}` by {$quantity}. ";
