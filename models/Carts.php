@@ -160,18 +160,16 @@ class Carts extends \base_core\models\Base {
 
 	// Adds given quantity to an already existing position, or creates one with given
 	// quantity. Does not save position.
-	public function preparePosition($entity, $productId, $quantity) {
+	public function preparePosition($entity, $productId, $quantity, $method) {
 		$data = [
 			'ecommerce_product_id' => $productId,
-			'ecommerce_cart_id' => $entity->id
+			'ecommerce_cart_id' => $entity->id,
+			'method' => $method
 		];
-		$position = CartPositions::find('first', ['conditions' => $data]);
-
-		if (!$position) {
+		if (!$position = CartPositions::find('first', ['conditions' => $data])) {
 			$position = CartPositions::create($data);
 		}
 		$position->quantity += $quantity;
-
 		return $position;
 	}
 
