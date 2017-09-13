@@ -323,7 +323,7 @@ class Orders extends \base_core\models\Base {
 
 		// Billing address is now contained in invoice.
 		// For clarity nullify field.
-		$entity->billing_invoice_address_id = null;
+		$entity->billing_address_id = null;
 
 		return $entity->save();
 	}
