@@ -104,7 +104,7 @@ class Orders extends \base_core\models\Base {
 		);
 
 		Validator::add('Orders.checked', function($value, $format, $options) {
-			return $value === '1';
+			return $value === '1' || $value === true;
 		});
 
 		$model->validates['shipping_method'] = [
