@@ -172,6 +172,7 @@ $this->set([
 						'id' => $invoice->id, 'action' => 'export_pdf',
 						'library' => 'billing_invoice'
 					], ['class' => 'button']) ?>
+
 					<?= $this->html->link($t('open invoice'), [
 						'controller' => 'Invoices',
 						'action' => 'edit',
@@ -222,6 +223,12 @@ $this->set([
 				</div>
 
 				<div class="actions">
+					<?= $this->html->link($t('PDF'), [
+						'controller' => 'Shipments',
+						'id' => $shipment->id, 'action' => 'export_pdf',
+						'library' => 'ecommerce_core'
+					], ['class' => 'button']) ?>
+
 					<?= $this->html->link($t('open shipment'), [
 						'controller' => 'Shipments',
 						'action' => 'edit',
