@@ -95,16 +95,16 @@ $this->set([
 				<?php foreach ($item->translate('description') as $locale => $value): ?>
 					<?= $this->editor->field("i18n.description.{$locale}", [
 						'label' => $t('Description'),
-						'size' => 'gamma',
-						'features' => 'minimal',
+						'size' => 'beta',
+						'features' => 'full',
 						'value' => $value
 					]) ?>
 				<?php endforeach ?>
 			<?php else: ?>
 				<?= $this->editor->field('description', [
 					'label' => $t('Description'),
-					'size' => 'gamma',
-					'features' => 'minimal'
+					'size' => 'beta',
+					'features' => 'full'
 				]) ?>
 			<?php endif ?>
 		</div>
