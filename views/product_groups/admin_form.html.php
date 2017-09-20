@@ -68,6 +68,11 @@ $this->set([
 					'attachment' => 'direct',
 					'value' => $item->cover()
 				]) ?>
+				<?= $this->media->field('media', [
+					'label' => $t('Media'),
+					'attachment' => 'joined',
+					'value' => $item->media()
+				]) ?>
 			</div>
 		</div>
 
