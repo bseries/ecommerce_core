@@ -32,10 +32,17 @@ $this->set([
 		<div class="grid-row">
 			<div class="grid-column-left">
 				<?= $this->form->field('number', [
+					'type' => 'text',
 					'label' => $t('Number'),
-					'disabled' => true,
-					'class' => 'use-for-title'
+					'class' => 'use-for-title',
+					'placeholder' => $autoNumber ? $t('Will autogenerate number.') : null,
+					'disabled' => $autoNumber && !$item->exists(),
+					'readonly' => $autoNumber || $item->exists()
 				]) ?>
+				<div class="help">
+					<?= $t('The reference number uniquely identifies this item and is used especially in correspondence with clients and customers.') ?>
+				</div>
+
 				<?= $this->form->field('uuid', [
 					'label' => $t('ID'),
 					'disabled' => true
