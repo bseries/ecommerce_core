@@ -44,7 +44,7 @@ $this->set([
 				</div>
 
 				<?= $this->form->field('uuid', [
-					'label' => $t('ID'),
+					'label' => $t('UUID'),
 					'disabled' => true
 				]) ?>
 			</div>

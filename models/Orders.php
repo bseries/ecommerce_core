@@ -19,20 +19,19 @@ namespace ecommerce_core\models;
 
 use DateTime;
 use Exception;
-use lithium\g11n\Message;
-use lithium\analysis\Logger;
-use lithium\util\Validator;
-
 use base_address\models\Addresses;
 use base_core\extensions\cms\Features;
 use base_core\extensions\cms\Settings;
 use billing_invoice\models\InvoicePositions;
 use billing_invoice\models\Invoices;
-use ecommerce_core\models\Carts;
-use ecommerce_core\models\Shipments;
 use billing_payment\billing\payment\Methods as PaymentMethods;
 use ecommerce_core\ecommerce\shipping\Methods as ShippingMethods;
+use ecommerce_core\models\Carts;
 use ecommerce_core\models\Products;
+use ecommerce_core\models\Shipments;
+use lithium\analysis\Logger;
+use lithium\g11n\Message;
+use lithium\util\Validator;
 
 class Orders extends \base_core\models\Base {
 
