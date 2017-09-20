@@ -60,16 +60,16 @@ $this->set([
 				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
-				<?= $this->media->field('cover_media_id', [
-					'label' => $t('Cover'),
-					'attachment' => 'direct',
-					'value' => $item->cover()
-				]) ?>
 			</div>
 		</div>
 
 		<div class="grid-row">
 			<div class="grid-column-left">
+				<?= $this->media->field('cover_media_id', [
+					'label' => $t('Cover'),
+					'attachment' => 'direct',
+					'value' => $item->cover()
+				]) ?>
 			</div>
 			<div class="grid-column-right">
 				<?= $this->media->field('media', [
