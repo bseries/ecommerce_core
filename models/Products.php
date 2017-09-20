@@ -87,6 +87,9 @@ class Products extends \base_core\models\Base {
 	];
 
 	public static function init() {
+		extract(Message::aliases());
+		$model = static::_object();
+
 		static::behavior('base_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('product.number')
 		);
@@ -97,6 +100,24 @@ class Products extends \base_core\models\Base {
 				'locales' => explode(' ', PROJECT_LOCALES),
 				'strategy' => 'inline'
 			]);
+		}
+
+		$model->validates['title'] = [
+			[
+				'notEmpty',
+				'on' => ['create', 'update'],
+				'message' => $t('This field cannot be empty.', ['scope' => 'ecommerce_core'])
+			]
+		];
+
+		if (!static::behavior('ReferenceNumber')->config('generate')) {
+			$model->validates['number'] = [
+				[
+					'notEmpty',
+					'on' => ['create', 'update'],
+					'message' => $t('This field cannot be empty.', ['scope' => 'ecommerce_core'])
+				]
+			];
 		}
 	}
 

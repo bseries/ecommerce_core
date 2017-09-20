@@ -42,7 +42,6 @@ $this->set([
 			</div>
 		</div>
 
-
 		<div class="grid-row">
 			<div class="grid-column-left">
 				<?php if ($isTranslated): ?>

@@ -32,12 +32,16 @@ $this->set([
 			<div class="grid-column-left">
 				<?= $this->form->field('number', [
 					'type' => 'text',
-					'label' => $t('Number/SKU'),
+					'label' => $t('Number'),
+					'placeholder' => $autoNumber ? $t('Will autogenerate number.') : null,
+					'disabled' => $autoNumber && !$item->exists(),
+					'readonly' => $autoNumber || $item->exists()
 				]) ?>
-				<div class="help"><?= $t('Leave empty to autogenerate number.') ?></div>
+				<div class="help">
+					<?= $t('The reference number uniquely identifies this item and is used especially in correspondence with clients and customers.') ?>
+				</div>
 			</div>
-			<div class="grid-column-right">
-			</div>
+			<div class="grid-column-right"></div>
 		</div>
 
 		<div class="grid-row">
