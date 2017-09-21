@@ -37,7 +37,9 @@ class ProductsController extends \base_core\controllers\BaseController {
 	protected function _selects($item = null) {
 		extract(Message::aliases());
 
-		$productGroups = ProductGroups::find('list');
+		$productGroups = ProductGroups::find('list', [
+			'order' => ['title' => 'ASC']
+		]);
 		$aquisitionMethods = AquisitionMethods::enum();
 		$currencies = Currencies::find('list');
 		$attributeKeys = [];
