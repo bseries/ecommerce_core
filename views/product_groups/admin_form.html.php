@@ -21,6 +21,12 @@ $this->set([
 
 ?>
 <article>
+	<div class="top-actions">
+		<?= $this->_render('element', 'backlink', ['type' => 'multiple'] + compact('item'), [
+			'library' => 'base_core'
+		]) ?>
+	</div>
+
 	<?=$this->form->create($item) ?>
 
 		<div class="grid-row">
@@ -35,7 +41,6 @@ $this->set([
 				]) ?>
 			</div>
 		</div>
-
 
 		<div class="grid-row">
 			<div class="grid-column-left">
@@ -57,17 +62,12 @@ $this->set([
 				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
-				<?= $this->media->field('cover_media_id', [
-					'label' => $t('Cover'),
-					'attachment' => 'direct',
-					'value' => $item->cover()
+				<?= $this->form->field('tags', [
+					'value' => $item->tags(),
+					'label' => $t('Tags'),
+					'placeholder' => 'foo, bar',
+					'class' => 'input--tags'
 				]) ?>
-			</div>
-		</div>
-
-		<div class="grid-row">
-			<div class="grid-column-left"></div>
-			<div class="grid-column-right">
 				<?php if (isset($brands)): ?>
 					<?= $this->form->field('ecommerce_brand_id', [
 						'type' => 'select',
@@ -75,11 +75,22 @@ $this->set([
 						'label' => $t('Brand')
 					]) ?>
 				<?php endif ?>
-				<?= $this->form->field('tags', [
-					'value' => $item->tags(),
-					'label' => $t('Tags'),
-					'placeholder' => 'foo, bar',
-					'class' => 'input--tags'
+			</div>
+		</div>
+
+		<div class="grid-row">
+			<div class="grid-column-left">
+				<?= $this->media->field('cover_media_id', [
+					'label' => $t('Cover'),
+					'attachment' => 'direct',
+					'value' => $item->cover()
+				]) ?>
+			</div>
+			<div class="grid-column-right">
+				<?= $this->media->field('media', [
+					'label' => $t('Media'),
+					'attachment' => 'joined',
+					'value' => $item->media()
 				]) ?>
 			</div>
 		</div>
@@ -89,16 +100,16 @@ $this->set([
 				<?php foreach ($item->translate('description') as $locale => $value): ?>
 					<?= $this->editor->field("i18n.description.{$locale}", [
 						'label' => $t('Description'),
-						'size' => 'gamma',
-						'features' => 'minimal',
+						'size' => 'beta',
+						'features' => 'full',
 						'value' => $value
 					]) ?>
 				<?php endforeach ?>
 			<?php else: ?>
 				<?= $this->editor->field('description', [
 					'label' => $t('Description'),
-					'size' => 'gamma',
-					'features' => 'minimal'
+					'size' => 'beta',
+					'features' => 'full'
 				]) ?>
 			<?php endif ?>
 		</div>

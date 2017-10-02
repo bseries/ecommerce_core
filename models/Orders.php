@@ -19,20 +19,19 @@ namespace ecommerce_core\models;
 
 use DateTime;
 use Exception;
-use lithium\g11n\Message;
-use lithium\analysis\Logger;
-use lithium\util\Validator;
-
 use base_address\models\Addresses;
 use base_core\extensions\cms\Features;
 use base_core\extensions\cms\Settings;
 use billing_invoice\models\InvoicePositions;
 use billing_invoice\models\Invoices;
-use ecommerce_core\models\Carts;
-use ecommerce_core\models\Shipments;
 use billing_payment\billing\payment\Methods as PaymentMethods;
 use ecommerce_core\ecommerce\shipping\Methods as ShippingMethods;
+use ecommerce_core\models\Carts;
 use ecommerce_core\models\Products;
+use ecommerce_core\models\Shipments;
+use lithium\analysis\Logger;
+use lithium\g11n\Message;
+use lithium\util\Validator;
 
 class Orders extends \base_core\models\Base {
 
@@ -104,7 +103,7 @@ class Orders extends \base_core\models\Base {
 		);
 
 		Validator::add('Orders.checked', function($value, $format, $options) {
-			return $value === '1';
+			return $value === '1' || $value === true;
 		});
 
 		$model->validates['shipping_method'] = [
@@ -128,6 +127,22 @@ class Orders extends \base_core\models\Base {
 				'message' => $t('You must accept the terms.', ['scope' => 'ecommerce_core'])
 			]
 		];
+
+		if (!static::behavior('ReferenceNumber')->config('generate')) {
+			$model->validates['number'] = [
+				'notEmpty' => [
+					'notEmpty',
+					'on' => ['create', 'update'],
+					'last' => true,
+					'message' => $t('This field cannot be empty.', ['scope' => 'ecommerce_core'])
+				],
+				'isUnique' => [
+					'isUniqueReferenceNumber',
+					'on' => ['create', 'update'],
+					'message' => $t('This number is already in use.', ['scope' => 'ecommerce_core'])
+				]
+			];
+		}
 	}
 
 	// Used during checkout to assign transient addresses while creating them when
@@ -323,7 +338,7 @@ class Orders extends \base_core\models\Base {
 
 		// Billing address is now contained in invoice.
 		// For clarity nullify field.
-		$entity->billing_invoice_address_id = null;
+		$entity->billing_address_id = null;
 
 		return $entity->save();
 	}

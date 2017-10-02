@@ -32,12 +32,19 @@ $this->set([
 		<div class="grid-row">
 			<div class="grid-column-left">
 				<?= $this->form->field('number', [
+					'type' => 'text',
 					'label' => $t('Number'),
-					'disabled' => true,
-					'class' => 'use-for-title'
+					'class' => 'use-for-title',
+					'placeholder' => $autoNumber ? $t('Will autogenerate number.') : null,
+					'disabled' => $autoNumber && !$item->exists(),
+					'readonly' => $autoNumber || $item->exists()
 				]) ?>
+				<div class="help">
+					<?= $t('The reference number uniquely identifies this item and is used especially in correspondence with clients and customers.') ?>
+				</div>
+
 				<?= $this->form->field('uuid', [
-					'label' => $t('ID'),
+					'label' => $t('UUID'),
 					'disabled' => true
 				]) ?>
 			</div>
@@ -172,6 +179,7 @@ $this->set([
 						'id' => $invoice->id, 'action' => 'export_pdf',
 						'library' => 'billing_invoice'
 					], ['class' => 'button']) ?>
+
 					<?= $this->html->link($t('open invoice'), [
 						'controller' => 'Invoices',
 						'action' => 'edit',
@@ -222,6 +230,12 @@ $this->set([
 				</div>
 
 				<div class="actions">
+					<?= $this->html->link($t('PDF'), [
+						'controller' => 'Shipments',
+						'id' => $shipment->id, 'action' => 'export_pdf',
+						'library' => 'ecommerce_core'
+					], ['class' => 'button']) ?>
+
 					<?= $this->html->link($t('open shipment'), [
 						'controller' => 'Shipments',
 						'action' => 'edit',

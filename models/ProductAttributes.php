@@ -25,7 +25,8 @@ class ProductAttributes extends \base_core\models\Base {
 	public static $enum = [
 		'key' => [
 			'size',
-			'color'
+			'color',
+			'format'
 		]
 	];
 
@@ -49,7 +50,8 @@ class ProductAttributes extends \base_core\models\Base {
 
 		$map = [
 			'size' => $t('size', ['scope' => 'ecommerce_core']),
-			'color' => $t('color', ['scope' => 'ecommerce_core'])
+			'color' => $t('color', ['scope' => 'ecommerce_core']),
+			'format' => $t('format', ['scope' => 'ecommerce_core'])
 		];
 		if (!isset($map[$entity->key])) {
 			return $entity->key;

@@ -126,6 +126,22 @@ class Shipments extends \base_core\models\Base {
 				'message' => $t('This field cannot be empty.', ['scope' => 'ecommerce_core'])
 			]
 		];
+
+		if (!static::behavior('ReferenceNumber')->config('generate')) {
+			$model->validates['number'] = [
+				'notEmpty' => [
+					'notEmpty',
+					'on' => ['create', 'update'],
+					'last' => true,
+					'message' => $t('This field cannot be empty.', ['scope' => 'ecommerce_core'])
+				],
+				'isUnique' => [
+					'isUniqueReferenceNumber',
+					'on' => ['create', 'update'],
+					'message' => $t('This number is already in use.', ['scope' => 'ecommerce_core'])
+				]
+			];
+		}
 	}
 
 	public function method($entity) {

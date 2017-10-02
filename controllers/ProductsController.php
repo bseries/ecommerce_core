@@ -37,7 +37,9 @@ class ProductsController extends \base_core\controllers\BaseController {
 	protected function _selects($item = null) {
 		extract(Message::aliases());
 
-		$productGroups = ProductGroups::find('list');
+		$productGroups = ProductGroups::find('list', [
+			'order' => ['title' => 'ASC']
+		]);
 		$aquisitionMethods = AquisitionMethods::enum();
 		$currencies = Currencies::find('list');
 		$attributeKeys = [];
@@ -46,7 +48,8 @@ class ProductsController extends \base_core\controllers\BaseController {
 		if ($item) {
 			$attributeKeys = ProductAttributes::enum('key', [
 				'size' => $t('size', ['scope' => 'ecommerce_core']),
-				'color' => $t('color', ['scope' => 'ecommerce_core'])
+				'color' => $t('color', ['scope' => 'ecommerce_core']),
+				'format' => $t('format', ['scope' => 'ecommerce_core'])
 			]);
 		}
 		return compact(

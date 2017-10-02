@@ -21,17 +21,27 @@ $this->set([
 
 ?>
 <article>
+	<div class="top-actions">
+		<?= $this->_render('element', 'backlink', ['type' => 'multiple'] + compact('item'), [
+			'library' => 'base_core'
+		]) ?>
+	</div>
+
 	<?=$this->form->create($item) ?>
 		<div class="grid-row">
 			<div class="grid-column-left">
 				<?= $this->form->field('number', [
 					'type' => 'text',
-					'label' => $t('Number/SKU'),
+					'label' => $t('Number'),
+					'placeholder' => $autoNumber ? $t('Will autogenerate number.') : null,
+					'disabled' => $autoNumber && !$item->exists(),
+					'readonly' => $autoNumber || $item->exists()
 				]) ?>
-				<div class="help"><?= $t('Leave empty to autogenerate number.') ?></div>
+				<div class="help">
+					<?= $t('The reference number uniquely identifies this item and is used especially in correspondence with clients and customers.') ?>
+				</div>
 			</div>
-			<div class="grid-column-right">
-			</div>
+			<div class="grid-column-right"></div>
 		</div>
 
 		<div class="grid-row">
@@ -54,16 +64,16 @@ $this->set([
 				<?php endif ?>
 			</div>
 			<div class="grid-column-right">
-				<?= $this->media->field('cover_media_id', [
-					'label' => $t('Cover'),
-					'attachment' => 'direct',
-					'value' => $item->cover()
-				]) ?>
 			</div>
 		</div>
 
 		<div class="grid-row">
 			<div class="grid-column-left">
+				<?= $this->media->field('cover_media_id', [
+					'label' => $t('Cover'),
+					'attachment' => 'direct',
+					'value' => $item->cover()
+				]) ?>
 			</div>
 			<div class="grid-column-right">
 				<?= $this->media->field('media', [
@@ -201,16 +211,16 @@ $this->set([
 				<?php foreach ($item->translate('description') as $locale => $value): ?>
 					<?= $this->editor->field("i18n.description.{$locale}", [
 						'label' => $t('Description') . ' (' . $this->g11n->name($locale) . ')',
-						'size' => 'gamma',
-						'features' => 'minimal',
+						'size' => 'beta',
+						'features' => 'full',
 						'value' => $value
 					]) ?>
 				<?php endforeach ?>
 			<?php else: ?>
 				<?= $this->editor->field('description', [
 					'label' => $t('Description'),
-					'size' => 'gamma',
-					'features' => 'minimal'
+					'size' => 'beta',
+					'features' => 'full'
 				]) ?>
 			<?php endif ?>
 		</div>
