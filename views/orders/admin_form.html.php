@@ -170,7 +170,7 @@ $this->set([
 					<?= $this->form->field('total_net', [
 						'label' => $t('Total (net)'),
 						'disabled' => true,
-						'value' => $this->price->format($item->totals($item->user()), 'net', ['currency' => false])
+						'value' => $this->price->format($invoice->totals(), 'net', ['currency' => false])
 					]) ?>
 				</div>
 				<div class="actions">
