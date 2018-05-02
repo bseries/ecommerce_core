@@ -95,7 +95,7 @@ class Orders extends \base_core\models\Base {
 	];
 
 	public static function init() {
-		$model = static::_object();
+		$model = static::object();
 		extract(Message::aliases());
 
 		static::behavior('base_core\extensions\data\behavior\ReferenceNumber')->config(

@@ -88,7 +88,7 @@ class Products extends \base_core\models\Base {
 
 	public static function init() {
 		extract(Message::aliases());
-		$model = static::_object();
+		$model = static::object();
 
 		static::behavior('base_core\extensions\data\behavior\ReferenceNumber')->config(
 			Settings::read('product.number')
