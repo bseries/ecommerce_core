@@ -21,10 +21,11 @@ use base_core\extensions\cms\Settings;
 use ecommerce_core\models\Orders;
 use ecommerce_core\models\Shipments;
 use li3_mailer\action\Mailer;
+use lithium\aop\Filters;
 use lithium\g11n\Message;
 
 if (Settings::read('order.sendCheckedOutMail')) {
-	Orders::applyFilter('statusChange', function($self, $params, $chain) {
+	Filters::apply(Orders::class, 'statusChange', function($params, $next) {
 		extract(Message::aliases());
 
 		if ($params['to'] !== 'checked-out') {
@@ -69,7 +70,7 @@ if (Settings::read('order.sendCheckedOutMail')) {
 }
 
 if (Settings::read('shipment.sendShippedMail')) {
-	Shipments::applyFilter('statusChange', function($self, $params, $chain) {
+	Filters::apply(Shipments::class, 'statusChange', function($params, $next) {
 		extract(Message::aliases());
 
 		if ($params['to'] !== 'shipped') {

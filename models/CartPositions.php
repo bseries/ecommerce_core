@@ -17,8 +17,9 @@
 
 namespace ecommerce_core\models;
 
-use ecommerce_core\models\Products;
 use ecommerce_core\models\Carts;
+use ecommerce_core\models\Products;
+use lithium\aop\Filters;
 
 class CartPositions extends \base_core\models\Base {
 
@@ -69,14 +70,15 @@ class CartPositions extends \base_core\models\Base {
 // Whenever we update a position update the parent's modified
 // field, too. This allows us to generate cache keys on the parents
 // last modified record.
-CartPositions::applyFilter('save', function($self, $params, $chain) {
-	if (!$result = $chain->next($self, $params, $chain)) {
+Filters::apply(CartPositions::class, 'save', function($params, $next) {
+	if (!$result = $next($params)) {
 		return false;
 	}
 	return Carts::touchTimestamp($params['entity']->ecommerce_cart_id, 'modified');
 });
-CartPositions::applyFilter('delete', function($self, $params, $chain) {
-	if (!$result = $chain->next($self, $params, $chain)) {
+
+Filters::apply(CartPositions::class, 'delete', function($params, $next) {
+	if (!$result = $next($params)) {
 		return false;
 	}
 	return Carts::touchTimestamp($params['entity']->ecommerce_cart_id, 'modified');
@@ -84,7 +86,7 @@ CartPositions::applyFilter('delete', function($self, $params, $chain) {
 
 // When a position is added, updated or deleted, sync stock on related product.
 // We assume that the product for a position is never updated.
-CartPositions::applyFilter('save', function($self, $params, $chain) {
+Filters::apply(CartPositions::class, 'save', function($params, $next) {
 	$data =& $params['data'];
 	$entity =& $params['entity'];
 
@@ -106,19 +108,20 @@ CartPositions::applyFilter('save', function($self, $params, $chain) {
 	if (!$entity->product()->reserveStock($entity->quantity)) {
 		return false;
 	}
-	if (!$result = $chain->next($self, $params, $chain)) {
+	if (!$result = $next($params)) {
 		return false;
 	}
 	return Carts::touchTimestamp($entity->ecommerce_cart_id, 'modified');
 });
-CartPositions::applyFilter('delete', function($self, $params, $chain) {
+
+Filters::apply(CartPositions::class, 'delete', function($params, $next) {
 	$entity =& $params['entity'];
 	$cart = $entity->ecommerce_cart_id;
 
 	if (!$entity->product()->unreserveStock($entity->quantity)) {
 		return false;
 	}
-	if (!$result = $chain->next($self, $params, $chain)) {
+	if (!$result = $next($params)) {
 		return false;
 	}
 	return Carts::touchTimestamp($cart, 'modified');

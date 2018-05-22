@@ -17,10 +17,11 @@
 
 namespace ecommerce_core\models;
 
-use Exception;
 use AD\Finance\Price;
+use Exception;
 use billing_core\billing\ClientGroups;
 use ecommerce_core\ecommerce\aquisition\Methods as AquisitionMethods;
+use lithium\aop\Filters;
 
 class ProductPrices extends \base_core\models\Base {
 
@@ -73,7 +74,7 @@ class ProductPrices extends \base_core\models\Base {
 }
 
 // On save derive tax type from group
-ProductPrices::applyFilter('save', function($self, $params, $chain) {
+Filters::apply(ProductPrices::class, 'save', function($params, $next) {
 	$entity = $params['entity'];
 	$data =& $params['data'];
 
@@ -82,7 +83,7 @@ ProductPrices::applyFilter('save', function($self, $params, $chain) {
 		$data['tax_type'] = $group->taxType()->name();
 		$data['amount_rate'] = $group->taxType()->rate();
 	}
-	return $chain->next($self, $params, $chain);
+	return $next($params);
 });
 
 ?>

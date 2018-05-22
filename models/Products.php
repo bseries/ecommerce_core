@@ -26,10 +26,11 @@ use ecommerce_core\models\ProductAttributes;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\ProductPrices;
 use lithium\analysis\Logger;
+use lithium\aop\Filters;
+use lithium\g11n\Message;
 use lithium\storage\Cache;
 use lithium\util\Collection;
 use lithium\util\Inflector;
-use lithium\g11n\Message;
 use lithium\util\Validator;
 
 class Products extends \base_core\models\Base {
@@ -286,11 +287,11 @@ class Products extends \base_core\models\Base {
 
 // Implements a validation rule on nested collection (prices). We cannot use normal
 // validation rules as they are not executed on fields not present in the schema.
-Products::applyFilter('validates', function($self, $params, $chain) {
+Filters::apply(Products::class, 'validates', function($params, $next) {
 	extract(Message::aliases());
 
 	$entity = $params['entity'];
-	$result = $chain->next($self, $params, $chain);
+	$result = $next($params);;
 
 	// Field was not submitted at all. Ensure we don't break save calls.
 	if ($entity->prices === null) {
@@ -313,7 +314,7 @@ Products::applyFilter('validates', function($self, $params, $chain) {
 	return $result;
 });
 
-Products::applyFilter('save', function($self, $params, $chain) {
+Filters::apply(Products::class, 'save', function($params, $next) {
 	$entity = $params['entity'];
 	$data =& $params['data'];
 
@@ -335,7 +336,7 @@ Products::applyFilter('save', function($self, $params, $chain) {
 		$data['ecommerce_product_group_id'] = $group->id;
 	}
 
-	if (!$result = $chain->next($self, $params, $chain)) {
+	if (!$result = $next($params)) {
 		return false;
 	}
 
@@ -393,9 +394,10 @@ Products::applyFilter('save', function($self, $params, $chain) {
 	}
 	return true;
 });
-Products::applyFilter('delete', function($self, $params, $chain) {
+
+Filters::apply(Products::class, 'delete', function($params, $next) {
 	$entity = $params['entity'];
-	$result = $chain->next($self, $params, $chain);
+	$result = $next($params);
 
 	// Delete nested/dependent items.
 	$entity->prices()->delete();

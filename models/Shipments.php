@@ -25,6 +25,7 @@ use base_address\models\Contacts;
 use base_core\extensions\cms\Settings;
 use ecommerce_core\ecommerce\shipping\Methods as ShippingMethods;
 use lithium\analysis\Logger;
+use lithium\aop\Filters;
 use lithium\core\Libraries;
 use lithium\g11n\Message;
 
@@ -270,7 +271,7 @@ class Shipments extends \base_core\models\Base {
 	}
 }
 
-Shipments::applyFilter('save', function($self, $params, $chain) {
+Filters::apply(Shipments::class, 'save', function($params, $next) {
 	$entity = $params['entity'];
 	$data =& $params['data'];
 
@@ -287,7 +288,7 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 		}
 	}
 
-	if (!$result = $chain->next($self, $params, $chain)) {
+	if (!$result = $next($params)) {
 		return false;
 	}
 
@@ -356,9 +357,9 @@ Shipments::applyFilter('save', function($self, $params, $chain) {
 	return true;
 });
 
-Shipments::applyFilter('delete', function($self, $params, $chain) {
+Filters::apply(Shipments::class, 'delete', function($params, $next) {
 	$entity = $params['entity'];
-	$result = $chain->next($self, $params, $chain);
+	$result = $next($params);
 
 	if ($result) {
 		$positions = ShipmentPositions::find('all', [
