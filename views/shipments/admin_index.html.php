@@ -39,6 +39,9 @@ $this->set([
 					<td data-sort="order" class="order number table-sort"><?= $t('Order') ?>
 					<td data-sort="method" class="method table-sort"><?= $t('Method') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
+					<?php if ($useSites): ?>
+						<td data-sort="site" class="table-sort"><?= $t('Site') ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
@@ -72,6 +75,10 @@ $this->set([
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>
 						</time>
+					<?php if ($useSites): ?>
+						<td>
+							<?= $item->site ?: '-' ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->html->link($t('PDF'), ['id' => $item->id, 'action' => 'export_pdf'], ['class' => 'button']) ?>
 						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit'], ['class' => 'button']) ?>

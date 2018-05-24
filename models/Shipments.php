@@ -84,7 +84,8 @@ class Shipments extends \base_core\models\Base {
 				'status',
 				'address_recipient',
 				'address_organization',
-				'modified'
+				'modified',
+				'site'
 			]
 		]
 	];
