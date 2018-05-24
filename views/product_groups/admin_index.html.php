@@ -42,6 +42,9 @@ $this->set([
 					<td data-sort="title" class="emphasize title table-sort"><?= $t('Title') ?>
 					<td><?= $t('# Products') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
+					<?php if ($useSites): ?>
+						<td data-sort="site" class="table-sort"><?= $t('Site') ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
@@ -73,6 +76,10 @@ $this->set([
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>
 						</time>
+					<?php if ($useSites): ?>
+						<td>
+							<?= $item->site ?: '-' ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->html->link($item->is_promoted ? $t('unpromote') : $t('promote'), ['id' => $item->id, 'action' => $item->is_promoted ? 'unpromote': 'promote', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
 						<?= $this->html->link($item->is_published ? $t('unpublish') : $t('publish'), ['id' => $item->id, 'action' => $item->is_published ? 'unpublish': 'publish', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>

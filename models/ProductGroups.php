@@ -71,7 +71,8 @@ class ProductGroups extends \base_core\models\Base {
 			'fields' => [
 				'title',
 				'tags',
-				'modified'
+				'modified',
+				'site'
 			]
 		]
 	];
