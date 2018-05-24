@@ -37,6 +37,9 @@ $this->set([
 					<td data-sort="Shipment.number" class="number table-sort"><?= $t('Shipment') ?>
 					<td data-sort="Shipment.status" class="status table-sort">…<?= $t('status') ?>
 					<td data-sort="modified" class="date table-sort desc"><?= $t('Modified') ?>
+					<?php if ($useSites): ?>
+						<td data-sort="site" class="table-sort"><?= $t('Site') ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
@@ -81,6 +84,10 @@ $this->set([
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>
 						</time>
+					<?php if ($useSites): ?>
+						<td>
+							<?= $item->site ?: '-' ?>
+					<?php endif ?>
 					<td class="actions">
 						<?php if ($item->status !== 'processed'): ?>
 							<?= $this->html->link($t('processed'), [

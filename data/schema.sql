@@ -9,11 +9,12 @@ CREATE TABLE `ecommerce_cart_positions` (
   PRIMARY KEY (`id`),
   KEY `ecommerce_cart_id` (`ecommerce_cart_id`),
   KEY `ecommerce_product_id` (`ecommerce_product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'ecommerce_carts'
 CREATE TABLE `ecommerce_carts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `site` varchar(50) DEFAULT NULL,
   `user_id` int(11) unsigned DEFAULT NULL,
   `user_session_key` varchar(250) DEFAULT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'open',
@@ -22,12 +23,13 @@ CREATE TABLE `ecommerce_carts` (
   PRIMARY KEY (`id`),
   KEY `status` (`status`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3927 DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'ecommerce_orders'
 CREATE TABLE `ecommerce_orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(200) NOT NULL,
+  `site` varchar(50) DEFAULT NULL,
   `user_id` int(11) unsigned DEFAULT NULL,
   `user_session_key` varchar(250) DEFAULT '',
   `number` varchar(100) NOT NULL,
@@ -51,7 +53,7 @@ CREATE TABLE `ecommerce_orders` (
   KEY `user_id` (`user_id`),
   KEY `billing_invoice_id` (`billing_invoice_id`),
   KEY `billing_address_id` (`billing_address_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'ecommerce_product_attributes'
 CREATE TABLE `ecommerce_product_attributes` (
@@ -61,11 +63,12 @@ CREATE TABLE `ecommerce_product_attributes` (
   `value` varchar(250) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_key` (`ecommerce_product_id`,`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'ecommerce_product_groups'
 CREATE TABLE `ecommerce_product_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `site` varchar(50) DEFAULT NULL,
   `title` varchar(200) NOT NULL DEFAULT '',
   `description` text,
   `tags` varchar(250) DEFAULT NULL,
@@ -78,7 +81,7 @@ CREATE TABLE `ecommerce_product_groups` (
   PRIMARY KEY (`id`),
   KEY `is_published` (`is_published`),
   KEY `cover_media_id` (`cover_media_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'ecommerce_product_prices'
 CREATE TABLE `ecommerce_product_prices` (
@@ -93,7 +96,7 @@ CREATE TABLE `ecommerce_product_prices` (
   `method` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `ecommerce_product_id` (`ecommerce_product_id`)
-) ENGINE=InnoDB CHARSET=utf8 COMMENT='no fixed tax_rate';
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='no fixed tax_rate';
 
 -- Create syntax for TABLE 'ecommerce_products'
 CREATE TABLE `ecommerce_products` (
@@ -114,7 +117,7 @@ CREATE TABLE `ecommerce_products` (
   KEY `is_published` (`is_published`),
   KEY `ecommerce_product_group_id` (`ecommerce_product_group_id`),
   KEY `cover_media_id` (`cover_media_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'ecommerce_shipment_positions'
 CREATE TABLE `ecommerce_shipment_positions` (
@@ -131,11 +134,12 @@ CREATE TABLE `ecommerce_shipment_positions` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `billing_invoice_id` (`ecommerce_shipment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8;
 
 -- Create syntax for TABLE 'ecommerce_shipments'
 CREATE TABLE `ecommerce_shipments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `site` varchar(50) DEFAULT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'created',
   `number` varchar(200) DEFAULT NULL,
@@ -159,9 +163,4 @@ CREATE TABLE `ecommerce_shipments` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `number` (`number`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Augment other tables
-ALTER TABLE `users` ADD `has_accepted_terms` TINYINT(1)  UNSIGNED  NOT NULL  DEFAULT '0'  COMMENT 'ecommerce' AFTER `is_notified`;
-ALTER TABLE `users` ADD `shipping_address_id` int(11) unsigned DEFAULT NULL COMMENT 'ecommerce' AFTER `billing_address_id`;
-
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;

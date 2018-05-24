@@ -36,6 +36,9 @@ $this->set([
 					<td class="money"><?= $t('Total value (net) ') ?>
 					<td data-sort="total-quantity" class="total-quantity table-sort"><?= $t('Total quantity') ?>
 					<td data-sort="modified" class="date modified table-sort desc"><?= $t('Modified') ?>
+					<?php if ($useSites): ?>
+						<td data-sort="site" class="table-sort"><?= $t('Site') ?>
+					<?php endif ?>
 					<td class="actions">
 						<?= $this->form->field('search', [
 							'type' => 'search',
@@ -73,6 +76,10 @@ $this->set([
 						<time datetime="<?= $this->date->format($item->modified, 'w3c') ?>">
 							<?= $this->date->format($item->modified, 'date') ?>
 						</time>
+					<?php if ($useSites): ?>
+						<td>
+							<?= $item->site ?: '-' ?>
+					<?php endif ?>
 					<td class="actions">
 						<?php if (!$order && $item->status !== 'cancelled'): ?>
 							<?= $this->html->link($t('cancel'), ['id' => $item->id, 'action' => 'cancel', 'library' => 'ecommerce_core'], ['class' => 'button']) ?>
