@@ -146,6 +146,14 @@ class Shipments extends \base_core\models\Base {
 		}
 	}
 
+	public function title($entity) {
+		return $entity->number;
+	}
+
+	public function date($entity) {
+		return DateTime::createFromFormat('Y-m-d', $entity->date);
+	}
+
 	public function method($entity) {
 		return ShippingMethods::registry($entity->method);
 	}
