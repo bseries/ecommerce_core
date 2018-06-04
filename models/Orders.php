@@ -220,6 +220,7 @@ class Orders extends \base_core\models\Base {
 		extract(Message::aliases());
 
 		$shipment = Shipments::create($data + [
+			'site' => $entity->site,
 			'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->shipping_method,
@@ -269,6 +270,7 @@ class Orders extends \base_core\models\Base {
 		extract(Message::aliases());
 
 		$invoice = Invoices::create($data + [
+			'site' => $entity->site,
 			'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->payment_method,
