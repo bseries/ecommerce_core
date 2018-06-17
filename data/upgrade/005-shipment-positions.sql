@@ -17,4 +17,4 @@ CREATE TABLE `ecommerce_shipment_positions` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `billing_invoice_id` (`ecommerce_shipment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB;
