@@ -286,9 +286,8 @@ $this->set([
 			<div class="bottom-actions__right">
 				<?php if ($item->exists()): ?>
 					<?= $this->html->link($t('PDF'), [
-						'controller' => 'Shipments',
-						'id' => $item->id, 'action' => 'export_pdf',
-					], ['class' => 'button large']) ?>
+						'id' => $item->id, 'action' => 'export_pdf'
+					], ['class' => 'button large', 'download' => "shipment_{$item->number}.pdf"]) ?>
 				<?php endif ?>
 				<?= $this->form->button($t('save'), [
 					'type' => 'submit',

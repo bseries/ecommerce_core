@@ -80,8 +80,12 @@ $this->set([
 							<?= $item->site ?: '-' ?>
 					<?php endif ?>
 					<td class="actions">
-						<?= $this->html->link($t('PDF'), ['id' => $item->id, 'action' => 'export_pdf'], ['class' => 'button']) ?>
-						<?= $this->html->link($t('open'), ['id' => $item->id, 'action' => 'edit'], ['class' => 'button']) ?>
+						<?= $this->html->link($t('PDF'), [
+							'id' => $item->id, 'action' => 'export_pdf'
+						], ['class' => 'button', 'download' => "shipment_{$item->number}.pdf"]) ?>
+						<?= $this->html->link($t('open'), [
+							'id' => $item->id, 'action' => 'edit'
+						], ['class' => 'button']) ?>
 				<?php endforeach ?>
 			</tbody>
 		</table>
