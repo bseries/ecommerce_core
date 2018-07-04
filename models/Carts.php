@@ -93,8 +93,9 @@ class Carts extends \base_core\models\Base {
 		}, 0);
 	}
 
-	// Returns the total net/gross value of the cart as *Monies* object.
-	public function totalValues($entity, $type = 'net', $user) {
+	// Returns the totals by currency only, adding differing tax rated prices together,
+	// but keeping differing currency distinct. Returns these as a Monies object.
+	public function totalValues($entity, $type, $user) {
 		$compare = new Monies();
 		$byMethod = 'get' . ucfirst($type);
 

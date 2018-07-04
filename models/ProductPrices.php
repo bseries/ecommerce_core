@@ -20,6 +20,7 @@ namespace ecommerce_core\models;
 use AD\Finance\Price;
 use Exception;
 use billing_core\billing\ClientGroups;
+use billing_core\billing\TaxTypes;
 use ecommerce_core\ecommerce\aquisition\Methods as AquisitionMethods;
 use lithium\aop\Filters;
 
@@ -45,12 +46,12 @@ class ProductPrices extends \base_core\models\Base {
 		]
 	];
 
-	public function method($entity) {
-		return AquisitionMethods::registry($entity->method);
-	}
-
 	public function group($entity) {
 		return ClientGroups::registry($entity->group);
+	}
+
+	public function taxType($entity) {
+		return TaxTypes::registry($entity->name);
 	}
 
 	public function amount($entity) {
@@ -62,9 +63,8 @@ class ProductPrices extends \base_core\models\Base {
 		);
 	}
 
-	// @deprecated
-	public function taxType($entity) {
-		throw new Exception('Removed.');
+	public function method($entity) {
+		return AquisitionMethods::registry($entity->method);
 	}
 
 	// @deprecated
@@ -73,15 +73,14 @@ class ProductPrices extends \base_core\models\Base {
 	}
 }
 
-// On save derive tax type from group
+// When given derive missing field values from tax type.
 Filters::apply(ProductPrices::class, 'save', function($params, $next) {
 	$entity = $params['entity'];
 	$data =& $params['data'];
 
-	if (isset($data['group'])) {
-		$group = ClientGroups::registry($data['group']);
-		$data['tax_type'] = $group->taxType()->name();
-		$data['amount_rate'] = $group->taxType()->rate();
+	if (isset($data['tax_type'])) {
+		$taxType = TaxTypes::registry($data['tax_type']);
+		$data['amount_rate'] = $taxType->rate();
 	}
 	return $next($params);
 });

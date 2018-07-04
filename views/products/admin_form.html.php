@@ -233,6 +233,7 @@ $this->set([
 						<tr>
 							<td class="position-description--f"><?= $t('Client Group') ?>
 							<td><?= $t('Acq. Method') ?>
+							<td class="price-type--f"><?= $t('Tax Type') ?>
 							<td class="currency--f"><?= $t('Currency') ?>
 							<td class="price-type--f"><?= $t('Type') ?>
 							<td class="money--f price-amount--f"><?= $t('Amount') ?>
@@ -262,6 +263,13 @@ $this->set([
 									'label' => false,
 									'list' => $aquisitionMethods,
 									'value' => $child->method
+								]) ?>
+							<td>
+								<?= $this->form->field("prices.{$key}.tax_type", [
+									'type' => 'select',
+									'label' => false,
+									'list' => $taxTypes,
+									'value' => $child->tax_type
 								]) ?>
 							<td class="currency--f">
 								<?= $this->form->field("prices.{$key}.amount_currency", [
@@ -300,6 +308,13 @@ $this->set([
 								'type' => 'select',
 								'label' => false,
 								'list' => $aquisitionMethods
+								// pick first
+							]) ?>
+						<td>
+							<?= $this->form->field("prices.new.tax_type", [
+								'type' => 'select',
+								'label' => false,
+								'list' => $taxTypes,
 								// pick first
 							]) ?>
 						<td class="currency--f">

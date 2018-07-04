@@ -18,6 +18,7 @@
 namespace ecommerce_core\controllers;
 
 use billing_core\billing\ClientGroups;
+use billing_core\billing\TaxTypes;
 use billing_core\models\Currencies;
 use ecommerce_core\ecommerce\aquisition\Methods as AquisitionMethods;
 use ecommerce_core\models\ProductAttributes;
@@ -44,6 +45,7 @@ class ProductsController extends \base_core\controllers\BaseController {
 		$currencies = Currencies::find('list');
 		$attributeKeys = [];
 		$clientGroups = ClientGroups::enum();
+		$taxTypes = TaxTypes::enum();
 
 		if ($item) {
 			$attributeKeys = ProductAttributes::enum('key', [
@@ -57,7 +59,8 @@ class ProductsController extends \base_core\controllers\BaseController {
 			'aquisitionMethods',
 			'currencies',
 			'attributeKeys',
-			'clientGroups'
+			'clientGroups',
+			'taxTypes'
 		);
 	}
 }
