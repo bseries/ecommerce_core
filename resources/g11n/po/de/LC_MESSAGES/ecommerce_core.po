@@ -290,11 +290,11 @@ msgstr "ID"
 
 #: views/orders/admin_form.html.php:51
 msgid ""
-"Cancelling an order will also cancel associated invoice and shipment - if "
+"Cancelling an order will also cancel associated invoice and shipment – if "
 "possible."
 msgstr ""
 "Das stornieren einer Bestellung wird ebenfalls die mit ihr verbundene "
-"Rechnung und Sendung stornieren - wenn dies möglich ist."
+"Rechnung und Sendung stornieren – wenn dies möglich ist."
 
 #: views/orders/admin_form.html.php:54
 msgid ""
@@ -557,8 +557,8 @@ msgstr ""
 "das Produkt trotzdem noch kaufen können."
 
 #: views/products/admin_form.html.php:110
-msgid "Calculated from: (physically available - reserved)."
-msgstr "Berechnet von: (physisch verfügbar - reserviert)"
+msgid "Calculated from: (physically available – reserved)."
+msgstr "Berechnet von: (physisch verfügbar – reserviert)"
 
 #: views/products/admin_form.html.php:114
 msgid "Stock (inventory)"
