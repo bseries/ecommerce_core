@@ -57,7 +57,7 @@ CREATE TABLE `ecommerce_orders` (
 CREATE TABLE `ecommerce_product_attributes` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ecommerce_product_id` int(11) unsigned NOT NULL,
-  `key` varchar(250) NOT NULL DEFAULT '',
+  `key` varchar(50) NOT NULL DEFAULT '',
   `value` varchar(250) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_key` (`ecommerce_product_id`,`key`)
@@ -138,7 +138,7 @@ CREATE TABLE `ecommerce_shipments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'created',
-  `number` varchar(200) DEFAULT NULL,
+  `number` varchar(100) DEFAULT NULL,
   `tracking` varchar(200) DEFAULT NULL,
   `method` varchar(100) NOT NULL DEFAULT '',
   `address_recipient` varchar(250) DEFAULT '',
