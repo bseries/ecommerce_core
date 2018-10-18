@@ -14,7 +14,6 @@ CREATE TABLE `ecommerce_cart_positions` (
 -- Create syntax for TABLE 'ecommerce_carts'
 CREATE TABLE `ecommerce_carts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `site` varchar(50) DEFAULT NULL,
   `user_id` int(11) unsigned DEFAULT NULL,
   `user_session_key` varchar(250) DEFAULT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'open',
@@ -29,7 +28,6 @@ CREATE TABLE `ecommerce_carts` (
 CREATE TABLE `ecommerce_orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(200) NOT NULL,
-  `site` varchar(50) DEFAULT NULL,
   `user_id` int(11) unsigned DEFAULT NULL,
   `user_session_key` varchar(250) DEFAULT '',
   `number` varchar(100) NOT NULL,
@@ -68,7 +66,6 @@ CREATE TABLE `ecommerce_product_attributes` (
 -- Create syntax for TABLE 'ecommerce_product_groups'
 CREATE TABLE `ecommerce_product_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `site` varchar(50) DEFAULT NULL,
   `title` varchar(200) NOT NULL DEFAULT '',
   `description` text,
   `tags` varchar(250) DEFAULT NULL,
@@ -139,7 +136,6 @@ CREATE TABLE `ecommerce_shipment_positions` (
 -- Create syntax for TABLE 'ecommerce_shipments'
 CREATE TABLE `ecommerce_shipments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `site` varchar(50) DEFAULT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'created',
   `number` varchar(200) DEFAULT NULL,
