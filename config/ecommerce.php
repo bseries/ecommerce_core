@@ -19,7 +19,12 @@ namespace ecommerce_core\config;
 
 use base_core\extensions\cms\Settings;
 
-Settings::register('contact.shipping', Settings::read('contact.default'));
+if (Settings::read('contact.primary')) {
+	Settings::register('contact.shipping', Settings::read('contact.primary'));
+} else {
+	trigger_error('No primary contact found, using deprecated default.', E_USER_DEPRECATED);
+	Settings::register('contact.shipping', Settings::read('contact.default'));
+}
 
 // Number Format
 Settings::register('order.number', [
