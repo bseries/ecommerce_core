@@ -70,7 +70,7 @@ $this->set([
 					'list' => $statuses
 				]) ?>
 				<div class="help">
-					<?= $t('Cancelling an order will also cancel associated invoice and shipment - if possible.') ?>
+					<?= $t('Cancelling an order will also cancel associated invoice and shipment – if possible.') ?>
 					<?php if (Settings::read('shipment.sendCheckedOutMail')): ?>
 						<strong>
 							<?= $t('The user will be notified by e-mail when the status is changed to `checked-out`.') ?>

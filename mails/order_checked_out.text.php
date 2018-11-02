@@ -1,6 +1,6 @@
 Hello <?= $user->name ?>,
 
-thank you for your order #<?= $order->number ?>. We're going to process your
+thank you for your order #<?= $order->number ?>. We’re going to process your
 order as soon as possible.
 
 <?php if ($invoice): ?>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ecommerce_core 1.0\n"
 "Report-Msgid-Bugs-To: info@atelierdisko.de\n"
-"POT-Creation-Date: 2017-05-19 10:56+0200\n"
+"POT-Creation-Date: 2018-07-12 12:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,32 +25,32 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-#: config/panes.php:35
-msgid "Product Groups"
-msgstr ""
-
-#: config/panes.php:40 config/widgets.php:80
-#: views/product_groups/admin_form.html.php:107
-msgid "Products"
-msgstr ""
-
-#: config/panes.php:45
-msgid "Shipments"
-msgstr ""
-
-#: config/panes.php:50 config/widgets.php:32
+#: config/panes.php:35 config/widgets.php:32
 msgid "Carts"
 msgstr ""
 
-#: config/switchboard.php:45
+#: config/panes.php:40
+msgid "Shipments"
+msgstr ""
+
+#: config/panes.php:46 config/widgets.php:80
+#: views/product_groups/admin_form.html.php:133
+msgid "Products"
+msgstr ""
+
+#: config/panes.php:51
+msgid "Product Groups"
+msgstr ""
+
+#: config/switchboard.php:47
 msgid "Your order #{:number}."
 msgstr ""
 
-#: config/switchboard.php:84
+#: config/switchboard.php:86
 msgid "Order #{:number} shipped."
 msgstr ""
 
-#: config/switchboard.php:90
+#: config/switchboard.php:92
 msgid "Shipment #{:number} shipped."
 msgstr ""
 
@@ -70,11 +70,11 @@ msgstr ""
 msgid "Out of Stock"
 msgstr ""
 
-#: controllers/CartsController.php:48
+#: controllers/CartsController.php:47
 msgid "Successfully cancelled."
 msgstr ""
 
-#: controllers/CartsController.php:53
+#: controllers/CartsController.php:52
 msgid "Failed to cancel."
 msgstr ""
 
@@ -86,12 +86,16 @@ msgstr ""
 msgid "Failed to change status."
 msgstr ""
 
-#: controllers/ProductsController.php:48 models/ProductAttributes.php:51
+#: controllers/ProductsController.php:52 models/ProductAttributes.php:52
 msgid "size"
 msgstr ""
 
-#: controllers/ProductsController.php:49 models/ProductAttributes.php:52
+#: controllers/ProductsController.php:53 models/ProductAttributes.php:53
 msgid "color"
+msgstr ""
+
+#: controllers/ProductsController.php:54 models/ProductAttributes.php:54
+msgid "format"
 msgstr ""
 
 #: documents/Shipment.php:68
@@ -106,116 +110,63 @@ msgstr ""
 msgid "{:number} — Shipment No."
 msgstr ""
 
-#: documents/Shipment.php:145 views/product_groups/admin_form.html.php:91
-#: views/product_groups/admin_form.html.php:99
-#: views/products/admin_form.html.php:203
-#: views/products/admin_form.html.php:211
-#: views/shipments/admin_form.html.php:139
+#: documents/Shipment.php:145 views/product_groups/admin_form.html.php:117
+#: views/product_groups/admin_form.html.php:125
+#: views/products/admin_form.html.php:213
+#: views/products/admin_form.html.php:221
+#: views/shipments/admin_form.html.php:159
 msgid "Description"
 msgstr ""
 
-#: documents/Shipment.php:152 views/shipments/admin_form.html.php:140
+#: documents/Shipment.php:152 views/shipments/admin_form.html.php:160
 msgid "Quantity"
 msgstr ""
 
-#: models/Orders.php:115 models/Orders.php:122
+#: models/Orders.php:114 models/Orders.php:121
 msgid "You must select a method."
 msgstr ""
 
-#: models/Orders.php:129
+#: models/Orders.php:128
 msgid "You must accept the terms."
 msgstr ""
 
-#: models/Orders.php:211 models/Orders.php:260
-msgid "Order No."
-msgstr ""
-
-#: models/ProductGroups.php:97
-msgid "Tags cannot contain spaces."
-msgstr ""
-
-#: models/Products.php:283
-msgid "You must define at least one price."
-msgstr ""
-
-#: models/Shipments.php:126
+#: models/Orders.php:138 models/Products.php:110 models/Products.php:120
+#: models/Shipments.php:129 models/Shipments.php:139
 msgid "This field cannot be empty."
 msgstr ""
 
-#: models/Shipments.php:222
+#: models/Orders.php:143 models/Products.php:125 models/Shipments.php:144
+msgid "This number is already in use."
+msgstr ""
+
+#: models/Orders.php:227 models/Orders.php:277
+msgid "Order No."
+msgstr ""
+
+#: models/ProductGroups.php:98
+msgid "Tags cannot contain spaces."
+msgstr ""
+
+#: models/Products.php:310
+msgid "You must define at least one price."
+msgstr ""
+
+#: models/Shipments.php:249
 msgid "Shipment #{:number}"
 msgstr ""
 
-#: models/Shipments.php:229 views/carts/admin_form.html.php:43
-#: views/orders/admin_form.html.php:182 views/orders/admin_index.html.php:37
+#: models/Shipments.php:256 views/orders/admin_form.html.php:210
+#: views/orders/admin_index.html.php:37
 msgid "Shipment"
-msgstr ""
-
-#: views/carts/admin_form.html.php:9
-msgid "Untitled"
-msgstr ""
-
-#: views/carts/admin_form.html.php:12
-msgid "creating"
-msgstr ""
-
-#: views/carts/admin_form.html.php:12
-msgid "editing"
-msgstr ""
-
-#: views/carts/admin_form.html.php:14 views/orders/admin_form.html.php:18
-msgid "order"
-msgstr ""
-
-#: views/carts/admin_form.html.php:14 views/orders/admin_index.html.php:12
-msgid "orders"
-msgstr ""
-
-#: views/carts/admin_form.html.php:28 views/orders/admin_form.html.php:35
-#: views/orders/admin_form.html.php:80 views/orders/admin_form.html.php:148
-#: views/orders/admin_form.html.php:202
-#: views/product_groups/admin_form.html.php:115
-#: views/products/admin_index.html.php:40
-#: views/shipments/admin_form.html.php:33
-#: views/shipments/admin_form.html.php:90
-#: views/shipments/admin_index.html.php:36
-msgid "Number"
-msgstr ""
-
-#: views/carts/admin_form.html.php:32
-msgid "The order number is automatically generated."
-msgstr ""
-
-#: views/carts/admin_form.html.php:36
-msgid "Invoice number"
-msgstr ""
-
-#: views/carts/admin_form.html.php:51
-#: views/product_groups/admin_form.html.php:169
-#: views/products/admin_form.html.php:172
-#: views/products/admin_form.html.php:187
-#: views/products/admin_form.html.php:278
-#: views/products/admin_form.html.php:317
-#: views/products/admin_form.html.php:334
-#: views/shipments/admin_form.html.php:195
-#: views/shipments/admin_form.html.php:232
-msgid "delete"
-msgstr ""
-
-#: views/carts/admin_form.html.php:57 views/orders/admin_form.html.php:231
-#: views/product_groups/admin_form.html.php:179
-#: views/products/admin_form.html.php:343
-#: views/shipments/admin_form.html.php:273
-msgid "save"
 msgstr ""
 
 #: views/carts/admin_index.html.php:13
 msgid "carts"
 msgstr ""
 
-#: views/carts/admin_index.html.php:33 views/orders/admin_form.html.php:47
-#: views/orders/admin_form.html.php:142 views/orders/admin_form.html.php:195
-#: views/orders/admin_index.html.php:33 views/shipments/admin_form.html.php:41
+#: views/carts/admin_index.html.php:33 views/orders/admin_form.html.php:69
+#: views/orders/admin_form.html.php:164 views/orders/admin_form.html.php:223
+#: views/orders/admin_index.html.php:33 views/shipments/admin_form.html.php:61
 #: views/shipments/admin_index.html.php:37
 msgid "Status"
 msgstr ""
@@ -225,10 +176,10 @@ msgstr ""
 msgid "Order"
 msgstr ""
 
-#: views/carts/admin_index.html.php:35 views/orders/admin_form.html.php:67
-#: views/orders/admin_form.html.php:71 views/orders/admin_index.html.php:34
-#: views/shipments/admin_form.html.php:69
-#: views/shipments/admin_form.html.php:83
+#: views/carts/admin_index.html.php:35 views/orders/admin_form.html.php:89
+#: views/orders/admin_form.html.php:93 views/orders/admin_index.html.php:34
+#: views/shipments/admin_form.html.php:89
+#: views/shipments/admin_form.html.php:103
 msgid "User"
 msgstr ""
 
@@ -241,141 +192,206 @@ msgid "Total quantity"
 msgstr ""
 
 #: views/carts/admin_index.html.php:38 views/orders/admin_index.html.php:39
-#: views/product_groups/admin_form.html.php:118
-#: views/product_groups/admin_index.html.php:41
-#: views/products/admin_index.html.php:43
+#: views/product_groups/admin_form.html.php:144
+#: views/product_groups/admin_index.html.php:44
+#: views/products/admin_index.html.php:46
 #: views/shipments/admin_index.html.php:41
 msgid "Modified"
 msgstr ""
 
-#: views/carts/admin_index.html.php:43 views/orders/admin_index.html.php:44
+#: views/carts/admin_index.html.php:40 views/orders/admin_form.html.php:40
+#: views/orders/admin_index.html.php:41
+#: views/product_groups/admin_form.html.php:40
 #: views/product_groups/admin_index.html.php:46
-#: views/products/admin_index.html.php:48
-#: views/shipments/admin_index.html.php:46
+#: views/shipments/admin_form.html.php:37
+#: views/shipments/admin_index.html.php:43
+msgid "Site"
+msgstr ""
+
+#: views/carts/admin_index.html.php:46 views/orders/admin_index.html.php:47
+#: views/product_groups/admin_index.html.php:52
+#: views/products/admin_index.html.php:51
+#: views/shipments/admin_index.html.php:49
 msgid "Filter"
 msgstr ""
 
-#: views/carts/admin_index.html.php:78
+#: views/carts/admin_index.html.php:85
 msgid "cancel"
 msgstr ""
 
-#: views/carts/admin_index.html.php:84 views/orders/admin_index.html.php:101
-#: views/product_groups/admin_form.html.php:162
-#: views/product_groups/admin_index.html.php:81
-#: views/products/admin_index.html.php:84
-#: views/shipments/admin_index.html.php:82
+#: views/carts/admin_index.html.php:91 views/orders/admin_index.html.php:108
+#: views/product_groups/admin_form.html.php:188
+#: views/product_groups/admin_index.html.php:91
+#: views/products/admin_index.html.php:87
+#: views/shipments/admin_index.html.php:93
 msgid "No items available, yet."
 msgstr ""
 
-#: views/carts/admin_index.html.php:90
+#: views/carts/admin_index.html.php:97
 msgid "When a cart is created all contained items are marked as reserved."
 msgstr ""
 
-#: views/carts/admin_index.html.php:92
+#: views/carts/admin_index.html.php:99
 msgid "Cart item limiting is enabled."
 msgstr ""
 
-#: views/carts/admin_index.html.php:93
+#: views/carts/admin_index.html.php:100
 msgid "A maximum of {:count} items can be hold per cart."
 msgstr ""
 
-#: views/orders/admin_form.html.php:40
-msgid "ID"
+#: views/orders/admin_form.html.php:18
+msgid "order"
 msgstr ""
 
-#: views/orders/admin_form.html.php:51
+#: views/orders/admin_form.html.php:34
+#: views/product_groups/admin_form.html.php:34
+#: views/shipments/admin_form.html.php:31
+msgid "Sites"
+msgstr ""
+
+#: views/orders/admin_form.html.php:51 views/orders/admin_form.html.php:102
+#: views/orders/admin_form.html.php:176 views/orders/admin_form.html.php:235
+#: views/product_groups/admin_form.html.php:141
+#: views/products/admin_form.html.php:35 views/products/admin_index.html.php:43
+#: views/shipments/admin_form.html.php:48
+#: views/shipments/admin_form.html.php:110
+#: views/shipments/admin_index.html.php:36
+msgid "Number"
+msgstr ""
+
+#: views/orders/admin_form.html.php:53 views/products/admin_form.html.php:36
+#: views/shipments/admin_form.html.php:50
+msgid "Will autogenerate number."
+msgstr ""
+
+#: views/orders/admin_form.html.php:58 views/products/admin_form.html.php:41
+#: views/shipments/admin_form.html.php:55
 msgid ""
-"Cancelling an order will also cancel associated invoice and shipment - if "
+"The reference number uniquely identifies this item and is used especially in "
+"correspondence with clients and customers."
+msgstr ""
+
+#: views/orders/admin_form.html.php:62
+msgid "UUID"
+msgstr ""
+
+#: views/orders/admin_form.html.php:73
+msgid ""
+"Cancelling an order will also cancel associated invoice and shipment – if "
 "possible."
 msgstr ""
 
-#: views/orders/admin_form.html.php:54
+#: views/orders/admin_form.html.php:76
 msgid ""
 "The user will be notified by e-mail when the status is changed to `checked-"
 "out`."
 msgstr ""
 
-#: views/orders/admin_form.html.php:59 views/orders/admin_form.html.php:153
-#: views/orders/admin_form.html.php:207 views/shipments/admin_form.html.php:53
+#: views/orders/admin_form.html.php:81 views/orders/admin_form.html.php:181
+#: views/orders/admin_form.html.php:240 views/shipments/admin_form.html.php:73
 msgid "Created"
 msgstr ""
 
-#: views/orders/admin_form.html.php:85 views/products/admin_form.html.php:147
-#: views/shipments/admin_form.html.php:95
+#: views/orders/admin_form.html.php:107 views/products/admin_form.html.php:157
+#: views/shipments/admin_form.html.php:115
 msgid "Name"
 msgstr ""
 
-#: views/orders/admin_form.html.php:90 views/shipments/admin_form.html.php:100
+#: views/orders/admin_form.html.php:112 views/shipments/admin_form.html.php:120
 msgid "Email"
 msgstr ""
 
-#: views/orders/admin_form.html.php:96 views/shipments/admin_form.html.php:106
+#: views/orders/admin_form.html.php:118 views/shipments/admin_form.html.php:126
 msgid "open user"
 msgstr ""
 
-#: views/orders/admin_form.html.php:110
+#: views/orders/admin_form.html.php:132
 msgid "Note from user"
 msgstr ""
 
-#: views/orders/admin_form.html.php:117
+#: views/orders/admin_form.html.php:139
 msgid "Private note"
 msgstr ""
 
-#: views/orders/admin_form.html.php:119
+#: views/orders/admin_form.html.php:141
 msgid "Never visible to user."
 msgstr ""
 
-#: views/orders/admin_form.html.php:124 views/orders/admin_index.html.php:35
-msgid "Invoice"
+#: views/orders/admin_form.html.php:146
+msgid "Payment"
 msgstr ""
 
-#: views/orders/admin_form.html.php:129 views/orders/admin_form.html.php:187
+#: views/orders/admin_form.html.php:151 views/orders/admin_form.html.php:215
 msgid "Address"
 msgstr ""
 
-#: views/orders/admin_form.html.php:134
+#: views/orders/admin_form.html.php:156
 msgid "Phone"
 msgstr ""
 
-#: views/orders/admin_form.html.php:158
+#: views/orders/admin_form.html.php:171
+msgid "Payment method"
+msgstr ""
+
+#: views/orders/admin_form.html.php:186
 msgid "Total (net)"
 msgstr ""
 
-#: views/orders/admin_form.html.php:164 views/shipments/admin_form.html.php:268
-#: views/shipments/admin_index.html.php:76
+#: views/orders/admin_form.html.php:192 views/orders/admin_form.html.php:247
+#: views/shipments/admin_form.html.php:288
+#: views/shipments/admin_index.html.php:83
 msgid "PDF"
 msgstr ""
 
-#: views/orders/admin_form.html.php:169
+#: views/orders/admin_form.html.php:197
 msgid "open invoice"
 msgstr ""
 
-#: views/orders/admin_form.html.php:177
+#: views/orders/admin_form.html.php:205
 msgid "There is no invoice attached to this order."
 msgstr ""
 
-#: views/orders/admin_form.html.php:214
+#: views/orders/admin_form.html.php:230
+msgid "Shipping method"
+msgstr ""
+
+#: views/orders/admin_form.html.php:252
 msgid "open shipment"
 msgstr ""
 
-#: views/orders/admin_form.html.php:222
+#: views/orders/admin_form.html.php:260
 msgid "There is no shipment attached to this order."
+msgstr ""
+
+#: views/orders/admin_form.html.php:269
+#: views/product_groups/admin_form.html.php:205
+#: views/products/admin_form.html.php:368
+#: views/shipments/admin_form.html.php:292
+msgid "save"
+msgstr ""
+
+#: views/orders/admin_index.html.php:12
+msgid "orders"
+msgstr ""
+
+#: views/orders/admin_index.html.php:35
+msgid "Invoice"
 msgstr ""
 
 #: views/orders/admin_index.html.php:36 views/orders/admin_index.html.php:38
 msgid "status"
 msgstr ""
 
-#: views/orders/admin_index.html.php:86
+#: views/orders/admin_index.html.php:93
 msgid "processed"
 msgstr ""
 
-#: views/orders/admin_index.html.php:92
-#: views/product_groups/admin_form.html.php:152
-#: views/product_groups/admin_index.html.php:76
-#: views/products/admin_form.html.php:131
-#: views/products/admin_index.html.php:79
-#: views/shipments/admin_index.html.php:77
+#: views/orders/admin_index.html.php:99
+#: views/product_groups/admin_form.html.php:178
+#: views/product_groups/admin_index.html.php:86
+#: views/products/admin_form.html.php:141
+#: views/products/admin_index.html.php:82
+#: views/shipments/admin_index.html.php:86
 msgid "open"
 msgstr ""
 
@@ -407,75 +423,91 @@ msgstr ""
 msgid "unpublished"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:27
+#: views/product_groups/admin_form.html.php:48
 msgid "Access"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:34
+#: views/product_groups/admin_form.html.php:55
 msgid "Visible for…"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:46
-#: views/product_groups/admin_form.html.php:54
-#: views/product_groups/admin_form.html.php:114
-#: views/product_groups/admin_index.html.php:39
-#: views/products/admin_form.html.php:43 views/products/admin_form.html.php:51
-#: views/products/admin_index.html.php:39
+#: views/product_groups/admin_form.html.php:66
+#: views/product_groups/admin_form.html.php:74
+#: views/product_groups/admin_form.html.php:140
+#: views/product_groups/admin_index.html.php:42
+#: views/products/admin_form.html.php:53 views/products/admin_form.html.php:61
+#: views/products/admin_index.html.php:42
 msgid "Title"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:61
-#: views/products/admin_form.html.php:58
-msgid "Cover"
-msgstr ""
-
-#: views/product_groups/admin_form.html.php:75
-msgid "Brand"
-msgstr ""
-
-#: views/product_groups/admin_form.html.php:80
+#: views/product_groups/admin_form.html.php:82
 msgid "Tags"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:112
-#: views/product_groups/admin_index.html.php:36
-#: views/products/admin_index.html.php:37
+#: views/product_groups/admin_form.html.php:90
+msgid "Brand"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:99
+#: views/products/admin_form.html.php:73
+msgid "Cover"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:106
+#: views/products/admin_form.html.php:80
+msgid "Media"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:138
+#: views/product_groups/admin_index.html.php:39
+#: views/products/admin_index.html.php:40
 msgid "publ.?"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:116
-#: views/products/admin_index.html.php:41
+#: views/product_groups/admin_form.html.php:142
+#: views/products/admin_index.html.php:44
 msgid "C = calculated, A = physically available, R = reserved, I = inventory"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:117
-#: views/products/admin_index.html.php:42
+#: views/product_groups/admin_form.html.php:143
+#: views/products/admin_index.html.php:45
 msgid "Stock (C/A/R/I)"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:146
-#: views/product_groups/admin_form.html.php:177
-#: views/product_groups/admin_index.html.php:75
-#: views/products/admin_form.html.php:341
-#: views/products/admin_index.html.php:78
+#: views/product_groups/admin_form.html.php:172
+#: views/product_groups/admin_form.html.php:203
+#: views/product_groups/admin_index.html.php:85
+#: views/products/admin_form.html.php:366
+#: views/products/admin_index.html.php:81
 msgid "publish"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:146
-#: views/product_groups/admin_form.html.php:177
-#: views/product_groups/admin_index.html.php:75
-#: views/products/admin_form.html.php:341
-#: views/products/admin_index.html.php:78
+#: views/product_groups/admin_form.html.php:172
+#: views/product_groups/admin_form.html.php:203
+#: views/product_groups/admin_index.html.php:85
+#: views/products/admin_form.html.php:366
+#: views/products/admin_index.html.php:81
 msgid "unpublish"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:176
-#: views/product_groups/admin_index.html.php:74
+#: views/product_groups/admin_form.html.php:195
+#: views/products/admin_form.html.php:182
+#: views/products/admin_form.html.php:197
+#: views/products/admin_form.html.php:296
+#: views/products/admin_form.html.php:342
+#: views/products/admin_form.html.php:359
+#: views/shipments/admin_form.html.php:215
+#: views/shipments/admin_form.html.php:252
+msgid "delete"
+msgstr ""
+
+#: views/product_groups/admin_form.html.php:202
+#: views/product_groups/admin_index.html.php:84
 msgid "promote"
 msgstr ""
 
-#: views/product_groups/admin_form.html.php:176
-#: views/product_groups/admin_index.html.php:74
+#: views/product_groups/admin_form.html.php:202
+#: views/product_groups/admin_index.html.php:84
 msgid "unpromote"
 msgstr ""
 
@@ -483,11 +515,11 @@ msgstr ""
 msgid "product groups"
 msgstr ""
 
-#: views/product_groups/admin_index.html.php:37
+#: views/product_groups/admin_index.html.php:40
 msgid "prom.?"
 msgstr ""
 
-#: views/product_groups/admin_index.html.php:40
+#: views/product_groups/admin_index.html.php:43
 msgid "# Products"
 msgstr ""
 
@@ -495,135 +527,127 @@ msgstr ""
 msgid "products"
 msgstr ""
 
-#: views/products/admin_form.html.php:29
-msgid "Number/SKU"
-msgstr ""
-
-#: views/products/admin_form.html.php:31 views/shipments/admin_form.html.php:36
-msgid "Leave empty to autogenerate number."
-msgstr ""
-
-#: views/products/admin_form.html.php:70
-msgid "Media"
-msgstr ""
-
-#: views/products/admin_form.html.php:78
+#: views/products/admin_form.html.php:88
 msgid "Stock"
 msgstr ""
 
-#: views/products/admin_form.html.php:83
+#: views/products/admin_form.html.php:93
 msgid "Stock (physically available)"
 msgstr ""
 
-#: views/products/admin_form.html.php:86
+#: views/products/admin_form.html.php:96
 msgid "Stock that is physically available i.e. items in storage not shipped."
 msgstr ""
 
-#: views/products/admin_form.html.php:90
+#: views/products/admin_form.html.php:100
 msgid "Stock (reserved)"
 msgstr ""
 
-#: views/products/admin_form.html.php:93
-msgid "Items reserved because they are held in a user's cart."
+#: views/products/admin_form.html.php:103
+msgid "Items reserved because they are held in a user’s cart."
 msgstr ""
 
-#: views/products/admin_form.html.php:99
+#: views/products/admin_form.html.php:109
 msgid "Stock (calculated)"
 msgstr ""
 
-#: views/products/admin_form.html.php:104
+#: views/products/admin_form.html.php:114
 msgid "Amount of stock as presented to users."
 msgstr ""
 
-#: views/products/admin_form.html.php:107
+#: views/products/admin_form.html.php:117
 msgid ""
 "Stock checking is disabled, even if this number is 0, users will be able to "
 "buy the product."
 msgstr ""
 
-#: views/products/admin_form.html.php:110
-msgid "Calculated from: (physically available - reserved)."
+#: views/products/admin_form.html.php:120
+msgid "Calculated from: (physically available – reserved)."
 msgstr ""
 
-#: views/products/admin_form.html.php:114
+#: views/products/admin_form.html.php:124
 msgid "Stock (inventory)"
 msgstr ""
 
-#: views/products/admin_form.html.php:117
+#: views/products/admin_form.html.php:127
 msgid "Field for inventory. Physically available stock should equal inventory."
 msgstr ""
 
-#: views/products/admin_form.html.php:118
+#: views/products/admin_form.html.php:128
 msgid ""
 "This field is for your note taking and is not used to calculate availability "
 "for users."
 msgstr ""
 
-#: views/products/admin_form.html.php:127
+#: views/products/admin_form.html.php:137
 msgid "Contained in product group"
 msgstr ""
 
-#: views/products/admin_form.html.php:128
+#: views/products/admin_form.html.php:138
 msgid "Create new product group"
 msgstr ""
 
-#: views/products/admin_form.html.php:142
+#: views/products/admin_form.html.php:152
 msgid "Attributes"
 msgstr ""
 
-#: views/products/admin_form.html.php:148
+#: views/products/admin_form.html.php:158
 msgid "Value"
 msgstr ""
 
-#: views/products/admin_form.html.php:192
+#: views/products/admin_form.html.php:202
 msgid "add"
 msgstr ""
 
-#: views/products/admin_form.html.php:218
+#: views/products/admin_form.html.php:228
 msgid "Prices"
 msgstr ""
 
-#: views/products/admin_form.html.php:224
+#: views/products/admin_form.html.php:234
 msgid "Client Group"
 msgstr ""
 
-#: views/products/admin_form.html.php:225
+#: views/products/admin_form.html.php:235
 msgid "Acq. Method"
 msgstr ""
 
-#: views/products/admin_form.html.php:226
-#: views/shipments/admin_form.html.php:141
+#: views/products/admin_form.html.php:236
+msgid "Tax Type"
+msgstr ""
+
+#: views/products/admin_form.html.php:237
+#: views/shipments/admin_form.html.php:161
 msgid "Currency"
 msgstr ""
 
-#: views/products/admin_form.html.php:227
-#: views/shipments/admin_form.html.php:142
+#: views/products/admin_form.html.php:238
+#: views/shipments/admin_form.html.php:162
 msgid "Type"
 msgstr ""
 
-#: views/products/admin_form.html.php:228
+#: views/products/admin_form.html.php:239
 msgid "Amount"
 msgstr ""
 
-#: views/products/admin_form.html.php:267
-#: views/products/admin_form.html.php:306
-#: views/shipments/admin_form.html.php:182
-#: views/shipments/admin_form.html.php:222
+#: views/products/admin_form.html.php:285
+#: views/products/admin_form.html.php:331
+#: views/shipments/admin_form.html.php:202
+#: views/shipments/admin_form.html.php:242
 msgid "gross"
 msgstr ""
 
-#: views/products/admin_form.html.php:267
-#: views/products/admin_form.html.php:306
-#: views/shipments/admin_form.html.php:182
-#: views/shipments/admin_form.html.php:222
+#: views/products/admin_form.html.php:285
+#: views/products/admin_form.html.php:331
+#: views/shipments/admin_form.html.php:202
+#: views/shipments/admin_form.html.php:242
 msgid "net"
 msgstr ""
 
-#: views/products/admin_form.html.php:322
+#: views/products/admin_form.html.php:347
 msgid "add price"
 msgstr ""
 
-#: views/products/admin_form.html.php:326
+#: views/products/admin_form.html.php:351
 msgid ""
 "There should ever be just one price for a client group/acq. method "
 "combination."
@@ -633,29 +657,29 @@ msgstr ""
 msgid "product"
 msgstr ""
 
-#: views/products/admin_index.html.php:90
+#: views/products/admin_index.html.php:93
 msgid "Stock keeping consists of 4 important numbers:"
 msgstr ""
 
-#: views/products/admin_index.html.php:92
+#: views/products/admin_index.html.php:95
 msgid ""
 "<strong>C</strong>, calculated, this is the stock amount as presented to the "
 "user. If this is 0 the item is unavailable."
 msgstr ""
 
-#: views/products/admin_index.html.php:93
+#: views/products/admin_index.html.php:96
 msgid "<strong>A</strong>, the physically available stock in storage."
 msgstr ""
 
-#: views/products/admin_index.html.php:94
+#: views/products/admin_index.html.php:97
 msgid "<strong>R</strong>, the reserved stock in i.e. carts."
 msgstr ""
 
-#: views/products/admin_index.html.php:95
+#: views/products/admin_index.html.php:98
 msgid "<strong>I</strong>, for note taking should equal physically available."
 msgstr ""
 
-#: views/products/admin_index.html.php:99
+#: views/products/admin_index.html.php:102
 msgid ""
 "Stock checking is disabled, even if the the calculated cnumber is 0, users "
 "will be able to buy the product."
@@ -666,86 +690,86 @@ msgstr ""
 msgid "shipment"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:45
+#: views/shipments/admin_form.html.php:65
 msgid ""
-"When shipment is set to `shipped` the item stock will be moved from reserved "
+"When shipment is set to “shipped” the item stock will be moved from reserved "
 "to taken, and acutally be subtracted from physically available stock."
 msgstr ""
 
-#: views/shipments/admin_form.html.php:48
+#: views/shipments/admin_form.html.php:68
 msgid ""
-"The user will be notified by e-mail when the status is changed to `shipped`."
+"The user will be notified by e-mail when the status is changed to “shipped”."
 msgstr ""
 
-#: views/shipments/admin_form.html.php:59
+#: views/shipments/admin_form.html.php:79
 #: views/shipments/admin_index.html.php:40
 msgid "Method"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:63
+#: views/shipments/admin_form.html.php:83
 msgid "Tracking Number"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:69
+#: views/shipments/admin_form.html.php:89
 msgid "Recpient"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:73
+#: views/shipments/admin_form.html.php:93
 msgid "Receiving Address"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:76
+#: views/shipments/admin_form.html.php:96
 msgid "Automatically uses address assigned to user."
 msgstr ""
 
-#: views/shipments/admin_form.html.php:120
+#: views/shipments/admin_form.html.php:140
 msgid "Terms"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:122
-#: views/shipments/admin_form.html.php:129
+#: views/shipments/admin_form.html.php:142
+#: views/shipments/admin_form.html.php:149
 msgid "Visible to recipient."
 msgstr ""
 
-#: views/shipments/admin_form.html.php:127
+#: views/shipments/admin_form.html.php:147
 msgid "Note"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:134
+#: views/shipments/admin_form.html.php:154
 msgid "Positions"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:143
+#: views/shipments/admin_form.html.php:163
 msgid "Unit value"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:144
+#: views/shipments/admin_form.html.php:164
 msgid "Line total value (net)"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:239
+#: views/shipments/admin_form.html.php:259
 msgid "add position"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:242
+#: views/shipments/admin_form.html.php:262
 msgid "Total value (net)"
 msgstr ""
 
-#: views/shipments/admin_form.html.php:248
+#: views/shipments/admin_form.html.php:268
 msgid ""
 "To reference products in positions add the product number in braces to the "
 "description i.e. `(#123)`."
 msgstr ""
 
-#: views/shipments/admin_form.html.php:251
+#: views/shipments/admin_form.html.php:271
 msgid "Referenced products have their stock taken."
 msgstr ""
 
-#: views/shipments/admin_form.html.php:253
+#: views/shipments/admin_form.html.php:273
 msgid "Referenced products have their stock not taken or reserved."
 msgstr ""
 
-#: views/shipments/admin_form.html.php:255
+#: views/shipments/admin_form.html.php:275
 msgid "Referenced products have their stock reserved."
 msgstr ""
 

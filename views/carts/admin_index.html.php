@@ -61,7 +61,7 @@ $this->set([
 							'library' => 'ecommerce_core'
 						]) ?>
 					<?php else: ?>
-						-
+						–
 					<?php endif ?>
 					<td class="user">
 						<?= $this->user->link($user) ?>

@@ -62,10 +62,10 @@ $this->set([
 					'list' => $statuses
 				]) ?>
 				<div class="help">
-					<?= $t('When shipment is set to `shipped` the item stock will be moved from reserved to taken, and acutally be subtracted from physically available stock.') ?>
+					<?= $t('When shipment is set to “shipped” the item stock will be moved from reserved to taken, and acutally be subtracted from physically available stock.') ?>
 					<?php if (Settings::read('shipment.sendShippedMail')): ?>
 						<strong>
-							<?= $t('The user will be notified by e-mail when the status is changed to `shipped`.') ?>
+							<?= $t('The user will be notified by e-mail when the status is changed to “shipped”.') ?>
 						</strong>
 					<?php endif ?>
 				</div>

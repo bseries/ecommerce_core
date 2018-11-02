@@ -100,7 +100,7 @@ $this->set([
 					'label' => $t('Stock (reserved)'),
 				]) ?>
 				<div class="help">
-					<?= $t("Items reserved because they are held in a user's cart.") ?>
+					<?= $t("Items reserved because they are held in a user’s cart.") ?>
 				</div>
 			</div>
 			<div class="grid-column-right">
@@ -117,7 +117,7 @@ $this->set([
 							<?= $t('Stock checking is disabled, even if this number is 0, users will be able to buy the product.') ?>
 						</strong>
 					<?php endif ?>
-					<?= $t('Calculated from: (physically available - reserved).') ?>
+					<?= $t('Calculated from: (physically available – reserved).') ?>
 				</div>
 				<?= $this->form->field('stock_target', [
 					'type' => 'number',
