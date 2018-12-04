@@ -62,6 +62,7 @@ class ProductGroups extends \base_core\models\Base {
 				'access' => ','
 			]
 		],
+		'base_core\extensions\data\behavior\Neighbors',
 		'li3_taggable\extensions\data\behavior\Taggable' => [
 			'field' => 'tags',
 			'tagsModel' => 'base_tag\models\Tags',
