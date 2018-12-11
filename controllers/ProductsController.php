@@ -21,7 +21,7 @@ use billing_core\billing\ClientGroups;
 use billing_core\billing\TaxTypes;
 use billing_core\models\Currencies;
 use ecommerce_core\ecommerce\aquisition\Methods as AquisitionMethods;
-use ecommerce_core\models\ProductAttributes;
+use ecommerce_core\ecommerce\product\Attributes;
 use ecommerce_core\models\ProductGroups;
 use ecommerce_core\models\Products;
 use lithium\g11n\Message;
@@ -48,11 +48,9 @@ class ProductsController extends \base_core\controllers\BaseController {
 		$taxTypes = TaxTypes::enum();
 
 		if ($item) {
-			$attributeKeys = ProductAttributes::enum('key', [
-				'size' => $t('size', ['scope' => 'ecommerce_core']),
-				'color' => $t('color', ['scope' => 'ecommerce_core']),
-				'format' => $t('format', ['scope' => 'ecommerce_core'])
-			]);
+			$attributeKeys = Attributes::registry(true)->map(function($v) {
+				return $v->title();
+			})->to('array');
 		}
 		return compact(
 			'productGroups',

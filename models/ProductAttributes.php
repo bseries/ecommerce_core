@@ -17,17 +17,12 @@
 
 namespace ecommerce_core\models;
 
-use lithium\g11n\Message;
-use ecommerce_core\models\Products;
+use ecommerce_core\ecommerce\product\Attributes;
 
 class ProductAttributes extends \base_core\models\Base {
 
 	public static $enum = [
-		'key' => [
-			'size',
-			'color',
-			'format'
-		]
+		'key' => [/* Populated from Attributes registry. */]
 	];
 
 	protected $_meta = [
@@ -45,19 +40,17 @@ class ProductAttributes extends \base_core\models\Base {
 		]
 	];
 
-	public function title($entity) {
-		extract(Message::aliases());
+	public static function init() {
+		static::$enum['key'] = Attributes::registry(true)->map(function($v) {
+			return $v->name();
+		});
+	}
 
-		$map = [
-			'size' => $t('size', ['scope' => 'ecommerce_core']),
-			'color' => $t('color', ['scope' => 'ecommerce_core']),
-			'format' => $t('format', ['scope' => 'ecommerce_core'])
-		];
-		if (!isset($map[$entity->key])) {
-			return $entity->key;
-		}
-		return $map[$entity->key];
+	public function title($entity) {
+		return Attributes::registry($entity->key)->title();
 	}
 }
+
+ProductAttributes::init();
 
 ?>
