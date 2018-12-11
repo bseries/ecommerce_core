@@ -386,6 +386,7 @@ class Orders extends \base_core\models\Base {
 				Logger::write('debug', "Order `{$item->id}` and associated cart expired.");
 			}
 		}
+		return true;
 	}
 
 	public function isExpired($entity) {
