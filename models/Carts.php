@@ -125,6 +125,7 @@ class Carts extends \base_core\models\Base {
 				Logger::write('debug', "Cart `{$item->id}` expired.");
 			}
 		}
+		return true;
 	}
 
 	public function isExpired($entity) {
