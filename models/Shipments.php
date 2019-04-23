@@ -29,6 +29,7 @@ use lithium\analysis\Logger;
 use lithium\aop\Filters;
 use lithium\core\Libraries;
 use lithium\g11n\Message;
+use lithium\util\Text;
 
 // Shipments are very similar to invoices in that
 // they also have positions. In general shipments
@@ -221,6 +222,37 @@ class Shipments extends \base_core\models\Base {
 			'shipping-scheduled',
 			'shipping-error'
 		]);
+	}
+
+	public function unprefixTrackingCode($entity){
+		return Shipments::_trackingParts($entity->tracking)['tracking_code'];
+	}
+
+	public function prefixedTrackingLink($entity){
+		$links = [
+			'dhl' => 'https://www.dhl.de/de/privatkunden/pakete-empfangen/verfolgen.html?
+					piececode={:tracking_code}',
+			'post' => 'https://www.deutschepost.de/sendung/simpleQueryResult.html?
+					form.einlieferungsdatum_tag={:day}&
+					form.einlieferungsdatum_monat={:month}&form.einlieferungsdatum_jahr={:year}&
+					form.sendungsnummer={:tracking_code}'
+		];
+		$code = Shipments::_trackingParts($entity->tracking);
+		if( !isset($code['service']) ){
+			return '';
+		}
+		return Text::insert($links[$code['service']], $code);
+	}
+
+	protected static function _trackingParts($code) {
+		$reg = "#^(?'service'\w+)\://(?'tracking_code'\w+)(?:\:(?'year'\d{4})(?'month'\d{2})(?'day'\d{2}))?$#";
+		if (!preg_match($reg, $code, $matches)){
+			return null;
+		}
+		foreach($matches as $key => $value){
+ 		   if(is_numeric($key)) unset($matches[$key]);
+		}
+		return $matches + ['service' => null, 'tracking_code' => null, 'year' => null, 'month' => null, 'day' => null, 'year' => null];
 	}
 
 	// This is the total value of the shipment. Used i.e. for
