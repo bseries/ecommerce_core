@@ -225,34 +225,44 @@ class Shipments extends \base_core\models\Base {
 	}
 
 	public function unprefixTrackingCode($entity){
-		return Shipments::_trackingParts($entity->tracking)['tracking_code'];
+		return static::_trackingParts($entity->tracking)['trackingCode'];
 	}
 
-	public function prefixedTrackingLink($entity){
+	public function prefixTrackingLink($entity){
 		$links = [
 			'dhl' => 'https://www.dhl.de/de/privatkunden/pakete-empfangen/verfolgen.html?
-					piececode={:tracking_code}',
+					piececode={:trackingCode}',
 			'post' => 'https://www.deutschepost.de/sendung/simpleQueryResult.html?
 					form.einlieferungsdatum_tag={:day}&
 					form.einlieferungsdatum_monat={:month}&form.einlieferungsdatum_jahr={:year}&
-					form.sendungsnummer={:tracking_code}'
+					form.sendungsnummer={:trackingCode}',
+			'dpd' => 'https://tracking.dpd.de/parcelstatus?query={:trackingCode}'
 		];
 		$code = Shipments::_trackingParts($entity->tracking);
-		if( !isset($code['service']) ){
+		if (!isset($code['service'])) {
 			return '';
 		}
 		return Text::insert($links[$code['service']], $code);
 	}
 
 	protected static function _trackingParts($code) {
-		$reg = "#^(?'service'\w+)\://(?'tracking_code'\w+)(?:\:(?'year'\d{4})(?'month'\d{2})(?'day'\d{2}))?$#";
+		$reg = "#^(?'service'\w+)\://(?'trackingCode'\w+)(?:\:(?'year'\d{4})(?'month'\d{2})(?'day'\d{2}))?$#";
 		if (!preg_match($reg, $code, $matches)){
 			return null;
 		}
-		foreach($matches as $key => $value){
- 		   if(is_numeric($key)) unset($matches[$key]);
+		foreach ($matches as $key => $value) {
+			if (is_numeric($key)) {
+				unset($matches[$key]);
+			}
 		}
-		return $matches + ['service' => null, 'tracking_code' => null, 'year' => null, 'month' => null, 'day' => null, 'year' => null];
+		return $matches + [
+			'service' => null,
+			'trackingCode' => null,
+			'year' => null,
+			'month' => null,
+			'day' => null,
+			'year' => null
+		];
 	}
 
 	// This is the total value of the shipment. Used i.e. for
