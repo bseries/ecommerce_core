@@ -238,7 +238,7 @@ class Shipments extends \base_core\models\Base {
 					form.sendungsnummer={:trackingCode}',
 			'dpd' => 'https://tracking.dpd.de/parcelstatus?query={:trackingCode}'
 		];
-		$code = Shipments::_trackingParts($entity->tracking);
+		$code = static::_trackingParts($entity->tracking);
 		if (!isset($code['service'])) {
 			return '';
 		}
