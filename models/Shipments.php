@@ -229,20 +229,38 @@ class Shipments extends \base_core\models\Base {
 	}
 
 	public function prefixTrackingLink($entity){
-		$links = [
-			'dhl' => 'https://www.dhl.de/de/privatkunden/pakete-empfangen/verfolgen.html?
-					piececode={:trackingCode}',
-			'post' => 'https://www.deutschepost.de/sendung/simpleQueryResult.html?
-					form.einlieferungsdatum_tag={:day}&
-					form.einlieferungsdatum_monat={:month}&form.einlieferungsdatum_jahr={:year}&
-					form.sendungsnummer={:trackingCode}',
-			'dpd' => 'https://tracking.dpd.de/parcelstatus?query={:trackingCode}'
-		];
 		$code = static::_trackingParts($entity->tracking);
+		$links = [
+			'dhl' => [
+				'path' => 'https://www.dhl.de/de/privatkunden/pakete-empfangen/verfolgen.html',
+				'query' => [
+					'piececode' => $code['trackingCode']
+				]
+			],
+			'post' => [
+				'path' => 'https://www.deutschepost.de/sendung/simpleQueryResult.html',
+				'query' => [
+					'form.einlieferungsdatum_tag' => $code['day'],
+					'form.einlieferungsdatum_monat' => $code['month'],
+					'form.einlieferungsdatum_jahr' => $code['year'],
+					'form.sendungsnummer' => $code['trackingCode']
+				]
+			],
+			'dpd' => [
+				'path' => 'https://tracking.dpd.de/parcelstatus',
+				'query' => [
+					'query' => $code['trackingCode']
+				]
+			]
+		];
 		if (!isset($code['service'])) {
 			return '';
 		}
-		return Text::insert($links[$code['service']], $code);
+		$url = $links[$code['service']]['path'];
+		if (isset($links[$code['service']]['query'])) {
+			$url .= '?' . http_build_query($links[$code['service']]['query']);
+		}
+		return $url;
 	}
 
 	protected static function _trackingParts($code) {
