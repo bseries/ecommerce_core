@@ -29,6 +29,7 @@ use lithium\analysis\Logger;
 use lithium\aop\Filters;
 use lithium\core\Libraries;
 use lithium\g11n\Message;
+use lithium\util\Text;
 
 // Shipments are very similar to invoices in that
 // they also have positions. In general shipments
@@ -221,6 +222,65 @@ class Shipments extends \base_core\models\Base {
 			'shipping-scheduled',
 			'shipping-error'
 		]);
+	}
+
+	public function unprefixTrackingCode($entity){
+		return static::_trackingParts($entity->tracking)['trackingCode'];
+	}
+
+	public function prefixTrackingLink($entity){
+		$code = static::_trackingParts($entity->tracking);
+		$links = [
+			'dhl' => [
+				'path' => 'https://www.dhl.de/de/privatkunden/pakete-empfangen/verfolgen.html',
+				'query' => [
+					'piececode' => $code['trackingCode']
+				]
+			],
+			'post' => [
+				'path' => 'https://www.deutschepost.de/sendung/simpleQueryResult.html',
+				'query' => [
+					'form.einlieferungsdatum_tag' => $code['day'],
+					'form.einlieferungsdatum_monat' => $code['month'],
+					'form.einlieferungsdatum_jahr' => $code['year'],
+					'form.sendungsnummer' => $code['trackingCode']
+				]
+			],
+			'dpd' => [
+				'path' => 'https://tracking.dpd.de/parcelstatus',
+				'query' => [
+					'query' => $code['trackingCode']
+				]
+			]
+		];
+		if (!isset($code['service'])) {
+			return '';
+		}
+		$url = $links[$code['service']]['path'];
+		if (isset($links[$code['service']]['query'])) {
+			$url .= '?' . http_build_query($links[$code['service']]['query']);
+		}
+		return $url;
+	}
+
+	protected static function _trackingParts($code) {
+		$reg = "#^(?'service'\w+)\://(?'trackingCode'\w+)(?:\:(?'year'\d{4})(?'month'\d{2})(?'day'\d{2}))?$#";
+		if (!preg_match($reg, $code, $matches)){
+			return null;
+		}
+		foreach ($matches as $key => $value) {
+			if (is_numeric($key)) {
+				unset($matches[$key]);
+			}
+		}
+		return $matches + [
+			'service' => null,
+			'trackingCode' => null,
+			'year' => null,
+			'month' => null,
+			'day' => null,
+			'year' => null
+		];
 	}
 
 	// This is the total value of the shipment. Used i.e. for
