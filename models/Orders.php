@@ -313,6 +313,7 @@ class Orders extends \base_core\models\Base {
 		$price = $entity->shippingMethod()->price($user, $cart);
 		if ($price->getAmount()) {
 			$invoicePosition = InvoicePositions::create([
+				'user_id' => $user->id,
 				'billing_invoice_id' => $invoice->id,
 				'description' => $entity->shippingMethod()->title(),
 				'quantity' => 1,
@@ -328,6 +329,7 @@ class Orders extends \base_core\models\Base {
 		$price = $entity->paymentMethod()->price($user, $cart);
 		if ($price->getAmount()) {
 			$invoicePosition = InvoicePositions::create([
+				'user_id' => $user->id,
 				'billing_invoice_id' => $invoice->id,
 				'description' => $entity->paymentMethod()->title(),
 				'amount_rate' => $price->getRate(),
