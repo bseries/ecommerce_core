@@ -296,6 +296,7 @@ class Orders extends \base_core\models\Base {
 			$price = $product->price($user, $cartPosition->method);
 
 			$invoicePosition = InvoicePositions::create([
+				'user_id' => $user->id,
 				'billing_invoice_id' => $invoice->id,
 				'description' => $description,
 				'quantity' => $cartPosition->quantity,
