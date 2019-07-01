@@ -274,7 +274,7 @@ class Orders extends \base_core\models\Base {
 			'user_id' => $user->id,
 			'status' => 'created',
 			'method' => $entity->payment_method,
-			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number
+			'note' => $t('Order No.', ['scope' => 'ecommerce_core']) . ': ' . $entity->number,
 		]);
 		if (!$invoice->save()) {
 			return false;
