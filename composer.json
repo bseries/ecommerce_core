@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "atelierdisko/finance": "^2",
-        "atelierdisko/li3_access": "^2",
+        "atelierdisko/li3_access": "^2.2",
         "atelierdisko/li3_flash_message": "^1",
         "atelierdisko/li3_mailer": "^1.1",
         "atelierdisko/li3_taggable": "^1.4",
