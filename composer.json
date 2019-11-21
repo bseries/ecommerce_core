@@ -2,7 +2,7 @@
     "name": "bseries/ecommerce_core",
     "description": "Core functionality for Boutique.",
     "type": "lithium-library",
-    "license": "proprietary",
+    "license": ["BSD-3-Clause"],
     "require": {
         "atelierdisko/finance": "^2",
         "atelierdisko/li3_access": "^2.2",
